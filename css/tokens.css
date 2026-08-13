@@ -33,10 +33,12 @@
   --color-upsell-card-border: #f0d9b5; /* product_main "Must Try" upsell card border, warm tan */
   --color-upsell-card-bg: #fff8ec; /* product_main "Must Try" upsell card fill */
   --color-terracotta: #d05835; /* product_story background — matches its Figma dev-mode spec exactly, distinct from the brighter --color-brand-orange used elsewhere */
-  --color-contact-card-bg: #f8dad0; /* contact_us info+form card background — soft peach/pink */
-  --color-contact-pin: #f2685a; /* contact_us location-pin icon color, coral/salmon */
-  --color-contact-pin-bg: #fce3dc; /* contact_us location-pin icon circle background — pale tint of --color-contact-pin */
-  --color-contact-input-border: #f0c9bb; /* contact_us form input border — soft peach, distinct from --color-select-border used elsewhere */
+  --color-contact-card-bg: #ffede3; /* contact_us info+form card background — matches its Figma dev-mode spec exactly */
+  --color-contact-pin: #ff66b6; /* contact_us location-pin icon stroke color — matches its Figma dev-mode spec exactly */
+  --color-contact-label: #414651; /* contact_us form field label text */
+  --color-contact-placeholder: #717680; /* contact_us input placeholder text */
+  --color-contact-dropdown-text: #535862; /* contact_us phone country-code select text */
+  --color-contact-chevron: #a4a7ae; /* contact_us phone country-code dropdown chevron */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -119,9 +121,8 @@
   --fs-faq-heading: clamp(26px, 3.6vw, 36px);
   --fs-faq-question: 16px;
   --fs-faq-answer: 14px;
-  --fs-contact-heading: clamp(32px, 5.4vw, 56px);
-  --fs-contact-label: 14px;
-  --fs-contact-input: 15px;
+  --fs-contact-label: 14px; /* contact_us form labels + info-card label/value, matches its Figma dev-mode spec exactly */
+  --fs-contact-input: 16px; /* contact_us typed field value/placeholder text, matches its Figma dev-mode spec exactly */
 
   --fw-medium: 500;
   --fw-bold: 700;
@@ -149,6 +150,9 @@
   --space-xl: 48px;
   --space-2xl: 64px;
   --space-card: 24px; /* bordered-card interior padding, e.g. testimonial cards */
+  --space-tight: 6px; /* contact_us info-card label/value gap and form-field label/input gap, matches its Figma dev-mode spec exactly */
+  --space-form-input-y: 10px; /* contact_us form field vertical padding, matches its Figma dev-mode spec exactly */
+  --space-form-input-x: 14px; /* contact_us form field horizontal padding, matches its Figma dev-mode spec exactly */
 
   /* Radius */
   --radius-sm: 6px;
@@ -159,6 +163,8 @@
   --radius-photo-frame: 15px; /* brand_story hero/character photo corner radius */
   --radius-pill: 999px;
   --radius-thumb: 14px; /* product_main gallery thumbnail corners */
+  --radius-2xl: 32px; /* contact_us card, matches its Figma dev-mode spec exactly */
+  --radius-textarea: 16px; /* contact_us message field, matches its Figma dev-mode spec exactly */
 
   /* Border */
   --border-width-btn: 3px;
@@ -173,6 +179,8 @@
   --shadow-btn: 0 4px 10px rgba(0, 0, 0, 0.15);
   --shadow-btn-pop: 0 6px 0 var(--color-shadow-pop); /* skeuomorphic "pop" edge under solid CTA buttons */
   --shadow-nav-cta: 0 3px 0 #000000; /* site-header "Build Your Bundle" CTA edge — flat black, distinct from --shadow-btn-pop's brand-tinted shadow */
+  --shadow-xs: 0 1px 2px rgba(10, 13, 18, 0.05); /* subtle input-field edge, e.g. contact_us form fields */
+  --shadow-btn-dark: 0 1px 2px rgba(10, 13, 18, 0.05), inset 0 0 0 1px rgba(10, 13, 18, 0.18), inset 0 -2px 0 rgba(10, 13, 18, 0.05); /* skeuomorphic edge for dark buttons, e.g. contact_us "Send Message" */
 
   /* Layout */
   --container-max: 1280px;

@@ -1049,26 +1049,22 @@
   color: var(--color-text-secondary);
 }
 
-/* Skin: dark — solid black fill, white label, no border/shadow. Used for
-   dense form-submit CTAs (e.g. contact_us "Send Message"). */
+/* Skin: dark — solid black fill, white label, skeuomorphic inset edge.
+   Used for dense form-submit CTAs (e.g. contact_us "Send Message"); own
+   Fredoka 500/16 type + --shadow-btn-dark, matching that button's Figma
+   dev-mode spec exactly. Pairs with .btn--pill for its full-stadium shape. */
 .btn--dark {
   background-color: var(--color-black);
   color: var(--color-white);
+  font-family: var(--font-heading-rounded);
+  font-weight: 500;
+  font-size: 16px;
+  box-shadow: var(--shadow-btn-dark);
 }
 
 .btn--dark:hover,
 .btn--dark:focus-visible {
   background-color: #000000;
-}
-
-/* Modifier: rounded — large-radius rectangle instead of a full pill/stadium
-   shape. Pairs with a skin modifier for CTAs that need a squarer footprint
-   than .btn--pill, e.g. a full-width form-submit button. */
-.btn--rounded {
-  padding: var(--space-md) var(--space-lg);
-  border-radius: var(--radius-lg);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
 }
 
 /* Breadcrumb ---------------------------------------------------------------
@@ -1102,25 +1098,27 @@
 }
 
 /* Form field ---------------------------------------------------------------
-   Labeled text input/textarea for contact/signup-style forms. Reuse for any
-   future form section instead of rebuilding. */
+   Labeled text input/textarea for contact/signup-style forms; metrics match
+   contact_us's Figma dev-mode spec exactly (10px/14px field padding, 1px
+   near-black border, --shadow-xs edge, pill-radius text inputs). Reuse for
+   any future form section instead of rebuilding. */
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
+  gap: var(--space-card);
 }
 
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xs);
+  gap: var(--space-tight);
 }
 
 .form-field__label {
   font-family: var(--font-ui);
-  font-weight: var(--fw-medium);
   font-size: var(--fs-contact-label);
-  color: var(--color-black);
+  line-height: 20px;
+  color: var(--color-contact-label);
 }
 
 .form-field__required {
@@ -1130,56 +1128,77 @@
 .form-field__input,
 .form-field__textarea {
   width: 100%;
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: var(--fs-contact-input);
+  line-height: 24px;
   color: var(--color-black);
   background-color: var(--color-white);
-  border: var(--border-width-thin) solid var(--color-contact-input-border);
+  border: var(--border-width-thin) solid var(--color-black);
   border-radius: var(--radius-pill);
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-form-input-y) var(--space-form-input-x);
+  box-shadow: var(--shadow-xs);
   outline: none;
   transition: border-color 0.15s ease;
 }
 
 .form-field__input::placeholder,
 .form-field__textarea::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-contact-placeholder);
 }
 
 .form-field__input:focus-visible,
 .form-field__textarea:focus-visible {
-  border-color: var(--color-black);
+  outline: 2px solid var(--color-black);
+  outline-offset: 2px;
 }
 
 .form-field__textarea {
-  border-radius: var(--radius-md);
-  min-height: 128px;
+  border-radius: var(--radius-textarea);
+  min-height: 134px;
   resize: vertical;
   font-family: inherit;
 }
 
-/* Phone input — country-code select fused with the number field into one
-   pill, e.g. contact_us's phone number field. */
+/* Phone input — country-code select (with its own chevron) fused with the
+   number field into one pill, e.g. contact_us's phone number field. */
 .phone-input {
   display: flex;
   align-items: stretch;
   background-color: var(--color-white);
-  border: var(--border-width-thin) solid var(--color-contact-input-border);
+  border: var(--border-width-thin) solid var(--color-black);
   border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-xs);
   overflow: hidden;
+}
+
+.phone-input__code-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-right: var(--border-width-thin) solid var(--color-black);
 }
 
 .phone-input__code {
   appearance: none;
-  flex-shrink: 0;
-  background-color: transparent;
+  background: none;
   border: none;
-  border-right: var(--border-width-thin) solid var(--color-contact-input-border);
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: var(--fs-contact-input);
-  color: var(--color-black);
-  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
+  color: var(--color-contact-dropdown-text);
+  padding: var(--space-form-input-y) var(--space-lg) var(--space-form-input-y) var(--space-form-input-x);
   cursor: pointer;
+}
+
+.phone-input__chevron {
+  position: absolute;
+  top: 50%;
+  right: var(--space-sm);
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  color: var(--color-contact-chevron);
+  pointer-events: none;
 }
 
 .phone-input__number {
@@ -1188,14 +1207,15 @@
   border: none;
   outline: none;
   background: none;
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   font-size: var(--fs-contact-input);
+  line-height: 24px;
   color: var(--color-black);
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-form-input-y) var(--space-form-input-x);
 }
 
 .phone-input__number::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-contact-placeholder);
 }
 
 @media (max-width: 640px) {
