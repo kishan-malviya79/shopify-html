@@ -1,9 +1,10 @@
 /* ==========================================================================
    Section: brand_story
    Yellow full-bleed "about the brand" section framed top and bottom by the
-   Figma "Vector" layer: a big, lazy red wave (not a tight scallop) — the
-   layer's own path is wavy, and its -9px red drop-shadow is what gives the
-   line its color/weight here. Intro row (stroked heading + framed hero
+   Figma "Vector" layer: a big, lazy red wave (not a tight scallop), colored
+   by the path's own stroke — the layer's "Drop shadow" effect is defined
+   in Figma but toggled off, so don't add it here either. Intro row (stroked
+   heading + framed hero
    photo) over an "about" row (framed character lineup + copy + CTA pill +
    icon-circle pair). Heading skin reuses .stroke-heading; CTA reuses
    .btn-group/.btn--pill/.btn--icon-circle/.btn--outline (all
