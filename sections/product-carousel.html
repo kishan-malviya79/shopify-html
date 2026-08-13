@@ -25,10 +25,13 @@
         - variant_label (text) — default: "20g Tasting Pouch"; shown in the
           variant select alongside the variant price
 
-  Fonts: heading uses "Anton" (single weight, condensed black); card/price/
-  UI text uses "Comic Neue" (weight 700). Both are Google Fonts, loaded here
-  for preview; in the Shopify build, load them through the theme's font
-  settings or a self-hosted @font-face instead.
+  Fonts: default heading uses "Anton" (single weight, condensed black); the
+  `nav_style = "cta"` "Combo" instance swaps it for "Mouse Memoirs" via
+  .stroke-heading.stroke-heading--black instead (see index.html). Card
+  title/select text use "Fredoka" (500/600); price/rating/badge text use
+  "Inter" (400/500). All Google Fonts, loaded here for preview; in the
+  Shopify build, load them through the theme's font settings or a
+  self-hosted @font-face instead.
 
   Images: product pouches are dummy placeholder art (assets/dummy/pouch-*.svg)
   standing in for each block's `product.featured_image`.
@@ -41,7 +44,7 @@
   <title>Product Carousel — Section Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@500;600&family=Comic+Neue:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/sections/product-carousel.css" />

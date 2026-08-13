@@ -66,10 +66,15 @@
 }
 
 /* Skin: red — solid brand-red fill, white label, skeuomorphic "pop" shadow
-   edge. Used for commerce CTAs like Add to Cart. */
+   edge. Used for commerce CTAs like Add to Cart. Overrides the base .btn
+   type (Comic Neue) with Fredoka 600, matching this skin's one use case. */
 .btn--red {
   background-color: var(--color-brand-red);
   color: var(--color-white);
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: 17px;
+  border: 2px solid var(--color-white);
   box-shadow: var(--shadow-btn-pop);
 }
 
@@ -108,11 +113,11 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  font-family: var(--font-body);
-  font-weight: var(--fw-bold);
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
   font-size: var(--fs-badge);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.06px;
   white-space: nowrap;
   padding: var(--space-2xs) var(--space-sm);
   border-radius: var(--radius-pill);
@@ -147,9 +152,10 @@
 }
 
 .rating__count {
-  font-family: var(--font-body);
+  font-family: var(--font-ui);
   font-size: var(--fs-rating-count);
-  color: var(--color-text-muted);
+  letter-spacing: 0.84px;
+  color: var(--color-black);
 }
 
 /* Modifier: larger stars, no count (e.g. testimonial_carousel cards). */
@@ -167,15 +173,17 @@
 }
 
 .price__sale {
-  font-family: var(--font-body);
-  font-weight: var(--fw-bold);
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
   font-size: var(--fs-price);
+  letter-spacing: -0.16px;
   color: var(--color-black);
 }
 
 .price__compare {
-  font-family: var(--font-body);
+  font-family: var(--font-ui);
   font-size: var(--fs-price-compare);
+  letter-spacing: -0.16px;
   color: var(--color-text-muted);
   text-decoration: line-through;
 }
@@ -190,15 +198,15 @@
 .select__input {
   width: 100%;
   appearance: none;
-  font-family: var(--font-body);
-  font-weight: var(--fw-bold);
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
   font-size: var(--fs-select);
   text-transform: uppercase;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.14px;
   color: var(--color-black);
   background-color: var(--color-white);
   border: var(--border-width-thin) solid var(--color-select-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   padding: var(--space-sm) var(--space-xl) var(--space-sm) var(--space-sm);
   cursor: pointer;
 }
@@ -243,11 +251,11 @@
 }
 
 .product-card__title {
-  font-family: var(--font-body);
-  font-weight: var(--fw-bold);
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
   font-size: var(--fs-card-title);
+  line-height: var(--lh-relaxed);
   text-transform: uppercase;
-  letter-spacing: 0.01em;
   color: var(--color-black);
   margin: 0;
 }
@@ -354,6 +362,15 @@
   text-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
 }
 
+/* Skin: black fill + thick white stroke, no drop shadow — flatter than the
+   default red skin. Used for the product_carousel "Combo" instance heading,
+   which sits on a plain card-bg section rather than a photo/color block. */
+.stroke-heading--black {
+  color: var(--color-black);
+  -webkit-text-stroke: var(--stroke-width-heading-desktop) var(--color-white);
+  text-shadow: none;
+}
+
 /* Ticker ---------------------------------------------------------------
    Infinite horizontal auto-scroll strip. Track/group/keyframes are the
    reusable mechanics; a wrapping section class (e.g. .marquee,
@@ -403,4 +420,42 @@
   .ticker__track {
     animation: none;
   }
+}
+
+/* Newsletter form ----------------------------------------------------------
+   Email-capture pill + submit button pair. The pill wraps a bare input and
+   composes with the existing .btn--pill.btn--red skin for its button —
+   reuse this for any future signup/newsletter section instead of rebuilding
+   the input chrome. */
+.newsletter-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  background-color: rgba(255, 255, 255, 0.55);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  border: var(--border-width-thin) solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs);
+  gap: var(--space-2xs);
+}
+
+.newsletter-form__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-btn-ink);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.newsletter-form__input::placeholder {
+  color: rgba(33, 28, 61, 0.55);
 }

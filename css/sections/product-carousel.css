@@ -28,6 +28,24 @@
   margin: 0;
 }
 
+/* Layout-only variant for the "Combo" instance — compose with
+   .stroke-heading.stroke-heading--black (css/components.css) for the
+   Mouse Memoirs black-fill/white-stroke skin instead of this section's
+   default Anton heading. */
+.product-carousel__heading--display {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: var(--lh-tight);
+}
+
+/* Desktop locks to a fixed size instead of continuing to scale with
+   viewport, same pattern as .hero__heading. */
+@media (min-width: 1025px) {
+  .product-carousel__heading--display {
+    font-size: var(--fs-display-heading-desktop);
+  }
+}
+
 .product-carousel__nav {
   display: flex;
   gap: var(--space-xs);

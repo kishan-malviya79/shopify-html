@@ -49,14 +49,19 @@
   color: var(--color-white);
 }
 
-/* Track is two identical groups placed side by side; animating exactly
-   -50% (one group-width) produces a seamless loop with no visible reset. */
+/* Track is 6 identical groups placed side by side (see marquee.html);
+   animating exactly one group-width (-100%/6) produces a seamless loop
+   with no visible reset. 2 groups isn't enough here — this item set is
+   short, so on a wide screen one copy alone doesn't reach the edge of the
+   viewport, leaving a visible gap of bare background right before the
+   loop restarts. 6 copies keeps that from happening up to very wide
+   (~4K) screens. Same fix as announcement_bar's .ticker__track override. */
 @keyframes marquee-scroll {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-16.6667%);
   }
 }
 

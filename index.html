@@ -12,7 +12,7 @@
   <title>Home — Page Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@600&family=Comic+Neue:wght@700&family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@500;600;700&family=Comic+Neue:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/sections/announcement-bar.css" />
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/sections/chaos-banner.css" />
   <link rel="stylesheet" href="css/sections/product-carousel.css" />
   <link rel="stylesheet" href="css/sections/testimonial-carousel.css" />
+  <link rel="stylesheet" href="css/sections/footer.css" />
 </head>
 <body>
 
@@ -150,13 +151,17 @@
 
   </section>
   <!-- ===================== /Section: Hero Banner ===================== -->
- <!-- ======================================================================
+
+  <!-- ======================================================================
        Section: Promo Marquee (promo_marquee)
        ====================================================================== -->
   <section class="marquee" aria-label="Product highlights">
     <div class="marquee__track">
 
-      <!-- Group 1 (real content) -->
+      <!-- Real content (announced once). 6 total copies of the item set are
+           rendered across this + the 5 duplicate groups below so the marquee
+           never runs out of content mid-scroll on wide viewports (see
+           @keyframes marquee-scroll in marquee.css). -->
       <div class="marquee__group">
         <span class="marquee__item">GLUTEN FREE</span>
         <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
@@ -170,8 +175,63 @@
         <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
       </div>
 
-      <!-- Group 2 (exact duplicate, hidden from assistive tech) — animation
-           scrolls exactly one group-width so the loop reads as continuous. -->
+      <!-- Duplicate 1/5 (aria-hidden) -->
+      <div class="marquee__group" aria-hidden="true">
+        <span class="marquee__item">GLUTEN FREE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">LOW CALORIE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">CRUNCH CRUNCH CRUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">NO ADDED SUGARS</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">MUNCH MUNCH MUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 2/5 (aria-hidden) -->
+      <div class="marquee__group" aria-hidden="true">
+        <span class="marquee__item">GLUTEN FREE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">LOW CALORIE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">CRUNCH CRUNCH CRUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">NO ADDED SUGARS</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">MUNCH MUNCH MUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 3/5 (aria-hidden) -->
+      <div class="marquee__group" aria-hidden="true">
+        <span class="marquee__item">GLUTEN FREE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">LOW CALORIE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">CRUNCH CRUNCH CRUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">NO ADDED SUGARS</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">MUNCH MUNCH MUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 4/5 (aria-hidden) -->
+      <div class="marquee__group" aria-hidden="true">
+        <span class="marquee__item">GLUTEN FREE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">LOW CALORIE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">CRUNCH CRUNCH CRUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">NO ADDED SUGARS</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">MUNCH MUNCH MUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 5/5 (aria-hidden) -->
       <div class="marquee__group" aria-hidden="true">
         <span class="marquee__item">GLUTEN FREE</span>
         <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
@@ -553,7 +613,7 @@
     <div class="container">
 
       <div class="product-carousel__header">
-        <h2 class="product-carousel__heading">Combo. Don't choose one mood.</h2>
+        <h2 class="product-carousel__heading--display stroke-heading stroke-heading--black">Combo. Don't Choose One Mood.</h2>
 
         <div class="product-carousel__nav">
           <div class="btn-group">
@@ -832,6 +892,99 @@
       });
     })();
   </script>
+
+  <!-- ======================================================================
+       Section: Footer (footer)
+       ====================================================================== -->
+  <footer class="footer" aria-label="Site footer">
+
+    <p class="footer__logo">münchief</p>
+
+    <div class="footer__hero">
+
+      <div class="footer__bubble footer__bubble--left">
+        <img src="assets/dummy/Perfect.png" alt="" role="presentation" />
+      </div>
+
+      <h2 class="footer__heading stroke-heading">More Munch<br />More Crunch</h2>
+
+      <div class="footer__bubble footer__bubble--right">
+        <img src="assets/dummy/favorite.png" alt="" role="presentation" />
+      </div>
+
+      <form class="footer__newsletter newsletter-form" action="#" method="post">
+        <input class="newsletter-form__input" type="email" name="email" placeholder="Enter your email..." aria-label="Email address" required />
+        <button type="submit" class="btn btn--pill btn--red">Notify Me</button>
+      </form>
+
+    </div>
+
+    <div class="footer__columns">
+
+      <!-- Block: footer_column (1/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Drinks</h3>
+        <ul class="footer__links">
+          <li><a href="#">Guava Chilli Lime</a></li>
+          <li><a href="#">Nimbu Jeera</a></li>
+          <li><a href="#">Mix Berry</a></li>
+          <li><a href="#">Wild Berries</a></li>
+          <li><a href="#">Variety Pack</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (2/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Makhanas</h3>
+        <ul class="footer__links">
+          <li><a href="#">Chutney Pop</a></li>
+          <li><a href="#">Noodle Blast</a></li>
+          <li><a href="#">Salt Pop</a></li>
+          <li><a href="#">Pop'n'Pani</a></li>
+          <li><a href="#">Pickle Punch</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (3/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Explore</h3>
+        <ul class="footer__links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (4/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Munchief</h3>
+        <ul class="footer__links">
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">My Cart</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (5/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Legal</h3>
+        <ul class="footer__links">
+          <li><a href="#">Refund Policy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="footer__divider" />
+
+    <p class="footer__copyright">©2026 Munchief. All rights reserved.</p>
+
+    <p class="footer__legal">Munchief &middot; Magical Foods &amp; Beverages LLP — Demo build for internal review. Pricing shown is placeholder</p>
+
+  </footer>
+  <!-- ===================== /Section: Footer ===================== -->
 
 </body>
 </html>

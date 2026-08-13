@@ -19,7 +19,8 @@
   --color-brand-blue: #2f6fed;
   --color-brand-coral: #ff7972; /* outline stroke for white display headings on saturated backgrounds */
   --color-brand-pink: #f0429c; /* announcement bar background */
-  --color-rust: #9a1902; /* announcement bar ticker text/icon */
+  --color-brand-yellow: #f9c846; /* footer background */
+  --color-rust: #9a1902; /* announcement bar ticker text/icon, muted legal text on yellow */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -57,6 +58,7 @@
 
   --fs-hero-heading: clamp(28px, 7vw, 64px); /* fluid size for mobile/tablet */
   --fs-hero-heading-desktop: 96px; /* explicit size at the desktop breakpoint (see section CSS) */
+  --fs-display-heading-desktop: 82px; /* explicit size at the desktop breakpoint for secondary display headings — product_carousel's "Combo" heading, chaos_banner's heading (see section CSS) */
   --fs-hero-text: clamp(14px, 1.6vw, 18px); /* fluid, tops out at the spec's 18px on desktop */
   --fs-btn: 16px;
   --fs-marquee: clamp(13px, 1.4vw, 16px);
@@ -71,6 +73,11 @@
   --fs-testimonial-text: 14px;
   --fs-testimonial-author: 24px;
   --fs-ticker-item: 12px;
+  --fs-footer-heading: clamp(44px, 14vw, 156px);
+  --fs-footer-logo: 20px;
+  --fs-footer-col-heading: 13px;
+  --fs-footer-link: 13px;
+  --fs-footer-legal: 11px;
 
   --fw-medium: 500;
   --fw-bold: 700;

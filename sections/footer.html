@@ -1,0 +1,138 @@
+<!--
+  Section: footer
+
+  Settings:
+    - logo_text (text) — default: "münchief"
+    - heading (text) — default: "More Munch<br>More Crunch"
+    - bubble_image_left (image_picker) — default: assets/dummy/Perfect.png
+    - bubble_image_right (image_picker) — default: assets/dummy/favorite.png
+    - newsletter_placeholder (text) — default: "Enter your email..."
+    - newsletter_button_label (text) — default: "Notify Me"
+    - copyright_text (text) — default: "©2026 Munchief. All rights reserved."
+    - legal_text (text) — default: "Munchief · Magical Foods & Beverages LLP —
+      Demo build for internal review. Pricing shown is placeholder"
+
+  Blocks:
+    - block type "footer_column" (repeatable, 1 per link group):
+        - column_heading (text) — e.g. "Drinks"
+        - links (list of link_label (text) + link_url (url) pairs)
+
+  Fonts: heading reuses the shared .stroke-heading component ("Mouse
+  Memoirs", same as hero_banner); logo uses "Fredoka" (weight 700); column
+  headings/links/copyright/legal text use "Inter" (weight 700), matching the
+  dense-UI voice already used by product_carousel/announcement_bar.
+
+  Images: bubble photos reuse the existing testimonial dummy assets
+  (Perfect.png, favorite.png) as placeholders for the two thought-bubble
+  callouts standing in for bubble_image_left/right.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Footer — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@700&family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/footer.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Footer (footer)
+       ====================================================================== -->
+  <footer class="footer" aria-label="Site footer">
+
+    <p class="footer__logo">münchief</p>
+
+    <div class="footer__hero">
+
+      <div class="footer__bubble footer__bubble--left">
+        <img src="../assets/dummy/Perfect.png" alt="" role="presentation" />
+      </div>
+
+      <h2 class="footer__heading stroke-heading">More Munch<br />More Crunch</h2>
+
+      <div class="footer__bubble footer__bubble--right">
+        <img src="../assets/dummy/favorite.png" alt="" role="presentation" />
+      </div>
+
+      <form class="footer__newsletter newsletter-form" action="#" method="post">
+        <input class="newsletter-form__input" type="email" name="email" placeholder="Enter your email..." aria-label="Email address" required />
+        <button type="submit" class="btn btn--pill btn--red">Notify Me</button>
+      </form>
+
+    </div>
+
+    <div class="footer__columns">
+
+      <!-- Block: footer_column (1/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Drinks</h3>
+        <ul class="footer__links">
+          <li><a href="#">Guava Chilli Lime</a></li>
+          <li><a href="#">Nimbu Jeera</a></li>
+          <li><a href="#">Mix Berry</a></li>
+          <li><a href="#">Wild Berries</a></li>
+          <li><a href="#">Variety Pack</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (2/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Makhanas</h3>
+        <ul class="footer__links">
+          <li><a href="#">Chutney Pop</a></li>
+          <li><a href="#">Noodle Blast</a></li>
+          <li><a href="#">Salt Pop</a></li>
+          <li><a href="#">Pop'n'Pani</a></li>
+          <li><a href="#">Pickle Punch</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (3/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Explore</h3>
+        <ul class="footer__links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (4/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Munchief</h3>
+        <ul class="footer__links">
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">My Cart</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (5/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Legal</h3>
+        <ul class="footer__links">
+          <li><a href="#">Refund Policy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="footer__divider" />
+
+    <p class="footer__copyright">©2026 Munchief. All rights reserved.</p>
+
+    <p class="footer__legal">Munchief &middot; Magical Foods &amp; Beverages LLP — Demo build for internal review. Pricing shown is placeholder</p>
+
+  </footer>
+  <!-- ===================== /Section: Footer ===================== -->
+
+</body>
+</html>

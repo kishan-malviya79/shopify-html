@@ -51,6 +51,14 @@
   letter-spacing: 0;
 }
 
+/* Desktop locks to a fixed size instead of continuing to scale with
+   viewport, same pattern as .hero__heading. */
+@media (min-width: 1025px) {
+  .chaos-banner__heading {
+    font-size: var(--fs-display-heading-desktop);
+  }
+}
+
 .chaos-banner__text {
   margin: 0;
   max-width: 380px;
