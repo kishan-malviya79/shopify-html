@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Section: world_grid
+   Two-up grid of "world" cards. Heading skin reuses .stroke-heading from
+   css/components.css — don't duplicate that here.
+   ========================================================================== */
+
+.world-grid {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.world-grid__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+.world-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-height: 420px;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.world-card--orange {
+  background-color: var(--color-brand-orange);
+}
+
+.world-card--cream {
+  background: linear-gradient(135deg, #fff6e5 0%, var(--color-brand-orange-light) 100%);
+}
+
+.world-card__content {
+  position: relative;
+  z-index: 2;
+  max-width: 60%;
+}
+
+.world-card__heading {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 0.95;
+}
+
+.world-card__text {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  max-width: 260px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 13px;
+  line-height: var(--lh-normal);
+  text-transform: uppercase;
+}
+
+.world-card__text--white {
+  color: var(--color-white);
+}
+
+.world-card__text--red {
+  color: var(--color-brand-red);
+}
+
+.world-card__media {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  width: 58%;
+  height: 88%;
+}
+
+.world-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+/* Responsive ---------------------------------------------------------------
+   Two columns from tablet up (per the breakpoint reference in tokens.css). */
+@media (min-width: 641px) {
+  .world-grid__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .world-card {
+    min-height: 360px;
+  }
+
+  .world-card__content {
+    max-width: 70%;
+  }
+}

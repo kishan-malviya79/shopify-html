@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Section: promo_marquee
+   Infinite horizontal scrolling ticker. Anything reusable here already lives
+   in css/components.css — don't duplicate.
+   ========================================================================== */
+
+.marquee {
+  overflow: hidden;
+  background-color: var(--color-brand-red);
+  border-top: 2px solid var(--color-brand-blue);
+  border-bottom: 2px solid var(--color-brand-blue);
+  padding-block: var(--space-sm);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 25s linear infinite;
+}
+
+/* Pause on hover/focus so the text is easier to read on demand. */
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marquee__item {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-style: italic;
+  font-size: var(--fs-marquee);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  white-space: nowrap;
+  padding-inline: var(--space-md);
+}
+
+.marquee__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-white);
+}
+
+/* Track is two identical groups placed side by side; animating exactly
+   -50% (one group-width) produces a seamless loop with no visible reset. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Respect reduced-motion preference — freeze on the first frame. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+}

@@ -1,0 +1,271 @@
+/* ==========================================================================
+   Component System
+   Reusable, cross-section classes. Keep this condensed — before writing a
+   one-off class inside a section stylesheet, check here first and extend an
+   existing component instead of duplicating it.
+   ========================================================================== */
+
+/* Layout container ------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* Button ------------------------------------------------------------------
+   Base .btn handles shared behavior; modifiers (.btn--pill, .btn--icon-circle)
+   handle shape/skin. Compose modifiers to build new button variants instead
+   of writing new button classes per section.                              */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-btn);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+}
+
+.btn--pill {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.btn--icon-circle {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.btn--icon-circle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Skin: primary — cream fill, navy-ink border + label/icon color. Compose
+   with a shape modifier, e.g. class="btn btn--pill btn--primary". */
+.btn--primary {
+  background-color: var(--color-cream);
+  color: var(--color-btn-ink);
+  border: var(--border-width-btn) solid var(--color-btn-ink);
+  box-shadow: var(--shadow-btn);
+}
+
+/* Skin: red — solid brand-red fill, white label, skeuomorphic "pop" shadow
+   edge. Used for commerce CTAs like Add to Cart. */
+.btn--red {
+  background-color: var(--color-brand-red);
+  color: var(--color-white);
+  box-shadow: var(--shadow-btn-pop);
+}
+
+.btn--red:hover,
+.btn--red:focus-visible {
+  background-color: var(--color-brand-red-dark);
+}
+
+/* Skin: outline — transparent fill, navy-ink border/icon, no shadow. Used
+   for secondary controls like carousel prev/next arrows. */
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-btn-ink);
+  border: var(--border-width-thin) solid var(--color-btn-ink);
+}
+
+/* Modifier: block — stretches a button to fill its container's width. */
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+
+/* Button group — pairs a primary pill CTA with a secondary icon button */
+.btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* Badge ---------------------------------------------------------------
+   Small pill label used to flag a product ("Best Seller", "5000+ Bought
+   This") or a savings amount. Base handles shape/type; modifiers handle
+   color. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-badge);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+}
+
+.badge--green {
+  background-color: var(--color-badge-green-bg);
+  color: var(--color-badge-green-text);
+}
+
+.badge--orange {
+  background-color: var(--color-badge-orange-bg);
+  color: var(--color-badge-orange-text);
+}
+
+/* Star rating ------------------------------------------------------------ */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.rating__stars {
+  display: flex;
+  gap: 2px;
+  color: var(--color-star);
+}
+
+.rating__stars svg {
+  width: 14px;
+  height: 14px;
+}
+
+.rating__count {
+  font-family: var(--font-body);
+  font-size: var(--fs-rating-count);
+  color: var(--color-text-muted);
+}
+
+/* Price ------------------------------------------------------------------ */
+.price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.price__sale {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-price);
+  color: var(--color-black);
+}
+
+.price__compare {
+  font-family: var(--font-body);
+  font-size: var(--fs-price-compare);
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+/* Select (variant picker) ------------------------------------------------- */
+.select {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.select__input {
+  width: 100%;
+  appearance: none;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-select);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width-thin) solid var(--color-select-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-xl) var(--space-sm) var(--space-sm);
+  cursor: pointer;
+}
+
+.select__icon {
+  position: absolute;
+  top: 50%;
+  right: var(--space-sm);
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%);
+  color: var(--color-black);
+  pointer-events: none;
+}
+
+/* Product card -------------------------------------------------------------
+   Reusable commerce card: badge over media, rating, title, price, variant
+   select, add-to-cart. Used by product_carousel; reuse for any future
+   product-grid section instead of rebuilding. */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.product-card__media {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.product-card__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.product-card__badge {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+}
+
+.product-card__title {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-card-title);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--color-black);
+  margin: 0;
+}
+
+/* Stroked display heading ---------------------------------------------------
+   Display-font headline with a solid fill + outline stroke for contrast on
+   any background. Compose with a section class that sets font-size/line
+   -height/margin (font-size isn't set here — sizes vary too much per use).
+   Default skin is red fill + white stroke; add --stroke-heading--white for
+   a plain white fill (no stroke) on saturated backgrounds. */
+.stroke-heading {
+  font-family: var(--font-display);
+  /* Mouse Memoirs ships a single weight — its regular weight already reads
+     heavy/hand-drawn, so don't request 700/900 (forces synthetic bold). */
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-brand-red);
+  -webkit-text-stroke: var(--stroke-width-heading) var(--color-white);
+  paint-order: stroke fill;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.stroke-heading--white {
+  color: var(--color-white);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}

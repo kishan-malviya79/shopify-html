@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Design Tokens
+   Single source of truth for the design system. Any value repeated across
+   sections (color, type, spacing, radius, shadow) must be added here and
+   referenced via var(--token-name) — never hardcoded in a section file.
+   ========================================================================== */
+
+:root {
+  /* Breakpoints (reference only — CSS vars can't be used inside @media)
+     mobile:  < 640px
+     tablet:  641px – 1024px
+     desktop: > 1024px                                                    */
+
+  /* Color — brand */
+  --color-brand-red: #ee2a2a;
+  --color-brand-red-dark: #c41c14;
+  --color-brand-orange: #ff7a2e;
+  --color-brand-orange-light: #ffb347;
+  --color-brand-blue: #2f6fed;
+
+  /* Color — neutrals */
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-cream: #f7f1e2; /* warm off-white used for primary button fill */
+  --color-cream-bg: #f6efdd; /* warm page/section background, slightly deeper than --color-cream */
+  --color-ink: #5f0e00; /* dark maroon, used for body copy on warm backgrounds */
+  --color-btn-ink: #211c3d; /* dark navy-indigo used for button labels/icons/borders, not pure black */
+  --color-overlay: rgba(0, 0, 0, 0.15);
+  --color-text-muted: #9b9690; /* struck-through compare-at prices, secondary text */
+
+  /* Color — commerce UI (badges, ratings, product cards) */
+  --color-badge-green-bg: #d8ecac;
+  --color-badge-green-text: #4c6b1f;
+  --color-badge-orange-bg: #f3ac4e;
+  --color-badge-orange-text: #6b3d10;
+  --color-star: #f5a623;
+  --color-select-border: #dcd5c2;
+
+  /* Typography
+     --font-display requires "Mouse Memoirs" and --font-body requires "Comic
+     Neue" (both Google Fonts) — loaded via the link tags in each page's
+     <head> (see sections/hero-banner.html, index.html). In the Shopify
+     build, load them via the theme's font settings or a manual @font-face
+     instead of hardcoding the Google Fonts link.                        */
+  --font-display: 'Mouse Memoirs', 'Baloo 2', 'Arial Black', sans-serif;
+  --font-body: 'Comic Neue', 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-heading-bold: 'Anton', 'Archivo Black', 'Arial Black', sans-serif; /* condensed black-weight headings, e.g. product-carousel heading */
+
+  --fs-hero-heading: clamp(28px, 7vw, 64px); /* fluid size for mobile/tablet */
+  --fs-hero-heading-desktop: 96px; /* explicit size at the desktop breakpoint (see section CSS) */
+  --fs-hero-text: clamp(14px, 1.6vw, 18px); /* fluid, tops out at the spec's 18px on desktop */
+  --fs-btn: 16px;
+  --fs-marquee: clamp(13px, 1.4vw, 16px);
+  --fs-section-heading: clamp(24px, 3.6vw, 38px);
+  --fs-badge: 11px;
+  --fs-card-title: 15px;
+  --fs-price: 19px;
+  --fs-price-compare: 14px;
+  --fs-select: 13px;
+  --fs-rating-count: 13px;
+
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  --lh-tight: 1; /* 100% — matches the hero heading spec */
+  --lh-relaxed: 1.2; /* 120% — matches the hero body-copy spec */
+  --lh-normal: 1.5;
+
+  --ls-tight: -0.2px; /* matches the hero body-copy spec */
+
+  /* Spacing scale */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* Border */
+  --border-width-btn: 3px;
+  --border-width-thin: 1.5px;
+  --stroke-width-heading: 2px; /* mobile/tablet text-stroke weight */
+  --stroke-width-heading-desktop: 5px; /* matches the 96px desktop heading spec */
+
+  /* Shadow */
+  --shadow-btn: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-btn-pop: 0 3px 0 var(--color-brand-red-dark); /* skeuomorphic "pop" edge under solid CTA buttons */
+
+  /* Layout */
+  --container-max: 1280px;
+  --container-padding: 24px;
+}

@@ -1,0 +1,73 @@
+<!--
+  Section: world_grid
+
+  Settings:
+    - background_color (color) — default: "#f6efdd" (--color-cream-bg), page-level backdrop behind the cards
+
+  Blocks:
+    - block type "world_card": heading (text), text (richtext),
+      image (image_picker), link (url),
+      background_style (select: "orange" | "cream") — default: "orange",
+      heading_style (select: "white" | "outline") — default matches
+      background_style (white heading on the orange card, red-outline
+      heading on the cream card)
+      Repeatable; renders as a rounded card with the heading top-left, the
+      image bleeding off the bottom-right corner, and supporting text
+      bottom-left. Default: 2 blocks ("Crunch World" / "Prebiotic World").
+
+  Fonts: headings reuse the shared .stroke-heading component (see
+  css/components.css) — same "Mouse Memoirs" family as the hero banner.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Grid — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/world-grid.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: World Grid (world_grid)
+       ====================================================================== -->
+  <section class="world-grid" aria-label="Explore our worlds">
+    <div class="container world-grid__grid">
+
+      <!-- Block: world_card (background_style = "orange", heading_style = "white") -->
+      <a href="#" class="world-card world-card--orange">
+        <div class="world-card__content">
+          <h2 class="world-card__heading stroke-heading stroke-heading--white">Crunch<br />World</h2>
+        </div>
+        <p class="world-card__text world-card__text--white">
+          Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
+        </p>
+        <div class="world-card__media">
+          <img src="../assets/dummy/world-crunch.svg" alt="" role="presentation" />
+        </div>
+      </a>
+
+      <!-- Block: world_card (background_style = "cream", heading_style = "outline") -->
+      <a href="#" class="world-card world-card--cream">
+        <div class="world-card__content">
+          <h2 class="world-card__heading stroke-heading">Prebiotic<br />World</h2>
+        </div>
+        <p class="world-card__text world-card__text--red">
+          Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
+        </p>
+        <div class="world-card__media">
+          <img src="../assets/dummy/world-prebiotic.svg" alt="" role="presentation" />
+        </div>
+      </a>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: World Grid ===================== -->
+
+</body>
+</html>

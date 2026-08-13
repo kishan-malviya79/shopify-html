@@ -1,0 +1,68 @@
+<!--
+  Section: promo_marquee
+
+  Settings:
+    - background_color (color) — default: "#e2241a" (--color-brand-red)
+    - text_color (color) — default: "#ffffff"
+    - border_color (color) — default: "#2f6fed" (--color-brand-blue)
+    - speed_seconds (range, 10–60) — default: 30, one full scroll loop duration
+
+  Blocks:
+    - block type "marquee_item": text (text) — default: "GLUTEN FREE"
+      Repeatable; each block renders as one ticker item with a sparkle icon
+      divider after it. Loop renders blocks twice back-to-back for a seamless
+      CSS animation loop (duplicate group is aria-hidden).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Promo Marquee — Section Preview</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/marquee.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Promo Marquee (promo_marquee)
+       ====================================================================== -->
+  <section class="marquee" aria-label="Product highlights">
+    <div class="marquee__track">
+
+      <!-- Group 1 (real content) -->
+      <div class="marquee__group">
+        <span class="marquee__item">GLUTEN FREE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">LOW CALORIE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">CRUNCH CRUNCH CRUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">NO ADDED SUGARS</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">MUNCH MUNCH MUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Group 2 (exact duplicate, hidden from assistive tech) — animation
+           scrolls exactly one group-width so the loop reads as continuous. -->
+      <div class="marquee__group" aria-hidden="true">
+        <span class="marquee__item">GLUTEN FREE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">LOW CALORIE</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">CRUNCH CRUNCH CRUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">NO ADDED SUGARS</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="marquee__item">MUNCH MUNCH MUNCH</span>
+        <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Promo Marquee ===================== -->
+
+</body>
+</html>

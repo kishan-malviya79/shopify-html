@@ -1,0 +1,78 @@
+<!--
+  Section: hero_banner
+
+  Settings:
+    - background_type (select: "image" | "video") — default: "image"
+    - background_image (image_picker) — used when background_type = "image"; dummy default: assets/dummy/Hero.png
+    - background_video (video) — Shopify native video setting, used when background_type = "video"
+    - heading (text) — default: "This is not a snack. This is a scene."
+    - text (richtext) — default: "Roasted makhana with big Indian flavour and even bigger personality. Meet the Munchief family and find out which one you are."
+    - button_label (text) — default: "Shop Now"
+    - button_link (url)
+    - icon_button_link (url) — secondary circular arrow CTA, defaults to button_link if left empty
+
+  Blocks: none — single hero instance, no repeater content
+
+  Fonts: heading uses "Mouse Memoirs" (single weight 400); body copy uses
+  "Comic Neue" (weight 700). Both are Google Fonts, loaded here for preview;
+  in the Shopify build, load them through the theme's font settings or a
+  self-hosted @font-face instead.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hero Banner — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/hero-banner.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Hero Banner (hero_banner)
+       ====================================================================== -->
+  <section class="hero" aria-label="Hero banner">
+
+    <!-- Background media: image variant shown by default. Swap for the
+         <video> block below when background_type = "video". -->
+    <div class="hero__media">
+      <img src="../assets/dummy/Hero.png" alt="" role="presentation" />
+
+      <!--
+      Video variant (background_type = "video"):
+      <video autoplay muted loop playsinline poster="../assets/dummy/Hero.png">
+        <source src="../assets/dummy/hero-banner-bg.mp4" type="video/mp4" />
+      </video>
+      -->
+    </div>
+
+    <div class="hero__content">
+      <h1 class="hero__heading stroke-heading">This is not a snack.<br />This is a scene.</h1>
+
+      <p class="hero__text">
+        Roasted makhana with big Indian flavour and even bigger personality.
+        Meet the Munchief family and find out which one you are.
+      </p>
+
+      <div class="btn-group">
+        <a href="#" class="btn btn--pill btn--primary">Shop Now</a>
+
+        <a href="#" class="btn btn--icon-circle btn--primary" aria-label="Shop now">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Hero Banner ===================== -->
+
+</body>
+</html>

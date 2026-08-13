@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Section: product_carousel
+   Reusable pieces (badge, price, rating, select, product-card, button skins)
+   already live in css/components.css — this file only holds section-specific
+   layout: heading row, nav arrows, and the card grid/scroll track.
+   ========================================================================== */
+
+.product-carousel {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.product-carousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.product-carousel__heading {
+  font-family: var(--font-heading-bold);
+  font-weight: 400; /* Anton/Archivo Black are already a single black weight */
+  font-size: var(--fs-section-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.product-carousel__nav {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.product-carousel__track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* Tablet: 2 cards, third scrolls into view */
+@media (max-width: 1024px) {
+  .product-carousel__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: horizontal scroll-snap carousel, one card per view */
+@media (max-width: 640px) {
+  .product-carousel__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-md);
+    margin-inline: calc(var(--container-padding) * -1);
+    padding-inline: var(--container-padding);
+    padding-bottom: var(--space-xs);
+  }
+
+  .product-carousel__track .product-card {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+}
