@@ -24,6 +24,7 @@
   --color-rust: #9a1902; /* announcement bar ticker text/icon */
   --color-brand-red-bright: #f12622; /* footer links/CTA/copyright/legal — distinct from --color-brand-red, matches Figma footer spec exactly */
   --color-brand-red-line: #ef3b34; /* brand_story top/bottom wavy divider rule — distinct hex from --color-brand-red/--color-brand-red-bright, matches Figma "Vector" layer spec exactly */
+  --color-quiz-heading-red: #ee2823; /* flavor_quiz heading fill — distinct hex from --color-brand-red (#ee2a2a), matches its Figma text layer spec exactly */
   --color-photo-border-gold: #e2af00; /* brand_story hero/character photo frame border — gold, distinct from footer's white blob-callout border */
   --color-cta-ink: #5b3419; /* brand_story CTA pill/icon-circle border + label — warm brown, distinct from --color-btn-ink's navy used by other outline CTAs */
   --color-footer-card-border: #2f1948; /* newsletter card border on the footer */
@@ -42,6 +43,7 @@
   --color-text-secondary: #6f6a63; /* body copy on cream backgrounds, e.g. testimonial review text */
   --color-border: #1b1b1b; /* default rounded-card border, e.g. testimonial cards */
   --color-card-bg: #fbf6ed; /* bordered-card fill, e.g. testimonial cards — lighter than --color-cream */
+  --color-quiz-card-bg: #fabd5b; /* flavor_quiz card fill — warm gold, distinct from --color-cream-bg used elsewhere */
 
   /* Color — commerce UI (badges, ratings, product cards) */
   --color-badge-green-bg: #d3fa99;
@@ -110,6 +112,7 @@
   --ls-footer-heading-desktop: -7px; /* footer heading letter-spacing at the desktop breakpoint */
   --lh-footer-heading: 0.8; /* 160/200 — matches the footer heading spec */
   --lh-brand-story-heading: 0.96; /* matches the brand_story heading spec */
+  --lh-quiz-heading: 1.12; /* 112% — matches the flavor_quiz heading spec */
 
   /* Spacing scale */
   --space-2xs: 4px;
@@ -137,6 +140,7 @@
   --stroke-width-heading: 2px; /* mobile/tablet text-stroke weight */
   --stroke-width-heading-desktop: 5px; /* matches the 96px desktop heading spec */
   --stroke-width-brand-story-desktop: 7px; /* scaled to match --fs-brand-story-heading-desktop's capped size */
+  --stroke-width-quiz-heading-desktop: 8px; /* flavor_quiz heading at 96px desktop — thicker than --stroke-width-heading-desktop's 5px despite the same 96px size; matches that heading's own Figma spec exactly */
 
   /* Shadow */
   --shadow-btn: 0 4px 10px rgba(0, 0, 0, 0.15);

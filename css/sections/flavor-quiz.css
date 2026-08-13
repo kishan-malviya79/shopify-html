@@ -1,10 +1,10 @@
 /* ==========================================================================
    Section: flavor_quiz
-   Full-bleed sunburst-background interactive quiz (4-step branching flow —
-   see sections/flavor-quiz.html for the JS). Heading skin reuses
-   .stroke-heading/.stroke-heading--white (css/components.css) — don't
-   duplicate it here. Rays/dots/sparkles are pure CSS + inline SVG (no photo
-   asset), built from existing color tokens rather than new one-off hexes.
+   Full-bleed interactive quiz (4-step branching flow — see
+   sections/flavor-quiz.html for the JS) over a swappable illustrated
+   sunburst backdrop (background_image, same media-swap pattern as
+   hero_banner). Heading skin reuses .stroke-heading (css/components.css) —
+   don't duplicate it here.
    ========================================================================== */
 
 .flavor-quiz {
@@ -12,75 +12,24 @@
   overflow: hidden;
   padding-block: var(--space-2xl);
   text-align: center;
-  /* Alternating-stripe sunburst radiating from the section center, built
-     from the existing brand red/orange tokens instead of new ray-specific
-     colors. */
-  background: repeating-conic-gradient(
-    from 0deg at 50% 45%,
-    var(--color-brand-red-bright) 0deg 9deg,
-    var(--color-brand-orange) 9deg 18deg
-  );
 }
 
-/* Halftone dot texture over the rays, same "decorative overlay" role as
-   brand_story's wavy ::before/::after rule but a repeating dot tile instead
-   of a wave path. */
-.flavor-quiz::before {
-  content: "";
+/* Background media layer — same pattern as hero__media (css/sections/
+   hero-banner.css): absolutely positioned, cover-fit. faqbg.png already
+   bakes in the sunburst rays, halftone dots, and star/squiggle accents, so
+   nothing else needs to be drawn here. */
+.flavor-quiz__media {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.35) 1.5px, transparent 1.5px);
-  background-size: 14px 14px;
-  opacity: 0.4;
-  pointer-events: none;
+  z-index: 0;
 }
 
-.flavor-quiz__decor {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.flavor-quiz__star {
-  position: absolute;
-  color: var(--color-cream);
-  opacity: 0.85;
-}
-
-.flavor-quiz__star--1 {
-  top: 8%;
-  left: 8%;
-  width: 22px;
-  height: 22px;
-  transform: rotate(-12deg);
-}
-
-.flavor-quiz__star--2 {
-  top: 14%;
-  right: 10%;
-  width: 16px;
-  height: 16px;
-  transform: rotate(20deg);
-  opacity: 0.6;
-}
-
-.flavor-quiz__star--3 {
-  bottom: 12%;
-  left: 12%;
-  width: 14px;
-  height: 14px;
-  transform: rotate(8deg);
-  opacity: 0.6;
-}
-
-.flavor-quiz__star--4 {
-  bottom: 10%;
-  right: 9%;
-  width: 24px;
-  height: 24px;
-  transform: rotate(-18deg);
+.flavor-quiz__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
 
 .flavor-quiz__inner {
@@ -90,14 +39,21 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-sm);
-  max-width: 560px;
+  max-width: 720px;
 }
 
+/* Fill/stroke/size match the heading's own Figma spec exactly (red fill,
+   thick white stroke, 96px at desktop) — deliberately not
+   .stroke-heading--white (that's for a different white-fill/coral-stroke
+   heading elsewhere). Responsive strategy mirrors hero__heading: fluid
+   clamp() through mobile/tablet, locked 96px + thicker stroke at desktop. */
 .flavor-quiz__heading {
   margin: 0;
-  font-size: var(--fs-section-heading);
-  line-height: var(--lh-tight);
+  max-width: 646px;
+  font-size: var(--fs-hero-heading);
+  line-height: var(--lh-quiz-heading);
   letter-spacing: 0;
+  color: var(--color-quiz-heading-red);
 }
 
 .flavor-quiz__text {
@@ -120,7 +76,7 @@
   min-height: 280px;
   margin-top: var(--space-sm);
   padding: var(--space-lg) var(--space-md);
-  background-color: var(--color-cream-bg);
+  background-color: var(--color-quiz-card-bg);
   border: var(--border-width-thin) solid var(--color-photo-border-gold);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-btn);
@@ -238,6 +194,26 @@
   flex-wrap: wrap;
   gap: var(--space-sm);
   margin-top: var(--space-xs);
+}
+
+/* Responsive heading — same strategy as hero__heading (css/sections/
+   hero-banner.css): fluid clamp() through mobile/tablet, locked to the
+   spec's fixed size at desktop instead of continuing to scale. */
+@media (min-width: 1025px) {
+  .flavor-quiz__heading {
+    font-size: var(--fs-hero-heading-desktop);
+    -webkit-text-stroke: var(--stroke-width-quiz-heading-desktop) var(--color-white);
+    /* -webkit-text-stroke paints outside the glyph without expanding the
+       line box, so this heading's thick 8px stroke visually bleeds past its
+       own bottom edge — pad it out so the subtext below doesn't crowd it. */
+    margin-bottom: var(--space-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .flavor-quiz__heading {
+    -webkit-text-stroke: 1.5px var(--color-white);
+  }
 }
 
 /* Below this width the 2-column option grid gets cramped — stack every
