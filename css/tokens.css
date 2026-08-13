@@ -32,7 +32,7 @@
   --color-footer-placeholder: rgba(254, 67, 26, 0.4); /* footer newsletter input placeholder */
   --color-upsell-card-border: #f0d9b5; /* product_main "Must Try" upsell card border, warm tan */
   --color-upsell-card-bg: #fff8ec; /* product_main "Must Try" upsell card fill */
-  --color-terracotta: #c15c3e; /* product_story background — muted burnt-orange, distinct from the brighter --color-brand-orange used elsewhere */
+  --color-terracotta: #d05835; /* product_story background — matches its Figma dev-mode spec exactly, distinct from the brighter --color-brand-orange used elsewhere */
 
   /* Color — neutrals */
   --color-white: #ffffff;

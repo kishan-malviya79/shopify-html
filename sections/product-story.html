@@ -2,8 +2,7 @@
   Section: product_story
 
   Settings:
-    - heading (text) — default: "Mimi's Chutney Pop" (rendered inside the
-      rotated sticker-style plaque, not a plain heading)
+    - heading (text) — default: "Mimi's Chutney Pop"
     - description (richtext) — default: "Made with blackberry, crisp apple,
       and a splash of mandarin and lemon juices, Blackberry Vanilla creates a
       layered blackberry flavor with smooth vanilla notes for an unforgettable
@@ -25,10 +24,10 @@
     - block type "testimonial" — same shape as testimonial_carousel's block
       (photo image_picker, rating_value number, title text, review_text
       richtext, author_name text). This section reuses that exact block type
-      and, in this build, its exact first two blocks' content (Tina A /
-      Sara M) — share block content between the two sections rather than
-      re-authoring it. Rendered in a horizontal peek-scroll track, no
-      prev/next nav.
+      and, in this build, all 3 of testimonial_carousel's existing blocks'
+      content (Tina A / Sara M / Nina K) — share block content between the
+      two sections rather than re-authoring it. Rendered in a horizontal
+      peek-scroll track, no prev/next nav.
     - block type "feature_badge": icon (select: less_sugar / real_ingredients
       / digestive / vegan / roasted_not_fried / prebiotic — swap for
       icon_picker in Liquid), label (text), highlight (checkbox, default:
@@ -39,15 +38,18 @@
   Not added to index.html — this is product-detail-page content (a specific
   flavor's description/ingredients/reviews), not a homepage section.
 
-  Fonts: the plaque heading uses "Anton" (--font-heading-bold, same family as
-  product_carousel's heading), solid black fill — a one-off skin local to
-  this section (not the shared .stroke-heading system, which assumes the
-  Mouse Memoirs family throughout). A white-fill/black-stroke treatment was
-  tried first but dropped: both -webkit-text-stroke and an 8-direction
-  text-shadow fake-stroke trigger a real Chromium rendering bug (rainbow
-  subpixel fringing) for light-fill stroked/shadowed text inside a white
-  bordered box — reproduced with and without GPU acceleration, so solid
-  fill sidesteps a real bug, not just a screenshot-tooling artifact.
+  Fonts/layout: matches the section's Figma dev-mode spec exactly — heading
+  reuses .stroke-heading.stroke-heading--black (css/components.css) at
+  product_carousel's existing 82px "Combo" size (--fs-display-heading-desktop)
+  instead of a new skin: Mouse Memoirs, black fill, 5px white stroke, no
+  shadow. Body copy is Inter (--font-ui), white, 15px/24px — reuses
+  --fs-product-description (product_main). An earlier white-fill/black-stroke
+  "sticker plaque" treatment (Anton, rotated white card) was tried first from
+  a screenshot read of this section and dropped once the Figma spec showed
+  the real design doesn't use one; it also triggered a real Chromium
+  rendering bug (rainbow subpixel fringing) for light-fill stroked/shadowed
+  text inside a white bordered box, reproduced with and without GPU
+  acceleration.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +59,7 @@
   <title>Product Story — Section Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@600&family=Comic+Neue:wght@700&family=Inter:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@600&family=Comic+Neue:wght@700&family=Inter:wght@500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/sections/product-story.css" />
@@ -72,9 +74,7 @@
     <div class="container product-story__grid">
 
       <div class="product-story__info">
-        <div class="product-story__badge">
-          <span class="product-story__badge-text">Mimi's Chutney Pop</span>
-        </div>
+        <h2 class="product-story__heading stroke-heading stroke-heading--black">Mimi's Chutney Pop</h2>
 
         <p class="product-story__text">
           Made with blackberry, crisp apple, and a splash of mandarin and
@@ -104,7 +104,7 @@
       <div class="product-story__reviews">
         <div class="product-story__reviews-track">
 
-          <!-- Block: testimonial (1/2), shared with testimonial_carousel -->
+          <!-- Block: testimonial (1/3), shared with testimonial_carousel -->
           <article class="testimonial-card product-story__card">
             <div class="testimonial-card__media">
               <img src="../assets/dummy/Perfect.png" alt="Tina A holding a Munchief pouch and drinking a Munchief soda" />
@@ -128,7 +128,7 @@
             </div>
           </article>
 
-          <!-- Block: testimonial (2/2), shared with testimonial_carousel -->
+          <!-- Block: testimonial (2/3), shared with testimonial_carousel -->
           <article class="testimonial-card product-story__card">
             <div class="testimonial-card__media">
               <img src="../assets/dummy/favorite.png" alt="Munchief soda can lineup on a shelf" />
@@ -149,6 +149,30 @@
               </p>
               <hr class="testimonial-card__divider" />
               <span class="testimonial-card__author">Sara M</span>
+            </div>
+          </article>
+
+          <!-- Block: testimonial (3/3), shared with testimonial_carousel -->
+          <article class="testimonial-card product-story__card">
+            <div class="testimonial-card__media">
+              <img src="../assets/dummy/delicious.png" alt="Nina K holding a Munchief pouch and drinking a Munchief soda" />
+            </div>
+            <div class="testimonial-card__body">
+              <div class="rating rating--lg">
+                <span class="rating__stars" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                </span>
+              </div>
+              <h3 class="testimonial-card__title">Subtle, relaxing, and delicious</h3>
+              <p class="testimonial-card__text">
+                These drinks taste great and give a calm, happy feeling without being too intense. Perfect for a chill night at home.
+              </p>
+              <hr class="testimonial-card__divider" />
+              <span class="testimonial-card__author">Nina K</span>
             </div>
           </article>
 

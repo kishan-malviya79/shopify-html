@@ -1,10 +1,12 @@
 /* ==========================================================================
    Section: product_story
-   Terracotta full-bleed product detail: info column (sticker-style plaque
-   heading + description/storage/ingredients copy) beside a horizontal
-   peek-scroll testimonial-card track, with a row of icon-badges below.
-   Review cards reuse .testimonial-card as-is (css/components.css) — don't
-   duplicate that here. Icon badges reuse .icon-badge (css/components.css).
+   Terracotta full-bleed product detail, matching the Figma dev-mode spec:
+   50/50 info column + horizontal peek-scroll testimonial-card track, with a
+   row of icon-badges below. Review cards reuse .testimonial-card as-is
+   (css/components.css) — don't duplicate that here. Heading reuses
+   .stroke-heading/.stroke-heading--black (also css/components.css) at
+   product_carousel's existing 82px "Combo" size — don't duplicate that
+   either. Icon badges reuse .icon-badge (css/components.css).
    ========================================================================== */
 
 .product-story {
@@ -31,11 +33,16 @@
   background-size: 100% 100%;
 }
 
+/* Figma's frame is 1440px wide with 170px side padding, giving a fixed
+   1100px content column — narrower than the site's shared --container-max
+   (1280px), so this section caps its own .container instance instead of
+   using the shared width. */
 .product-story__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: var(--space-xl);
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+  max-width: 1100px;
 }
 
 .product-story__info {
@@ -44,61 +51,34 @@
   gap: var(--space-md);
 }
 
-/* Sticker-style plaque — white fill, thick black border, slightly rotated,
-   like a label stuck onto the page. Anton (--font-heading-bold) with solid
-   black text — deliberately not the shared .stroke-heading system (which
-   assumes Mouse Memoirs), and deliberately not a white-fill/black-stroke
-   treatment either: -webkit-text-stroke (and an 8-direction text-shadow
-   fake-stroke) both trigger a real Chromium rendering bug — rainbow
-   subpixel fringing — for light-fill text stroked/shadowed in black inside
-   a white bordered box. Reproduced with and without GPU acceleration, so
-   it's not just a screenshot-tooling artifact; solid fill sidesteps it. */
-.product-story__badge {
-  display: inline-flex;
-  align-self: flex-start;
-  padding: var(--space-sm) var(--space-lg);
-  background-color: var(--color-white);
-  border: 3px solid var(--color-black);
-  border-radius: var(--radius-md);
-  transform: rotate(-2deg);
-}
-
-.product-story__badge-text {
-  font-family: var(--font-heading-bold);
-  font-weight: 400;
-  font-size: clamp(20px, 2.2vw, 28px);
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--color-black);
-  white-space: nowrap;
+.product-story__heading {
+  margin: 0;
+  font-size: var(--fs-display-heading-desktop);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
 }
 
 .product-story__text {
   margin: 0;
   max-width: 460px;
-  font-family: var(--font-body);
-  font-weight: var(--fw-bold);
-  font-size: 14px;
-  line-height: var(--lh-normal);
-  color: var(--color-cream);
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-product-description);
+  line-height: 24px;
+  color: var(--color-white);
 }
 
 .product-story__text strong {
   font-weight: var(--fw-bold);
-  color: var(--color-white);
-}
-
-.product-story__text--ingredients {
-  opacity: 0.9;
 }
 
 .product-story__footnote {
   margin: 0;
-  font-family: var(--font-body);
-  font-weight: var(--fw-bold);
-  font-size: 12px;
-  color: var(--color-cream);
-  opacity: 0.7;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-product-description);
+  line-height: 24px;
+  color: var(--color-white);
 }
 
 /* Reviews: horizontal peek-scroll track, no prev/next nav — the next card
@@ -109,14 +89,14 @@
 
 .product-story__reviews-track {
   display: flex;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: var(--space-2xs);
 }
 
 .product-story__card {
-  flex: 0 0 340px;
+  flex: 0 0 453px;
   scroll-snap-align: start;
 }
 
@@ -125,7 +105,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: var(--space-lg) var(--space-xl);
-  max-width: 620px;
+  max-width: 1100px;
   margin-top: var(--space-2xl);
   color: var(--color-cream);
 }
@@ -144,10 +124,6 @@
 }
 
 @media (max-width: 640px) {
-  .product-story__badges {
-    justify-content: flex-start;
-  }
-
   .product-story__badges .icon-badge {
     flex: 0 0 calc(33.333% - var(--space-md));
   }

@@ -1,0 +1,50 @@
+<!--
+  Section: product_photo_banner
+
+  Settings:
+    - image (image_picker) — dummy default: assets/dummy/pop-bg.png
+    - image_alt (text) — default: "Roasted makhana with green chutney and
+      Mimi's Chutney Pop tin and pouch"
+
+  Blocks: none — single full-bleed photo instance, no repeater content.
+
+  A full-bleed lifestyle/product photo break, framed top and bottom by the
+  same wavy-edge technique as product_story (see css/sections/product-story.css
+  .product-story::before) — this section reuses that exact SVG wave path
+  rather than redrawing it, just recolored per edge and, for the bottom
+  edge, flipped vertically (same "reuse the same path, flip it" precedent
+  as brand_story's ::before/::after). Top band is solid --color-terracotta
+  (flat top, wavy bottom dipping into the photo); bottom band is solid
+  --color-cream-bg (wavy top rising into the photo, flat bottom meeting the
+  page). Not added to index.html — PDP visual-break content, not a homepage
+  section (same call as product_story).
+
+  Also rendered at the very bottom of sections/product-main.html (after
+  product_story), so that file previews as one full PDP for Mimi's Chutney
+  Pop — this is a separate section, just placed there in page order, not a
+  block of product_main.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Photo Banner — Section Preview</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/product-photo-banner.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Product Photo Banner (product_photo_banner)
+       ====================================================================== -->
+  <section class="photo-banner" aria-label="Mimi's Chutney Pop lifestyle photo">
+    <div class="photo-banner__media">
+      <img src="../assets/dummy/pop-bg.png" alt="Roasted makhana with green chutney and Mimi's Chutney Pop tin and pouch" />
+    </div>
+  </section>
+  <!-- ===================== /Section: Product Photo Banner ===================== -->
+
+</body>
+</html>
