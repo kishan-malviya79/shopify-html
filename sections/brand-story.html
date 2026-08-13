@@ -1,0 +1,88 @@
+<!--
+  Section: brand_story
+
+  Settings:
+    - heading (richtext) — default: "Crunch it.<br>Sip it.<br>Repeat."
+    - hero_image (image_picker) — default: assets/dummy/delicious.png
+    - characters_image (image_picker) — default: assets/dummy/favorite.png
+    - subheading (richtext) — default: "5 Characters. 5 Flavours.<br>Zero Boring Snacks."
+    - text (richtext) — default: "Munchief started with a simple idea: snacking
+      should feel like a personality, not a nutrition label. Every flavour is
+      built around a real person's mood, their cravings, their chaos. Roasted,
+      not fried. Loud, not quiet. This is what happens when Indian street-food
+      flavour meets a snack that actually wants to be talked about."
+    - cta_text (text) — default: "About Munchiefam"
+    - cta_link (url)
+
+  Blocks: none — single brand-story instance, no repeater content
+
+  Fonts: main heading reuses the shared .stroke-heading component ("Mouse
+  Memoirs"); subheading uses "Anton" (--font-heading-bold), same voice as
+  product_carousel's heading; body copy uses "Comic Neue" (--font-body); CTA
+  reuses the existing .btn--pill.btn--outline skin.
+
+  Images: hero_image (woman holding a Noodle Blast pouch + Mixed Berry can)
+  reuses the existing delicious.png dummy asset — near-exact match for the
+  supplied comp. characters_image (the 5 character flavours lined up)
+  reuses the existing favorite.png dummy asset as a stand-in for a dedicated
+  "5 characters together" illustration until a real one is supplied.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand Story — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/brand-story.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Brand Story (brand_story)
+       ====================================================================== -->
+  <section class="brand-story" aria-label="About Munchief">
+
+    <div class="container brand-story__row brand-story__row--intro">
+      <h2 class="brand-story__heading stroke-heading">Crunch it.<br />Sip it.<br />Repeat.</h2>
+
+      <div class="brand-story__photo">
+        <img src="../assets/dummy/delicious.png" alt="Woman holding a Munchief Noodle Blast pouch and drinking a Munchief Mixed Berry can" />
+      </div>
+    </div>
+
+    <div class="container brand-story__row brand-story__row--about">
+      <div class="brand-story__characters">
+        <img src="../assets/dummy/favorite.png" alt="The five Munchief flavour characters" />
+      </div>
+
+      <div class="brand-story__content">
+        <h3 class="brand-story__subheading">5 Characters. 5 Flavours.<br />Zero Boring Snacks.</h3>
+
+        <p class="brand-story__text">
+          Munchief started with a simple idea: snacking should feel like a
+          personality, not a nutrition label. Every flavour is built around a
+          real person's mood, their cravings, their chaos. Roasted, not fried.
+          Loud, not quiet. This is what happens when Indian street-food
+          flavour meets a snack that actually wants to be talked about.
+        </p>
+
+        <a href="#" class="btn btn--pill btn--outline brand-story__cta">
+          About Munchiefam
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Brand Story ===================== -->
+
+</body>
+</html>

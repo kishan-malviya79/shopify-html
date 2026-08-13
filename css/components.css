@@ -423,39 +423,66 @@
 }
 
 /* Newsletter form ----------------------------------------------------------
-   Email-capture pill + submit button pair. The pill wraps a bare input and
-   composes with the existing .btn--pill.btn--red skin for its button —
-   reuse this for any future signup/newsletter section instead of rebuilding
-   the input chrome. */
+   Email-capture card: cream fill + navy border wrapping a bare input pill
+   and its own dedicated submit-button skin (distinct from .btn--red, which
+   is now specialized for Add to Cart's Fredoka/bordered look). Reuse for
+   any future signup/newsletter section instead of rebuilding. Currently
+   only consumed by the footer, which adds its own rotation on top. */
 .newsletter-form {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 420px;
-  background-color: rgba(255, 255, 255, 0.55);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
-  background-size: 120px 120px;
-  border: var(--border-width-thin) solid rgba(255, 255, 255, 0.8);
-  border-radius: var(--radius-pill);
-  padding: var(--space-2xs);
+  max-width: 504px;
   gap: var(--space-2xs);
+  padding: var(--space-xs);
+  background-color: var(--color-card-bg);
+  border: 3px solid var(--color-footer-card-border);
+  border-radius: var(--radius-md);
 }
 
 .newsletter-form__input {
   flex: 1;
   min-width: 0;
-  background: transparent;
-  border: none;
+  background-color: rgba(251, 247, 238, 0.06);
+  border: 2px solid rgba(251, 247, 238, 0.1);
+  border-radius: var(--radius-pill);
   outline: none;
   font-family: var(--font-ui);
-  font-weight: var(--fw-medium);
-  font-size: 13px;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-newsletter-input);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-btn-ink);
-  padding: var(--space-sm) var(--space-md);
+  letter-spacing: -0.14px;
+  color: var(--color-footer-placeholder);
+  padding: 11px 16px 12px;
 }
 
 .newsletter-form__input::placeholder {
-  color: rgba(33, 28, 61, 0.55);
+  color: var(--color-footer-placeholder);
+}
+
+.newsletter-form__submit {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  height: 46px;
+  padding: 13px 16.7px;
+  background-color: var(--color-brand-red-bright);
+  color: var(--color-white);
+  font-family: var(--font-ui);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-newsletter-btn);
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.newsletter-form__submit:hover,
+.newsletter-form__submit:focus-visible {
+  background-color: var(--color-brand-red-dark);
+  transform: translateY(-2px);
 }

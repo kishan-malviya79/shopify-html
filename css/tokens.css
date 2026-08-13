@@ -19,8 +19,14 @@
   --color-brand-blue: #2f6fed;
   --color-brand-coral: #ff7972; /* outline stroke for white display headings on saturated backgrounds */
   --color-brand-pink: #f0429c; /* announcement bar background */
-  --color-brand-yellow: #f9c846; /* footer background */
-  --color-rust: #9a1902; /* announcement bar ticker text/icon, muted legal text on yellow */
+  --color-yellow-bright: #ffd750; /* site-header "Build Your Bundle" CTA fill; also footer background */
+  --color-purple: #3f0791; /* site-header "Bestseller" ribbon text */
+  --color-rust: #9a1902; /* announcement bar ticker text/icon */
+  --color-brand-red-bright: #f12622; /* footer links/CTA/copyright/legal — distinct from --color-brand-red, matches Figma footer spec exactly */
+  --color-brand-red-line: #ef3b34; /* brand_story top/bottom wavy divider rule — distinct hex from --color-brand-red/--color-brand-red-bright, matches Figma "Vector" layer spec exactly */
+  --color-footer-card-border: #2f1948; /* newsletter card border on the footer */
+  --color-footer-heading-muted: rgba(217, 15, 4, 0.6); /* footer column headings */
+  --color-footer-placeholder: rgba(254, 67, 26, 0.4); /* footer newsletter input placeholder */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -55,6 +61,7 @@
   --font-heading-bold: 'Anton', 'Archivo Black', 'Arial Black', sans-serif; /* condensed black-weight headings, e.g. product-carousel heading */
   --font-ui: 'Inter', 'Helvetica Neue', Arial, sans-serif; /* tight/dense small UI text, e.g. announcement_bar ticker items — distinct from --font-body's display voice */
   --font-heading-rounded: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', sans-serif; /* rounded friendly display font, e.g. testimonial card titles */
+  --font-ribbon: 'Poppins', 'Helvetica Neue', Arial, sans-serif; /* site-header "Bestseller" ribbon only — distinct from --font-ui's Inter */
 
   --fs-hero-heading: clamp(28px, 7vw, 64px); /* fluid size for mobile/tablet */
   --fs-hero-heading-desktop: 96px; /* explicit size at the desktop breakpoint (see section CSS) */
@@ -73,11 +80,14 @@
   --fs-testimonial-text: 14px;
   --fs-testimonial-author: 24px;
   --fs-ticker-item: 12px;
-  --fs-footer-heading: clamp(44px, 14vw, 156px);
-  --fs-footer-logo: 20px;
-  --fs-footer-col-heading: 13px;
-  --fs-footer-link: 13px;
-  --fs-footer-legal: 11px;
+  --fs-footer-heading: clamp(44px, 13vw, 150px); /* fluid size for mobile/tablet */
+  --fs-footer-heading-desktop: 200px; /* explicit size at the desktop breakpoint (see section CSS) */
+  --fs-footer-col-heading: 16px;
+  --fs-footer-link: 16px;
+  --fs-footer-copyright: 13.8px;
+  --fs-footer-legal: 11.8px;
+  --fs-newsletter-input: 13.3px; /* .newsletter-form__input, css/components.css */
+  --fs-newsletter-btn: 13.9px; /* .newsletter-form__submit, css/components.css */
 
   --fw-medium: 500;
   --fw-bold: 700;
@@ -91,6 +101,8 @@
   --ls-snug: -0.12px; /* matches the announcement-bar ticker-item spec */
   --ls-heading-tight: -0.04em; /* large rounded headings, e.g. testimonial card title/author */
   --ls-body-snug: -0.16px; /* matches the testimonial card review-text spec */
+  --ls-footer-heading-desktop: -7px; /* footer heading letter-spacing at the desktop breakpoint */
+  --lh-footer-heading: 0.8; /* 160/200 — matches the footer heading spec */
 
   /* Spacing scale */
   --space-2xs: 4px;
@@ -120,6 +132,7 @@
   /* Shadow */
   --shadow-btn: 0 4px 10px rgba(0, 0, 0, 0.15);
   --shadow-btn-pop: 0 6px 0 var(--color-shadow-pop); /* skeuomorphic "pop" edge under solid CTA buttons */
+  --shadow-nav-cta: 0 3px 0 #000000; /* site-header "Build Your Bundle" CTA edge — flat black, distinct from --shadow-btn-pop's brand-tinted shadow */
 
   /* Layout */
   --container-max: 1280px;

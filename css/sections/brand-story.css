@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Section: brand_story
+   Yellow full-bleed "about the brand" section framed top and bottom by the
+   Figma "Vector" layer: a big, lazy red wave (not a tight scallop) — the
+   layer's own path is wavy, and its -9px red drop-shadow is what gives the
+   line its color/weight here. Intro row (stroked heading + framed hero
+   photo) over an "about" row (framed character lineup + copy + CTA).
+   Heading skin reuses .stroke-heading, CTA reuses .btn--pill.btn--outline
+   (both css/components.css) — don't duplicate either here.
+   ========================================================================== */
+
+.brand-story {
+  position: relative;
+  background-color: var(--color-yellow-bright);
+  padding-block: var(--space-2xl);
+  overflow: hidden;
+}
+
+/* Wavy top/bottom divider rule — one big, lazy sine wave (wide period, low
+   bump count) rather than a tight repeating scallop, matching the single
+   flowing curve in the Figma reference. Straddles each edge so it reads as
+   a rule sitting on top of whatever content is adjacent, same technique as
+   footer's scalloped edge. */
+.brand-story::before,
+.brand-story::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='24'%3E%3Cpath d='M0 12 Q120 -10 240 12 T480 12' stroke='%23ef3b34' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 480px 24px;
+}
+
+.brand-story::before {
+  top: 0;
+  transform: translateY(-50%);
+}
+
+.brand-story::after {
+  bottom: 0;
+  transform: translateY(50%);
+}
+
+.brand-story__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.brand-story__row--intro {
+  padding-bottom: var(--space-2xl);
+}
+
+.brand-story__heading {
+  font-size: clamp(32px, 6vw, var(--fs-display-heading-desktop));
+  line-height: var(--lh-tight);
+  margin: 0;
+}
+
+.brand-story__photo,
+.brand-story__characters {
+  border-radius: var(--radius-lg);
+  border: 6px solid var(--color-white);
+  overflow: hidden;
+  box-shadow: var(--shadow-btn);
+}
+
+.brand-story__photo img,
+.brand-story__characters img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-story__photo {
+  aspect-ratio: 4 / 4.6;
+  max-width: 420px;
+  margin-inline: auto;
+  transform: rotate(2deg);
+}
+
+.brand-story__characters {
+  aspect-ratio: 16 / 9;
+  transform: rotate(-1.5deg);
+}
+
+.brand-story__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.brand-story__subheading {
+  font-family: var(--font-heading-bold);
+  font-weight: 400; /* Anton is already a single black weight */
+  font-size: var(--fs-section-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-brand-red-bright);
+  margin: 0;
+}
+
+.brand-story__text {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 15px;
+  line-height: var(--lh-normal);
+  color: var(--color-ink);
+  max-width: 480px;
+  margin: 0;
+}
+
+/* Responsive ---------------------------------------------------------------
+   Two columns from tablet up (per the breakpoint reference in tokens.css). */
+@media (min-width: 641px) {
+  .brand-story__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-story__photo {
+    max-width: 320px;
+  }
+}

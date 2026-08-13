@@ -2,7 +2,7 @@
   Section: footer
 
   Settings:
-    - logo_text (text) — default: "münchief"
+    - logo_image (image_picker) — default: assets/dummy/logo.png
     - heading (text) — default: "More Munch<br>More Crunch"
     - bubble_image_left (image_picker) — default: assets/dummy/Perfect.png
     - bubble_image_right (image_picker) — default: assets/dummy/favorite.png
@@ -17,14 +17,18 @@
         - column_heading (text) — e.g. "Drinks"
         - links (list of link_label (text) + link_url (url) pairs)
 
-  Fonts: heading reuses the shared .stroke-heading component ("Mouse
-  Memoirs", same as hero_banner); logo uses "Fredoka" (weight 700); column
-  headings/links/copyright/legal text use "Inter" (weight 700), matching the
-  dense-UI voice already used by product_carousel/announcement_bar.
+  Fonts: heading is a solid-fill (no stroke) "Fredoka" weight 600 headline,
+  matching the Figma spec exactly; column headings/links/copyright/legal
+  text use "Inter" (weight 600/700), matching the dense-UI voice already
+  used by product_carousel/announcement_bar.
 
-  Images: bubble photos reuse the existing testimonial dummy assets
-  (Perfect.png, favorite.png) as placeholders for the two thought-bubble
-  callouts standing in for bubble_image_left/right.
+  Images: logo uses the real Munchief wordmark PNG (assets/dummy/logo.png)
+  standing in for the `logo_image` image_picker — same asset reused by the
+  header section's logo. Bubble photos reuse the existing testimonial dummy
+  assets (Perfect.png, favorite.png) as placeholders for the two
+  thought-bubble callouts standing in for bubble_image_left/right (the
+  source design uses pre-composited footer-cloud-left/right.png cutouts we
+  don't have here).
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +38,7 @@
   <title>Footer — Section Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@700&family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Inter:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/sections/footer.css" />
@@ -46,7 +50,7 @@
        ====================================================================== -->
   <footer class="footer" aria-label="Site footer">
 
-    <p class="footer__logo">münchief</p>
+    <img class="footer__logo" src="../assets/dummy/logo.png" alt="Munchief" />
 
     <div class="footer__hero">
 
@@ -54,7 +58,7 @@
         <img src="../assets/dummy/Perfect.png" alt="" role="presentation" />
       </div>
 
-      <h2 class="footer__heading stroke-heading">More Munch<br />More Crunch</h2>
+      <h2 class="footer__heading">More Munch<br />More Crunch</h2>
 
       <div class="footer__bubble footer__bubble--right">
         <img src="../assets/dummy/favorite.png" alt="" role="presentation" />
@@ -62,7 +66,7 @@
 
       <form class="footer__newsletter newsletter-form" action="#" method="post">
         <input class="newsletter-form__input" type="email" name="email" placeholder="Enter your email..." aria-label="Email address" required />
-        <button type="submit" class="btn btn--pill btn--red">Notify Me</button>
+        <button type="submit" class="newsletter-form__submit">Notify Me</button>
       </form>
 
     </div>

@@ -12,9 +12,10 @@
   <title>Home — Page Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@500;600;700&family=Comic+Neue:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@500;600&family=Comic+Neue:wght@700&family=Inter:wght@400;500;700&family=Poppins:wght@500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/sections/header.css" />
   <link rel="stylesheet" href="css/sections/announcement-bar.css" />
   <link rel="stylesheet" href="css/sections/marquee.css" />
   <link rel="stylesheet" href="css/sections/hero-banner.css" />
@@ -22,6 +23,7 @@
   <link rel="stylesheet" href="css/sections/chaos-banner.css" />
   <link rel="stylesheet" href="css/sections/product-carousel.css" />
   <link rel="stylesheet" href="css/sections/testimonial-carousel.css" />
+  <link rel="stylesheet" href="css/sections/brand-story.css" />
   <link rel="stylesheet" href="css/sections/footer.css" />
 </head>
 <body>
@@ -110,6 +112,73 @@
     </div>
   </section>
   <!-- ===================== /Section: Announcement Bar ===================== -->
+
+  <!-- ======================================================================
+       Section: Header (header)
+       ====================================================================== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+
+      <!-- Block: nav_link x2, both with a dropdown_menu -->
+      <nav class="site-header__nav" aria-label="Primary">
+        <div class="site-header__nav-item">
+          <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
+            Products
+            <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
+          </button>
+          <div class="site-header__dropdown">
+            <a href="#munchief-family" class="site-header__dropdown-link">Munchief Family</a>
+            <a href="#munchief-sodas" class="site-header__dropdown-link">Munchief Sodas</a>
+            <a href="#combo-bundles" class="site-header__dropdown-link">Combo Bundles</a>
+          </div>
+        </div>
+        <div class="site-header__nav-item">
+          <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
+            Learn
+            <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
+          </button>
+          <div class="site-header__dropdown">
+            <a href="#our-story" class="site-header__dropdown-link">Our Story</a>
+            <a href="#reviews" class="site-header__dropdown-link">Reviews</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="#" class="site-header__logo" aria-label="Munchief home">
+        <img src="assets/dummy/logo.png" alt="Munchief" />
+      </a>
+
+      <div class="site-header__actions">
+        <a href="#" class="site-header__action site-header__action--bundle">
+          <span class="site-header__ribbon">Bestseller</span>
+          <span>Build Your Bundle</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+        </a>
+
+        <a href="#" class="site-header__action">
+          <span>Account</span>
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1c-3 0-6 1.5-6 4v1h12v-1c0-2.5-3-4-6-4Z"/></svg>
+        </a>
+
+        <button type="button" class="site-header__action" aria-label="Cart, 0 items">
+          <span>Cart</span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6h8l-.6 7.7a1.3 1.3 0 0 1-1.3 1.2H5.9a1.3 1.3 0 0 1-1.3-1.2L4 6Z" fill="currentColor"/>
+            <path d="M6 6V4.6a2 2 0 0 1 4 0V6" stroke="currentColor" stroke-width="1.3" fill="none"/>
+          </svg>
+          <span class="site-header__cart-count" data-count="0">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+  <!-- ===================== /Section: Header ===================== -->
 
   <!-- ======================================================================
        Section: Hero Banner (hero_banner)
@@ -320,7 +389,7 @@
   <!-- ======================================================================
        Section: Product Carousel (product_carousel)
        ====================================================================== -->
-  <section class="product-carousel" aria-label="Featured products">
+  <section id="munchief-family" class="product-carousel" aria-label="Featured products">
     <div class="container">
 
       <div class="product-carousel__header">
@@ -464,7 +533,7 @@
        Section: Product Carousel (product_carousel) — second instance,
        same section/blocks reused with soda-line settings + block content.
        ====================================================================== -->
-  <section class="product-carousel" aria-label="Featured sodas">
+  <section id="munchief-sodas" class="product-carousel" aria-label="Featured sodas">
     <div class="container">
 
       <div class="product-carousel__header">
@@ -609,7 +678,7 @@
        = "cta" (Build Your Bundle pill + icon-circle link instead of arrows).
        Blocks reuse the same three products/content as the first instance.
        ====================================================================== -->
-  <section class="product-carousel" aria-label="Build your combo">
+  <section id="combo-bundles" class="product-carousel" aria-label="Build your combo">
     <div class="container">
 
       <div class="product-carousel__header">
@@ -751,7 +820,7 @@
   <!-- ======================================================================
        Section: Testimonial Carousel (testimonial_carousel)
        ====================================================================== -->
-  <section class="testimonial-carousel" aria-label="Customer testimonials">
+  <section id="reviews" class="testimonial-carousel" aria-label="Customer testimonials">
     <div class="container">
 
       <h2 class="testimonial-carousel__heading stroke-heading">Don't take our<br />word for it</h2>
@@ -848,6 +917,48 @@
   </section>
   <!-- ===================== /Section: Testimonial Carousel ===================== -->
 
+  <!-- ======================================================================
+       Section: Brand Story (brand_story)
+       ====================================================================== -->
+  <section id="our-story" class="brand-story" aria-label="About Munchief">
+
+    <div class="container brand-story__row brand-story__row--intro">
+      <h2 class="brand-story__heading stroke-heading">Crunch it.<br />Sip it.<br />Repeat.</h2>
+
+      <div class="brand-story__photo">
+        <img src="assets/dummy/delicious.png" alt="Woman holding a Munchief Noodle Blast pouch and drinking a Munchief Mixed Berry can" />
+      </div>
+    </div>
+
+    <div class="container brand-story__row brand-story__row--about">
+      <div class="brand-story__characters">
+        <img src="assets/dummy/favorite.png" alt="The five Munchief flavour characters" />
+      </div>
+
+      <div class="brand-story__content">
+        <h3 class="brand-story__subheading">5 Characters. 5 Flavours.<br />Zero Boring Snacks.</h3>
+
+        <p class="brand-story__text">
+          Munchief started with a simple idea: snacking should feel like a
+          personality, not a nutrition label. Every flavour is built around a
+          real person's mood, their cravings, their chaos. Roasted, not fried.
+          Loud, not quiet. This is what happens when Indian street-food
+          flavour meets a snack that actually wants to be talked about.
+        </p>
+
+        <a href="#" class="btn btn--pill btn--outline brand-story__cta">
+          About Munchiefam
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Brand Story ===================== -->
+
   <script>
     // Preview-only interactivity for the prev/next arrows (scrolls each
     // instance's track by one card width). Instances using nav_style = "cta"
@@ -891,6 +1002,52 @@
         next.addEventListener('click', function () { scrollByCard(1); });
       });
     })();
+
+    // Header dropdown menus: hover/focus-within already reveals them via
+    // CSS; this adds click-to-toggle (so touch devices and mouse clicks
+    // alike can "pin" a menu open), closes other open menus first, and
+    // closes on an outside click or Escape.
+    (function () {
+      var items = document.querySelectorAll('.site-header__nav-item');
+
+      function closeAll(except) {
+        items.forEach(function (item) {
+          if (item === except) return;
+          item.classList.remove('is-open');
+          var trigger = item.querySelector('.site-header__nav-link');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      items.forEach(function (item) {
+        var trigger = item.querySelector('.site-header__nav-link');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = item.classList.contains('is-open');
+          closeAll();
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          } else {
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+
+      document.addEventListener('click', function () { closeAll(); });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        items.forEach(function (item) {
+          if (!item.classList.contains('is-open')) return;
+          var trigger = item.querySelector('.site-header__nav-link');
+          closeAll();
+          if (trigger) trigger.focus();
+        });
+      });
+    })();
   </script>
 
   <!-- ======================================================================
@@ -898,7 +1055,7 @@
        ====================================================================== -->
   <footer class="footer" aria-label="Site footer">
 
-    <p class="footer__logo">münchief</p>
+    <img class="footer__logo" src="assets/dummy/logo.png" alt="Munchief" />
 
     <div class="footer__hero">
 
@@ -906,7 +1063,7 @@
         <img src="assets/dummy/Perfect.png" alt="" role="presentation" />
       </div>
 
-      <h2 class="footer__heading stroke-heading">More Munch<br />More Crunch</h2>
+      <h2 class="footer__heading">More Munch<br />More Crunch</h2>
 
       <div class="footer__bubble footer__bubble--right">
         <img src="assets/dummy/favorite.png" alt="" role="presentation" />
@@ -914,7 +1071,7 @@
 
       <form class="footer__newsletter newsletter-form" action="#" method="post">
         <input class="newsletter-form__input" type="email" name="email" placeholder="Enter your email..." aria-label="Email address" required />
-        <button type="submit" class="btn btn--pill btn--red">Notify Me</button>
+        <button type="submit" class="newsletter-form__submit">Notify Me</button>
       </form>
 
     </div>

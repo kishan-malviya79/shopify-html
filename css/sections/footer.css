@@ -1,15 +1,17 @@
 /* ==========================================================================
    Section: footer
-   Yellow full-bleed site footer: logo, oversized stroked heading flanked by
-   two blob-photo callouts with a newsletter form overlapping the gap
-   between heading lines, a centered link-column group, and a copyright +
-   legal strip. Heading skin reuses .stroke-heading and the email capture
-   reuses .newsletter-form (both css/components.css) — don't duplicate here.
+   Yellow full-bleed site footer: logo, oversized solid-fill Fredoka heading
+   flanked by two rotated blob-photo callouts, a rotated bordered newsletter
+   card overlapping the gap between heading lines, a centered link-column
+   group, and a copyright + legal strip. Matches the Figma dev-mode spec
+   (colors/type/rotation) — see the section's HTML header comment for the
+   settings this maps to. Newsletter card/input/button is the shared
+   .newsletter-form component (css/components.css) — don't duplicate here.
    ========================================================================== */
 
 .footer {
   position: relative;
-  background-color: var(--color-brand-yellow);
+  background-color: var(--color-yellow-bright);
   padding-top: var(--space-2xl);
   text-align: center;
   overflow: hidden;
@@ -26,31 +28,35 @@
   right: 0;
   height: 34px;
   transform: translateY(-50%);
-  background-image: radial-gradient(circle at 50% 100%, var(--color-brand-yellow) 0 17px, transparent 17px);
+  background-image: radial-gradient(circle at 50% 100%, var(--color-yellow-bright) 0 17px, transparent 17px);
   background-size: 56px 34px;
   background-repeat: repeat-x;
 }
 
 .footer__logo {
-  font-family: var(--font-heading-rounded);
-  font-weight: 700;
-  font-size: var(--fs-footer-logo);
-  color: var(--color-brand-red);
-  margin: 0 0 var(--space-lg);
+  display: block;
+  height: 48px;
+  width: auto;
+  margin: 0 auto var(--space-lg);
 }
 
 .footer__hero {
   position: relative;
-  max-width: 760px;
+  isolation: isolate;
+  max-width: 1320px;
   margin-inline: auto;
   padding-inline: var(--container-padding);
 }
 
+/* Blob-photo callout — stands in for the design's pre-composited
+   footer-cloud-left/right.png assets (a cloud-shaped cutout of a lifestyle
+   photo); approximated here with an organic border-radius + thick white
+   edge since only flat dummy photos are available in this repo. */
 .footer__bubble {
   position: absolute;
   z-index: 3;
-  width: clamp(90px, 15vw, 150px);
-  aspect-ratio: 1;
+  width: clamp(96px, 16vw, 220px);
+  aspect-ratio: 240 / 185;
   border: 7px solid var(--color-white);
   border-radius: 63% 37% 54% 46% / 55% 45% 55% 45%;
   overflow: hidden;
@@ -65,39 +71,50 @@
 }
 
 .footer__bubble--left {
-  top: -6px;
-  left: -6vw;
-  transform: rotate(-8deg);
+  top: 4px;
+  left: -5vw;
+  transform: rotate(-15.88deg);
 }
 
 .footer__bubble--right {
   top: 18px;
-  right: -6vw;
-  transform: rotate(8deg);
+  right: -5vw;
+  transform: rotate(5.14deg);
 }
 
 .footer__heading {
   position: relative;
   z-index: 1;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
   font-size: var(--fs-footer-heading);
-  line-height: 0.88;
+  line-height: var(--lh-footer-heading);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-brand-red);
   white-space: nowrap;
   margin: 0;
 }
 
+/* Newsletter card positioning — shape/color come from .newsletter-form
+   (css/components.css); the footer only adds the slight rotation + overlap
+   with the heading's line gap. */
 .footer__newsletter {
   position: relative;
   z-index: 2;
   margin-inline: auto;
-  margin-top: clamp(-18px, -1.6vw, -8px);
+  margin-top: clamp(-14px, -1.2vw, -6px);
   margin-bottom: var(--space-xl);
+  transform: rotate(-2.64deg);
 }
 
 .footer__columns {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-2xl) var(--space-xl);
+  gap: var(--space-2xl) var(--space-2xl);
+  max-width: 1200px;
+  margin-inline: auto;
   padding-inline: var(--container-padding);
   padding-bottom: var(--space-xl);
   text-align: left;
@@ -105,30 +122,32 @@
 
 .footer__column-heading {
   font-family: var(--font-ui);
-  font-weight: var(--fw-bold);
+  font-weight: 600;
   font-size: var(--fs-footer-col-heading);
-  letter-spacing: 0.04em;
+  line-height: 1.2;
+  letter-spacing: -0.16px;
   text-transform: uppercase;
-  color: var(--color-brand-red);
-  margin: 0 0 var(--space-sm);
+  color: var(--color-footer-heading-muted);
+  margin: 0 0 16px;
 }
 
 .footer__links {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-2xs);
   margin: 0;
   padding: 0;
 }
 
 .footer__links a {
   font-family: var(--font-ui);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-bold);
   font-size: var(--fs-footer-link);
-  letter-spacing: 0.02em;
+  line-height: 1.12;
+  letter-spacing: -0.16px;
   text-transform: uppercase;
-  color: var(--color-brand-red);
+  color: var(--color-brand-red-bright);
   text-decoration: none;
 }
 
@@ -141,34 +160,44 @@
   max-width: var(--container-max);
   margin-inline: auto;
   border: none;
-  border-top: var(--border-width-thin) solid rgba(238, 42, 42, 0.25);
+  border-top: var(--border-width-thin) solid rgba(241, 38, 34, 0.25);
 }
 
 .footer__copyright {
   font-family: var(--font-ui);
   font-weight: var(--fw-bold);
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  font-size: var(--fs-footer-copyright);
+  letter-spacing: -0.14px;
   text-transform: uppercase;
-  color: var(--color-brand-red);
+  color: var(--color-brand-red-bright);
   padding-block: var(--space-lg);
   margin: 0;
 }
 
 .footer__legal {
-  border-top: var(--border-width-thin) solid rgba(238, 42, 42, 0.2);
-  padding: var(--space-sm) var(--container-padding);
+  padding: 0 var(--container-padding) var(--space-lg);
   font-family: var(--font-ui);
+  font-weight: var(--fw-bold);
   font-size: var(--fs-footer-legal);
-  letter-spacing: 0.03em;
+  letter-spacing: -0.12px;
   text-transform: uppercase;
-  color: var(--color-rust);
+  color: var(--color-brand-red-bright);
   margin: 0;
 }
 
 /* Responsive -----------------------------------------------------------
-   Bubbles crowd the heading badly on narrow phones — drop them below the
-   tablet breakpoint rather than shrinking them past legibility. */
+   Desktop (>1024px) locks the heading to the spec's fixed 200px/-7px
+   letter-spacing instead of continuing to scale with viewport, same
+   pattern as hero_banner's --fs-hero-heading-desktop. Bubbles crowd the
+   heading badly on narrow phones — drop them below the tablet breakpoint
+   rather than shrinking them past legibility. */
+@media (min-width: 1025px) {
+  .footer__heading {
+    font-size: var(--fs-footer-heading-desktop);
+    letter-spacing: var(--ls-footer-heading-desktop);
+  }
+}
+
 @media (max-width: 640px) {
   .footer__bubble {
     display: none;
@@ -176,5 +205,6 @@
 
   .footer__newsletter {
     margin-top: var(--space-lg);
+    transform: none;
   }
 }
