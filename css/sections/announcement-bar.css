@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Section: announcement_bar
+   Mostly skin — scroll mechanics (.ticker, .ticker__track/__group/__icon,
+   @keyframes ticker-scroll) live in css/components.css, shared with
+   promo_marquee; don't duplicate them here. This section does override the
+   animation's keyframe below, since its short item set needs more than the
+   shared default's 2 content copies to loop without a gap (see comment).
+   ========================================================================== */
+
+.announcement-bar {
+  background-color: var(--color-brand-pink);
+  padding-block: var(--space-sm);
+}
+
+/* The shared .ticker__track keyframe (-50%) assumes exactly 2 content
+   copies, which is only seamless if a single copy is already wider than
+   the viewport. This section's item set is short, so on a wide screen a
+   single copy doesn't reach the edge and the loop shows a blank gap before
+   restarting. Fix: the markup renders 6 copies of the item set instead of
+   2 (see announcement-bar.html), and this override moves the track by
+   exactly one copy-width (1/6) instead of one half. */
+.announcement-bar .ticker__track {
+  animation-name: announcement-bar-scroll;
+}
+
+@keyframes announcement-bar-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-16.6667%);
+  }
+}
+
+.announcement-bar__item {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-ticker-item);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--ls-snug);
+  text-transform: uppercase;
+  color: var(--color-rust);
+  white-space: nowrap;
+  padding-inline: var(--space-md);
+}
+
+.announcement-bar__icon {
+  color: var(--color-rust);
+}

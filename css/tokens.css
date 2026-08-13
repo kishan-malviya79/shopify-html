@@ -17,6 +17,9 @@
   --color-brand-orange: #ff7a2e;
   --color-brand-orange-light: #ffb347;
   --color-brand-blue: #2f6fed;
+  --color-brand-coral: #ff7972; /* outline stroke for white display headings on saturated backgrounds */
+  --color-brand-pink: #f0429c; /* announcement bar background */
+  --color-rust: #9a1902; /* announcement bar ticker text/icon */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -27,6 +30,9 @@
   --color-btn-ink: #211c3d; /* dark navy-indigo used for button labels/icons/borders, not pure black */
   --color-overlay: rgba(0, 0, 0, 0.15);
   --color-text-muted: #9b9690; /* struck-through compare-at prices, secondary text */
+  --color-text-secondary: #6f6a63; /* body copy on cream backgrounds, e.g. testimonial review text */
+  --color-border: #1b1b1b; /* default rounded-card border, e.g. testimonial cards */
+  --color-card-bg: #fbf6ed; /* bordered-card fill, e.g. testimonial cards — lighter than --color-cream */
 
   /* Color — commerce UI (badges, ratings, product cards) */
   --color-badge-green-bg: #d8ecac;
@@ -45,6 +51,8 @@
   --font-display: 'Mouse Memoirs', 'Baloo 2', 'Arial Black', sans-serif;
   --font-body: 'Comic Neue', 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --font-heading-bold: 'Anton', 'Archivo Black', 'Arial Black', sans-serif; /* condensed black-weight headings, e.g. product-carousel heading */
+  --font-ui: 'Inter', 'Helvetica Neue', Arial, sans-serif; /* tight/dense small UI text, e.g. announcement_bar ticker items — distinct from --font-body's display voice */
+  --font-heading-rounded: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', sans-serif; /* rounded friendly display font, e.g. testimonial card titles */
 
   --fs-hero-heading: clamp(28px, 7vw, 64px); /* fluid size for mobile/tablet */
   --fs-hero-heading-desktop: 96px; /* explicit size at the desktop breakpoint (see section CSS) */
@@ -58,6 +66,10 @@
   --fs-price-compare: 14px;
   --fs-select: 13px;
   --fs-rating-count: 13px;
+  --fs-testimonial-title: 28px;
+  --fs-testimonial-text: 14px;
+  --fs-testimonial-author: 24px;
+  --fs-ticker-item: 12px;
 
   --fw-bold: 700;
   --fw-black: 900;
@@ -67,6 +79,9 @@
   --lh-normal: 1.5;
 
   --ls-tight: -0.2px; /* matches the hero body-copy spec */
+  --ls-snug: -0.12px; /* matches the announcement-bar ticker-item spec */
+  --ls-heading-tight: -0.04em; /* large rounded headings, e.g. testimonial card title/author */
+  --ls-body-snug: -0.16px; /* matches the testimonial card review-text spec */
 
   /* Spacing scale */
   --space-2xs: 4px;
@@ -76,16 +91,20 @@
   --space-lg: 32px;
   --space-xl: 48px;
   --space-2xl: 64px;
+  --space-card: 24px; /* bordered-card interior padding, e.g. testimonial cards */
 
   /* Radius */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 24px;
+  --radius-xl: 30px; /* e.g. testimonial cards */
+  --radius-image: 21px; /* inset photo inside a padded bordered card, e.g. testimonial cards */
   --radius-pill: 999px;
 
   /* Border */
   --border-width-btn: 3px;
   --border-width-thin: 1.5px;
+  --border-width-card: 3px;
   --stroke-width-heading: 2px; /* mobile/tablet text-stroke weight */
   --stroke-width-heading-desktop: 5px; /* matches the 96px desktop heading spec */
 

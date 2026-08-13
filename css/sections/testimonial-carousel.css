@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Section: testimonial_carousel
+   Reusable pieces (testimonial-card, rating, button skins) already live in
+   css/components.css — this file only holds section-specific layout: the
+   centered heading/nav stack and the card grid/scroll track.
+   ========================================================================== */
+
+.testimonial-carousel {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.testimonial-carousel__heading {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: var(--lh-relaxed);
+  margin: 0 auto var(--space-lg);
+  max-width: 640px;
+}
+
+.testimonial-carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.testimonial-carousel__track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* Tablet: 2 cards, third scrolls into view */
+@media (max-width: 1024px) {
+  .testimonial-carousel__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: horizontal scroll-snap carousel, one card per view */
+@media (max-width: 640px) {
+  .testimonial-carousel__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-md);
+    margin-inline: calc(var(--container-padding) * -1);
+    padding-inline: var(--container-padding);
+    padding-bottom: var(--space-xs);
+  }
+
+  .testimonial-carousel__track .testimonial-card {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+}

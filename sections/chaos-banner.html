@@ -1,0 +1,68 @@
+<!--
+  Section: chaos_banner
+
+  Settings:
+    - background_image (image_picker) — dummy default: assets/dummy/chos-bg.png
+      (callout bubbles + product lineup are baked into the photo itself,
+      with a blank zone reserved up top for the heading/text/CTA — the
+      section locks to the photo's own aspect ratio so it never crops)
+    - heading (text) — default: "Ready to cause some chaos?"
+    - text (richtext) — default: "Ten flavours. Five personalities. One
+      mystery still brewing. Come find out which one you are."
+    - button_label (text) — default: "Shop Now"
+    - button_link (url)
+
+  Blocks: none — single banner instance, no repeater content
+
+  Fonts: heading reuses the shared .stroke-heading component (see
+  css/components.css) — same "Mouse Memoirs" family as the hero banner.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chaos Banner — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/chaos-banner.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Chaos Banner (chaos_banner)
+       ====================================================================== -->
+  <section class="chaos-banner" aria-label="Ready to cause some chaos">
+
+    <div class="chaos-banner__media">
+      <img src="../assets/dummy/chos-bg.png" alt="" role="presentation" />
+
+      <div class="chaos-banner__content">
+        <h2 class="chaos-banner__heading stroke-heading">Ready to cause<br />some chaos?</h2>
+
+        <p class="chaos-banner__text">
+          Ten flavours. Five personalities. One mystery still brewing.
+          Come find out which one you are.
+        </p>
+
+        <div class="btn-group">
+          <a href="#" class="btn btn--pill btn--outline">Shop Now</a>
+
+          <a href="#" class="btn btn--icon-circle btn--outline" aria-label="Shop now">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Chaos Banner ===================== -->
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Section: chaos_banner
+   Background photo composition (callout bubbles + product lineup are baked
+   into the image itself, with a reserved blank zone up top for the text) —
+   heading skin lives in .stroke-heading (css/components.css), don't
+   duplicate it here.
+   ========================================================================== */
+
+.chaos-banner {
+  background-color: var(--color-card-bg); /* matches the photo's own backdrop tone */
+}
+
+.chaos-banner__media {
+  position: relative;
+  width: 100%;
+  /* Locked to the source photo's own aspect ratio so it always renders at
+     full size with zero cropping — the callout bubbles and product lineup
+     are part of the image, not separate elements, so cover-style cropping
+     would risk cutting them off. */
+  aspect-ratio: 935 / 589;
+  overflow: hidden;
+}
+
+.chaos-banner__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.chaos-banner__content {
+  position: absolute;
+  z-index: 2;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  width: min(80%, 460px);
+  text-align: center;
+}
+
+.chaos-banner__heading {
+  margin: 0;
+  font-size: clamp(18px, 3.6vw, 40px);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
+}
+
+.chaos-banner__text {
+  margin: 0;
+  max-width: 380px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: clamp(10px, 1.3vw, 15px);
+  line-height: var(--lh-normal);
+  color: var(--color-ink);
+}
+
+.chaos-banner .btn--pill {
+  padding: var(--space-2xs) var(--space-md);
+  font-size: clamp(10px, 1.2vw, 14px);
+}
+
+.chaos-banner .btn--icon-circle {
+  width: clamp(28px, 3vw, 40px);
+  height: clamp(28px, 3vw, 40px);
+}
+
+.chaos-banner .btn--icon-circle svg {
+  width: 40%;
+  height: 40%;
+}

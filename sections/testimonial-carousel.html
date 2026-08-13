@@ -1,0 +1,164 @@
+<!--
+  Section: testimonial_carousel
+
+  Settings:
+    - heading (text) — default: "Don't take our word for it"
+    - enable_arrows (checkbox) — default: true; shows/hides the prev/next nav
+
+  Blocks:
+    - block type "testimonial" (repeatable, 1 per review tile):
+        - photo (image_picker) — customer/UGC photo
+        - rating_value (number, 0–5 step 0.5) — default: 5
+        - title (text) — short pull-quote style headline
+        - review_text (richtext)
+        - author_name (text)
+
+  Fonts: heading uses "Mouse Memoirs" (stroked, same treatment as hero_banner);
+  card titles/authors use "Fredoka" (weight 600) and "Comic Neue" (weight 700)
+  respectively; body copy uses "Comic Neue" (weight 700). All are Google
+  Fonts, loaded here for preview; in the Shopify build, load them through the
+  theme's font settings or a self-hosted @font-face instead.
+
+  Images: customer photos are dummy assets (assets/dummy/Perfect.png,
+  favorite.png, delicious.png) standing in for each block's `photo`
+  image_picker.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testimonial Carousel — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@600&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/testimonial-carousel.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Testimonial Carousel (testimonial_carousel)
+       ====================================================================== -->
+  <section class="testimonial-carousel" aria-label="Customer testimonials">
+    <div class="container">
+
+      <h2 class="testimonial-carousel__heading stroke-heading">Don't take our<br />word for it</h2>
+
+      <div class="testimonial-carousel__nav">
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 6 9 12 15 18"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 6 15 12 9 18"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="testimonial-carousel__track" data-carousel-track>
+
+        <!-- Block: testimonial (1/3) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/Perfect.png" alt="Tina A holding a Munchief pouch and drinking a Munchief soda" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">Perfect way to unwind</h3>
+            <p class="testimonial-card__text">
+              I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Tina A</span>
+          </div>
+        </article>
+
+        <!-- Block: testimonial (2/3) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/favorite.png" alt="Munchief soda can lineup on a shelf" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">My new favorite treat</h3>
+            <p class="testimonial-card__text">
+              These Makhanas are amazing. The flavor is actually really good. I take one after work and it just melts the stress away. Will definitely be ordering again.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Sara M</span>
+          </div>
+        </article>
+
+        <!-- Block: testimonial (3/3) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/delicious.png" alt="Nina K holding a Munchief pouch and drinking a Munchief soda" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">Subtle, relaxing, and delicious</h3>
+            <p class="testimonial-card__text">
+              These drinks taste great and give a calm, happy feeling without being too intense. Perfect for a chill night at home.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Nina K</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  <!-- ===================== /Section: Testimonial Carousel ===================== -->
+
+  <script>
+    // Preview-only interactivity for the prev/next arrows (scrolls the track
+    // by one card width). In the Shopify build this stays as a small section
+    // script, not a settings-driven behavior.
+    (function () {
+      var section = document.currentScript.closest('section.testimonial-carousel');
+      var track = section.querySelector('[data-carousel-track]');
+      var prev = section.querySelector('[data-carousel-prev]');
+      var next = section.querySelector('[data-carousel-next]');
+
+      function scrollByCard(direction) {
+        var card = track.querySelector('.testimonial-card');
+        if (!card) return;
+        var amount = card.getBoundingClientRect().width + 32; /* + gap */
+        track.scrollBy({ left: direction * amount, behavior: 'smooth' });
+      }
+
+      prev.addEventListener('click', function () { scrollByCard(-1); });
+      next.addEventListener('click', function () { scrollByCard(1); });
+    })();
+  </script>
+
+</body>
+</html>

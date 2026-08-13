@@ -1,0 +1,75 @@
+<!--
+  Section: announcement_bar
+
+  Settings:
+    - background_color (color) — default: "#f0429c" (--color-brand-pink)
+    - text_color (color) — default: "#9a1902" (--color-rust)
+    - speed_seconds (range, 10–60) — default: 25, one full scroll loop duration
+
+  Blocks:
+    - block type "announcement_item": text (text) — default: "JOYFULLY BOLD"
+      Repeatable; each block renders as one ticker item with a sparkle icon
+      divider after it. The block loop renders 6 times back-to-back (1 real
+      + 5 aria-hidden duplicate groups) so the ticker never runs out of
+      content mid-scroll on wide viewports — more copies than
+      promo_marquee's marquee_item (2 copies) since this item set/font is
+      shorter. See the .announcement-bar .ticker__track override in
+      announcement-bar.css.
+
+  Font: ticker item text uses "Inter" (weight 700) — distinct from the
+  site's Comic Neue --font-body, reserved for this section's tight/dense
+  ticker copy (--font-ui). Loaded here for preview; in the Shopify build,
+  load it through the theme's font settings or a self-hosted @font-face.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcement Bar — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/announcement-bar.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Announcement Bar (announcement_bar)
+       ====================================================================== -->
+  <section class="announcement-bar ticker" aria-label="Announcements">
+    <div class="ticker__track">
+
+      <!-- Group 1 (real content) -->
+      <div class="ticker__group">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Group 2 (exact duplicate, hidden from assistive tech) — animation
+           scrolls exactly one group-width so the loop reads as continuous. -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Announcement Bar ===================== -->
+
+</body>
+</html>

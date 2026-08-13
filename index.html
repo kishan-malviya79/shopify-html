@@ -12,17 +12,54 @@
   <title>Home — Page Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@600&family=Comic+Neue:wght@700&family=Inter:wght@700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/sections/announcement-bar.css" />
   <link rel="stylesheet" href="css/sections/marquee.css" />
   <link rel="stylesheet" href="css/sections/hero-banner.css" />
   <link rel="stylesheet" href="css/sections/world-grid.css" />
+  <link rel="stylesheet" href="css/sections/chaos-banner.css" />
   <link rel="stylesheet" href="css/sections/product-carousel.css" />
+  <link rel="stylesheet" href="css/sections/testimonial-carousel.css" />
 </head>
 <body>
 
- 
+  <!-- ======================================================================
+       Section: Announcement Bar (announcement_bar)
+       ====================================================================== -->
+  <section class="announcement-bar ticker" aria-label="Announcements">
+    <div class="ticker__track">
+
+      <!-- Group 1 (real content) -->
+      <div class="ticker__group">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Group 2 (exact duplicate, hidden from assistive tech) — animation
+           scrolls exactly one group-width so the loop reads as continuous. -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Announcement Bar ===================== -->
+
   <!-- ======================================================================
        Section: Hero Banner (hero_banner)
        ====================================================================== -->
@@ -110,33 +147,65 @@
 
       <!-- Block: world_card (background_style = "orange", heading_style = "white") -->
       <a href="#" class="world-card world-card--orange">
+        <div class="world-card__media">
+          <img src="assets/dummy/CrunchWorld.png" alt="" role="presentation" />
+        </div>
         <div class="world-card__content">
           <h2 class="world-card__heading stroke-heading stroke-heading--white">Crunch<br />World</h2>
-        </div>
-        <p class="world-card__text world-card__text--white">
-          Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
-        </p>
-        <div class="world-card__media">
-          <img src="assets/dummy/world-crunch.svg" alt="" role="presentation" />
+          <p class="world-card__text world-card__text--white">
+            Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
+          </p>
         </div>
       </a>
 
       <!-- Block: world_card (background_style = "cream", heading_style = "outline") -->
       <a href="#" class="world-card world-card--cream">
+        <div class="world-card__media">
+          <img src="assets/dummy/PREBIOTICWorld.png" alt="" role="presentation" />
+        </div>
         <div class="world-card__content">
           <h2 class="world-card__heading stroke-heading">Prebiotic<br />World</h2>
-        </div>
-        <p class="world-card__text world-card__text--red">
-          Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
-        </p>
-        <div class="world-card__media">
-          <img src="assets/dummy/world-prebiotic.svg" alt="" role="presentation" />
+          <p class="world-card__text world-card__text--red">
+            Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
+          </p>
         </div>
       </a>
 
     </div>
   </section>
   <!-- ===================== /Section: World Grid ===================== -->
+
+  <!-- ======================================================================
+       Section: Chaos Banner (chaos_banner)
+       ====================================================================== -->
+  <section class="chaos-banner" aria-label="Ready to cause some chaos">
+
+    <div class="chaos-banner__media">
+      <img src="assets/dummy/chos-bg.png" alt="" role="presentation" />
+
+      <div class="chaos-banner__content">
+        <h2 class="chaos-banner__heading stroke-heading">Ready to cause<br />some chaos?</h2>
+
+        <p class="chaos-banner__text">
+          Ten flavours. Five personalities. One mystery still brewing.
+          Come find out which one you are.
+        </p>
+
+        <div class="btn-group">
+          <a href="#" class="btn btn--pill btn--outline">Shop Now</a>
+
+          <a href="#" class="btn btn--icon-circle btn--outline" aria-label="Shop now">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Chaos Banner ===================== -->
 
   <!-- ======================================================================
        Section: Product Carousel (product_carousel)
@@ -281,25 +350,436 @@
   </section>
   <!-- ===================== /Section: Product Carousel ===================== -->
 
+  <!-- ======================================================================
+       Section: Product Carousel (product_carousel) — second instance,
+       same section/blocks reused with soda-line settings + block content.
+       ====================================================================== -->
+  <section class="product-carousel" aria-label="Featured sodas">
+    <div class="container">
+
+      <div class="product-carousel__header">
+        <h2 class="product-carousel__heading">Meet the Munchief Sodas</h2>
+
+        <div class="product-carousel__nav">
+          <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous product">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 6 9 12 15 18"></polyline>
+            </svg>
+          </button>
+          <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next product">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 6 15 12 9 18"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="product-carousel__track" data-carousel-track>
+
+        <!-- Block: product_card (1/3) -->
+        <article class="product-card">
+          <div class="product-card__media">
+            <span class="badge badge--green product-card__badge">5000+ Bought This</span>
+            <img src="assets/dummy/can-guava-chilli-lime.svg" alt="Guava Chilli Lime can" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Guava Chilli Lime</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>Pack of 1</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+        <!-- Block: product_card (2/3) -->
+        <article class="product-card">
+          <div class="product-card__media">
+            <span class="badge badge--orange product-card__badge">Best Seller</span>
+            <img src="assets/dummy/can-nimbu-jeera.svg" alt="Nimbu Jeera can" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Nimbu Jeera</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>Pack of 1</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+        <!-- Block: product_card (3/3) -->
+        <article class="product-card">
+          <div class="product-card__media">
+            <img src="assets/dummy/can-mixed-berry.svg" alt="Mixed Berry can" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Mixed Berry</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>Pack of 1</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  <!-- ===================== /Section: Product Carousel (sodas) ===================== -->
+
+  <!-- ======================================================================
+       Section: Product Carousel (product_carousel) — third instance, nav_style
+       = "cta" (Build Your Bundle pill + icon-circle link instead of arrows).
+       Blocks reuse the same three products/content as the first instance.
+       ====================================================================== -->
+  <section class="product-carousel" aria-label="Build your combo">
+    <div class="container">
+
+      <div class="product-carousel__header">
+        <h2 class="product-carousel__heading">Combo. Don't choose one mood.</h2>
+
+        <div class="product-carousel__nav">
+          <div class="btn-group">
+            <a href="#" class="btn btn--pill btn--outline">Build Your Bundle</a>
+            <a href="#" class="btn btn--icon-circle btn--outline" aria-label="Build your bundle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-carousel__track" data-carousel-track>
+
+        <!-- Block: product_card (1/3) -->
+        <article class="product-card">
+          <div class="product-card__media">
+            <span class="badge badge--green product-card__badge">5000+ Bought This</span>
+            <img src="assets/dummy/pouch-chutney-pop.svg" alt="Mimi's Chutney Pop pouch" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Mimi's Chutney Pop</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>20g Tasting Pouch — ₹99</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+        <!-- Block: product_card (2/3) -->
+        <article class="product-card">
+          <div class="product-card__media">
+            <span class="badge badge--orange product-card__badge">Best Seller</span>
+            <img src="assets/dummy/pouch-salt-pop.svg" alt="Tantan's Salt Pop pouch" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Tantan's Salt Pop</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>20g Tasting Pouch — ₹99</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+        <!-- Block: product_card (3/3) -->
+        <article class="product-card">
+          <div class="product-card__media">
+            <img src="assets/dummy/pouch-noodle-blast.svg" alt="Chiku's Noodle Blast pouch" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Chiku's Noodle Blast</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>20g Tasting Pouch — ₹99</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  <!-- ===================== /Section: Product Carousel (combo) ===================== -->
+
+  <!-- ======================================================================
+       Section: Testimonial Carousel (testimonial_carousel)
+       ====================================================================== -->
+  <section class="testimonial-carousel" aria-label="Customer testimonials">
+    <div class="container">
+
+      <h2 class="testimonial-carousel__heading stroke-heading">Don't take our<br />word for it</h2>
+
+      <div class="testimonial-carousel__nav">
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 6 9 12 15 18"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 6 15 12 9 18"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="testimonial-carousel__track" data-carousel-track>
+
+        <!-- Block: testimonial (1/3) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="assets/dummy/Perfect.png" alt="Tina A holding a Munchief pouch and drinking a Munchief soda" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">Perfect way to unwind</h3>
+            <p class="testimonial-card__text">
+              I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Tina A</span>
+          </div>
+        </article>
+
+        <!-- Block: testimonial (2/3) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="assets/dummy/favorite.png" alt="Munchief soda can lineup on a shelf" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">My new favorite treat</h3>
+            <p class="testimonial-card__text">
+              These Makhanas are amazing. The flavor is actually really good. I take one after work and it just melts the stress away. Will definitely be ordering again.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Sara M</span>
+          </div>
+        </article>
+
+        <!-- Block: testimonial (3/3) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="assets/dummy/delicious.png" alt="Nina K holding a Munchief pouch and drinking a Munchief soda" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">Subtle, relaxing, and delicious</h3>
+            <p class="testimonial-card__text">
+              These drinks taste great and give a calm, happy feeling without being too intense. Perfect for a chill night at home.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Nina K</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  <!-- ===================== /Section: Testimonial Carousel ===================== -->
+
   <script>
-    // Preview-only interactivity for the prev/next arrows (scrolls the track
-    // by one card width). In the Shopify build this stays as a small section
-    // script, not a settings-driven behavior.
+    // Preview-only interactivity for the prev/next arrows (scrolls each
+    // instance's track by one card width). Instances using nav_style = "cta"
+    // have no arrow buttons, so this no-ops for them. In the Shopify build
+    // this stays as a small section script, not a settings-driven behavior.
     (function () {
-      var section = document.querySelector('section.product-carousel');
-      var track = section.querySelector('[data-carousel-track]');
-      var prev = section.querySelector('[data-carousel-prev]');
-      var next = section.querySelector('[data-carousel-next]');
+      document.querySelectorAll('section.product-carousel').forEach(function (section) {
+        var track = section.querySelector('[data-carousel-track]');
+        var prev = section.querySelector('[data-carousel-prev]');
+        var next = section.querySelector('[data-carousel-next]');
+        if (!prev || !next) return;
 
-      function scrollByCard(direction) {
-        var card = track.querySelector('.product-card');
-        if (!card) return;
-        var amount = card.getBoundingClientRect().width + 32; /* + gap */
-        track.scrollBy({ left: direction * amount, behavior: 'smooth' });
-      }
+        function scrollByCard(direction) {
+          var card = track.querySelector('.product-card');
+          if (!card) return;
+          var amount = card.getBoundingClientRect().width + 32; /* + gap */
+          track.scrollBy({ left: direction * amount, behavior: 'smooth' });
+        }
 
-      prev.addEventListener('click', function () { scrollByCard(-1); });
-      next.addEventListener('click', function () { scrollByCard(1); });
+        prev.addEventListener('click', function () { scrollByCard(-1); });
+        next.addEventListener('click', function () { scrollByCard(1); });
+      });
+    })();
+
+    // Same pattern for the testimonial carousel's own track/card class names.
+    (function () {
+      document.querySelectorAll('section.testimonial-carousel').forEach(function (section) {
+        var track = section.querySelector('[data-carousel-track]');
+        var prev = section.querySelector('[data-carousel-prev]');
+        var next = section.querySelector('[data-carousel-next]');
+        if (!prev || !next) return;
+
+        function scrollByCard(direction) {
+          var card = track.querySelector('.testimonial-card');
+          if (!card) return;
+          var amount = card.getBoundingClientRect().width + 32; /* + gap */
+          track.scrollBy({ left: direction * amount, behavior: 'smooth' });
+        }
+
+        prev.addEventListener('click', function () { scrollByCard(-1); });
+        next.addEventListener('click', function () { scrollByCard(1); });
+      });
     })();
   </script>
 

@@ -11,9 +11,11 @@
       heading_style (select: "white" | "outline") — default matches
       background_style (white heading on the orange card, red-outline
       heading on the cream card)
-      Repeatable; renders as a rounded card with the heading top-left, the
-      image bleeding off the bottom-right corner, and supporting text
-      bottom-left. Default: 2 blocks ("Crunch World" / "Prebiotic World").
+      Repeatable; renders as a rounded card with the photo as a full-bleed
+      background (heading top-left, supporting text bottom-left, over the
+      photo's solid-color side). Default: 2 blocks ("Crunch World" /
+      "Prebiotic World"), dummy images: assets/dummy/CrunchWorld.png,
+      assets/dummy/PREBIOTICWorld.png.
 
   Fonts: headings reuse the shared .stroke-heading component (see
   css/components.css) — same "Mouse Memoirs" family as the hero banner.
@@ -41,27 +43,27 @@
 
       <!-- Block: world_card (background_style = "orange", heading_style = "white") -->
       <a href="#" class="world-card world-card--orange">
+        <div class="world-card__media">
+          <img src="../assets/dummy/CrunchWorld.png" alt="" role="presentation" />
+        </div>
         <div class="world-card__content">
           <h2 class="world-card__heading stroke-heading stroke-heading--white">Crunch<br />World</h2>
-        </div>
-        <p class="world-card__text world-card__text--white">
-          Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
-        </p>
-        <div class="world-card__media">
-          <img src="../assets/dummy/world-crunch.svg" alt="" role="presentation" />
+          <p class="world-card__text world-card__text--white">
+            Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
+          </p>
         </div>
       </a>
 
       <!-- Block: world_card (background_style = "cream", heading_style = "outline") -->
       <a href="#" class="world-card world-card--cream">
+        <div class="world-card__media">
+          <img src="../assets/dummy/PREBIOTICWorld.png" alt="" role="presentation" />
+        </div>
         <div class="world-card__content">
           <h2 class="world-card__heading stroke-heading">Prebiotic<br />World</h2>
-        </div>
-        <p class="world-card__text world-card__text--red">
-          Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
-        </p>
-        <div class="world-card__media">
-          <img src="../assets/dummy/world-prebiotic.svg" alt="" role="presentation" />
+          <p class="world-card__text world-card__text--red">
+            Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.
+          </p>
         </div>
       </a>
 

@@ -152,6 +152,12 @@
   color: var(--color-text-muted);
 }
 
+/* Modifier: larger stars, no count (e.g. testimonial_carousel cards). */
+.rating--lg .rating__stars svg {
+  width: 18px;
+  height: 18px;
+}
+
 /* Price ------------------------------------------------------------------ */
 .price {
   display: inline-flex;
@@ -246,12 +252,90 @@
   margin: 0;
 }
 
+/* Testimonial card -----------------------------------------------------------
+   Reusable review/UGC card: inset photo, rating + title + body + divider +
+   author below, all inside one padded border. Used by testimonial_carousel;
+   reuse for any future reviews section instead of rebuilding. */
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-card);
+  border: var(--border-width-card) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-card-bg);
+}
+
+.testimonial-card__media {
+  aspect-ratio: 399 / 463;
+  border-radius: var(--radius-image);
+  overflow: hidden;
+}
+
+.testimonial-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Monochrome stars for this card family — overrides the default gold
+   .rating__stars fill to match the card's black border/text palette. */
+.testimonial-card .rating__stars {
+  color: var(--color-border);
+}
+
+.testimonial-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.testimonial-card__title {
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-testimonial-title);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--ls-heading-tight);
+  color: var(--color-border);
+  margin: 0;
+}
+
+.testimonial-card__text {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-testimonial-text);
+  line-height: 1.4;
+  letter-spacing: var(--ls-body-snug);
+  color: var(--color-border);
+  margin: 0 0 var(--space-lg);
+}
+
+.testimonial-card__divider {
+  border: none;
+  border-top: 1px solid rgba(27, 27, 27, 0.15);
+  width: 100%;
+  margin: 0;
+}
+
+.testimonial-card__author {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-testimonial-author);
+  line-height: 0.92;
+  letter-spacing: var(--ls-heading-tight);
+  color: var(--color-border);
+  padding-top: var(--space-sm);
+}
+
 /* Stroked display heading ---------------------------------------------------
    Display-font headline with a solid fill + outline stroke for contrast on
    any background. Compose with a section class that sets font-size/line
    -height/margin (font-size isn't set here — sizes vary too much per use).
    Default skin is red fill + white stroke; add --stroke-heading--white for
-   a plain white fill (no stroke) on saturated backgrounds. */
+   a white fill + coral stroke on saturated backgrounds (e.g. the orange
+   world_card). */
 .stroke-heading {
   font-family: var(--font-display);
   /* Mouse Memoirs ships a single weight — its regular weight already reads
@@ -266,6 +350,57 @@
 
 .stroke-heading--white {
   color: var(--color-white);
-  -webkit-text-stroke: 0;
+  -webkit-text-stroke: var(--stroke-width-heading) var(--color-brand-coral);
   text-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Ticker ---------------------------------------------------------------
+   Infinite horizontal auto-scroll strip. Track/group/keyframes are the
+   reusable mechanics; a wrapping section class (e.g. .marquee,
+   .announcement-bar) sets the bar's background/border/padding and its own
+   item class sets text color/weight/style. Used by promo_marquee and
+   announcement_bar — reuse this instead of re-declaring the scroll
+   animation for any future ticker-style section. */
+.ticker {
+  overflow: hidden;
+}
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 25s linear infinite;
+}
+
+.ticker:hover .ticker__track,
+.ticker:focus-within .ticker__track {
+  animation-play-state: paused;
+}
+
+.ticker__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ticker__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Track is two identical groups placed side by side; animating exactly
+   -50% (one group-width) produces a seamless loop with no visible reset. */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track {
+    animation: none;
+  }
 }

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 500" role="img" aria-label="Placeholder can: Guava Chilli Lime">
+  <rect width="300" height="500" fill="#f6dbe0"/>
+  <ellipse cx="150" cy="440" rx="112" ry="16" fill="#bdbdbd"/>
+  <rect x="38" y="60" width="224" height="380" fill="#f3c6d1"/>
+  <rect x="38" y="60" width="224" height="14" fill="#00000010"/>
+  <ellipse cx="150" cy="60" rx="112" ry="17" fill="#dcdcdc" stroke="#b0b0b0" stroke-width="1.5"/>
+  <ellipse cx="150" cy="46" rx="100" ry="13" fill="#ececec"/>
+  <text x="150" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#d1274b">munchief</text>
+  <text x="150" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="#96c22e">GUAVA</text>
+  <text x="150" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="26" fill="#96c22e">CHILLI LIME</text>
+  <text x="150" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-style="italic" font-size="12" letter-spacing="1" fill="#7a2f45">DAILY SODA CHAATPATA</text>
+  <rect x="105" y="395" width="90" height="24" rx="12" fill="#f6dbe0" stroke="#7a2f45" stroke-width="1"/>
+  <text x="150" y="411" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#7a2f45">250ML</text>
+</svg>

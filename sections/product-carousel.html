@@ -3,7 +3,14 @@
 
   Settings:
     - heading (text) — default: "Meet the Munchief Family"
-    - enable_arrows (checkbox) — default: true; shows/hides the prev/next nav
+    - nav_style (select: "arrows" | "cta") — default: "arrows"
+        "arrows": prev/next carousel controls (scrolls the track)
+        "cta": a pill + icon-circle button pair instead of arrows, e.g. a
+          "Build Your Bundle" upsell link (see index.html's third instance,
+          "Combo. Don't Choose One Mood.", which reuses this section/blocks
+          with nav_style = "cta")
+    - cta_text (text) — used when nav_style = "cta"; default: "Build Your Bundle"
+    - cta_link (url) — used when nav_style = "cta"
 
   Blocks:
     - block type "product_card" (repeatable, 1 per product tile):
