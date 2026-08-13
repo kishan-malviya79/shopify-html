@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Section: product_main
+   Reusable buy-box pieces (variant pills, qty stepper, pincode form, trust
+   badges, upsell card, rating/price/badge) already live in
+   css/components.css — this file only holds section-specific layout: the
+   two-column grid, gallery/thumbnail rail, and title/copy type.
+   ========================================================================== */
+
+.product-main {
+  background-color: var(--color-white);
+  padding-block: var(--space-2xl);
+}
+
+.product-main__layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+/* Gallery ------------------------------------------------------------------ */
+.product-main__media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-cream-bg);
+}
+
+.product-main__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.product-main__chat {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-white);
+  border: none;
+  color: var(--color-black);
+  box-shadow: var(--shadow-btn);
+  cursor: pointer;
+}
+
+.product-main__chat svg {
+  width: 18px;
+  height: 18px;
+}
+
+.product-main__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.product-main__thumb {
+  border-radius: var(--radius-thumb);
+  overflow: hidden;
+  border: var(--border-width-thin) solid var(--color-gallery-thumb-border);
+  background-color: var(--color-cream-bg);
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.product-main__thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.product-main__thumb:hover,
+.product-main__thumb:focus-visible {
+  border-color: var(--color-text-muted);
+}
+
+.product-main__thumb.is-active {
+  border-color: var(--color-black);
+}
+
+/* Buy box copy --------------------------------------------------------------- */
+.product-main__eyebrow {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-product-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-2xs);
+}
+
+.product-main__title {
+  font-family: var(--font-heading-bold);
+  font-weight: 400; /* Anton is already a single black weight */
+  font-size: var(--fs-product-title);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin: 0 0 var(--space-sm);
+}
+
+.product-main__info .rating {
+  margin-bottom: var(--space-md);
+}
+
+.product-main__info .rating__count {
+  font-size: var(--fs-select);
+  text-decoration: none;
+  color: var(--color-text-secondary);
+}
+
+.product-main__description {
+  font-family: var(--font-ui);
+  font-size: var(--fs-product-description);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-md);
+}
+
+.product-main__price {
+  margin-bottom: var(--space-2xs);
+}
+
+.product-main__tax-note {
+  font-family: var(--font-ui);
+  font-size: var(--fs-product-note);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-lg);
+}
+
+.product-main__variants {
+  margin-bottom: var(--space-lg);
+}
+
+.product-main__variants-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-product-variant-label);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.product-main__cart-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.product-main__add-to-cart {
+  flex: 1;
+}
+
+.product-main__checkout-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-ui);
+  font-size: var(--fs-product-note);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-md);
+}
+
+.product-main__checkout-note svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.pincode-form {
+  margin-bottom: var(--space-lg);
+}
+
+.trust-badges {
+  padding-block: var(--space-lg);
+  border-block: var(--border-width-thin) solid var(--color-gallery-thumb-border);
+  margin-bottom: var(--space-xl);
+}
+
+.upsell__heading {
+  display: block;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-product-note);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+/* Tablet ---------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .product-main__layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* Mobile ------------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .product-main__thumbs {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .product-main__cart-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .qty-stepper {
+    justify-content: center;
+  }
+
+  .trust-badges {
+    justify-content: space-between;
+    gap: var(--space-md) var(--space-xs);
+  }
+
+  .trust-badge {
+    width: auto;
+    flex: 1 1 40%;
+  }
+
+  .upsell-card {
+    flex-wrap: wrap;
+  }
+
+  .upsell-card__cta {
+    width: 100%;
+  }
+}

@@ -30,6 +30,9 @@
   --color-footer-card-border: #2f1948; /* newsletter card border on the footer */
   --color-footer-heading-muted: rgba(217, 15, 4, 0.6); /* footer column headings */
   --color-footer-placeholder: rgba(254, 67, 26, 0.4); /* footer newsletter input placeholder */
+  --color-upsell-card-border: #f0d9b5; /* product_main "Must Try" upsell card border, warm tan */
+  --color-upsell-card-bg: #fff8ec; /* product_main "Must Try" upsell card fill */
+  --color-terracotta: #c15c3e; /* product_story background — muted burnt-orange, distinct from the brighter --color-brand-orange used elsewhere */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -51,8 +54,10 @@
   --color-badge-orange-bg: #ffc247;
   --color-badge-orange-text: #1c3a13; /* both badge skins share the same dark-ink text per spec, regardless of pill color */
   --color-star: #f7a81c;
+  --color-star-empty: #ddd6cc; /* unfilled star, e.g. product_main's partial 4.3-of-5 rating */
   --color-select-border: rgba(0, 0, 0, 0.37);
   --color-shadow-pop: #8a3216; /* skeuomorphic "pop" shadow under solid CTA buttons, e.g. Add to Cart */
+  --color-gallery-thumb-border: #e7e1d4; /* product_main thumbnail rail border, active state swaps to --color-black */
 
   /* Typography
      --font-display requires "Mouse Memoirs" and --font-body requires "Comic
@@ -96,6 +101,11 @@
   --fs-brand-story-heading-desktop: clamp(80px, 8.5vw, 120px); /* the Figma spec's literal 233px only fits its own 729px-wide unconstrained text box — in this repo's responsive 2-column layout that same box is ~650-700px, so this is capped to the largest size that doesn't wrap "Crunch it."/"Repeat." mid-word */
   --fs-brand-story-subheading: clamp(22px, 3.4vw, 45px);
   --fs-brand-story-text: clamp(14px, 1.6vw, 22px);
+  --fs-product-title: clamp(28px, 3.4vw, 38px); /* product_main title */
+  --fs-product-eyebrow: 13px;
+  --fs-product-description: 15px;
+  --fs-product-note: 13px; /* product_main tax note, checkout note, trust badge labels */
+  --fs-product-variant-label: 13px;
 
   --fw-medium: 500;
   --fw-bold: 700;
@@ -132,6 +142,7 @@
   --radius-image: 21px; /* inset photo inside a padded bordered card, e.g. testimonial cards */
   --radius-photo-frame: 15px; /* brand_story hero/character photo corner radius */
   --radius-pill: 999px;
+  --radius-thumb: 14px; /* product_main gallery thumbnail corners */
 
   /* Border */
   --border-width-btn: 3px;

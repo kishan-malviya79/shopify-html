@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Section: product_story
+   Terracotta full-bleed product detail: info column (sticker-style plaque
+   heading + description/storage/ingredients copy) beside a horizontal
+   peek-scroll testimonial-card track, with a row of icon-badges below.
+   Review cards reuse .testimonial-card as-is (css/components.css) — don't
+   duplicate that here. Icon badges reuse .icon-badge (css/components.css).
+   ========================================================================== */
+
+.product-story {
+  position: relative;
+  background-color: var(--color-terracotta);
+  padding-top: calc(var(--space-2xl) + 40px);
+  padding-bottom: var(--space-2xl);
+  overflow: hidden;
+}
+
+/* Wavy top edge — a single soft, asymmetric cream wave straddling the
+   section's top edge, same "decorative edge" role as brand_story's stroked
+   line and footer's scalloped circles, but a solid filled shape instead of
+   either of those techniques. */
+.product-story::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='120' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1200V40C1100 90 950 100 800 70C650 40 520 20 380 35C250 49 130 85 0 60Z' fill='%23FBF1E4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.product-story__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.product-story__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Sticker-style plaque — white fill, thick black border, slightly rotated,
+   like a label stuck onto the page. Anton (--font-heading-bold) with solid
+   black text — deliberately not the shared .stroke-heading system (which
+   assumes Mouse Memoirs), and deliberately not a white-fill/black-stroke
+   treatment either: -webkit-text-stroke (and an 8-direction text-shadow
+   fake-stroke) both trigger a real Chromium rendering bug — rainbow
+   subpixel fringing — for light-fill text stroked/shadowed in black inside
+   a white bordered box. Reproduced with and without GPU acceleration, so
+   it's not just a screenshot-tooling artifact; solid fill sidesteps it. */
+.product-story__badge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-white);
+  border: 3px solid var(--color-black);
+  border-radius: var(--radius-md);
+  transform: rotate(-2deg);
+}
+
+.product-story__badge-text {
+  font-family: var(--font-heading-bold);
+  font-weight: 400;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-black);
+  white-space: nowrap;
+}
+
+.product-story__text {
+  margin: 0;
+  max-width: 460px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 14px;
+  line-height: var(--lh-normal);
+  color: var(--color-cream);
+}
+
+.product-story__text strong {
+  font-weight: var(--fw-bold);
+  color: var(--color-white);
+}
+
+.product-story__text--ingredients {
+  opacity: 0.9;
+}
+
+.product-story__footnote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 12px;
+  color: var(--color-cream);
+  opacity: 0.7;
+}
+
+/* Reviews: horizontal peek-scroll track, no prev/next nav — the next card
+   is meant to show a sliver at the column's edge as a scroll affordance. */
+.product-story__reviews {
+  overflow: hidden;
+}
+
+.product-story__reviews-track {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-2xs);
+}
+
+.product-story__card {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
+}
+
+.product-story__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--space-lg) var(--space-xl);
+  max-width: 620px;
+  margin-top: var(--space-2xl);
+  color: var(--color-cream);
+}
+
+/* Responsive ---------------------------------------------------------------
+   Below tablet, stack info above reviews and let the badge row wrap to a
+   3-column grid instead of squeezing 6 across. */
+@media (max-width: 900px) {
+  .product-story__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-story__text {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .product-story__badges {
+    justify-content: flex-start;
+  }
+
+  .product-story__badges .icon-badge {
+    flex: 0 0 calc(33.333% - var(--space-md));
+  }
+
+  .product-story__card {
+    flex-basis: 82%;
+  }
+}

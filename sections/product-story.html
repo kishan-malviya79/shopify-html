@@ -1,0 +1,233 @@
+<!--
+  Section: product_story
+
+  Settings:
+    - heading (text) — default: "Mimi's Chutney Pop" (rendered inside the
+      rotated sticker-style plaque, not a plain heading)
+    - description (richtext) — default: "Made with blackberry, crisp apple,
+      and a splash of mandarin and lemon juices, Blackberry Vanilla creates a
+      layered blackberry flavor with smooth vanilla notes for an unforgettable
+      soda that'll satisfy every craving."
+    - storage_label (text) — default: "Storage:"
+    - storage_text (richtext) — default: "As part of our 9g Fiber Line, this
+      flavor should be stored in the fridge so it's ready to chill whenever
+      you are."
+    - ingredients_label (text) — default: "Ingredients:"
+    - ingredients_text (richtext) — default: "Carbonated Water, OLISMART
+      (Cassava Root Fiber, Chicory Root Inulin, Jerusalem Artichoke Inulin,
+      Nopal Cactus*, Marshmallow Root*, Calendula Flower*, Kudzu Root*),
+      Blackberry Juice Concentrate, Apple Juice Concentrate, Cassava Root
+      Syrup, Mandarin Juice Concentrate, Lemon Juice Concentrate, Stevia
+      Leaf*, Himalayan Pink Salt, Natural Flavors."
+    - footnote (text) — default: "*Extract"
+
+  Blocks:
+    - block type "testimonial" — same shape as testimonial_carousel's block
+      (photo image_picker, rating_value number, title text, review_text
+      richtext, author_name text). This section reuses that exact block type
+      and, in this build, its exact first two blocks' content (Tina A /
+      Sara M) — share block content between the two sections rather than
+      re-authoring it. Rendered in a horizontal peek-scroll track, no
+      prev/next nav.
+    - block type "feature_badge": icon (select: less_sugar / real_ingredients
+      / digestive / vegan / roasted_not_fried / prebiotic — swap for
+      icon_picker in Liquid), label (text), highlight (checkbox, default:
+      false) — the one highlighted badge (e.g. "Vegan") gets the filled-red
+      .icon-badge__circle--solid treatment instead of the shared outline
+      skin. 6 instances.
+
+  Not added to index.html — this is product-detail-page content (a specific
+  flavor's description/ingredients/reviews), not a homepage section.
+
+  Fonts: the plaque heading uses "Anton" (--font-heading-bold, same family as
+  product_carousel's heading), solid black fill — a one-off skin local to
+  this section (not the shared .stroke-heading system, which assumes the
+  Mouse Memoirs family throughout). A white-fill/black-stroke treatment was
+  tried first but dropped: both -webkit-text-stroke and an 8-direction
+  text-shadow fake-stroke trigger a real Chromium rendering bug (rainbow
+  subpixel fringing) for light-fill stroked/shadowed text inside a white
+  bordered box — reproduced with and without GPU acceleration, so solid
+  fill sidesteps a real bug, not just a screenshot-tooling artifact.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Story — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@600&family=Comic+Neue:wght@700&family=Inter:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/product-story.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Product Story (product_story)
+       ====================================================================== -->
+  <section class="product-story" aria-label="Mimi's Chutney Pop details">
+
+    <div class="container product-story__grid">
+
+      <div class="product-story__info">
+        <div class="product-story__badge">
+          <span class="product-story__badge-text">Mimi's Chutney Pop</span>
+        </div>
+
+        <p class="product-story__text">
+          Made with blackberry, crisp apple, and a splash of mandarin and
+          lemon juices, Blackberry Vanilla creates a layered blackberry
+          flavor with smooth vanilla notes for an unforgettable soda that'll
+          satisfy every craving.
+        </p>
+
+        <p class="product-story__text">
+          <strong>Storage:</strong> As part of our 9g Fiber Line, this
+          flavor should be stored in the fridge so it's ready to chill
+          whenever you are.
+        </p>
+
+        <p class="product-story__text product-story__text--ingredients">
+          <strong>Ingredients:</strong> Carbonated Water, OLISMART (Cassava
+          Root Fiber, Chicory Root Inulin, Jerusalem Artichoke Inulin, Nopal
+          Cactus*, Marshmallow Root*, Calendula Flower*, Kudzu Root*),
+          Blackberry Juice Concentrate, Apple Juice Concentrate, Cassava Root
+          Syrup, Mandarin Juice Concentrate, Lemon Juice Concentrate, Stevia
+          Leaf*, Himalayan Pink Salt, Natural Flavors.
+        </p>
+
+        <p class="product-story__footnote">*Extract</p>
+      </div>
+
+      <div class="product-story__reviews">
+        <div class="product-story__reviews-track">
+
+          <!-- Block: testimonial (1/2), shared with testimonial_carousel -->
+          <article class="testimonial-card product-story__card">
+            <div class="testimonial-card__media">
+              <img src="../assets/dummy/Perfect.png" alt="Tina A holding a Munchief pouch and drinking a Munchief soda" />
+            </div>
+            <div class="testimonial-card__body">
+              <div class="rating rating--lg">
+                <span class="rating__stars" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                </span>
+              </div>
+              <h3 class="testimonial-card__title">Perfect way to unwind</h3>
+              <p class="testimonial-card__text">
+                I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.
+              </p>
+              <hr class="testimonial-card__divider" />
+              <span class="testimonial-card__author">Tina A</span>
+            </div>
+          </article>
+
+          <!-- Block: testimonial (2/2), shared with testimonial_carousel -->
+          <article class="testimonial-card product-story__card">
+            <div class="testimonial-card__media">
+              <img src="../assets/dummy/favorite.png" alt="Munchief soda can lineup on a shelf" />
+            </div>
+            <div class="testimonial-card__body">
+              <div class="rating rating--lg">
+                <span class="rating__stars" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                </span>
+              </div>
+              <h3 class="testimonial-card__title">My new favorite treat</h3>
+              <p class="testimonial-card__text">
+                These Makhanas are amazing. The flavor is actually really good. I take one after work and it just melts the stress away. Will definitely be ordering again.
+              </p>
+              <hr class="testimonial-card__divider" />
+              <span class="testimonial-card__author">Sara M</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container product-story__badges">
+
+      <!-- Block: feature_badge (1/6) -->
+      <div class="icon-badge">
+        <span class="icon-badge__circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 8 12 3 3 8l9 5 9-5Z"></path>
+            <path d="M3 8v8l9 5 9-5V8"></path>
+            <path d="M12 13v8"></path>
+          </svg>
+        </span>
+        <span class="icon-badge__label">Less Sugar</span>
+      </div>
+
+      <!-- Block: feature_badge (2/6) -->
+      <div class="icon-badge">
+        <span class="icon-badge__circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 20A7 7 0 0 1 4 13c0-5 5-11 11-11 0 6-1 8-2 10-1.5 3-4 6-2 8Z"></path>
+            <path d="M4 13c3 0 6 1 8 4"></path>
+          </svg>
+        </span>
+        <span class="icon-badge__label">Real Ingredients</span>
+      </div>
+
+      <!-- Block: feature_badge (3/6) -->
+      <div class="icon-badge">
+        <span class="icon-badge__circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a4 4 0 0 1 4 4c0 2-2 3-2 5a3 3 0 0 0 3 3 4 4 0 0 1 0 8H9a5 5 0 0 1 0-10c2 0 3-1.5 3-3a4 4 0 0 0-4-4"></path>
+          </svg>
+        </span>
+        <span class="icon-badge__label">Supports Digestive Health</span>
+      </div>
+
+      <!-- Block: feature_badge (4/6), highlight = true -->
+      <div class="icon-badge">
+        <span class="icon-badge__circle icon-badge__circle--solid">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <text x="12" y="17" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="16" fill="currentColor">V</text>
+          </svg>
+        </span>
+        <span class="icon-badge__label">Vegan</span>
+      </div>
+
+      <!-- Block: feature_badge (5/6) -->
+      <div class="icon-badge">
+        <span class="icon-badge__circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c1 1 2 3 2 5a5 5 0 0 1-10 0c0-4 3-5 3-9 0-2 1-3 2-4Z"></path>
+          </svg>
+        </span>
+        <span class="icon-badge__label">Roasted Not Fried</span>
+      </div>
+
+      <!-- Block: feature_badge (6/6) -->
+      <div class="icon-badge">
+        <span class="icon-badge__circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21V10"></path>
+            <path d="M12 10c0-4-3-6-7-6 0 4 3 6 7 6Z"></path>
+            <path d="M12 14c0-3 3-5 7-5 0 3-3 5-7 5Z"></path>
+          </svg>
+        </span>
+        <span class="icon-badge__label">· Prebiotic ·</span>
+      </div>
+
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Product Story ===================== -->
+
+</body>
+</html>

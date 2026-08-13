@@ -174,6 +174,52 @@
   color: var(--color-badge-orange-text);
 }
 
+/* Icon badge ---------------------------------------------------------------
+   Trust-badge/feature callout: an outline icon circle with a small uppercase
+   label underneath. Base skin is transparent fill + a border colored by
+   whatever text color the section sets; the --solid modifier fills the
+   circle instead (e.g. product_story's highlighted "Vegan" badge). Reuse for
+   any future trust-badge/feature-icon row instead of rebuilding. */
+.icon-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
+}
+
+.icon-badge__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  border: var(--border-width-thin) solid currentColor;
+}
+
+.icon-badge__circle svg {
+  width: 26px;
+  height: 26px;
+}
+
+.icon-badge__circle--solid {
+  background-color: var(--color-brand-red);
+  border-color: var(--color-brand-red);
+  color: var(--color-white);
+}
+
+.icon-badge__label {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: 11px;
+  line-height: var(--lh-relaxed);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  max-width: 96px;
+}
+
 /* Star rating ------------------------------------------------------------ */
 .rating {
   display: flex;
@@ -203,6 +249,13 @@
 .rating--lg .rating__stars svg {
   width: 18px;
   height: 18px;
+}
+
+/* Modifier: renders a star as "unfilled" for a fractional rating value
+   (e.g. product_main's 4.3-of-5) — swap the gold fill for a muted one on
+   whichever trailing star(s) the rating value doesn't reach. */
+.rating__star--partial {
+  color: var(--color-star-empty);
 }
 
 /* Price ------------------------------------------------------------------ */
@@ -271,6 +324,17 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+}
+
+/* Wraps media/rating/title/price so the card links to its PDP; the variant
+   select and Add to Cart button stay outside this link (siblings on
+   .product-card) since interactive controls can't nest inside an <a>. */
+.product-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  color: inherit;
+  text-decoration: none;
 }
 
 .product-card__media {
@@ -526,4 +590,196 @@
 .newsletter-form__submit:focus-visible {
   background-color: var(--color-brand-red-dark);
   transform: translateY(-2px);
+}
+
+/* Variant pills ------------------------------------------------------------
+   Row of selectable weight/size pills for a product's buy box (e.g.
+   product_main's "70g Tin" / "20g Tasting Pouch"). Reuse for any future PDP
+   variant picker instead of rebuilding. */
+.variant-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.variant-pill {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-select);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width-thin) solid var(--color-select-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.variant-pill:hover,
+.variant-pill:focus-visible {
+  border-color: var(--color-black);
+}
+
+.variant-pill.is-selected {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Quantity stepper -----------------------------------------------------------
+   Pill-shaped −/value/+ control that pairs with an Add to Cart button in a
+   PDP buy box. Reuse for any future product-quantity control. */
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xs) var(--space-md);
+  border: var(--border-width-thin) solid var(--color-select-border);
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.qty-stepper__btn {
+  background: none;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-black);
+  cursor: pointer;
+  padding: var(--space-2xs);
+}
+
+.qty-stepper__value {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-select);
+  min-width: 1ch;
+  text-align: center;
+}
+
+/* Pincode checker ------------------------------------------------------------
+   Inline pill input + submit button for delivery-availability checks.
+   Reuse for any future PDP serviceability form. */
+.pincode-form {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.pincode-form__input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-select);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width-thin) solid var(--color-select-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-md);
+  outline: none;
+}
+
+.pincode-form__input:focus-visible {
+  border-color: var(--color-black);
+}
+
+.pincode-form__submit {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-select);
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+}
+
+/* Trust badges ---------------------------------------------------------------
+   Row of icon+label reassurance items under a PDP buy box (dispatch,
+   payment, replacement, product-claim). Reuse for any future PDP trust row. */
+.trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg) var(--space-md);
+}
+
+.trust-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  width: 76px;
+  text-align: center;
+}
+
+.trust-badge svg {
+  width: 26px;
+  height: 26px;
+  color: var(--color-black);
+}
+
+.trust-badge span {
+  font-family: var(--font-ui);
+  font-size: var(--fs-product-note);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* Upsell card ----------------------------------------------------------------
+   Compact cross-sell card (media + title/body/price + CTA) surfaced inside
+   a PDP buy box, e.g. product_main's "Must Try" combo offer. Reuse for any
+   future inline cross-sell card instead of rebuilding. */
+.upsell-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm);
+  background-color: var(--color-upsell-card-bg);
+  border: var(--border-width-thin) solid var(--color-upsell-card-border);
+  border-radius: var(--radius-md);
+}
+
+.upsell-card__badge {
+  position: absolute;
+  top: calc(var(--space-md) * -1 + 2px);
+  left: var(--space-sm);
+}
+
+.upsell-card__media {
+  width: 56px;
+  height: 84px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.upsell-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.upsell-card__title {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-select);
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.upsell-card__text {
+  font-family: var(--font-ui);
+  font-size: var(--fs-product-note);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.upsell-card__cta {
+  flex-shrink: 0;
+  padding-block: var(--space-xs);
+  font-size: 13px;
 }
