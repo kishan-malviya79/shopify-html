@@ -19,21 +19,22 @@
   overflow: hidden;
 }
 
-/* Wavy top/bottom divider rule — one big, lazy sine wave (wide period, low
-   bump count) rather than a tight repeating scallop, matching the single
-   flowing curve in the Figma reference. Straddles each edge so it reads as
-   a rule sitting on top of whatever content is adjacent, same technique as
-   footer's scalloped edge. */
+/* Wavy top/bottom divider rule — a single irregular hand-drawn line (big
+   peak near the left, a long shallow trough through the middle, a smaller
+   peak, then a rise at the right edge) stretched to the full section width,
+   matching the Figma reference exactly instead of a uniform repeating sine
+   tile. Straddles each edge so it reads as a rule sitting on top of
+   whatever content is adjacent, same technique as footer's scalloped edge. */
 .brand-story::before,
 .brand-story::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  height: 24px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='24'%3E%3Cpath d='M0 12 Q120 -10 240 12 T480 12' stroke='%23ef3b34' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-size: 480px 24px;
+  height: 70px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='940' height='90' preserveAspectRatio='none'%3E%3Cpath d='M0 38 C50 0 110 0 150 10 C230 30 260 60 340 65 C400 68 410 72 450 74 C500 76 520 50 570 42 C610 36 630 28 660 30 C710 33 720 50 760 52 C810 55 840 35 870 22 C900 12 920 8 940 6' stroke='%23ef3b34' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .brand-story::before {
@@ -41,9 +42,13 @@
   transform: translateY(-50%);
 }
 
+/* Bottom edge reuses the same path but flipped vertically — the top's high
+   peak on the left now reads as a low dip on the bottom-left, so the two
+   edges look like complementary halves of one shape instead of identical
+   twins ("top wave in bottom, bottom in top"). */
 .brand-story::after {
   bottom: 0;
-  transform: translateY(50%);
+  transform: translateY(50%) scaleY(-1);
 }
 
 .brand-story__row {
