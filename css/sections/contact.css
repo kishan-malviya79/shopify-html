@@ -1,109 +1,136 @@
 /* ==========================================================================
    Section: contact_us
+   Metrics below match its Figma dev-mode spec exactly (section padding/gap,
+   card padding/gap/radius, info-card padding/radius, heading size/color/
+   stroke) unless a comment says otherwise.
    ========================================================================== */
 
-.contact-hero {
-  padding-block: var(--space-lg) var(--space-2xl);
-  text-align: center;
-}
-
-.contact-hero__breadcrumb {
-  justify-content: center;
-  margin-bottom: var(--space-2xl);
-}
-
-.contact-hero__heading {
-  font-size: var(--fs-contact-heading);
-}
-
 .contact {
-  padding-bottom: var(--space-2xl);
+  display: flex;
+  justify-content: center;
+  padding-block: var(--space-2xl);
+  background-color: var(--color-card-bg);
+}
+
+.contact__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.contact__breadcrumb {
+  justify-content: center;
+}
+
+/* Heading composes the shared .stroke-heading skin (Mouse Memoirs, uppercase,
+   paint-order stroke-then-fill) but overrides color/stroke-width/shadow to
+   this section's own spec — distinct red hex and no drop shadow, unlike the
+   shared skin's default red/shadowed treatment. */
+.contact__heading {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 82px);
+  line-height: 0.9;
+  color: var(--color-brand-red-line);
+  -webkit-text-stroke: var(--stroke-width-heading) var(--color-white);
+  text-shadow: none;
+}
+
+@media (min-width: 1025px) {
+  .contact__heading {
+    font-size: var(--fs-display-heading-desktop);
+    -webkit-text-stroke-width: var(--stroke-width-heading-desktop);
+  }
 }
 
 .contact-card {
-  display: grid;
-  grid-template-columns: minmax(0, 380px) 1fr;
-  gap: var(--space-2xl);
-  padding: var(--space-2xl);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xl);
+  width: 100%;
+  padding: var(--space-xl);
   background-color: var(--color-contact-card-bg);
-  border-radius: var(--radius-xl);
+  border: var(--border-width-card) solid var(--color-white);
+  border-radius: var(--radius-2xl);
+}
+
+.contact-info,
+.contact-form {
+  flex: 1;
+  min-width: 0;
 }
 
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-card);
 }
 
 .contact-info__item {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md);
+  gap: var(--space-sm);
+  padding: var(--space-sm);
   background-color: var(--color-white);
   border-radius: var(--radius-md);
 }
 
 .contact-info__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-contact-pin-bg);
   color: var(--color-contact-pin);
 }
 
-.contact-info__icon svg {
-  width: 18px;
-  height: 18px;
+.contact-info__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
 }
 
 .contact-info__label {
-  margin: 0 0 var(--space-2xs);
+  margin: 0;
   font-family: var(--font-ui);
   font-weight: var(--fw-bold);
-  font-size: 15px;
+  font-size: var(--fs-contact-label);
+  line-height: var(--lh-normal);
   color: var(--color-black);
 }
 
 .contact-info__value {
   margin: 0;
   font-family: var(--font-ui);
-  font-size: var(--fs-contact-input);
-  line-height: var(--lh-relaxed);
-  color: var(--color-text-secondary);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-contact-label);
+  line-height: var(--lh-normal);
+  color: var(--color-black);
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-lg);
 }
 
-.contact-form__submit {
-  margin-top: var(--space-xs);
+.contact-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card);
 }
 
 @media (max-width: 900px) {
   .contact-card {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 }
 
 @media (max-width: 640px) {
+  .contact {
+    padding-block: var(--space-xl);
+  }
+
   .contact-card {
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
-  }
-
-  .contact-hero {
-    padding-bottom: var(--space-xl);
-  }
-
-  .contact-hero__breadcrumb {
-    margin-bottom: var(--space-lg);
   }
 }
