@@ -228,3 +228,32 @@
     flex: none;
   }
 }
+
+/* Narrow phones: the 3 action pills' text labels no longer fit next to the
+   logo without overflowing the viewport (discovered building product_main's
+   full-PDP preview, which is the first place this header renders down to
+   360-400px — the same overflow already existed standalone/on index.html,
+   just hadn't been checked at this width before). Drop each pill to
+   icon-only; aria-label on the cart button and the visually-hidden text
+   below keep them accessible. */
+@media (max-width: 420px) {
+  .site-header__action span:not(.site-header__ribbon):not(.site-header__cart-count) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .site-header__action {
+    padding: 9px;
+  }
+
+  .site-header__ribbon {
+    display: none;
+  }
+}

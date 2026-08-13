@@ -1,0 +1,135 @@
+<!--
+  Section: faq_section
+
+  Settings:
+    - image (image_picker) — dummy default: assets/dummy/chutney-pop.png
+    - heading (text) — default: "Questions?<br>We're here to help."
+    - more_questions_text (text) — default: "Still have questions?"
+    - more_questions_link_text (text) — default: "Let's chat"
+    - more_questions_link (url)
+
+  Blocks:
+    - block type "faq_item" (repeatable, 1 per accordion row):
+        - question (text)
+        - answer (richtext)
+        - open_by_default (checkbox) — default: false
+
+  Fonts: heading uses "Fredoka" (matches brand_story's subheading voice);
+  question/answer text use "Inter". All Google Fonts, loaded here for
+  preview; in the Shopify build, load them through the theme's font
+  settings or a self-hosted @font-face instead.
+
+  Images: photo reuses the product's own dummy shot (chutney-pop.png),
+  framed in a rotated bordered card — same "border + shadow + rotate"
+  recipe as brand_story's photo frame, kept section-local rather than
+  promoted to a shared class (see css/sections/faq.css).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/faq.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: FAQ (faq_section)
+       ====================================================================== -->
+  <section class="faq" aria-label="Frequently asked questions">
+    <div class="container faq__grid">
+
+      <div class="faq__photo">
+        <img src="../assets/dummy/chutney-pop.png" alt="Mimi's Chutney Pop tin" />
+      </div>
+
+      <div class="faq__content">
+        <h2 class="faq__heading">Questions?<br />We're here to help.</h2>
+
+        <div class="accordion">
+          <!-- Block: faq_item (1/4) -->
+          <div class="accordion__item is-open">
+            <button type="button" class="accordion__trigger" aria-expanded="true">
+              How long does shipping take?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>Most orders dispatch within 24 hours and arrive in 3–6 business days, depending on your pincode. You can check serviceability right on this page before you order.</p>
+            </div>
+          </div>
+
+          <!-- Block: faq_item (2/4) -->
+          <div class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false">
+              Is Chutney Pop vegan?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>Yes — every Munchief makhana flavour, including Chutney Pop, is 100% vegan, roasted (not fried), and made with real ingredients.</p>
+            </div>
+          </div>
+
+          <!-- Block: faq_item (3/4) -->
+          <div class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false">
+              How should I store it after opening?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>Reseal the pouch or snap the tin's lid back on and keep it somewhere cool and dry. For maximum crunch, we'd finish it within 2–3 weeks of opening.</p>
+            </div>
+          </div>
+
+          <!-- Block: faq_item (4/4) -->
+          <div class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false">
+              Can I return it if I don't like the flavour?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>We offer a 7-day return window on unopened packs. If something arrived damaged, reach out and we'll sort a replacement or refund.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="faq__more">Still have questions? <a href="#">Let's chat</a></p>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: FAQ ===================== -->
+
+  <script>
+    // Accordion toggle — only one row open at a time. Section-scoped via
+    // document.querySelector('.faq'), NOT document.currentScript.closest(),
+    // since this script tag is a sibling after the section closes, not a
+    // descendant (closest() only walks ancestors and would return null —
+    // the same bug fixed in product_main's gallery/variant script).
+    (function () {
+      var section = document.querySelector('.faq');
+      var items = section.querySelectorAll('.accordion__item');
+      items.forEach(function (item) {
+        var trigger = item.querySelector('.accordion__trigger');
+        trigger.addEventListener('click', function () {
+          var isOpen = item.classList.contains('is-open');
+          items.forEach(function (i) {
+            i.classList.remove('is-open');
+            i.querySelector('.accordion__trigger').setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

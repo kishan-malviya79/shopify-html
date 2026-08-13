@@ -1,0 +1,108 @@
+<!--
+  Section: combo_promo
+
+  Settings:
+    - heading (text) — default: "The Crunch Max Combo"
+    - product (product) — Shopify product reference for the combo card;
+      supplies title, price, compare_at_price and featured_image
+    - image (image_picker) — dummy default: assets/dummy/can-guava-chilli-lime.svg
+    - rating_value (number, 0–5 step 0.5) — default: 5
+    - description (richtext) — default: "The crunch, the flap, the full-on
+      flavour scene. Pair Chutney Pop with a Guava Chilli Lime protein soda."
+    - button_label (text) — default: "Add Combo to Cart"
+    - button_link (url)
+
+  Blocks: none — single combo-card instance, no repeater content.
+
+  Fonts: heading reuses the shared "Mouse Memoirs" `.stroke-heading--white`
+  skin (css/components.css) — same treatment used for headings on other
+  saturated/busy backgrounds (hero_banner, world_grid's orange card,
+  product_carousel/chaos_banner's "Shop Now"); card title uses "Fredoka".
+  All Google Fonts, loaded here for preview; in the Shopify build, load
+  them through the theme's font settings or a self-hosted @font-face
+  instead.
+
+  Background: the sunburst is a pure-CSS repeating-conic-gradient (see
+  css/sections/combo-promo.css .combo-promo) rather than an image — no
+  dummy asset needed, and it scales to any viewport without cropping.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combo Promo — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/combo-promo.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Combo Promo (combo_promo)
+       ====================================================================== -->
+  <section class="combo-promo" aria-label="Combo offer">
+    <div class="container">
+
+      <h2 class="combo-promo__heading stroke-heading stroke-heading--white">The Crunch Max Combo</h2>
+
+      <div class="combo-card">
+        <div class="combo-card__media">
+          <img src="../assets/dummy/can-guava-chilli-lime.svg" alt="Mimi + Guava Chilli Lime" />
+        </div>
+        <div class="combo-card__body">
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+          <h3 class="combo-card__title">Mimi + Guava Chilli Lime</h3>
+          <p class="combo-card__text">The crunch, the flap, the full-on flavour scene. Pair Chutney Pop with a Guava Chilli Lime protein soda.</p>
+          <div class="price">
+            <span class="price__sale">₹300</span>
+            <span class="price__compare">₹450</span>
+            <span class="badge badge--green">Save ₹150</span>
+          </div>
+          <div class="combo-card__cart-row">
+            <div class="qty-stepper">
+              <button type="button" class="qty-stepper__btn" data-qty-decrease aria-label="Decrease quantity">−</button>
+              <span class="qty-stepper__value" data-qty-value>1</span>
+              <button type="button" class="qty-stepper__btn" data-qty-increase aria-label="Increase quantity">+</button>
+            </div>
+            <button type="button" class="btn btn--pill btn--red">Add Combo to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Combo Promo ===================== -->
+
+  <script>
+    // Preview-only interactivity for the quantity stepper — same pattern as
+    // product_main's script. In the Shopify build this stays as a small
+    // section script, not settings-driven behavior.
+    (function () {
+      var section = document.querySelector('section.combo-promo');
+      var qtyValue = section.querySelector('[data-qty-value]');
+      section.querySelector('[data-qty-decrease]').addEventListener('click', function () {
+        var next = Math.max(1, parseInt(qtyValue.textContent, 10) - 1);
+        qtyValue.textContent = next;
+      });
+      section.querySelector('[data-qty-increase]').addEventListener('click', function () {
+        var next = parseInt(qtyValue.textContent, 10) + 1;
+        qtyValue.textContent = next;
+      });
+    })();
+  </script>
+
+</body>
+</html>

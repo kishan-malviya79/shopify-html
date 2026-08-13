@@ -783,3 +783,423 @@
   padding-block: var(--space-xs);
   font-size: 13px;
 }
+
+/* Review breakdown ----------------------------------------------------------
+   Star-count histogram (5 down to 1) paired with a reviews summary score.
+   Reuse for any future ratings-summary block. */
+.review-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.review-breakdown__row {
+  display: grid;
+  grid-template-columns: 12px 1fr 28px;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-ui);
+  font-size: var(--fs-review-meta);
+  color: var(--color-text-secondary);
+}
+
+.review-breakdown__track {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-star-empty);
+  overflow: hidden;
+}
+
+.review-breakdown__fill {
+  height: 100%;
+  background-color: var(--color-black);
+  border-radius: var(--radius-pill);
+}
+
+/* Review card ----------------------------------------------------------------
+   Compact written-review card: rating + verified badge, title, snippet text,
+   author/date footer. Reuse for any future reviews-grid section. */
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-card);
+  border: var(--border-width-thin) solid var(--color-gallery-thumb-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+}
+
+.review-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.review-card__title {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-review-title);
+  color: var(--color-black);
+  margin: 0;
+}
+
+.review-card__text {
+  font-family: var(--font-ui);
+  font-size: var(--fs-review-text);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.review-card__text a {
+  color: var(--color-black);
+  font-weight: var(--fw-medium);
+}
+
+.review-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  margin-top: auto;
+  padding-top: var(--space-xs);
+  font-family: var(--font-ui);
+  font-size: var(--fs-review-meta);
+}
+
+.review-card__author {
+  font-weight: var(--fw-medium);
+  color: var(--color-black);
+}
+
+.review-card__date {
+  color: var(--color-text-muted);
+}
+
+/* Pagination ------------------------------------------------------------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.pagination__page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: var(--fs-review-meta);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.pagination__page.is-active {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.pagination__next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  border: var(--border-width-thin) solid var(--color-select-border);
+  background: none;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.pagination__next svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Combo card -------------------------------------------------------------
+   Larger promo-card variant of .product-card/.upsell-card for a dedicated
+   bundle/combo offer section: media + rating/title/text/price + qty
+   stepper + CTA. Reuse for any future standalone combo/bundle section. */
+.combo-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+  padding: var(--space-xl);
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.combo-card__media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-cream-bg);
+}
+
+.combo-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.combo-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.combo-card__title {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-card-title);
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.combo-card__text {
+  font-family: var(--font-ui);
+  font-size: var(--fs-product-description);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-xs);
+}
+
+.combo-card__cart-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.combo-card__cart-row .btn {
+  flex: 1;
+}
+
+@media (max-width: 640px) {
+  .combo-card {
+    grid-template-columns: 1fr;
+    padding: var(--space-lg);
+  }
+}
+
+/* Accordion ----------------------------------------------------------------
+   FAQ-style disclosure list: bordered rows, each a button trigger (question
+   + rotating chevron) revealing a plain-text answer panel. Reuse for any
+   future FAQ/disclosure-list section. */
+.accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion__item {
+  border-bottom: var(--border-width-thin) solid var(--color-gallery-thumb-border);
+}
+
+.accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  width: 100%;
+  padding-block: var(--space-md);
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-faq-question);
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.accordion__trigger svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.accordion__item.is-open .accordion__trigger svg {
+  transform: rotate(45deg);
+}
+
+.accordion__panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease;
+}
+
+.accordion__item.is-open .accordion__panel {
+  max-height: 200px;
+}
+
+.accordion__panel p {
+  margin: 0 0 var(--space-md);
+  font-family: var(--font-ui);
+  font-size: var(--fs-faq-answer);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* Skin: dark — solid black fill, white label, no border/shadow. Used for
+   dense form-submit CTAs (e.g. contact_us "Send Message"). */
+.btn--dark {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.btn--dark:hover,
+.btn--dark:focus-visible {
+  background-color: #000000;
+}
+
+/* Modifier: rounded — large-radius rectangle instead of a full pill/stadium
+   shape. Pairs with a skin modifier for CTAs that need a squarer footprint
+   than .btn--pill, e.g. a full-width form-submit button. */
+.btn--rounded {
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Breadcrumb ---------------------------------------------------------------
+   Simple "Home > Current Page" trail. Reuse for any future interior page
+   (policy pages, blog posts, etc.) instead of rebuilding. */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb__link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.breadcrumb__link:hover {
+  color: var(--color-black);
+}
+
+.breadcrumb__sep {
+  color: var(--color-text-muted);
+}
+
+.breadcrumb__current {
+  color: var(--color-black);
+  font-weight: var(--fw-medium);
+}
+
+/* Form field ---------------------------------------------------------------
+   Labeled text input/textarea for contact/signup-style forms. Reuse for any
+   future form section instead of rebuilding. */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.form-field__label {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-contact-label);
+  color: var(--color-black);
+}
+
+.form-field__required {
+  color: var(--color-brand-red);
+}
+
+.form-field__input,
+.form-field__textarea {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: var(--fs-contact-input);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width-thin) solid var(--color-contact-input-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-md);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.form-field__input::placeholder,
+.form-field__textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-field__input:focus-visible,
+.form-field__textarea:focus-visible {
+  border-color: var(--color-black);
+}
+
+.form-field__textarea {
+  border-radius: var(--radius-md);
+  min-height: 128px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Phone input — country-code select fused with the number field into one
+   pill, e.g. contact_us's phone number field. */
+.phone-input {
+  display: flex;
+  align-items: stretch;
+  background-color: var(--color-white);
+  border: var(--border-width-thin) solid var(--color-contact-input-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.phone-input__code {
+  appearance: none;
+  flex-shrink: 0;
+  background-color: transparent;
+  border: none;
+  border-right: var(--border-width-thin) solid var(--color-contact-input-border);
+  font-family: var(--font-ui);
+  font-size: var(--fs-contact-input);
+  color: var(--color-black);
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
+  cursor: pointer;
+}
+
+.phone-input__number {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: var(--fs-contact-input);
+  color: var(--color-black);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.phone-input__number::placeholder {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

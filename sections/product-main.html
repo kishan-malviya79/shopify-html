@@ -44,13 +44,15 @@
   assets/dummy/can-guava-chilli-lime.svg) standing in for real product
   media picked in Shopify.
 
-  This file also renders product_story (sections/product-story.html)
-  directly below the buy box, and product_photo_banner
-  (sections/product-photo-banner.html) below that at the very bottom, so
-  this preview reads as one full PDP for Mimi's Chutney Pop rather than
-  just the above-the-fold buy box. See each section's own header comment
-  for its settings/blocks — they're separate sections, just placed here in
-  page order, not blocks of product_main.
+  This file assembles the full PDP for Mimi's Chutney Pop, in page order:
+  header, this buy box, product_story (sections/product-story.html),
+  product_photo_banner (sections/product-photo-banner.html),
+  product_reviews (sections/product-reviews.html), combo_promo
+  (sections/combo-promo.html), faq_section (sections/faq.html), a
+  product_carousel instance ("Meet the Rest of the Family"), and footer.
+  See each section's own header comment for its settings/blocks — they're
+  separate sections, just placed here in page order, not blocks of
+  product_main.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -60,14 +62,87 @@
   <title>Product Main — Section Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Mouse+Memoirs&family=Fredoka:wght@500;600&family=Comic+Neue:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Mouse+Memoirs&family=Fredoka:wght@500;600&family=Comic+Neue:wght@700&family=Inter:wght@400;500;600;700&family=Poppins:wght@500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/header.css" />
   <link rel="stylesheet" href="../css/sections/product-main.css" />
   <link rel="stylesheet" href="../css/sections/product-story.css" />
   <link rel="stylesheet" href="../css/sections/product-photo-banner.css" />
+  <link rel="stylesheet" href="../css/sections/product-reviews.css" />
+  <link rel="stylesheet" href="../css/sections/combo-promo.css" />
+  <link rel="stylesheet" href="../css/sections/faq.css" />
+  <link rel="stylesheet" href="../css/sections/product-carousel.css" />
+  <link rel="stylesheet" href="../css/sections/footer.css" />
 </head>
 <body>
+
+  <!-- ======================================================================
+       Section: Header (header)
+       ====================================================================== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+
+      <!-- Block: nav_link x2, both with a dropdown_menu -->
+      <nav class="site-header__nav" aria-label="Primary">
+        <div class="site-header__nav-item">
+          <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
+            Products
+            <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
+          </button>
+          <div class="site-header__dropdown">
+            <a href="#" class="site-header__dropdown-link">Munchief Family</a>
+            <a href="#" class="site-header__dropdown-link">Munchief Sodas</a>
+            <a href="#" class="site-header__dropdown-link">Combo Bundles</a>
+          </div>
+        </div>
+        <div class="site-header__nav-item">
+          <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
+            Learn
+            <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
+          </button>
+          <div class="site-header__dropdown">
+            <a href="#" class="site-header__dropdown-link">Our Story</a>
+            <a href="#" class="site-header__dropdown-link">Reviews</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="#" class="site-header__logo" aria-label="Munchief home">
+        <img src="../assets/dummy/logo.png" alt="Munchief" />
+      </a>
+
+      <div class="site-header__actions">
+        <a href="#" class="site-header__action site-header__action--bundle">
+          <span class="site-header__ribbon">Bestseller</span>
+          <span>Build Your Bundle</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+        </a>
+
+        <a href="#" class="site-header__action">
+          <span>Account</span>
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1c-3 0-6 1.5-6 4v1h12v-1c0-2.5-3-4-6-4Z"/></svg>
+        </a>
+
+        <button type="button" class="site-header__action" aria-label="Cart, 0 items">
+          <span>Cart</span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6h8l-.6 7.7a1.3 1.3 0 0 1-1.3 1.2H5.9a1.3 1.3 0 0 1-1.3-1.2L4 6Z" fill="currentColor"/>
+            <path d="M6 6V4.6a2 2 0 0 1 4 0V6" stroke="currentColor" stroke-width="1.3" fill="none"/>
+          </svg>
+          <span class="site-header__cart-count" data-count="0">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+  <!-- ===================== /Section: Header ===================== -->
 
   <!-- ======================================================================
        Section: Product Main (product_main)
@@ -430,6 +505,585 @@
   </section>
   <!-- ===================== /Section: Product Photo Banner ===================== -->
 
+  <!-- ======================================================================
+       Section: Product Reviews (product_reviews) — same product; see
+       sections/product-reviews.html for this section on its own.
+       ====================================================================== -->
+  <section class="product-reviews" aria-label="Customer reviews" id="reviews">
+    <div class="container">
+
+      <h2 class="product-reviews__heading">Customer Reviews</h2>
+
+      <div class="product-reviews__summary">
+        <div class="product-reviews__score">
+          <div class="rating rating--lg">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+          </div>
+          <span class="product-reviews__score-value">4.75 out of 5</span>
+          <span class="product-reviews__score-count">Based on 118 reviews</span>
+        </div>
+
+        <div class="review-breakdown">
+          <div class="review-breakdown__row">
+            <span>5</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 80%;"></div></div>
+            <span>94</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>4</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 12%;"></div></div>
+            <span>14</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>3</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 5%;"></div></div>
+            <span>6</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>2</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 2%;"></div></div>
+            <span>3</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>1</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 1%;"></div></div>
+            <span>1</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn--pill btn--outline product-reviews__write-btn">Write a review</button>
+      </div>
+
+      <div class="review-grid">
+
+        <!-- Block: review (1/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Perfectly chatpata, not overpowering</h3>
+          <p class="review-card__text">
+            Some chutney snacks I've tried are way too tangy or too salty.
+            This one nails the balance — crunchy, spiced, and I keep going
+            back for... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Ankit Bansal</span>
+            <span class="review-card__date">08/21/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (2/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Great for post-workout cravings</h3>
+          <p class="review-card__text">
+            I keep a tin at my desk and a pouch in my gym bag. Roasted, not
+            fried, so it doesn't feel like a guilty snack after a... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Vikas Gupta</span>
+            <span class="review-card__date">08/19/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (3/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Excellent product, cost-effective</h3>
+          <p class="review-card__text">
+            Compared to other roasted makhana brands I've bought, this is
+            easily the best value for the flavour and quantity you... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Soumya Mitra</span>
+            <span class="review-card__date">08/17/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (4/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Delivery was spot on</h3>
+          <p class="review-card__text">
+            Ordered on a Tuesday, got it Thursday. Super fast and the
+            packaging kept everything crisp — no crushed tins or... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Varun Kapoor</span>
+            <span class="review-card__date">08/14/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (5/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Crunchy and genuinely addictive</h3>
+          <p class="review-card__text">
+            Roasted, never fried, but you'd never guess from the crunch. The
+            green chutney flavour is the closest I've had to the real... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Nikhil Desai</span>
+            <span class="review-card__date">08/10/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (6/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Stress levels have gone down</h3>
+          <p class="review-card__text">
+            I didn't expect a performance supplement to affect my stress,
+            but this one definitely has. Calming without making me... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Karan Rao</span>
+            <span class="review-card__date">08/05/2025</span>
+          </div>
+        </article>
+
+      </div>
+
+      <nav class="pagination" aria-label="Review pages">
+        <button type="button" class="pagination__page is-active" aria-current="page">1</button>
+        <button type="button" class="pagination__page">2</button>
+        <button type="button" class="pagination__page">3</button>
+        <button type="button" class="pagination__page">4</button>
+        <button type="button" class="pagination__next" aria-label="Next page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+      </nav>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Product Reviews ===================== -->
+
+  <!-- ======================================================================
+       Section: Combo Promo (combo_promo) — same product; see
+       sections/combo-promo.html for this section on its own.
+       ====================================================================== -->
+  <section class="combo-promo" aria-label="Combo offer">
+    <div class="container">
+
+      <h2 class="combo-promo__heading stroke-heading stroke-heading--white">The Crunch Max Combo</h2>
+
+      <div class="combo-card">
+        <div class="combo-card__media">
+          <img src="../assets/dummy/can-guava-chilli-lime.svg" alt="Mimi + Guava Chilli Lime" />
+        </div>
+        <div class="combo-card__body">
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+          <h3 class="combo-card__title">Mimi + Guava Chilli Lime</h3>
+          <p class="combo-card__text">The crunch, the flap, the full-on flavour scene. Pair Chutney Pop with a Guava Chilli Lime protein soda.</p>
+          <div class="price">
+            <span class="price__sale">₹300</span>
+            <span class="price__compare">₹450</span>
+            <span class="badge badge--green">Save ₹150</span>
+          </div>
+          <div class="combo-card__cart-row">
+            <div class="qty-stepper">
+              <button type="button" class="qty-stepper__btn" data-combo-qty-decrease aria-label="Decrease quantity">−</button>
+              <span class="qty-stepper__value" data-combo-qty-value>1</span>
+              <button type="button" class="qty-stepper__btn" data-combo-qty-increase aria-label="Increase quantity">+</button>
+            </div>
+            <button type="button" class="btn btn--pill btn--red">Add Combo to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Combo Promo ===================== -->
+
+  <!-- ======================================================================
+       Section: FAQ (faq_section) — see sections/faq.html for this section
+       on its own.
+       ====================================================================== -->
+  <section class="faq" aria-label="Frequently asked questions">
+    <div class="container faq__grid">
+
+      <div class="faq__photo">
+        <img src="../assets/dummy/chutney-pop.png" alt="Mimi's Chutney Pop tin" />
+      </div>
+
+      <div class="faq__content">
+        <h2 class="faq__heading">Questions?<br />We're here to help.</h2>
+
+        <div class="accordion">
+          <!-- Block: faq_item (1/4) -->
+          <div class="accordion__item is-open">
+            <button type="button" class="accordion__trigger" aria-expanded="true">
+              How long does shipping take?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>Most orders dispatch within 24 hours and arrive in 3–6 business days, depending on your pincode. You can check serviceability right on this page before you order.</p>
+            </div>
+          </div>
+
+          <!-- Block: faq_item (2/4) -->
+          <div class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false">
+              Is Chutney Pop vegan?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>Yes — every Munchief makhana flavour, including Chutney Pop, is 100% vegan, roasted (not fried), and made with real ingredients.</p>
+            </div>
+          </div>
+
+          <!-- Block: faq_item (3/4) -->
+          <div class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false">
+              How should I store it after opening?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>Reseal the pouch or snap the tin's lid back on and keep it somewhere cool and dry. For maximum crunch, we'd finish it within 2–3 weeks of opening.</p>
+            </div>
+          </div>
+
+          <!-- Block: faq_item (4/4) -->
+          <div class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false">
+              Can I return it if I don't like the flavour?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__panel">
+              <p>We offer a 7-day return window on unopened packs. If something arrived damaged, reach out and we'll sort a replacement or refund.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="faq__more">Still have questions? <a href="#">Let's chat</a></p>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: FAQ ===================== -->
+
+  <!-- ======================================================================
+       Section: Product Carousel (product_carousel) — "Meet the Rest of the
+       Family" instance, nav_style = "cta" (Shop All link instead of arrows).
+       See sections/product-carousel.html for this section on its own.
+       ====================================================================== -->
+  <section class="product-carousel" aria-label="Meet the rest of the family">
+    <div class="container">
+
+      <div class="product-carousel__header">
+        <h2 class="product-carousel__heading">Meet the Rest of the Family</h2>
+
+        <div class="product-carousel__nav">
+          <a href="product-carousel.html" class="btn btn--pill btn--outline">
+            Shop All
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="product-carousel__track" data-carousel-track>
+
+        <!-- Block: product_card (1/3) -->
+        <article class="product-card">
+          <a href="product-main.html" class="product-card__link">
+          <div class="product-card__media">
+            <span class="badge badge--orange product-card__badge">20% Weekend Only</span>
+            <img src="../assets/dummy/pouch-chutney-pop.svg" alt="Mimi's Chutney Pop pouch" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Mimi's Chutney Pop</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          </a>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>20g Tasting Pouch — ₹99</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+        <!-- Block: product_card (2/3) -->
+        <article class="product-card">
+          <a href="product-main.html" class="product-card__link">
+          <div class="product-card__media">
+            <span class="badge badge--orange product-card__badge">Best Seller</span>
+            <img src="../assets/dummy/pouch-salt-pop.svg" alt="Tantan's Salt Pop pouch" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Tantan's Salt Pop</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          </a>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>20g Tasting Pouch — ₹99</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+        <!-- Block: product_card (3/3) -->
+        <article class="product-card">
+          <a href="product-main.html" class="product-card__link">
+          <div class="product-card__media">
+            <img src="../assets/dummy/pouch-noodle-blast.svg" alt="Chiku's Noodle Blast pouch" />
+          </div>
+
+          <div class="rating">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+            <span class="rating__count">(53)</span>
+          </div>
+
+          <h3 class="product-card__title">Chiku's Noodle Blast</h3>
+
+          <div class="price">
+            <span class="price__sale">₹99</span>
+            <span class="price__compare">₹299</span>
+            <span class="badge badge--green">Save ₹200</span>
+          </div>
+
+          </a>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>20g Tasting Pouch — ₹99</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block">Add to Cart</button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  <!-- ===================== /Section: Product Carousel (family) ===================== -->
+
+  <!-- ======================================================================
+       Section: Footer (footer) — see sections/footer.html for this section
+       on its own.
+       ====================================================================== -->
+  <footer class="footer" aria-label="Site footer">
+
+    <img class="footer__logo" src="../assets/dummy/logo.png" alt="Munchief" />
+
+    <div class="footer__hero">
+
+      <div class="footer__bubble footer__bubble--left">
+        <img src="../assets/dummy/Perfect.png" alt="" role="presentation" />
+      </div>
+
+      <h2 class="footer__heading">More Munch<br />More Crunch</h2>
+
+      <div class="footer__bubble footer__bubble--right">
+        <img src="../assets/dummy/favorite.png" alt="" role="presentation" />
+      </div>
+
+      <form class="footer__newsletter newsletter-form" action="#" method="post">
+        <input class="newsletter-form__input" type="email" name="email" placeholder="Enter your email..." aria-label="Email address" required />
+        <button type="submit" class="newsletter-form__submit">Notify Me</button>
+      </form>
+
+    </div>
+
+    <div class="footer__columns">
+
+      <!-- Block: footer_column (1/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Drinks</h3>
+        <ul class="footer__links">
+          <li><a href="#">Guava Chilli Lime</a></li>
+          <li><a href="#">Nimbu Jeera</a></li>
+          <li><a href="#">Mix Berry</a></li>
+          <li><a href="#">Wild Berries</a></li>
+          <li><a href="#">Variety Pack</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (2/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Makhanas</h3>
+        <ul class="footer__links">
+          <li><a href="#">Chutney Pop</a></li>
+          <li><a href="#">Noodle Blast</a></li>
+          <li><a href="#">Salt Pop</a></li>
+          <li><a href="#">Pop'n'Pani</a></li>
+          <li><a href="#">Pickle Punch</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (3/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Explore</h3>
+        <ul class="footer__links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (4/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Munchief</h3>
+        <ul class="footer__links">
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">My Cart</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (5/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Legal</h3>
+        <ul class="footer__links">
+          <li><a href="#">Refund Policy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="footer__divider" />
+
+    <p class="footer__copyright">©2026 Munchief. All rights reserved.</p>
+
+    <p class="footer__legal">Munchief &middot; Magical Foods &amp; Beverages LLP — Demo build for internal review. Pricing shown is placeholder</p>
+
+  </footer>
+  <!-- ===================== /Section: Footer ===================== -->
+
   <script>
     // Preview-only interactivity: thumbnail click swaps the main image,
     // variant pill selects update the displayed price, quantity stepper
@@ -465,6 +1119,96 @@
       section.querySelector('[data-qty-increase]').addEventListener('click', function () {
         var next = parseInt(qtyValue.textContent, 10) + 1;
         qtyValue.textContent = next;
+      });
+    })();
+  </script>
+
+  <script>
+    // Header dropdown menus — same script as sections/header.html. Global
+    // querySelectorAll is safe here since header appears once per page.
+    (function () {
+      var items = document.querySelectorAll('.site-header__nav-item');
+
+      function closeAll(except) {
+        items.forEach(function (item) {
+          if (item === except) return;
+          item.classList.remove('is-open');
+          var trigger = item.querySelector('.site-header__nav-link');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      items.forEach(function (item) {
+        var trigger = item.querySelector('.site-header__nav-link');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = item.classList.contains('is-open');
+          closeAll();
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          } else {
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+
+      document.addEventListener('click', function () { closeAll(); });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        items.forEach(function (item) {
+          if (!item.classList.contains('is-open')) return;
+          var trigger = item.querySelector('.site-header__nav-link');
+          closeAll();
+          if (trigger) trigger.focus();
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    // Combo promo quantity stepper — scoped to section.combo-promo and its
+    // own data-combo-qty-* attributes so it doesn't collide with the buy
+    // box's identically-shaped qty-stepper above.
+    (function () {
+      var section = document.querySelector('section.combo-promo');
+      var qtyValue = section.querySelector('[data-combo-qty-value]');
+      section.querySelector('[data-combo-qty-decrease]').addEventListener('click', function () {
+        var next = Math.max(1, parseInt(qtyValue.textContent, 10) - 1);
+        qtyValue.textContent = next;
+      });
+      section.querySelector('[data-combo-qty-increase]').addEventListener('click', function () {
+        var next = parseInt(qtyValue.textContent, 10) + 1;
+        qtyValue.textContent = next;
+      });
+    })();
+  </script>
+
+  <script>
+    // FAQ accordion toggle — same script as sections/faq.html, scoped via
+    // document.querySelector('.faq') rather than document.currentScript
+    // .closest(), since this script tag is a sibling after the section
+    // closes, not a descendant (closest() only walks ancestors and would
+    // return null — the same bug fixed in the buy-box script above).
+    (function () {
+      var section = document.querySelector('.faq');
+      var items = section.querySelectorAll('.accordion__item');
+      items.forEach(function (item) {
+        var trigger = item.querySelector('.accordion__trigger');
+        trigger.addEventListener('click', function () {
+          var isOpen = item.classList.contains('is-open');
+          items.forEach(function (i) {
+            i.classList.remove('is-open');
+            i.querySelector('.accordion__trigger').setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
       });
     })();
   </script>

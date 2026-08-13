@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Section: contact_us
+   ========================================================================== */
+
+.contact-hero {
+  padding-block: var(--space-lg) var(--space-2xl);
+  text-align: center;
+}
+
+.contact-hero__breadcrumb {
+  justify-content: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.contact-hero__heading {
+  font-size: var(--fs-contact-heading);
+}
+
+.contact {
+  padding-bottom: var(--space-2xl);
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) 1fr;
+  gap: var(--space-2xl);
+  padding: var(--space-2xl);
+  background-color: var(--color-contact-card-bg);
+  border-radius: var(--radius-xl);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.contact-info__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+}
+
+.contact-info__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-contact-pin-bg);
+  color: var(--color-contact-pin);
+}
+
+.contact-info__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-info__label {
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-ui);
+  font-weight: var(--fw-bold);
+  font-size: 15px;
+  color: var(--color-black);
+}
+
+.contact-info__value {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-contact-input);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.contact-form__submit {
+  margin-top: var(--space-xs);
+}
+
+@media (max-width: 900px) {
+  .contact-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-card {
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+  }
+
+  .contact-hero {
+    padding-bottom: var(--space-xl);
+  }
+
+  .contact-hero__breadcrumb {
+    margin-bottom: var(--space-lg);
+  }
+}

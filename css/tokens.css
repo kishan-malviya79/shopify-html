@@ -33,6 +33,10 @@
   --color-upsell-card-border: #f0d9b5; /* product_main "Must Try" upsell card border, warm tan */
   --color-upsell-card-bg: #fff8ec; /* product_main "Must Try" upsell card fill */
   --color-terracotta: #d05835; /* product_story background — matches its Figma dev-mode spec exactly, distinct from the brighter --color-brand-orange used elsewhere */
+  --color-contact-card-bg: #f8dad0; /* contact_us info+form card background — soft peach/pink */
+  --color-contact-pin: #f2685a; /* contact_us location-pin icon color, coral/salmon */
+  --color-contact-pin-bg: #fce3dc; /* contact_us location-pin icon circle background — pale tint of --color-contact-pin */
+  --color-contact-input-border: #f0c9bb; /* contact_us form input border — soft peach, distinct from --color-select-border used elsewhere */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -106,6 +110,18 @@
   --fs-product-description: 15px;
   --fs-product-note: 13px; /* product_main tax note, checkout note, trust badge labels */
   --fs-product-variant-label: 13px;
+  --fs-review-score-value: 20px; /* product_reviews summary "4.75 out of 5" */
+  --fs-review-score-count: 13px;
+  --fs-review-title: 15px;
+  --fs-review-text: 13px;
+  --fs-review-meta: 12px;
+  --fs-combo-heading: clamp(26px, 4vw, 42px); /* combo_promo "The Crunch Max Combo" */
+  --fs-faq-heading: clamp(26px, 3.6vw, 36px);
+  --fs-faq-question: 16px;
+  --fs-faq-answer: 14px;
+  --fs-contact-heading: clamp(32px, 5.4vw, 56px);
+  --fs-contact-label: 14px;
+  --fs-contact-input: 15px;
 
   --fw-medium: 500;
   --fw-bold: 700;

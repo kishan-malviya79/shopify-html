@@ -1,0 +1,269 @@
+<!--
+  Section: product_reviews
+
+  Settings:
+    - heading (text) — default: "Customer Reviews"
+    - rating_value (number, 0–5 step 0.01) — default: 4.75
+    - rating_count (number) — default: 118
+    - write_review_text (text) — default: "Write a review"
+    - write_review_link (url)
+    - star_5_count / star_4_count / star_3_count / star_2_count /
+      star_1_count (number) — drive the `.review-breakdown` histogram bars;
+      defaults: 94 / 14 / 6 / 3 / 1 (sums to rating_count)
+
+  Blocks:
+    - block type "review" (repeatable, 1 per review card):
+        - rating_value (number, 0–5 step 0.5) — default: 5
+        - verified (checkbox) — default: true; shows the "Verified" badge
+        - title (text)
+        - body (richtext) — truncated with a "Read more" link in Liquid via
+          a line-clamp + JS/detail-page pattern; here it's just plain text
+        - author (text)
+        - date (text) — default format: MM/DD/YYYY
+
+  Fonts: heading reuses "Anton" (matches product_carousel/product_story's
+  secondary-heading voice); card titles use "Fredoka"; body/meta text use
+  "Inter". All Google Fonts, loaded here for preview; in the Shopify build,
+  load them through the theme's font settings or a self-hosted @font-face
+  instead.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Reviews — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/product-reviews.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Product Reviews (product_reviews)
+       ====================================================================== -->
+  <section class="product-reviews" aria-label="Customer reviews" id="reviews">
+    <div class="container">
+
+      <h2 class="product-reviews__heading">Customer Reviews</h2>
+
+      <div class="product-reviews__summary">
+        <div class="product-reviews__score">
+          <div class="rating rating--lg">
+            <span class="rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+            </span>
+          </div>
+          <span class="product-reviews__score-value">4.75 out of 5</span>
+          <span class="product-reviews__score-count">Based on 118 reviews</span>
+        </div>
+
+        <div class="review-breakdown">
+          <div class="review-breakdown__row">
+            <span>5</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 80%;"></div></div>
+            <span>94</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>4</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 12%;"></div></div>
+            <span>14</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>3</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 5%;"></div></div>
+            <span>6</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>2</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 2%;"></div></div>
+            <span>3</span>
+          </div>
+          <div class="review-breakdown__row">
+            <span>1</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: 1%;"></div></div>
+            <span>1</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn--pill btn--outline product-reviews__write-btn">Write a review</button>
+      </div>
+
+      <div class="review-grid">
+
+        <!-- Block: review (1/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Perfectly chatpata, not overpowering</h3>
+          <p class="review-card__text">
+            Some chutney snacks I've tried are way too tangy or too salty.
+            This one nails the balance — crunchy, spiced, and I keep going
+            back for... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Ankit Bansal</span>
+            <span class="review-card__date">08/21/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (2/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Great for post-workout cravings</h3>
+          <p class="review-card__text">
+            I keep a tin at my desk and a pouch in my gym bag. Roasted, not
+            fried, so it doesn't feel like a guilty snack after a... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Vikas Gupta</span>
+            <span class="review-card__date">08/19/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (3/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Excellent product, cost-effective</h3>
+          <p class="review-card__text">
+            Compared to other roasted makhana brands I've bought, this is
+            easily the best value for the flavour and quantity you... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Soumya Mitra</span>
+            <span class="review-card__date">08/17/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (4/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Delivery was spot on</h3>
+          <p class="review-card__text">
+            Ordered on a Tuesday, got it Thursday. Super fast and the
+            packaging kept everything crisp — no crushed tins or... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Varun Kapoor</span>
+            <span class="review-card__date">08/14/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (5/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Crunchy and genuinely addictive</h3>
+          <p class="review-card__text">
+            Roasted, never fried, but you'd never guess from the crunch. The
+            green chutney flavour is the closest I've had to the real... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Nikhil Desai</span>
+            <span class="review-card__date">08/10/2025</span>
+          </div>
+        </article>
+
+        <!-- Block: review (6/6) -->
+        <article class="review-card">
+          <div class="review-card__header">
+            <div class="rating">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <span class="badge badge--green">Verified</span>
+          </div>
+          <h3 class="review-card__title">Stress levels have gone down</h3>
+          <p class="review-card__text">
+            I didn't expect a performance supplement to affect my stress,
+            but this one definitely has. Calming without making me... <a href="#">Read more</a>
+          </p>
+          <div class="review-card__footer">
+            <span class="review-card__author">Karan Rao</span>
+            <span class="review-card__date">08/05/2025</span>
+          </div>
+        </article>
+
+      </div>
+
+      <nav class="pagination" aria-label="Review pages">
+        <button type="button" class="pagination__page is-active" aria-current="page">1</button>
+        <button type="button" class="pagination__page">2</button>
+        <button type="button" class="pagination__page">3</button>
+        <button type="button" class="pagination__page">4</button>
+        <button type="button" class="pagination__next" aria-label="Next page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+      </nav>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Product Reviews ===================== -->
+
+</body>
+</html>
