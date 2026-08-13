@@ -20,7 +20,7 @@
 }
 
 .contact__breadcrumb {
-  justify-content: center;
+  align-self: flex-start;
 }
 
 /* Heading composes the shared .stroke-heading skin (Mouse Memoirs, uppercase,
