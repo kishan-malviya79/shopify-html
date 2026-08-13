@@ -31,7 +31,10 @@
   <section class="announcement-bar ticker" aria-label="Announcements">
     <div class="ticker__track">
 
-      <!-- Group 1 (real content) -->
+      <!-- Real content (announced once). 6 total copies of the item set are
+           rendered across this + the 5 duplicate groups below so the ticker
+           never runs out of content mid-scroll on wide viewports (see
+           .announcement-bar .ticker__track override in announcement-bar.css). -->
       <div class="ticker__group">
         <span class="announcement-bar__item">JOYFULLY BOLD</span>
         <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
@@ -43,8 +46,55 @@
         <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
       </div>
 
-      <!-- Group 2 (exact duplicate, hidden from assistive tech) — animation
-           scrolls exactly one group-width so the loop reads as continuous. -->
+      <!-- Duplicate 1/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 2/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 3/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 4/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 5/5 (aria-hidden) -->
       <div class="ticker__group" aria-hidden="true">
         <span class="announcement-bar__item">JOYFULLY BOLD</span>
         <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>

@@ -29,18 +29,19 @@
   --color-ink: #5f0e00; /* dark maroon, used for body copy on warm backgrounds */
   --color-btn-ink: #211c3d; /* dark navy-indigo used for button labels/icons/borders, not pure black */
   --color-overlay: rgba(0, 0, 0, 0.15);
-  --color-text-muted: #9b9690; /* struck-through compare-at prices, secondary text */
+  --color-text-muted: #7b7b7b; /* struck-through compare-at prices, secondary text */
   --color-text-secondary: #6f6a63; /* body copy on cream backgrounds, e.g. testimonial review text */
   --color-border: #1b1b1b; /* default rounded-card border, e.g. testimonial cards */
   --color-card-bg: #fbf6ed; /* bordered-card fill, e.g. testimonial cards — lighter than --color-cream */
 
   /* Color — commerce UI (badges, ratings, product cards) */
-  --color-badge-green-bg: #d8ecac;
-  --color-badge-green-text: #4c6b1f;
-  --color-badge-orange-bg: #f3ac4e;
-  --color-badge-orange-text: #6b3d10;
-  --color-star: #f5a623;
-  --color-select-border: #dcd5c2;
+  --color-badge-green-bg: #d3fa99;
+  --color-badge-green-text: #1c3a13;
+  --color-badge-orange-bg: #ffc247;
+  --color-badge-orange-text: #1c3a13; /* both badge skins share the same dark-ink text per spec, regardless of pill color */
+  --color-star: #f7a81c;
+  --color-select-border: rgba(0, 0, 0, 0.37);
+  --color-shadow-pop: #8a3216; /* skeuomorphic "pop" shadow under solid CTA buttons, e.g. Add to Cart */
 
   /* Typography
      --font-display requires "Mouse Memoirs" and --font-body requires "Comic
@@ -60,17 +61,18 @@
   --fs-btn: 16px;
   --fs-marquee: clamp(13px, 1.4vw, 16px);
   --fs-section-heading: clamp(24px, 3.6vw, 38px);
-  --fs-badge: 11px;
-  --fs-card-title: 15px;
-  --fs-price: 19px;
-  --fs-price-compare: 14px;
-  --fs-select: 13px;
-  --fs-rating-count: 13px;
+  --fs-badge: 12px;
+  --fs-card-title: 22px;
+  --fs-price: 16px;
+  --fs-price-compare: 16px;
+  --fs-select: 14px;
+  --fs-rating-count: 14px;
   --fs-testimonial-title: 28px;
   --fs-testimonial-text: 14px;
   --fs-testimonial-author: 24px;
   --fs-ticker-item: 12px;
 
+  --fw-medium: 500;
   --fw-bold: 700;
   --fw-black: 900;
 
@@ -110,7 +112,7 @@
 
   /* Shadow */
   --shadow-btn: 0 4px 10px rgba(0, 0, 0, 0.15);
-  --shadow-btn-pop: 0 3px 0 var(--color-brand-red-dark); /* skeuomorphic "pop" edge under solid CTA buttons */
+  --shadow-btn-pop: 0 6px 0 var(--color-shadow-pop); /* skeuomorphic "pop" edge under solid CTA buttons */
 
   /* Layout */
   --container-max: 1280px;
