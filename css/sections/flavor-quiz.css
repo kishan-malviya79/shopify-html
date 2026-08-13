@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Section: flavor_quiz
+   Full-bleed sunburst-background interactive quiz (4-step branching flow —
+   see sections/flavor-quiz.html for the JS). Heading skin reuses
+   .stroke-heading/.stroke-heading--white (css/components.css) — don't
+   duplicate it here. Rays/dots/sparkles are pure CSS + inline SVG (no photo
+   asset), built from existing color tokens rather than new one-off hexes.
+   ========================================================================== */
+
+.flavor-quiz {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-2xl);
+  text-align: center;
+  /* Alternating-stripe sunburst radiating from the section center, built
+     from the existing brand red/orange tokens instead of new ray-specific
+     colors. */
+  background: repeating-conic-gradient(
+    from 0deg at 50% 45%,
+    var(--color-brand-red-bright) 0deg 9deg,
+    var(--color-brand-orange) 9deg 18deg
+  );
+}
+
+/* Halftone dot texture over the rays, same "decorative overlay" role as
+   brand_story's wavy ::before/::after rule but a repeating dot tile instead
+   of a wave path. */
+.flavor-quiz::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.35) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.flavor-quiz__decor {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flavor-quiz__star {
+  position: absolute;
+  color: var(--color-cream);
+  opacity: 0.85;
+}
+
+.flavor-quiz__star--1 {
+  top: 8%;
+  left: 8%;
+  width: 22px;
+  height: 22px;
+  transform: rotate(-12deg);
+}
+
+.flavor-quiz__star--2 {
+  top: 14%;
+  right: 10%;
+  width: 16px;
+  height: 16px;
+  transform: rotate(20deg);
+  opacity: 0.6;
+}
+
+.flavor-quiz__star--3 {
+  bottom: 12%;
+  left: 12%;
+  width: 14px;
+  height: 14px;
+  transform: rotate(8deg);
+  opacity: 0.6;
+}
+
+.flavor-quiz__star--4 {
+  bottom: 10%;
+  right: 9%;
+  width: 24px;
+  height: 24px;
+  transform: rotate(-18deg);
+}
+
+.flavor-quiz__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  max-width: 560px;
+}
+
+.flavor-quiz__heading {
+  margin: 0;
+  font-size: var(--fs-section-heading);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
+}
+
+.flavor-quiz__text {
+  margin: 0;
+  max-width: 380px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: clamp(13px, 1.6vw, 16px);
+  line-height: var(--lh-normal);
+  color: var(--color-ink);
+}
+
+.flavor-quiz__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 440px;
+  min-height: 280px;
+  margin-top: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  background-color: var(--color-cream-bg);
+  border: var(--border-width-thin) solid var(--color-photo-border-gold);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-btn);
+}
+
+/* Progress dots — one per step, filled in as the quiz advances. */
+.flavor-quiz__progress {
+  display: flex;
+  gap: var(--space-xs);
+  justify-content: center;
+}
+
+.flavor-quiz__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.flavor-quiz__dot.is-done {
+  background-color: var(--color-photo-border-gold);
+}
+
+/* Steps — only the active one renders; JS toggles .is-active. */
+.flavor-quiz__step {
+  display: none;
+  width: 100%;
+}
+
+.flavor-quiz__step.is-active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.flavor-quiz__question {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-black);
+}
+
+.flavor-quiz__options {
+  display: grid;
+  /* minmax(0, 1fr), not 1fr — a bare 1fr track still floors at the content's
+     min-content width, so a long label (e.g. "Like you've earned a win")
+     pushes the grid (and the card) wider than the viewport instead of
+     wrapping. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+/* Odd option out in a row (e.g. a lone 5th mood, or step 1's two world
+   picks) spans both columns instead of leaving a gap. */
+.flavor-quiz__option--wide {
+  grid-column: 1 / -1;
+}
+
+.flavor-quiz__option-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-star);
+}
+
+/* Result data is block markup the script reads from, never rendered. */
+.flavor-quiz__result-data {
+  display: none;
+}
+
+.flavor-quiz__result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.flavor-quiz__result-media {
+  width: 130px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-btn);
+}
+
+.flavor-quiz__result-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.flavor-quiz__result-name {
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--color-black);
+}
+
+.flavor-quiz__result-quote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 14px;
+  color: var(--color-rust);
+}
+
+.flavor-quiz__result-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+/* Below this width the 2-column option grid gets cramped — stack every
+   option full-width instead (the --wide modifier is then a no-op). */
+@media (max-width: 480px) {
+  .flavor-quiz__options {
+    grid-template-columns: 1fr;
+  }
+}

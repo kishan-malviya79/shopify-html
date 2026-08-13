@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Placeholder pouch: Pop'n'Pani">
+  <rect width="400" height="500" fill="#f6dbe0"/>
+  <path d="M90 120 L310 120 L330 470 Q330 490 310 490 L90 490 Q70 490 70 470 Z" fill="#8fc7dc"/>
+  <path d="M90 120 L120 90 L280 90 L310 120 Z" fill="#5fa8c2"/>
+  <path d="M70 470 L90 120 L120 120 L100 470 Z" fill="#ffffff" opacity="0.35"/>
+  <path d="M170 120 L150 470 L180 470 L200 120 Z" fill="#ffffff" opacity="0.35"/>
+  <path d="M260 120 L240 470 L270 470 L290 120 Z" fill="#ffffff" opacity="0.35"/>
+  <text x="200" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="22" fill="#ffffff">munchief</text>
+  <text x="200" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="30" fill="#0d3f52">POP'N'PANI</text>
+  <text x="200" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="14" letter-spacing="2" fill="#ffffff">ROASTED MAKHANA</text>
+</svg>

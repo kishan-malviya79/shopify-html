@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Placeholder pouch: Pickle Punch">
+  <rect width="400" height="500" fill="#f6dbe0"/>
+  <path d="M90 120 L310 120 L330 470 Q330 490 310 490 L90 490 Q70 490 70 470 Z" fill="#c3d17a"/>
+  <path d="M90 120 L120 90 L280 90 L310 120 Z" fill="#a9b85c"/>
+  <line x1="150" y1="120" x2="150" y2="480" stroke="#a9b85c" stroke-width="2" opacity="0.5"/>
+  <line x1="250" y1="120" x2="250" y2="480" stroke="#a9b85c" stroke-width="2" opacity="0.5"/>
+  <text x="200" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="22" fill="#ffffff">munchief</text>
+  <text x="200" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="30" fill="#4a3410">PICKLE PUNCH</text>
+  <text x="200" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="14" letter-spacing="2" fill="#fff6df">ROASTED MAKHANA</text>
+</svg>

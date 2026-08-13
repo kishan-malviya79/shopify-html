@@ -5,6 +5,20 @@
    existing component instead of duplicating it.
    ========================================================================== */
 
+/* Global box model — every component here pairs a set width with padding
+   and/or a border (.container's width:100% + padding-inline, cards, pills,
+   the quiz option grid, ...). Without border-box, padding/border add on top
+   of that width instead of being included in it, silently overflowing the
+   box. This was previously missing sitewide; it only became visible once
+   flavor_quiz's option grid pushed a hard edge close to the viewport
+   boundary at narrow widths — every other .container-based section had the
+   same latent overflow, just not enough to notice. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* Layout container ------------------------------------------------------- */
 .container {
   width: 100%;
@@ -95,6 +109,33 @@
 .btn--block {
   display: flex;
   width: 100%;
+}
+
+/* Modifier: sm — compact padding/type for a secondary/tertiary action sitting
+   next to a full-size primary CTA (e.g. flavor_quiz's "Try again" next to
+   its "Shop this" button). Stacks on .btn--pill; must be declared after it
+   to win the padding override. */
+.btn--sm {
+  padding: var(--space-2xs) var(--space-md);
+  font-size: 13px;
+}
+
+/* Skin: quiz-option — white fill, thin gold border, warm-red label. Used for
+   stacked answer pills in flavor_quiz; reuse for any future poll/quiz-style
+   answer button instead of rebuilding. */
+.btn--quiz-option {
+  background-color: var(--color-white);
+  color: var(--color-rust);
+  text-transform: none;
+  letter-spacing: normal;
+  border: var(--border-width-thin) solid var(--color-photo-border-gold);
+  box-shadow: var(--shadow-btn);
+}
+
+.btn--quiz-option:hover,
+.btn--quiz-option:focus-visible {
+  border-color: var(--color-brand-red);
+  color: var(--color-brand-red);
 }
 
 /* Button group — pairs a primary pill CTA with a secondary icon button */

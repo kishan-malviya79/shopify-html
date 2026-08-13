@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/sections/product-carousel.css" />
   <link rel="stylesheet" href="css/sections/testimonial-carousel.css" />
   <link rel="stylesheet" href="css/sections/brand-story.css" />
+  <link rel="stylesheet" href="css/sections/flavor-quiz.css" />
   <link rel="stylesheet" href="css/sections/footer.css" />
 </head>
 <body>
@@ -830,6 +831,147 @@
   <!-- ===================== /Section: Product Carousel (combo) ===================== -->
 
   <!-- ======================================================================
+       Section: Flavor Quiz (flavor_quiz)
+       ====================================================================== -->
+  <section class="flavor-quiz" aria-label="Take the Munchief flavor quiz">
+
+    <div class="flavor-quiz__decor" aria-hidden="true">
+      <svg class="flavor-quiz__star flavor-quiz__star--1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      <svg class="flavor-quiz__star flavor-quiz__star--2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      <svg class="flavor-quiz__star flavor-quiz__star--3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      <svg class="flavor-quiz__star flavor-quiz__star--4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+    </div>
+
+    <div class="container flavor-quiz__inner">
+      <h2 class="flavor-quiz__heading stroke-heading stroke-heading--white">Which One Are You<br />Brave Enough To Try?</h2>
+
+      <p class="flavor-quiz__text">
+        Answer honestly. We'll match you to your Munchief character or soda.
+      </p>
+
+      <div class="flavor-quiz__card">
+
+        <div class="flavor-quiz__progress" aria-hidden="true">
+          <span class="flavor-quiz__dot" data-quiz-dot></span>
+          <span class="flavor-quiz__dot" data-quiz-dot></span>
+          <span class="flavor-quiz__dot" data-quiz-dot></span>
+          <span class="flavor-quiz__dot" data-quiz-dot></span>
+        </div>
+
+        <!-- Step 1: world select -->
+        <div class="flavor-quiz__step is-active" data-quiz-step="1">
+          <p class="flavor-quiz__question">Right now, you're craving...</p>
+          <div class="flavor-quiz__options">
+            <button type="button" class="btn btn--pill btn--quiz-option flavor-quiz__option--wide" data-quiz-world="crunch">
+              A crunch — something to munch
+            </button>
+            <button type="button" class="btn btn--pill btn--quiz-option flavor-quiz__option--wide" data-quiz-world="sip">
+              <svg class="flavor-quiz__option-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>
+              A sip — something to sip
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2 (crunch branch): mood -> block: quiz_character_result (1-5) -->
+        <div class="flavor-quiz__step" data-quiz-step="2-crunch">
+          <p class="flavor-quiz__question">Right now, you're feeling...</p>
+          <div class="flavor-quiz__options">
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="mimi">Loud &amp; hungry</button>
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="tantan">Calm &amp; steady</button>
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="chiku">Wide awake at midnight</button>
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="kunnu">Like you've earned a win</button>
+            <button type="button" class="btn btn--pill btn--quiz-option flavor-quiz__option--wide" data-quiz-match="sunny">Ready to cause some chaos with friends</button>
+          </div>
+        </div>
+
+        <!-- Step 2 (sip branch): craving -> block: quiz_soda_result (1-4) -->
+        <div class="flavor-quiz__step" data-quiz-step="2-sip">
+          <p class="flavor-quiz__question">Your soda mood is...</p>
+          <div class="flavor-quiz__options">
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="guava">Tropical &amp; adventurous</button>
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="nimbu">Classic &amp; familiar</button>
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="jamun">Nostalgic &amp; rooted</button>
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-match="berry">Bright &amp; social</button>
+          </div>
+        </div>
+
+        <!-- Step 3: flavour intensity — block: quiz_intensity_option (1-3),
+             shared by both branches, doesn't change the match -->
+        <div class="flavor-quiz__step" data-quiz-step="3">
+          <p class="flavor-quiz__question">Your flavour intensity comfort zone is...</p>
+          <div class="flavor-quiz__options">
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-intensity="mild">Keep it mild</button>
+            <button type="button" class="btn btn--pill btn--quiz-option" data-quiz-intensity="medium">Medium heat, I can handle it</button>
+            <button type="button" class="btn btn--pill btn--quiz-option flavor-quiz__option--wide" data-quiz-intensity="full">Bring the full chaatpata</button>
+          </div>
+        </div>
+
+        <!-- Step 4: result, populated by script from the matched
+             .flavor-quiz__result-data block below -->
+        <div class="flavor-quiz__step" data-quiz-step="4">
+          <div class="flavor-quiz__result" aria-live="polite">
+            <div class="flavor-quiz__result-media">
+              <img data-quiz-result-img src="" alt="" />
+            </div>
+            <h3 class="flavor-quiz__result-name" data-quiz-result-name></h3>
+            <p class="flavor-quiz__result-quote" data-quiz-result-quote></p>
+            <div class="flavor-quiz__result-actions">
+              <a class="btn btn--pill btn--primary" data-quiz-result-cta href="#">Shop this →</a>
+              <button type="button" class="btn btn--pill btn--outline btn--sm" data-quiz-restart>Try again</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result data: one hidden node per matchable block (rendered from
+             the section's quiz_character_result / quiz_soda_result blocks).
+             The script only ever reads from here — never hardcodes result
+             content. -->
+        <div class="flavor-quiz__result-data" hidden>
+          <!-- Block: quiz_character_result (1/5) -->
+          <div data-quiz-key="mimi" data-name="Mimi's Chutney Pop" data-quote="&quot;Crunch Max. Mumbai mood on.&quot;" data-cta="Shop Mimi's Chutney Pop →" data-link="#">
+            <img src="assets/dummy/pouch-chutney-pop.svg" alt="Mimi's Chutney Pop pouch" />
+          </div>
+          <!-- Block: quiz_character_result (2/5) -->
+          <div data-quiz-key="tantan" data-name="Tantan's Salt Pop" data-quote="&quot;Your gut-friendly bestie in a crunch.&quot;" data-cta="Shop Tantan's Salt Pop →" data-link="#">
+            <img src="assets/dummy/pouch-salt-pop.svg" alt="Tantan's Salt Pop pouch" />
+          </div>
+          <!-- Block: quiz_character_result (3/5) -->
+          <div data-quiz-key="chiku" data-name="Chiku's Noodle Blast" data-quote="&quot;Midnight called. Chiku answered.&quot;" data-cta="Shop Chiku's Noodle Blast →" data-link="#">
+            <img src="assets/dummy/pouch-noodle-blast.svg" alt="Chiku's Noodle Blast pouch" />
+          </div>
+          <!-- Block: quiz_character_result (4/5) -->
+          <div data-quiz-key="kunnu" data-name="Kunnu's Pickle Punch" data-quote="&quot;Tangy, punchy, and fully justified.&quot;" data-cta="Shop Kunnu's Pickle Punch →" data-link="#">
+            <img src="assets/dummy/pouch-pickle-punch.svg" alt="Kunnu's Pickle Punch pouch" />
+          </div>
+          <!-- Block: quiz_character_result (5/5) -->
+          <div data-quiz-key="sunny" data-name="Sunny's Pop'n'Pani" data-quote="&quot;Perfectly chaatpata. Fully Sunny.&quot;" data-cta="Shop Sunny's Pop'n'Pani →" data-link="#">
+            <img src="assets/dummy/pouch-popn-pani.svg" alt="Sunny's Pop'n'Pani pouch" />
+          </div>
+          <!-- Block: quiz_soda_result (1/4) -->
+          <div data-quiz-key="guava" data-name="Guava Chilli Lime" data-quote="&quot;Bold. Tropical. Zesty kick.&quot;" data-cta="Shop Guava Chilli Lime →" data-link="#">
+            <img src="assets/dummy/can-guava-chilli-lime.svg" alt="Guava Chilli Lime can" />
+          </div>
+          <!-- Block: quiz_soda_result (2/4) -->
+          <div data-quiz-key="nimbu" data-name="Nimbu Jeera" data-quote="&quot;Classic desi refresher, zesty and familiar.&quot;" data-cta="Shop Nimbu Jeera →" data-link="#">
+            <img src="assets/dummy/can-nimbu-jeera.svg" alt="Nimbu Jeera can" />
+          </div>
+          <!-- Block: quiz_soda_result (3/4) -->
+          <div data-quiz-key="jamun" data-name="Jamun Jeera" data-quote="&quot;Nostalgic Indian summer, tangy and rooted.&quot;" data-cta="Shop Jamun Jeera →" data-link="#">
+            <img src="assets/dummy/can-jamun-jeera.svg" alt="Jamun Jeera can" />
+          </div>
+          <!-- Block: quiz_soda_result (4/4) -->
+          <div data-quiz-key="berry" data-name="Mixed Berry" data-quote="&quot;Berry bright. Fizzy light.&quot;" data-cta="Shop Mixed Berry →" data-link="#">
+            <img src="assets/dummy/can-mixed-berry.svg" alt="Mixed Berry can" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Flavor Quiz ===================== -->
+
+  <!-- ======================================================================
        Section: Testimonial Carousel (testimonial_carousel)
        ====================================================================== -->
   <section id="reviews" class="testimonial-carousel" aria-label="Customer testimonials">
@@ -970,6 +1112,76 @@
 
         prev.addEventListener('click', function () { scrollByCard(-1); });
         next.addEventListener('click', function () { scrollByCard(1); });
+      });
+    })();
+
+    // Flavor quiz: branching step flow (crunch-or-sip -> mood/craving ->
+    // flavour intensity -> result). Every possible result is rendered as
+    // ordinary block markup in .flavor-quiz__result-data — this only ever
+    // copies the matched block's content into the visible result slot,
+    // never hardcodes it.
+    (function () {
+      document.querySelectorAll('section.flavor-quiz').forEach(function (section) {
+        var steps = section.querySelectorAll('[data-quiz-step]');
+        var dots = section.querySelectorAll('[data-quiz-dot]');
+
+        function showStep(id) {
+          steps.forEach(function (step) {
+            step.classList.toggle('is-active', step.dataset.quizStep === id);
+          });
+        }
+
+        function updateDots(count) {
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('is-done', i < count);
+          });
+        }
+
+        section.querySelectorAll('[data-quiz-world]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            updateDots(1);
+            showStep(btn.dataset.quizWorld === 'crunch' ? '2-crunch' : '2-sip');
+          });
+        });
+
+        section.querySelectorAll('[data-quiz-match]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            section.dataset.quizSelectedMatch = btn.dataset.quizMatch;
+            updateDots(2);
+            showStep('3');
+          });
+        });
+
+        section.querySelectorAll('[data-quiz-intensity]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            updateDots(3);
+
+            var key = section.dataset.quizSelectedMatch;
+            var data = section.querySelector('[data-quiz-key="' + key + '"]');
+            if (data) {
+              var sourceImg = data.querySelector('img');
+              var resultImg = section.querySelector('[data-quiz-result-img]');
+              resultImg.src = sourceImg.getAttribute('src');
+              resultImg.alt = sourceImg.getAttribute('alt');
+              section.querySelector('[data-quiz-result-name]').textContent = data.dataset.name;
+              section.querySelector('[data-quiz-result-quote]').textContent = data.dataset.quote;
+              var cta = section.querySelector('[data-quiz-result-cta]');
+              cta.textContent = data.dataset.cta;
+              cta.href = data.dataset.link;
+            }
+
+            updateDots(4);
+            showStep('4');
+          });
+        });
+
+        var restart = section.querySelector('[data-quiz-restart]');
+        if (restart) {
+          restart.addEventListener('click', function () {
+            updateDots(0);
+            showStep('1');
+          });
+        }
       });
     })();
 
