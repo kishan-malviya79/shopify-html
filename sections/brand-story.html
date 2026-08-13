@@ -17,9 +17,11 @@
   Blocks: none — single brand-story instance, no repeater content
 
   Fonts: main heading reuses the shared .stroke-heading component ("Mouse
-  Memoirs"); subheading uses "Anton" (--font-heading-bold), same voice as
-  product_carousel's heading; body copy uses "Comic Neue" (--font-body); CTA
-  reuses the existing .btn--pill.btn--outline skin.
+  Memoirs"); subheading uses "Fredoka" (--font-heading-rounded, weight 500);
+  body copy uses "Comic Neue" (--font-body); CTA reuses the existing
+  .btn-group/.btn--pill/.btn--icon-circle/.btn--outline pattern (same shape
+  as hero_banner/chaos_banner's CTA pairs) with a local brown color override
+  (--color-cta-ink) — see css/sections/brand-story.css.
 
   Images: hero_image (woman holding a Noodle Blast pouch + Mixed Berry can)
   reuses the existing delicious.png dummy asset — near-exact match for the
@@ -35,7 +37,7 @@
   <title>Brand Story — Section Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@500&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/sections/brand-story.css" />
@@ -71,13 +73,15 @@
           flavour meets a snack that actually wants to be talked about.
         </p>
 
-        <a href="#" class="btn btn--pill btn--outline brand-story__cta">
-          About Munchiefam
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
-          </svg>
-        </a>
+        <div class="btn-group">
+          <a href="#" class="btn btn--pill btn--outline brand-story__cta">About Munchiefam</a>
+          <a href="#" class="btn btn--icon-circle btn--outline brand-story__cta" aria-label="About Munchiefam">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
 

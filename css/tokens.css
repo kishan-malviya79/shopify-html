@@ -24,6 +24,8 @@
   --color-rust: #9a1902; /* announcement bar ticker text/icon */
   --color-brand-red-bright: #f12622; /* footer links/CTA/copyright/legal — distinct from --color-brand-red, matches Figma footer spec exactly */
   --color-brand-red-line: #ef3b34; /* brand_story top/bottom wavy divider rule — distinct hex from --color-brand-red/--color-brand-red-bright, matches Figma "Vector" layer spec exactly */
+  --color-photo-border-gold: #e2af00; /* brand_story hero/character photo frame border — gold, distinct from footer's white blob-callout border */
+  --color-cta-ink: #5b3419; /* brand_story CTA pill/icon-circle border + label — warm brown, distinct from --color-btn-ink's navy used by other outline CTAs */
   --color-footer-card-border: #2f1948; /* newsletter card border on the footer */
   --color-footer-heading-muted: rgba(217, 15, 4, 0.6); /* footer column headings */
   --color-footer-placeholder: rgba(254, 67, 26, 0.4); /* footer newsletter input placeholder */
@@ -88,6 +90,10 @@
   --fs-footer-legal: 11.8px;
   --fs-newsletter-input: 13.3px; /* .newsletter-form__input, css/components.css */
   --fs-newsletter-btn: 13.9px; /* .newsletter-form__submit, css/components.css */
+  --fs-brand-story-heading: clamp(32px, 9vw, 96px); /* fluid size for mobile/tablet */
+  --fs-brand-story-heading-desktop: clamp(80px, 8.5vw, 120px); /* the Figma spec's literal 233px only fits its own 729px-wide unconstrained text box — in this repo's responsive 2-column layout that same box is ~650-700px, so this is capped to the largest size that doesn't wrap "Crunch it."/"Repeat." mid-word */
+  --fs-brand-story-subheading: clamp(22px, 3.4vw, 45px);
+  --fs-brand-story-text: clamp(14px, 1.6vw, 22px);
 
   --fw-medium: 500;
   --fw-bold: 700;
@@ -103,6 +109,7 @@
   --ls-body-snug: -0.16px; /* matches the testimonial card review-text spec */
   --ls-footer-heading-desktop: -7px; /* footer heading letter-spacing at the desktop breakpoint */
   --lh-footer-heading: 0.8; /* 160/200 — matches the footer heading spec */
+  --lh-brand-story-heading: 0.96; /* matches the brand_story heading spec */
 
   /* Spacing scale */
   --space-2xs: 4px;
@@ -120,6 +127,7 @@
   --radius-lg: 24px;
   --radius-xl: 30px; /* e.g. testimonial cards */
   --radius-image: 21px; /* inset photo inside a padded bordered card, e.g. testimonial cards */
+  --radius-photo-frame: 15px; /* brand_story hero/character photo corner radius */
   --radius-pill: 999px;
 
   /* Border */
@@ -128,6 +136,7 @@
   --border-width-card: 3px;
   --stroke-width-heading: 2px; /* mobile/tablet text-stroke weight */
   --stroke-width-heading-desktop: 5px; /* matches the 96px desktop heading spec */
+  --stroke-width-brand-story-desktop: 7px; /* scaled to match --fs-brand-story-heading-desktop's capped size */
 
   /* Shadow */
   --shadow-btn: 0 4px 10px rgba(0, 0, 0, 0.15);
