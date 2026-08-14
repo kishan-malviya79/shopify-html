@@ -13,13 +13,22 @@
 
 .bundle {
   background-color: var(--color-cream-bg);
-  padding-block: var(--space-2xl);
+  /* Tighter at the top: the breadcrumb is the section's first row now, so the
+     old full 2xl lead-in would double up on its own spacing. */
+  padding-block: var(--space-md) var(--space-2xl);
 }
 
 .bundle__inner {
   display: flex;
   flex-direction: column;
   gap: var(--space-2xl);
+}
+
+/* Inside the section (not above it) so it sits on the same cream background
+   as the rest of the page — same placement as collection_grid's breadcrumb. */
+.bundle__breadcrumb {
+  align-self: flex-start;
+  margin-bottom: calc(var(--space-2xl) * -1 + var(--space-lg));
 }
 
 /* Intro ------------------------------------------------------------------- */
