@@ -17,39 +17,56 @@
   position: relative;
   background-color: var(--color-yellow-bright);
   padding-block: var(--space-2xl);
-  overflow: hidden;
+  /* clip sideways (the rotated photos overhang) but stay visible vertically,
+     so the wave edges below can sit outside the section. `clip` not `hidden`:
+     hidden on one axis forces the other to scroll. */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
-/* Wavy top/bottom divider rule — a single irregular hand-drawn line (big
-   peak near the left, a long shallow trough through the middle, a smaller
-   peak, then a rise at the right edge) stretched to the full section width,
-   matching the Figma reference exactly instead of a uniform repeating sine
-   tile. Straddles each edge so it reads as a rule sitting on top of
-   whatever content is adjacent, same technique as footer's scalloped edge. */
+/* Wavy top/bottom edges — the exported Figma "Vector" layers
+   (assets/dummy/icons/wave-top.svg / wave-bottom.svg). Each is the yellow
+   band's own wavy edge with the red rule baked in as the shape's offset drop
+   shadow (dy -9 on top, +8 on bottom), so the red line always sits on the
+   outside of the curve exactly as drawn. Replaced a hand-derived sine path
+   that only approximated the rhythm.
+
+   They sit outside the section (translate ±100%) and are 1440-wide shapes
+   stretched to the viewport, so the wave keeps its proportions at any width. */
 .brand-story::before,
 .brand-story::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  height: 70px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='940' height='90' preserveAspectRatio='none'%3E%3Cpath d='M0 38 C50 0 110 0 150 10 C230 30 260 60 340 65 C400 68 410 72 450 74 C500 76 520 50 570 42 C610 36 630 28 660 30 C710 33 720 50 760 52 C810 55 840 35 870 22 C900 12 920 8 940 6' stroke='%23ef3b34' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  pointer-events: none;
 }
 
 .brand-story::before {
   top: 0;
-  transform: translateY(-50%);
+  height: clamp(48px, 7.6vw, 109px);
+  transform: translateY(-100%);
+  background-image: url("../../assets/dummy/icons/wave-top.svg");
 }
 
-/* Bottom edge reuses the same path but flipped vertically — the top's high
-   peak on the left now reads as a low dip on the bottom-left, so the two
-   edges look like complementary halves of one shape instead of identical
-   twins ("top wave in bottom, bottom in top"). */
+/* Bottom edge: the same top-wave shape flipped. Its solid side is now the
+   top, so it continues the section's yellow with no seam, its wavy edge dips
+   into whatever follows, and the shape's red shadow lands just under that
+   curve — the look in the reference.
+
+   (The exported wave-bottom.svg is filled only *below* its wavy edge, so any
+   placement of it either left a cream sliver against the section or hid the
+   curve entirely; the flipped top shape is the same drawing without that
+   problem.) */
 .brand-story::after {
   bottom: 0;
-  transform: translateY(50%) scaleY(-1);
+  /* Capped at 64px so the tongue stays inside the next section's own top
+     padding (--space-2xl) instead of running into its heading. */
+  height: clamp(36px, 4.4vw, 64px);
+  transform: translateY(100%) scaleY(-1);
+  background-image: url("../../assets/dummy/icons/wave-top.svg");
 }
 
 .brand-story__row {
@@ -63,14 +80,14 @@
   padding-bottom: var(--space-2xl);
 }
 
-/* Heading — fluid on mobile/tablet; at desktop, --fs-brand-story-heading-desktop
-   is capped well below the Figma spec's literal 233px so "Crunch it."/
-   "Repeat." don't wrap mid-word inside this layout's column (see that
-   token's comment in tokens.css for the math). Line-height still matches
-   the spec's 96%. */
+/* Heading — the spec's literal 233px in its own 729px box, one word-group
+   per line. It was previously capped at ~120px because the heading shared a
+   grid column with the photo; the photo is now absolutely placed (as in the
+   comp), so the headline has the width to run at full size. */
 .brand-story__heading {
   font-size: var(--fs-brand-story-heading);
   line-height: var(--lh-brand-story-heading);
+  max-width: 729px;
   margin: 0;
 }
 
@@ -133,10 +150,10 @@
   font-family: var(--font-body);
   font-weight: var(--fw-bold);
   font-size: var(--fs-brand-story-text);
-  line-height: 1.41; /* 31/22 — matches the Figma spec */
+  line-height: 1.4; /* 30.8/22 — matches the Figma spec */
   letter-spacing: var(--ls-tight);
   color: var(--color-ink);
-  max-width: 480px;
+  max-width: 645px; /* the spec's copy column */
   margin: 0;
 }
 
@@ -146,8 +163,23 @@
    section only, same "local skin override" precedent as testimonial-card's
    monochrome .rating__stars override in components.css. */
 .brand-story__cta.btn--outline {
-  border-color: var(--color-cta-ink);
+  height: 50px;
+  background-color: transparent;
+  border: 2px solid var(--color-cta-ink);
+  font-size: var(--fs-select);
+  letter-spacing: -0.56px;
   color: var(--color-cta-ink);
+}
+
+.brand-story__cta.btn--pill {
+  min-width: 123px;
+  padding-inline: 23.5px;
+}
+
+.brand-story__cta.btn--icon-circle {
+  width: 50px;
+  min-width: 50px;
+  padding-inline: 0;
 }
 
 /* Responsive ---------------------------------------------------------------
@@ -166,6 +198,48 @@
 @media (min-width: 1025px) {
   .brand-story__row--intro {
     grid-template-columns: 1.3fr 1fr;
+  }
+}
+
+/* Desktop: the comp doesn't put the heading and hero photo in two columns —
+   the photo is pinned to the right edge and the 729px headline runs beneath
+   it, which is what lets the type reach 233px. The about row then starts
+   200px lower with a 62px gutter. */
+@media (min-width: 1025px) {
+  /* Bottom padding is small on purpose: the wave band below adds its own
+     ~72px of yellow, so the spec's 50px here would read as dead space. */
+  .brand-story {
+    padding-block: 106px var(--space-md);
+  }
+
+  .brand-story__row--intro {
+    position: relative;
+    display: block;
+    padding-bottom: 0;
+  }
+
+  .brand-story__heading {
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand-story__photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 56.4%; /* 812/1440 */
+    max-width: 812px;
+  }
+
+  .brand-story__row--about {
+    gap: 62px;
+    padding-top: 200px;
+  }
+
+  /* The copy column sits 90px lower than the character photo. */
+  .brand-story__content {
+    padding-top: 90px;
   }
 }
 

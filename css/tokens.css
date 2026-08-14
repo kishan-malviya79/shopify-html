@@ -129,7 +129,7 @@
   --fs-newsletter-input: 13.3px; /* .newsletter-form__input, css/components.css */
   --fs-newsletter-btn: 13.9px; /* .newsletter-form__submit, css/components.css */
   --fs-brand-story-heading: clamp(32px, 9vw, 96px); /* fluid size for mobile/tablet */
-  --fs-brand-story-heading-desktop: clamp(80px, 8.5vw, 120px); /* the Figma spec's literal 233px only fits its own 729px-wide unconstrained text box — in this repo's responsive 2-column layout that same box is ~650-700px, so this is capped to the largest size that doesn't wrap "Crunch it."/"Repeat." mid-word */
+  --fs-brand-story-heading-desktop: clamp(96px, 16vw, 233px); /* the Figma spec's literal 233px, in its own 729px box — reachable now that the hero photo is absolutely placed instead of sharing a grid column with the heading */
   --fs-brand-story-subheading: clamp(22px, 3.4vw, 45px);
   --fs-brand-story-text: clamp(14px, 1.6vw, 22px);
   --fs-product-title: clamp(28px, 3.4vw, 38px); /* product_main title */
