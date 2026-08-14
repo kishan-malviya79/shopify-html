@@ -13,12 +13,23 @@
   background-color: var(--color-card-bg);
 }
 
+/* Full-bleed with 48px side padding rather than the site's 1280px container,
+   matching the nav-bar Figma spec (1440 wide, 48px gutters, 61px tall). */
 .site-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  height: 60px;
+  height: 61px;
+  max-width: none;
+  padding-inline: var(--space-xl);
+}
+
+@media (max-width: 720px) {
+  .site-header__inner {
+    height: 58px;
+    padding-inline: var(--space-md);
+  }
 }
 
 /* Nav links (left) --------------------------------------------------------- */
@@ -206,10 +217,6 @@
    top and, pinned to the bottom, a peek-scrolling pair of promo cards over a
    full-width "Shop All" CTA. Metrics match the mobile Figma comp (32/16px
    padding, 13px link gap, 18px links, 16px card gap, 24px stack gap). */
-.site-header__burger {
-  display: none;
-}
-
 .site-header__mobile-menu {
   position: absolute;
   top: 100%;
@@ -329,6 +336,13 @@
   width: 16px;
   height: 16px;
   flex-shrink: 0;
+}
+
+/* The hamburger is a mobile-only action pill. Declared after .site-header__action
+   (same specificity) so it actually wins and stays hidden on desktop, where
+   the nav row + mega menus are the navigation. */
+.site-header__burger {
+  display: none;
 }
 
 /* Skin: the bright-yellow "Build Your Bundle" CTA with a flat black pop
