@@ -1,0 +1,152 @@
+<!--
+  Section: character_carousel
+
+  Settings:
+    - heading (text) — default: "Real People. Not Cartoons."
+    - text (richtext)
+
+  Blocks:
+    - block type "character" (repeatable, 4 in this build):
+        - image (image_picker) — the pack character photo
+        - title (text) — the flavour, e.g. "Chutney Pop"
+        - text (richtext)
+        - author (text) — e.g. "Mimi aka Maitri"
+        - tint (select: "peach" | "pink" | "butter" | "gold") — card fill
+
+  Notes:
+    - Cards are the shared `.testimonial-card` with the `--character` skin
+      (tinted fill, white-framed photo, uppercase title, no star rating), so
+      this section adds no new card CSS — see blocks-list.md.
+    - Distinct from `testimonial_carousel`, which is the homepage's 3-up grid
+      of cream review cards with ratings. This one is a wide peek-scroll of
+      543px character cards; prev/next scroll the track by one card.
+    - Rendered on the About page (sections/about.html) between the world
+      bands and `about_moments`.
+
+  Fonts: heading is "Mouse Memoirs" at 82px in `--color-brand-red-line`;
+  blurb and card copy use "Comic Neue" (bold); card titles use "Fredoka" 600.
+
+  Images: character photos are dummy placeholders from assets/dummy/.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character Carousel — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@500;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/character-carousel.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Character Carousel (character_carousel)
+       ====================================================================== -->
+  <section class="character-carousel" aria-label="Real people, not cartoons">
+
+    <div class="character-carousel__header">
+      <h2 class="character-carousel__heading">Real People.<br />Not Cartoons.</h2>
+      <p class="character-carousel__text">Every character on every pack is a real person&rsquo;s real mood not a stock mascot. Same rendering family, same premium polish, actual faces behind the flavours.</p>
+
+      <div class="character-carousel__nav">
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous character">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="11 6 5 12 11 18"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next character">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="13 6 19 12 13 18"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="character-carousel__track" data-carousel-track>
+
+        <!-- Block: character (1/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--peach">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/Perfect.png" alt="Mimi aka Maitri" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Chutney Pop</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Mimi aka Maitri</p>
+          </div>
+        </article>
+
+        <!-- Block: character (2/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--pink">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/favorite.png" alt="Tantan aka Tanya" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Salt Pop</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Tantan aka Tanya</p>
+          </div>
+        </article>
+
+        <!-- Block: character (3/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--butter">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/delicious.png" alt="Chiku aka Chirag" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Noodle Blast</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Chiku aka Chirag</p>
+          </div>
+        </article>
+
+        <!-- Block: character (4/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--gold">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/chutney-pop.png" alt="Golu aka Gaurav" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Pop'n'Pani</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Golu aka Gaurav</p>
+          </div>
+        </article>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Character Carousel ===================== -->
+
+  <script>
+    // Prev/next scroll the track by one card — same small script as
+    // product_carousel's arrows.
+    (function () {
+      var track = document.querySelector('[data-carousel-track]');
+      if (!track) return;
+
+      function scrollByCard(direction) {
+        var card = track.querySelector('.testimonial-card');
+        if (!card) return;
+        track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 24), behavior: 'smooth' });
+      }
+
+      document.querySelector('[data-carousel-prev]').addEventListener('click', function () { scrollByCard(-1); });
+      document.querySelector('[data-carousel-next]').addEventListener('click', function () { scrollByCard(1); });
+    })();
+  </script>
+
+</body>
+</html>

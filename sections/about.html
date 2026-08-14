@@ -64,7 +64,7 @@
   <link rel="stylesheet" href="../css/sections/about-hero.css" />
   <link rel="stylesheet" href="../css/sections/about-manifesto.css" />
   <link rel="stylesheet" href="../css/sections/world-band.css" />
-  <link rel="stylesheet" href="../css/sections/testimonial-carousel.css" />
+  <link rel="stylesheet" href="../css/sections/character-carousel.css" />
   <link rel="stylesheet" href="../css/sections/about-moments.css" />
   <link rel="stylesheet" href="../css/sections/our-promise.css" />
   <link rel="stylesheet" href="../css/sections/chaos-banner.css" />
@@ -448,78 +448,91 @@
   <!-- ===================== /Section: World Band (Prebiotic) ===================== -->
 
   <!-- ======================================================================
-       Section: Testimonial Carousel (testimonial_carousel) — "Real People"
-       instance: same section/blocks as the homepage reviews, character copy
+       Section: Character Carousel (character_carousel)
        ====================================================================== -->
-  <section class="testimonial-carousel" aria-label="Real people, not cartoons">
-    <div class="container">
+  <section class="character-carousel" aria-label="Real people, not cartoons">
 
-      <div class="testimonial-carousel__header">
-        <h2 class="testimonial-carousel__heading stroke-heading">Real People.<br />Not Cartoons.</h2>
-        <p class="testimonial-carousel__text">Every character on every pack is a real person&rsquo;s real mood &mdash; not a stock mascot. Same rendering family, same premium polish, actual faces behind the flavours.</p>
+    <div class="character-carousel__header">
+      <h2 class="character-carousel__heading">Real People.<br />Not Cartoons.</h2>
+      <p class="character-carousel__text">Every character on every pack is a real person&rsquo;s real mood not a stock mascot. Same rendering family, same premium polish, actual faces behind the flavours.</p>
 
-        <div class="testimonial-carousel__nav">
-          <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous character">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 6 9 12 15 18"></polyline>
-            </svg>
-          </button>
-          <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next character">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 6 15 12 9 18"></polyline>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="testimonial-carousel__track" data-carousel-track>
-
-          <!-- Block: character (1/3) -->
-          <article class="testimonial-card">
-            <div class="testimonial-card__media">
-              <img src="../assets/dummy/Perfect.png" alt="Mimi aka Maitri" />
-            </div>
-
-            <div class="testimonial-card__body">
-              <h3 class="testimonial-card__title">Chutney Pop</h3>
-              <p class="testimonial-card__text">Loud, chatpata and always mid-story. Mimi is the friend who turns a chai break into an event — which is exactly how her pouch tastes.</p>
-              <hr class="testimonial-card__divider" />
-              <p class="testimonial-card__author">Mimi aka Maitri</p>
-            </div>
-          </article>
-
-          <!-- Block: character (2/3) -->
-          <article class="testimonial-card">
-            <div class="testimonial-card__media">
-              <img src="../assets/dummy/favorite.png" alt="Tantan aka Tanya" />
-            </div>
-
-            <div class="testimonial-card__body">
-              <h3 class="testimonial-card__title">Salt Pop</h3>
-              <p class="testimonial-card__text">The calm one with the sharpest comebacks. Clean salt, zero drama, the flavour everybody quietly finishes first.</p>
-              <hr class="testimonial-card__divider" />
-              <p class="testimonial-card__author">Tantan aka Tanya</p>
-            </div>
-          </article>
-
-          <!-- Block: character (3/3) -->
-          <article class="testimonial-card">
-            <div class="testimonial-card__media">
-              <img src="../assets/dummy/delicious.png" alt="Chiku aka Chirag" />
-            </div>
-
-            <div class="testimonial-card__body">
-              <h3 class="testimonial-card__title">Noodle Blast</h3>
-              <p class="testimonial-card__text">Chaos in a polo shirt. Chiku eats like every snack is a dare, so his pouch had to hit like street noodles at midnight.</p>
-              <hr class="testimonial-card__divider" />
-              <p class="testimonial-card__author">Chiku aka Chirag</p>
-            </div>
-          </article>
-
+      <div class="character-carousel__nav">
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous character">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="11 6 5 12 11 18"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next character">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="13 6 19 12 13 18"></polyline>
+          </svg>
+        </button>
       </div>
     </div>
+
+    <div class="character-carousel__track" data-carousel-track>
+
+        <!-- Block: character (1/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--peach">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/Perfect.png" alt="Mimi aka Maitri" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Chutney Pop</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Mimi aka Maitri</p>
+          </div>
+        </article>
+
+        <!-- Block: character (2/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--pink">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/favorite.png" alt="Tantan aka Tanya" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Salt Pop</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Tantan aka Tanya</p>
+          </div>
+        </article>
+
+        <!-- Block: character (3/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--butter">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/delicious.png" alt="Chiku aka Chirag" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Noodle Blast</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Chiku aka Chirag</p>
+          </div>
+        </article>
+
+        <!-- Block: character (4/4) -->
+        <article class="testimonial-card testimonial-card--character testimonial-card--gold">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/chutney-pop.png" alt="Golu aka Gaurav" />
+          </div>
+
+          <div class="testimonial-card__body">
+            <h3 class="testimonial-card__title">Pop'n'Pani</h3>
+            <p class="testimonial-card__text">I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>
+            <hr class="testimonial-card__divider" />
+            <p class="testimonial-card__author">Golu aka Gaurav</p>
+          </div>
+        </article>
+
+    </div>
   </section>
-  <!-- ===================== /Section: Testimonial Carousel ===================== -->
+  <!-- ===================== /Section: Character Carousel ===================== -->
 
   <!-- ======================================================================
        Section: About Moments (about_moments)
@@ -941,13 +954,14 @@
   <script>
     // Character carousel prev/next — same small script as product_carousel's.
     (function () {
-      var track = document.querySelector('.testimonial-carousel__track');
+      var track = document.querySelector('[data-carousel-track]');
       if (!track) return;
 
       function scrollByCard(direction) {
         var card = track.querySelector('.testimonial-card');
         if (!card) return;
-        track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 32), behavior: 'smooth' });
+        /* + 24px, the track's card gap */
+        track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 24), behavior: 'smooth' });
       }
 
       document.querySelector('[data-carousel-prev]').addEventListener('click', function () { scrollByCard(-1); });

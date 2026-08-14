@@ -57,6 +57,10 @@
   --color-slot-empty: rgba(27, 27, 27, 0.12); /* bundle_builder empty slot bar */
   --color-promise-border: #fe431a; /* our_promise card border + its flat 10px drop shadow */
   --color-promise-ink: #2f1948; /* our_promise card text — deep indigo (same hex as --color-footer-card-border, different role) */
+  /* character_carousel card tints — the peach one is --color-contact-card-bg */
+  --color-tint-pink: #ffd4e6;
+  --color-tint-butter: #ffefb8;
+  --color-tint-gold: #fbdf86;
   --color-tile-pink: #fed8e8; /* menu-card photo tile fill — matches the nav mega-menu Figma spec exactly */
   --color-tile-lime: #e4edac; /* menu-card photo tile fill (2nd tint) */
   --color-tile-rose: #ffb1c1; /* menu-card photo tile fill (3rd tint) */

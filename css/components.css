@@ -730,6 +730,24 @@
   padding-block: var(--space-sm);
 }
 
+/* Testimonial card — character skin ----------------------------------------
+   character_carousel's cards are the same `.testimonial-card` (3px black
+   border, 30px radius, 399:463 photo, 28px title, divider, 24px author) on a
+   tinted fill, with the photo framed in white and no rating. Modifiers, not
+   a second card. */
+.testimonial-card--character .testimonial-card__media {
+  border: var(--border-width-card) solid var(--color-white);
+}
+
+.testimonial-card--character .testimonial-card__title {
+  text-transform: uppercase;
+}
+
+.testimonial-card--peach { background-color: var(--color-contact-card-bg); }
+.testimonial-card--pink { background-color: var(--color-tint-pink); }
+.testimonial-card--butter { background-color: var(--color-tint-butter); }
+.testimonial-card--gold { background-color: var(--color-tint-gold); }
+
 /* Band ----------------------------------------------------------------------
    The about page's stacked "cards": each full-width band has 96px rounded
    top corners, rides 64px up over the band above it, and carries a flat

@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Section: character_carousel
+   "Real People. Not Cartoons." — centred heading + blurb + prev/next over a
+   peek-scrolling row of tinted `.testimonial-card--character` tiles.
+   Metrics match its Figma dev-mode spec exactly (150/140px section padding,
+   48px stack gap, 500px header column, 82px heading, 52px nav buttons,
+   543px cards, 24px card gap, 48px track gutters).
+
+   Distinct from `testimonial_carousel`: that one is a 3-up grid of cream
+   review cards with star ratings; this is a wide peek-scroll of character
+   cards on colour.
+   ========================================================================== */
+
+.character-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  padding-block: clamp(var(--space-2xl), 10.4vw, 150px) clamp(var(--space-2xl), 9.7vw, 140px);
+  background-color: var(--color-card-bg);
+}
+
+.character-carousel__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: min(500px, 100% - var(--space-lg) * 2);
+  padding-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.character-carousel__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400; /* Mouse Memoirs ships a single weight */
+  font-size: clamp(38px, 5.7vw, 82px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--color-brand-red-line);
+}
+
+.character-carousel__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-band-text);
+  line-height: 1.4;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-ink);
+}
+
+.character-carousel__nav {
+  display: flex;
+}
+
+/* Heavier and larger than the shared `.btn--icon-circle.btn--outline`
+   default, per this section's spec: 52px, 2px, navy-indigo. */
+.character-carousel__nav .btn--icon-circle {
+  width: 52px;
+  height: 52px;
+  background-color: var(--color-card-bg);
+  border: 2px solid var(--color-footer-card-border);
+  color: var(--color-footer-card-border);
+}
+
+.character-carousel__nav .btn--icon-circle svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Track: cards keep their 543px width and run off both edges, so the row
+   reads as a peek-scroll rather than a contained carousel. */
+.character-carousel__track {
+  display: flex;
+  gap: var(--space-card);
+  width: 100%;
+  padding-inline: var(--space-xl);
+  overflow-x: auto;
+  /* proximity, not mandatory: a mandatory snap can cancel the arrows'
+     smooth programmatic scroll mid-animation and spring back to the card
+     it started on. */
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--space-xl);
+  scrollbar-width: none;
+}
+
+.character-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.character-carousel__track .testimonial-card {
+  flex: 0 0 543px;
+  max-width: 88vw;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 640px) {
+  .character-carousel__track {
+    padding-inline: var(--space-md);
+    gap: var(--space-md);
+  }
+
+  .character-carousel__track .testimonial-card {
+    flex-basis: 80vw;
+  }
+}
