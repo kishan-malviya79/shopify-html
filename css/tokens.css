@@ -128,6 +128,12 @@
   --fs-contact-input: 16px; /* contact_us typed field value/placeholder text, matches its Figma dev-mode spec exactly */
   --fs-filter-tab: 13px; /* .filter-tab pill label, e.g. collection_grid's All/Makhanas/Prebiotic Soda/Combos row */
   --fs-collection-group-heading: clamp(22px, 3vw, 32px); /* collection_grid per-category heading ("Makhanas", "Munchief Sodas") */
+  --fs-legal-group-heading: clamp(21px, 2.4vw, 26px); /* legal_page group heading ("Hours & Visiting") */
+  --fs-legal-meta: 12px; /* legal_page group meta line ("6 Questions") */
+  --fs-legal-question: 13px; /* legal_page question line */
+  --fs-legal-answer: 13px; /* legal_page answer copy */
+
+  --lh-legal: 1.7; /* long-form legal/FAQ body copy — looser than --lh-normal's 1.5 */
 
   --fw-medium: 500;
   --fw-bold: 700;

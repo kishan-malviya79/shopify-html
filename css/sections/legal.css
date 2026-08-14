@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Section: legal_page
+   Long-form legal/FAQ document page. Breadcrumb and the page title's skin
+   live in css/components.css (.breadcrumb, .stroke-heading--page) — this
+   file only holds the document column layout and its Q&A type scale.
+   Deliberately NOT the .accordion component used by faq_section: this page
+   renders every answer expanded so the whole policy text is readable (and
+   crawlable) in one pass.
+   ========================================================================== */
+
+.legal {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.legal__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.legal__breadcrumb {
+  align-self: flex-start;
+}
+
+.legal__heading {
+  margin: 0;
+  align-self: center;
+  text-align: center;
+}
+
+/* Narrow measure for the document body — the copy is long-form, so it reads
+   in a column well inside .container's full width. */
+.legal__body {
+  width: 100%;
+  max-width: 780px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.legal__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.legal__group-heading {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-legal-group-heading);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--ls-heading-tight);
+  color: var(--color-black);
+}
+
+.legal__group-meta {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-legal-meta);
+  line-height: var(--lh-normal);
+  color: var(--color-text-secondary);
+}
+
+.legal__qa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.legal__question {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-legal-question);
+  line-height: var(--lh-legal);
+  color: var(--color-black);
+}
+
+.legal__answer {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: var(--fs-legal-answer);
+  line-height: var(--lh-legal);
+  color: var(--color-text-secondary);
+}
+
+.legal__answer a {
+  color: inherit;
+}
+
+@media (max-width: 640px) {
+  .legal {
+    padding-block: var(--space-lg) var(--space-xl);
+  }
+
+  .legal__inner {
+    gap: var(--space-lg);
+  }
+
+  .legal__body {
+    gap: var(--space-xl);
+  }
+}

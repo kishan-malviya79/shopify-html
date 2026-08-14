@@ -1,0 +1,570 @@
+<!--
+  Section: legal_page
+
+  Settings:
+    - breadcrumb_home_label (text) — default: "Home"
+    - breadcrumb_current_label (text) — default: "Legal Page"
+    - heading (text) — default: "Legal Page"
+
+  Blocks (flat list — Shopify blocks can't nest, so a group is opened by a
+  "legal_group" block and every "legal_qa" block after it belongs to that
+  group until the next one; the Liquid loop closes/reopens the wrapper):
+    - block type "legal_group":
+        - heading (text) — e.g. "Hours & Visiting"
+        - meta (text) — small line under the heading, e.g. "6 Questions ·
+          FAQPage Schema On Each"
+    - block type "legal_qa":
+        - question (text)
+        - answer (richtext)
+
+  Notes:
+    - Standalone page (not part of index.html's homepage flow, same call as
+      product_main / contact_us / collection_grid) — announcement_bar,
+      header, this section and footer render together here so the file
+      previews as one full page.
+    - Every answer renders expanded, unlike `faq_section`'s .accordion — this
+      page is a readable/crawlable policy document, not a compact FAQ widget,
+      so the accordion component is deliberately not reused here.
+    - The Q&A copy below is the supplied comp's placeholder text (a THRöW
+      Social DC venue policy set, not Munchief's own). Swap it for the real
+      legal copy in Liquid — the markup/blocks don't change.
+    - The comp's "FAQPage Schema On Each" note means each group should also
+      emit FAQPage JSON-LD in the Liquid build; no schema markup is included
+      in this static preview since the copy is placeholder.
+
+  Fonts: page title reuses the shared "Mouse Memoirs" .stroke-heading with
+  the .stroke-heading--page skin (same treatment as contact_us's title);
+  group headings use "Fredoka" (600); breadcrumb, meta, question and answer
+  copy use "Inter". All Google Fonts, loaded here for preview; in the Shopify
+  build, load them through the theme's font settings or a self-hosted
+  @font-face instead.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Page — Page Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@500;600&family=Inter:wght@400;500;600;700&family=Poppins:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/announcement-bar.css" />
+  <link rel="stylesheet" href="../css/sections/header.css" />
+  <link rel="stylesheet" href="../css/sections/legal.css" />
+  <link rel="stylesheet" href="../css/sections/footer.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Announcement Bar (announcement_bar)
+       ====================================================================== -->
+  <section class="announcement-bar ticker" aria-label="Announcements">
+    <div class="ticker__track">
+
+      <!-- Real content (announced once), followed by 5 aria-hidden duplicate
+           groups so the ticker never runs out of content mid-scroll. -->
+      <div class="ticker__group">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 1/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 2/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 3/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 4/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 5/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Announcement Bar ===================== -->
+
+  <!-- ======================================================================
+       Section: Header (header)
+       ====================================================================== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+
+      <!-- Block: nav_link x2, both with a dropdown_menu -->
+      <nav class="site-header__nav" aria-label="Primary">
+        <div class="site-header__nav-item">
+          <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
+            Products
+            <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
+          </button>
+          <div class="site-header__dropdown">
+            <a href="#" class="site-header__dropdown-link">Munchief Family</a>
+            <a href="#" class="site-header__dropdown-link">Munchief Sodas</a>
+            <a href="#" class="site-header__dropdown-link">Combo Bundles</a>
+          </div>
+        </div>
+        <div class="site-header__nav-item">
+          <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
+            Learn
+            <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
+          </button>
+          <div class="site-header__dropdown">
+            <a href="#" class="site-header__dropdown-link">Our Story</a>
+            <a href="#" class="site-header__dropdown-link">Reviews</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="../index.html" class="site-header__logo" aria-label="Munchief home">
+        <img src="../assets/dummy/logo.png" alt="Munchief" />
+      </a>
+
+      <div class="site-header__actions">
+        <a href="#" class="site-header__action site-header__action--bundle">
+          <span class="site-header__ribbon">Bestseller</span>
+          <span>Build Your Bundle</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+        </a>
+
+        <a href="#" class="site-header__action">
+          <span>Account</span>
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1c-3 0-6 1.5-6 4v1h12v-1c0-2.5-3-4-6-4Z"/></svg>
+        </a>
+
+        <button type="button" class="site-header__action" aria-label="Cart, 0 items">
+          <span>Cart</span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6h8l-.6 7.7a1.3 1.3 0 0 1-1.3 1.2H5.9a1.3 1.3 0 0 1-1.3-1.2L4 6Z" fill="currentColor"/>
+            <path d="M6 6V4.6a2 2 0 0 1 4 0V6" stroke="currentColor" stroke-width="1.3" fill="none"/>
+          </svg>
+          <span class="site-header__cart-count" data-count="0">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+  <!-- ===================== /Section: Header ===================== -->
+
+  <!-- ======================================================================
+       Section: Legal Page (legal_page)
+       ====================================================================== -->
+  <section class="legal" aria-label="Legal">
+    <div class="container legal__inner">
+
+      <nav class="breadcrumb legal__breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html" class="breadcrumb__link">Home</a>
+        <span class="breadcrumb__sep">&gt;</span>
+        <span class="breadcrumb__current">Legal Page</span>
+      </nav>
+
+      <h1 class="legal__heading stroke-heading stroke-heading--page">Legal Page</h1>
+
+      <div class="legal__body">
+
+        <!-- ================================================================
+             Block: legal_group (1/5) — Hours & Visiting, + 6 legal_qa blocks
+             ================================================================ -->
+        <div class="legal__group">
+          <h2 class="legal__group-heading">Hours &amp; Visiting</h2>
+          <p class="legal__group-meta">6 Questions · FAQPage Schema On Each</p>
+
+          <!-- Block: legal_qa (1/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">What Are The Opening Hours At THRöW Social DC?</h3>
+            <p class="legal__answer">Thursday 7PM–2AM · Friday 7PM–3AM · Saturday 12PM–3AM · Sunday 12PM–2AM · Monday To Wednesday Closed.</p>
+          </div>
+
+          <!-- Block: legal_qa (2/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Do I Need A Reservation To Visit THRöW Social DC?</h3>
+            <p class="legal__answer">No — Walk-Ins Are Always Welcome On A First-Come, First-Served Basis. Reservations Guarantee A Table Or Cabana And Are Recommended On Friday And Saturday Nights As They Fill Up Early.</p>
+          </div>
+
+          <!-- Block: legal_qa (3/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">What Is The Age Policy At THRöW Social DC?</h3>
+            <p class="legal__answer">21+ After 9PM Daily. All Ages Are Welcome Before 9PM With Valid ID. Valid Government-Issued Photo ID Required For Entry.</p>
+          </div>
+
+          <!-- Block: legal_qa (4/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Is There A Dress Code At THRöW Social DC?</h3>
+            <p class="legal__answer">Smart Casual Is Recommended On Friday And Saturday Nights. No Athletic Wear, Overly Casual Attire, Or Sportswear. Management Reserves The Right To Refuse Entry.</p>
+          </div>
+
+          <!-- Block: legal_qa (5/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Is The Rooftop Open In Winter?</h3>
+            <p class="legal__answer">Yes — The Rooftop Has Roll-Up Doors Creating An Indoor And Outdoor Feel. THRöW Social DC Is Open Year Round Thu Through Sun Regardless Of Season.</p>
+          </div>
+
+          <!-- Block: legal_qa (6/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Is There A Sunday Brunch At THRöW Social DC?</h3>
+            <p class="legal__answer">Yes — The Sunday Brunch Social Runs Every Sunday From 12PM. No Cover Charge. Brunch Menu, Cocktails, Bar Games, And Rooftop Access. Walk-Ins Welcome Or Reserve A Table In Advance.</p>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             Block: legal_group (2/5) — Reservations & Booking, + 6 legal_qa
+             ================================================================ -->
+        <div class="legal__group">
+          <h2 class="legal__group-heading">Reservations &amp; Booking</h2>
+          <p class="legal__group-meta">6 Questions</p>
+
+          <!-- Block: legal_qa (1/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">How Do I Make A Reservation At THRöW Social DC?</h3>
+            <p class="legal__answer">All Reservations Are Made Via Tock. Click Reserve Now, Select Your Table Or Cabana Type, Choose Your Date And Time, And Complete The Booking In Under 2 Minutes.</p>
+          </div>
+
+          <!-- Block: legal_qa (2/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">What Is The Reservation Fee At THRöW Social DC?</h3>
+            <p class="legal__answer">All Table And Cabana Reservations Include A $100 Venue Fee Plus A Food And Beverage Minimum Of $400–$600 Depending On Table Type And Night.</p>
+          </div>
+
+          <!-- Block: legal_qa (3/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">What Are The Table Types Available At THRöW Social DC?</h3>
+            <p class="legal__answer">Three Table Types: Stage Front (Best Views Of The Stage, Up To 8 Guests, $100 + $450–600 Min), Interior (Great Atmosphere, Up To 8 Guests, $100 + $400–500 Min), And Double (Large Groups, Up To 20 Guests, Contact For Pricing).</p>
+          </div>
+
+          <!-- Block: legal_qa (4/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Can I Cancel Or Modify My Reservation?</h3>
+            <p class="legal__answer">Cancellation And Modification Policies Are Managed Through Tock At The Time Of Booking. Contact Guests@Throwsocialdc.Com For Assistance With An Existing Reservation.</p>
+          </div>
+
+          <!-- Block: legal_qa (5/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">How Far In Advance Should I Book A Table?</h3>
+            <p class="legal__answer">We Recommend Booking 1–2 Weeks In Advance For Friday And Saturday Nights. Stage Front Tables Sell Out Fastest, Especially On GoGo Fridays. Thursday And Sunday Bookings Are Generally Easier To Secure With Shorter Notice.</p>
+          </div>
+
+          <!-- Block: legal_qa (6/6) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Can I Make A Reservation For A Large Group?</h3>
+            <p class="legal__answer">Yes — Double Tables Accommodate Up To 20 Guests. For Groups Larger Than 20 Or Full Private Event Enquiries, Contact Guests@Throwsocialdc.Com Or Use The Private Events Enquiry Form.</p>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             Block: legal_group (3/5) — Cover Charges, + 4 legal_qa
+             ================================================================ -->
+        <div class="legal__group">
+          <h2 class="legal__group-heading">Cover Charges</h2>
+          <p class="legal__group-meta">4 Questions</p>
+
+          <!-- Block: legal_qa (1/4) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">What Is The Cover Charge At THRöW Social DC?</h3>
+            <p class="legal__answer">Friday: $20 (8PM–10PM) And $30 (10PM–Close). Saturday: $20 (10PM–Close). Thursday: No Cover. Sunday: No Cover. Cover Charges May Vary For Special Events.</p>
+          </div>
+
+          <!-- Block: legal_qa (2/4) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Do I Still Pay Cover If I Have A Table Reservation?</h3>
+            <p class="legal__answer">Table And Cabana Reservations Include A $100 Venue Fee Which Covers Entry For Your Group. Cover Charges At The Door Are For Walk-In Guests Without A Reservation.</p>
+          </div>
+
+          <!-- Block: legal_qa (3/4) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Is There A Cover Charge For Sunday Brunch?</h3>
+            <p class="legal__answer">No — The Sunday Brunch Social Has No Cover Charge. Walk In Free From 12PM.</p>
+          </div>
+
+          <!-- Block: legal_qa (4/4) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Can Cover Charges Change For Special Events?</h3>
+            <p class="legal__answer">Yes — Special Events May Have Different Cover Charges. Check The Events Calendar Or Follow @Throwsocialdc On Instagram For Weekly Updates.</p>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             Block: legal_group (4/5) — VIP Cabanas, + 5 legal_qa
+             ================================================================ -->
+        <div class="legal__group">
+          <h2 class="legal__group-heading">VIP Cabanas</h2>
+          <p class="legal__group-meta">5 Questions</p>
+
+          <!-- Block: legal_qa (1/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">How Much Does A VIP Cabana Cost At THRöW Social DC?</h3>
+            <p class="legal__answer">All Cabanas Have A $100 Venue Fee Plus A Food And Beverage Minimum Of $400–$600 Depending On Type And Night. The 3-Hour Experience Includes Complimentary Welcome Shots For Guests 21+.</p>
+          </div>
+
+          <!-- Block: legal_qa (2/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">What Is Included In A Cabana Booking?</h3>
+            <p class="legal__answer">Every Cabana Includes A Furnished Private Space, Complimentary Welcome Shots (21+), Dedicated Server, And 3 Hours Of VIP Experience. Optional Add-Ons: Welcome Bottle, Balloon Arch, Polaroid Camera, And Custom Cups.</p>
+          </div>
+
+          <!-- Block: legal_qa (3/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Can I Book A Cabana For A Birthday Party?</h3>
+            <p class="legal__answer">Yes — Book Within 6 Days Of Your Birthday For A Free Birthday Package: Manager Shoutout On The 20-Ft Stage, Birthday Dessert, Sparkler, And Welcome Shots For The Group. Just Mention Your Birthday At Booking.</p>
+          </div>
+
+          <!-- Block: legal_qa (4/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">What Cabana Types Are Available?</h3>
+            <p class="legal__answer">Three Types: Interior Cabanas (Up To 10 Guests), Double Cabana (Up To 20 Guests, Most Popular For Birthdays And Larger Groups), And Rooftop Lounge (Exterior Open-Air, Up To 10 Guests).</p>
+          </div>
+
+          <!-- Block: legal_qa (5/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">How Do I Book A VIP Cabana?</h3>
+            <p class="legal__answer">Cabanas Are Booked Online Via Tock. Select Your Cabana Type, Date, And Time — Then Add Any Extras At Checkout. Takes Under 2 Minutes.</p>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             Block: legal_group (5/5) — Private & Corporate Events, + 5 legal_qa
+             ================================================================ -->
+        <div class="legal__group">
+          <h2 class="legal__group-heading">Private &amp; Corporate Events</h2>
+          <p class="legal__group-meta">5 Questions</p>
+
+          <!-- Block: legal_qa (1/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">How Many Guests Can THRöW Social DC Accommodate For A Private Event?</h3>
+            <p class="legal__answer">Up To 350 Guests Across 11,000 Sq Ft Of Rooftop And Indoor Space. Full Venue Buyouts Are Available.</p>
+          </div>
+
+          <!-- Block: legal_qa (2/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">How Do I Book A Private Event At THRöW Social DC?</h3>
+            <p class="legal__answer">Fill Out The Private Events Enquiry Form Or Email Guests@Throwsocialdc.Com. We Respond Within 24 Hours With Package Options And Pricing. No Commitment Required To Inquire.</p>
+          </div>
+
+          <!-- Block: legal_qa (3/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Is Axe Throwing Available For Private Events?</h3>
+            <p class="legal__answer">Yes — Kick Axe DC Is Downstairs In The Same Building And Can Be Incorporated Into Your Event Package. Axe Throwing, Nerf Battles, And The Den Can All Be Combined With The THRöW Social Rooftop Experience.</p>
+          </div>
+
+          <!-- Block: legal_qa (4/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Does THRöW Social DC Have AV Equipment For Presentations?</h3>
+            <p class="legal__answer">Yes — The Main Stage Features A 20-Ft Video Wall With Full HD Display, Professional Sound System, And Lighting Rig. Available For Corporate Presentations, Brand Content, And Live Video Feeds.</p>
+          </div>
+
+          <!-- Block: legal_qa (5/5) -->
+          <div class="legal__qa">
+            <h3 class="legal__question">Can I Do A Full Venue Buyout For My Event?</h3>
+            <p class="legal__answer">Yes — Full Venue Buyouts Are Available. Contact Guests@Throwsocialdc.Com With Your Date And Guest Count For Pricing.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Legal Page ===================== -->
+
+  <!-- ======================================================================
+       Section: Footer (footer)
+       ====================================================================== -->
+  <footer class="footer" aria-label="Site footer">
+
+    <img class="footer__logo" src="../assets/dummy/logo.png" alt="Munchief" />
+
+    <div class="footer__hero">
+
+      <div class="footer__bubble footer__bubble--left">
+        <img src="../assets/dummy/Perfect.png" alt="" role="presentation" />
+      </div>
+
+      <h2 class="footer__heading">More Munch<br />More Crunch</h2>
+
+      <div class="footer__bubble footer__bubble--right">
+        <img src="../assets/dummy/favorite.png" alt="" role="presentation" />
+      </div>
+
+      <form class="footer__newsletter newsletter-form" action="#" method="post">
+        <input class="newsletter-form__input" type="email" name="email" placeholder="Enter your email..." aria-label="Email address" required />
+        <button type="submit" class="newsletter-form__submit">Notify Me</button>
+      </form>
+
+    </div>
+
+    <div class="footer__columns">
+
+      <!-- Block: footer_column (1/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Drinks</h3>
+        <ul class="footer__links">
+          <li><a href="#">Guava Chilli Lime</a></li>
+          <li><a href="#">Nimbu Jeera</a></li>
+          <li><a href="#">Mix Berry</a></li>
+          <li><a href="#">Wild Berries</a></li>
+          <li><a href="#">Variety Pack</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (2/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Makhanas</h3>
+        <ul class="footer__links">
+          <li><a href="#">Chutney Pop</a></li>
+          <li><a href="#">Noodle Blast</a></li>
+          <li><a href="#">Salt Pop</a></li>
+          <li><a href="#">Pop'n'Pani</a></li>
+          <li><a href="#">Pickle Punch</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (3/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Explore</h3>
+        <ul class="footer__links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (4/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Munchief</h3>
+        <ul class="footer__links">
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">My Cart</a></li>
+        </ul>
+      </div>
+
+      <!-- Block: footer_column (5/5) -->
+      <div class="footer__column">
+        <h3 class="footer__column-heading">Legal</h3>
+        <ul class="footer__links">
+          <li><a href="legal.html">Refund Policy</a></li>
+          <li><a href="legal.html">Privacy Policy</a></li>
+          <li><a href="legal.html">Shipping Policy</a></li>
+          <li><a href="legal.html">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="footer__divider" />
+
+    <p class="footer__copyright">©2026 Munchief. All rights reserved.</p>
+
+    <p class="footer__legal">Munchief &middot; Magical Foods &amp; Beverages LLP — Demo build for internal review. Pricing shown is placeholder</p>
+
+  </footer>
+  <!-- ===================== /Section: Footer ===================== -->
+
+  <script>
+    // Dropdown menus: hover/focus-within already reveals them via CSS; this
+    // adds click-to-toggle (so touch devices and mouse clicks alike can
+    // "pin" a menu open), closes other open menus first, and closes on an
+    // outside click or Escape.
+    (function () {
+      var items = document.querySelectorAll('.site-header__nav-item');
+
+      function closeAll(except) {
+        items.forEach(function (item) {
+          if (item === except) return;
+          item.classList.remove('is-open');
+          var trigger = item.querySelector('.site-header__nav-link');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      items.forEach(function (item) {
+        var trigger = item.querySelector('.site-header__nav-link');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = item.classList.contains('is-open');
+          closeAll();
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          } else {
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+
+      document.addEventListener('click', function () { closeAll(); });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        items.forEach(function (item) {
+          if (!item.classList.contains('is-open')) return;
+          var trigger = item.querySelector('.site-header__nav-link');
+          closeAll();
+          if (trigger) trigger.focus();
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -23,24 +23,11 @@
   align-self: flex-start;
 }
 
-/* Heading composes the shared .stroke-heading skin (Mouse Memoirs, uppercase,
-   paint-order stroke-then-fill) but overrides color/stroke-width/shadow to
-   this section's own spec — distinct red hex and no drop shadow, unlike the
-   shared skin's default red/shadowed treatment. */
+/* Colour/size/stroke all live in the shared .stroke-heading--page skin
+   (css/components.css), shared with legal_page — only the margin reset is
+   section-local. */
 .contact__heading {
   margin: 0;
-  font-size: clamp(32px, 6vw, 82px);
-  line-height: 0.9;
-  color: var(--color-brand-red-line);
-  -webkit-text-stroke: var(--stroke-width-heading) var(--color-white);
-  text-shadow: none;
-}
-
-@media (min-width: 1025px) {
-  .contact__heading {
-    font-size: var(--fs-display-heading-desktop);
-    -webkit-text-stroke-width: var(--stroke-width-heading-desktop);
-  }
 }
 
 .contact-card {

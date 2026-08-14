@@ -476,6 +476,26 @@
   text-shadow: none;
 }
 
+/* Skin + size: interior-page title (contact_us, legal_page) — the same red
+   fill/white stroke/no shadow treatment at the same size on both, so it
+   carries its own font-size here rather than leaving it to each section.
+   Distinct red hex from the default skin's --color-brand-red, matching
+   contact_us's Figma dev-mode spec. */
+.stroke-heading--page {
+  font-size: clamp(32px, 6vw, 82px);
+  line-height: 0.9;
+  color: var(--color-brand-red-line);
+  -webkit-text-stroke: var(--stroke-width-heading) var(--color-white);
+  text-shadow: none;
+}
+
+@media (min-width: 1025px) {
+  .stroke-heading--page {
+    font-size: var(--fs-display-heading-desktop);
+    -webkit-text-stroke-width: var(--stroke-width-heading-desktop);
+  }
+}
+
 /* Ticker ---------------------------------------------------------------
    Infinite horizontal auto-scroll strip. Track/group/keyframes are the
    reusable mechanics; a wrapping section class (e.g. .marquee,
