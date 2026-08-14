@@ -200,6 +200,91 @@
   }
 }
 
+/* Mobile menu -------------------------------------------------------------
+   Below 720px the desktop mega menus are gone (the nav row is hidden), so
+   the hamburger opens this full-height sheet instead: a stacked link list up
+   top and, pinned to the bottom, a peek-scrolling pair of promo cards over a
+   full-width "Shop All" CTA. Metrics match the mobile Figma comp (32/16px
+   padding, 13px link gap, 18px links, 16px card gap, 24px stack gap). */
+.site-header__burger {
+  display: none;
+}
+
+.site-header__mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  /* 88px = announcement bar + nav row, i.e. this sheet's own offset. */
+  height: calc(100vh - 88px);
+  height: calc(100dvh - 88px);
+  padding: var(--space-lg) var(--space-md);
+  overflow-y: auto;
+  background-color: var(--color-card-bg);
+}
+
+.site-header.has-mobile-menu .site-header__mobile-menu {
+  display: flex;
+}
+
+.site-header__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.site-header__mobile-link {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-mobile-menu-link);
+  line-height: 1.3;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-border);
+}
+
+.site-header__mobile-promo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card);
+}
+
+/* Wider than the viewport on purpose — the second card peeks, same
+   peek-scroll pattern as product_story's review track. */
+.site-header__mobile-cards {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-inline: calc(var(--space-md) * -1);
+  padding-inline: var(--space-md);
+  scrollbar-width: none;
+}
+
+.site-header__mobile-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.site-header__mobile-cards .menu-card {
+  flex: 0 0 74%;
+  scroll-snap-align: start;
+}
+
+.site-header__mobile-cards .menu-card__media {
+  border: 2px solid var(--color-white);
+  border-radius: var(--radius-md);
+}
+
+.site-header__mobile-cards .menu-card__title {
+  padding: var(--space-sm) var(--space-md) 0;
+  font-size: var(--fs-mobile-menu-card-title);
+}
+
 /* Logo (center) ------------------------------------------------------------ */
 .site-header__logo {
   display: block;
@@ -299,7 +384,9 @@
   opacity: 1;
 }
 
-/* Mobile: collapse the left nav (kept simple — no hamburger/drawer yet). */
+/* Mobile: the left nav collapses into the hamburger sheet above, and the
+   Account pill drops out (the sheet carries "My Account" as a link), which
+   is exactly the 3-pill row — bundle / cart / menu — in the mobile comp. */
 @media (max-width: 720px) {
   .site-header__nav {
     display: none;
@@ -308,16 +395,30 @@
   .site-header__actions {
     flex: none;
   }
+
+  .site-header__action--account {
+    display: none;
+  }
+
+  .site-header__burger {
+    display: inline-flex;
+  }
 }
 
-/* Narrow phones: the 3 action pills' text labels no longer fit next to the
-   logo without overflowing the viewport (discovered building product_main's
-   full-PDP preview, which is the first place this header renders down to
-   360-400px — the same overflow already existed standalone/on index.html,
-   just hadn't been checked at this width before). Drop each pill to
-   icon-only; aria-label on the cart button and the visually-hidden text
-   below keep them accessible. */
-@media (max-width: 420px) {
+/* Desktop: the hamburger and its sheet never render. */
+@media (min-width: 721px) {
+  .site-header__mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Mobile: the action pills' text labels no longer fit next to the logo
+   without overflowing, and the mobile comp shows them as a row of three
+   icon-only pills (bundle / cart / menu) anyway. Drop each to icon-only;
+   aria-label on the buttons and the visually-hidden text below keep them
+   accessible. Was scoped to 420px while the header still had no hamburger —
+   raised to the mobile breakpoint once the burger joined the row. */
+@media (max-width: 720px) {
   .site-header__action span:not(.site-header__ribbon):not(.site-header__cart-count) {
     position: absolute;
     width: 1px;

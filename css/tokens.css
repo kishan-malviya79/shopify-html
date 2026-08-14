@@ -171,6 +171,8 @@
   --fs-mega-link: clamp(22px, 2.4vw, 32px);
   --fs-menu-card-title: 22px;
   --fs-menu-card-title-wide: 20px; /* the wider "Learn" promo cards */
+  --fs-mobile-menu-link: 18px; /* hamburger sheet link list */
+  --fs-mobile-menu-card-title: 14px; /* hamburger sheet promo card caption */
 
   --lh-cart-milestone: 1; /* 10/10 — matches the milestone label spec */
   --lh-cart-empty-heading: 1.19; /* 44/37 */

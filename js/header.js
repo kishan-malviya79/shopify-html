@@ -54,8 +54,39 @@
 
   document.addEventListener('click', closeAll);
 
+  /* Mobile hamburger sheet — separate from the desktop mega menus (they
+     never render at the same width). Locks page scroll while open. */
+  var burger = header.querySelector('[data-mobile-menu-toggle]');
+  var sheet = header.querySelector('.site-header__mobile-menu');
+
+  function setMobileMenu(open) {
+    header.classList.toggle('has-mobile-menu', open);
+    if (burger) burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  if (burger && sheet) {
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setMobileMenu(!header.classList.contains('has-mobile-menu'));
+    });
+
+    /* Taps inside the sheet shouldn't close it — following a link navigates
+       away, which resets everything anyway. */
+    sheet.addEventListener('click', function (e) { e.stopPropagation(); });
+
+    document.addEventListener('click', function () { setMobileMenu(false); });
+  }
+
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
+
+    if (header.classList.contains('has-mobile-menu')) {
+      setMobileMenu(false);
+      if (burger) burger.focus();
+      return;
+    }
+
     var open = header.querySelector('.site-header__nav-item.is-open');
     if (!open) return;
     var trigger = open.querySelector('.site-header__nav-link');

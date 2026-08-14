@@ -243,7 +243,7 @@
           </svg>
         </a>
 
-        <a href="#" class="site-header__action">
+        <a href="#" class="site-header__action site-header__action--account">
           <span>Account</span>
           <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1c-3 0-6 1.5-6 4v1h12v-1c0-2.5-3-4-6-4Z"/></svg>
         </a>
@@ -256,6 +256,52 @@
           </svg>
           <span class="site-header__cart-count" data-count="0">0</span>
         </button>
+
+        <button type="button" class="site-header__action site-header__burger" data-mobile-menu-toggle aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="17" x2="20" y2="17"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- Mobile menu sheet (mobile only — the mega menus above are desktop) -->
+    <div class="site-header__mobile-menu" id="mobile-menu">
+
+      <nav class="site-header__mobile-links" aria-label="Mobile">
+        <a href="shop-all.html" class="site-header__mobile-link">Makhanas</a>
+        <a href="shop-all.html" class="site-header__mobile-link">Prebiotic Sodas</a>
+        <a href="#" class="site-header__mobile-link">About Us</a>
+        <a href="contact.html" class="site-header__mobile-link">Contact Us</a>
+        <a href="faq-page.html" class="site-header__mobile-link">FAQ&rsquo;s</a>
+        <a href="#" class="site-header__mobile-link">My Account</a>
+      </nav>
+
+      <div class="site-header__mobile-promo">
+        <div class="site-header__mobile-cards">
+          <!-- Block: menu_card (1/2), style = "wide" -->
+          <a href="shop-all.html" class="menu-card menu-card--wide">
+            <span class="menu-card__media">
+              <span class="badge badge--green menu-card__badge">Bestseller</span>
+              <img src="../assets/dummy/CrunchWorld.png" alt="" />
+            </span>
+            <h3 class="menu-card__title">Upto 25% Off With Bundle</h3>
+          </a>
+
+          <!-- Block: menu_card (2/2), style = "wide" -->
+          <a href="shop-all.html" class="menu-card menu-card--wide">
+            <span class="menu-card__media menu-card__media--rose">
+              <img src="../assets/dummy/PREBIOTICWorld.png" alt="" />
+            </span>
+            <h3 class="menu-card__title">Stock Up Summer Sale</h3>
+          </a>
+        </div>
+
+        <a href="shop-all.html" class="btn btn--pill btn--red btn--block">Shop All</a>
       </div>
 
     </div>
