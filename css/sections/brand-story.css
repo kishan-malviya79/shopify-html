@@ -69,6 +69,19 @@
   background-image: url("../../assets/dummy/icons/wave-top.svg");
 }
 
+/* The two waves hang outside the section, so on their own they'd sit on top
+   of whatever the neighbouring sections have near their edges (the row of
+   Add to Cart buttons above, the "Combo" heading below). These reserve that
+   room in the neighbours themselves — the section pays for its own overhang
+   rather than every adjacent section needing to know about it. */
+:has(+ .brand-story) {
+  padding-bottom: calc(var(--space-2xl) + clamp(48px, 7.6vw, 109px));
+}
+
+.brand-story + * {
+  padding-top: calc(var(--space-2xl) + clamp(36px, 4.4vw, 64px));
+}
+
 .brand-story__row {
   display: grid;
   grid-template-columns: 1fr;
