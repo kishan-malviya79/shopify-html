@@ -46,6 +46,12 @@
   --color-cart-meta: rgba(27, 27, 27, 0.67); /* cart_drawer line-item subtitle */
   --color-scrim: rgba(27, 27, 27, 0.57); /* full-screen overlay behind cart_drawer */
   --color-rec-price: #16433d; /* cart_drawer recommendation card price — deep green, matches its Figma spec exactly */
+  --color-bundle-header-bg: #ffe3c5; /* bundle_builder panel header — warm peach, matches its Figma spec exactly */
+  --color-bundle-subtitle: #5a4633; /* bundle_builder intro copy */
+  --color-bundle-muted: #9a8b7a; /* bundle_builder "no items yet" note */
+  --color-slot-empty: rgba(27, 27, 27, 0.12); /* bundle_builder empty slot bar */
+  --color-promise-border: #fe431a; /* our_promise card border + its flat 10px drop shadow */
+  --color-promise-ink: #2f1948; /* our_promise card text — deep indigo (same hex as --color-footer-card-border, different role) */
   --color-tile-pink: #fed8e8; /* menu-card photo tile fill — matches the nav mega-menu Figma spec exactly */
   --color-tile-lime: #e4edac; /* menu-card photo tile fill (2nd tint) */
   --color-tile-rose: #ffb1c1; /* menu-card photo tile fill (3rd tint) */
@@ -171,6 +177,16 @@
   --fs-mega-link: clamp(22px, 2.4vw, 32px);
   --fs-menu-card-title: 22px;
   --fs-menu-card-title-wide: 20px; /* the wider "Learn" promo cards */
+  /* bundle_builder + our_promise — match their Figma dev-mode specs exactly */
+  --fs-bundle-heading: clamp(38px, 6vw, 82px);
+  --fs-bundle-subtitle: 15px;
+  --fs-bundle-card-title: 16px;
+  --fs-bundle-panel-title: 24px;
+  --fs-bundle-slot-note: 12px;
+  --fs-promise-heading: clamp(48px, 8.5vw, 120px);
+  --fs-promise-card-title: clamp(22px, 2.2vw, 28px);
+  --fs-promise-card-text: 15px;
+
   --fs-mobile-menu-link: 18px; /* hamburger sheet link list */
   --fs-mobile-menu-card-title: 14px; /* hamburger sheet promo card caption */
 

@@ -678,6 +678,101 @@
   text-align: center;
 }
 
+/* Product card — bundle skin ------------------------------------------------
+   bundle_builder's tile is the same `.product-card` (badge, price, select,
+   red CTA) with no rating, centred copy and the media cropped square inside
+   a rounded, clipped card. Modifier rather than a second card component. */
+.product-card--bundle {
+  gap: 0; /* the body below owns the internal spacing */
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-card-bg);
+}
+
+.product-card--bundle .product-card__media {
+  border-radius: 0;
+}
+
+.product-card--bundle .product-card__media {
+  aspect-ratio: 1;
+  margin: 0;
+}
+
+.product-card--bundle .product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card--bundle .product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+}
+
+.product-card--bundle .product-card__title {
+  margin: 0;
+  font-size: var(--fs-bundle-card-title);
+  line-height: var(--lh-relaxed);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.product-card--bundle .price {
+  justify-content: center;
+}
+
+/* 12px variant label per the bundle spec — the wider card copy already
+   carries the price, so the select only names the size. */
+.product-card--bundle .select__input {
+  font-size: var(--fs-bundle-slot-note);
+  padding-block: var(--space-sm);
+}
+
+/* Promise card --------------------------------------------------------------
+   Cream sticker card: 2px orange border with a flat 10px drop shadow, an
+   oversized emoji up top and the title/copy pinned to the bottom. Reuse for
+   any future "sticker" callout row. */
+.promise-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--space-card);
+  background-color: var(--color-card-bg);
+  border: 2px solid var(--color-promise-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 0 var(--color-promise-border);
+}
+
+.promise-card__icon {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.promise-card__title {
+  margin: 0 0 var(--space-md);
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-promise-card-title);
+  line-height: 0.92;
+  letter-spacing: -1.12px;
+  color: var(--color-promise-ink);
+}
+
+.promise-card__text {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-promise-card-text);
+  line-height: 1.12;
+  letter-spacing: -0.32px;
+  color: var(--color-promise-ink);
+}
+
 /* Menu card ----------------------------------------------------------------
    Tinted rounded photo tile + uppercase caption, with an optional corner
    `.badge`. Used by the header's mega menu for both product tiles (square)

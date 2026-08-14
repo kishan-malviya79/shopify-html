@@ -1,0 +1,300 @@
+/* ==========================================================================
+   Section: bundle_builder
+   Two-column bundle builder: product groups on the left, a sticky bundle
+   panel on the right. Metrics match its Figma dev-mode spec exactly.
+
+   The panel deliberately reuses cart_drawer's pieces rather than restating
+   them — `.cart-rewards*` for step 1's milestone bar and `.cart-summary*`
+   for the subtotal + CTA footer — so this file only holds what is genuinely
+   new: the intro block, the grid, the group headings, and the step/slot UI.
+   That means pages rendering this section must also link
+   css/sections/cart-drawer.css.
+   ========================================================================== */
+
+.bundle {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.bundle__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+/* Intro ------------------------------------------------------------------- */
+.bundle__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-card);
+  text-align: center;
+}
+
+.bundle__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400; /* Mouse Memoirs ships a single weight */
+  font-size: var(--fs-bundle-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-border);
+}
+
+.bundle__subtitle {
+  margin: 0;
+  max-width: 523px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-bundle-subtitle);
+  line-height: var(--lh-normal);
+  color: var(--color-bundle-subtitle);
+}
+
+/* Layout ------------------------------------------------------------------ */
+.bundle__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 473px;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.bundle__groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.bundle__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.bundle__group[hidden] {
+  display: none;
+}
+
+.bundle__group-heading {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-collection-group-heading);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading-tight);
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.bundle__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-card);
+}
+
+/* Bundle panel ------------------------------------------------------------ */
+.bundle-panel {
+  position: sticky;
+  top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: var(--border-width-card) solid var(--color-white);
+  border-radius: var(--radius-drawer);
+}
+
+.bundle-panel__header {
+  padding: var(--space-card);
+  background-color: var(--color-bundle-header-bg);
+  border-bottom: 1px solid var(--color-cart-hairline);
+}
+
+.bundle-panel__title {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-bundle-panel-title);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-black);
+}
+
+.bundle-panel__step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-card-bg);
+  border-bottom: 1px solid rgba(243, 228, 205, 0.3);
+}
+
+/* Step 1 carries cart_drawer's milestone bar, which needs room underneath
+   for its labels — same 60px the drawer reserves. */
+.bundle-panel__step--rewards {
+  gap: var(--space-lg);
+  padding-bottom: 60px;
+}
+
+.bundle-panel__step-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-progress);
+  line-height: 1.26;
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.bundle-panel__step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-brand-red-line);
+  font-family: var(--font-ribbon);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-select);
+  color: var(--color-white);
+}
+
+/* The bar inside step 1 is cart_drawer's `.cart-rewards__track`; only the
+   wrapper's own spacing lives here. */
+.bundle-panel__step--rewards .cart-rewards__text {
+  display: none; /* the step title already states the reward copy */
+}
+
+.bundle-panel__slots {
+  display: flex;
+  gap: 5px;
+}
+
+.bundle-panel__slot {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-slot-empty);
+  transition: background-color 0.15s ease;
+}
+
+.bundle-panel__slot.is-filled {
+  background-color: var(--color-brand-red-line);
+}
+
+.bundle-panel__count {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-bundle-slot-note);
+  text-align: center;
+  color: var(--color-black);
+}
+
+.bundle-panel__note {
+  margin: 0;
+  padding-block: var(--space-xs);
+  font-family: var(--font-heading-rounded);
+  font-size: var(--fs-bundle-slot-note);
+  text-align: center;
+  color: var(--color-bundle-muted);
+}
+
+.bundle-panel__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.bundle-panel__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-ui);
+  font-size: var(--fs-bundle-slot-note);
+  color: var(--color-black);
+}
+
+.bundle-panel__item img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  object-fit: contain;
+  background-color: var(--color-contact-card-bg);
+  border-radius: var(--radius-sm);
+}
+
+.bundle-panel__item-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bundle-panel__item-remove {
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-bundle-slot-note);
+  text-transform: uppercase;
+  color: var(--color-brand-red-bright);
+  cursor: pointer;
+}
+
+.bundle-panel__terms {
+  margin: var(--space-sm) 0 0;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-bundle-slot-note);
+  line-height: 1;
+  text-align: center;
+  color: var(--color-black);
+}
+
+/* Disabled until at least one product is in the bundle. */
+.bundle-panel .cart-summary__checkout[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1100px) {
+  .bundle__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bundle-panel {
+    position: static;
+  }
+
+  .bundle__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .bundle__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .bundle__grid {
+    grid-template-columns: 1fr;
+  }
+}

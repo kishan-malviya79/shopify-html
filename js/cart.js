@@ -341,6 +341,14 @@
     });
   }
 
+  /* Minimal public surface so other section scripts can push items in —
+     bundle_builder's "Add bundle to cart" uses it. In Liquid this is just
+     a /cart/add.js call, so nothing here needs to survive the port. */
+  window.MunchiefCart = {
+    add: function (product) { addItem(product); },
+    open: open
+  };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { bind(); render(); });
   } else {

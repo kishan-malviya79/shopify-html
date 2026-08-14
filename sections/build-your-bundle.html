@@ -1,65 +1,58 @@
 <!--
-  Section: collection_grid
+  Section: bundle_builder  (+ our_promise, below it on this page)
 
-  Settings:
-    - breadcrumb_home_label (text) — default: "Home"
-    - breadcrumb_current_label (text) — default: "Shop all"
-    - heading (text) — default: "Shop All"
-    - show_filters (checkbox) — default: true; renders the .filter-tabs row
-    - all_filter_label (text) — default: "All"
+  bundle_builder settings:
+    - heading (text) — default: "Build Your Bundle"
+    - subtitle (richtext)
+    - max_items (number) — default: 10; drives the slot bars and the
+      "N of 10 selected" counter (read from data-bundle-max)
+    - panel_heading (text) — default: "Your Mix, Your Rules"
+    - step_one_label / step_two_label (text)
+    - submit_text (text) — default: "Add bundle to cart"
+    - terms_text (richtext)
 
-  Blocks:
-    - block type "collection_group" (repeatable, 1 per category row):
-        - collection (collection) — Shopify collection reference; supplies the
-          product loop (this static build renders the product tiles inline as
-          `product_card` markup instead)
-        - heading (text) — e.g. "Makhanas"; also the group's filter-tab label
-        - filter_key (text) — slug matching the tab's data-filter value,
-          e.g. "makhanas" | "sodas" | "combos"
-        - filter_label (text) — tab label when it differs from the group
-          heading (e.g. group "Munchief Sodas" / tab "Prebiotic Soda")
+  bundle_builder blocks:
+    - block type "bundle_group" (repeatable, 1 per category):
+        - collection (collection), heading (text), filter_key (text)
+    - block type "bundle_product" (repeatable inside a group) — the same
+      `product_card` shape used by product_carousel/collection_grid, with the
+      `.product-card--bundle` skin and an "Add" button instead of Add to Cart
+    - block type "reward_milestone" — shared shape with cart_drawer
+      (position %, threshold, message, icon, label)
 
-    - block type "product_card" (repeatable inside a group — same block shape
-      already used by `product_carousel`, reused verbatim here):
-        - product (product) — supplies title, price, compare_at_price,
-          featured_image
-        - badge_text (text) — optional corner badge, blank hides it
-        - badge_style (select: "green" | "orange") — default: "green"
-        - rating_value (number, 0–5 step 0.5) — default: 5
-        - rating_count (number) — default: 0
-        - variant_label (text) — e.g. "20g Tasting Pouch", "Pack of 1"
+  our_promise settings:
+    - background_image (image_picker) — dummy default assets/dummy/delicious.png
+    - heading (text) — default: "Our Promise"
+  our_promise blocks:
+    - block type "promise" (repeatable, 4 in this build): icon (text, emoji),
+      title (text), text (richtext)
 
   Notes:
-    - This is a standalone page (not part of index.html's homepage flow, same
-      call as product_main / contact_us) — announcement_bar, header, this
-      section, chaos_banner and footer render together here so the file
-      previews as one full page.
-    - The design's "Combos" tab has no group in the supplied comp; a combos
-      group is included here (2 placeholder bundle tiles) so the tab isn't a
-      dead filter. Drop the group in Liquid if the real store has no combo
-      collection — the tab is block-driven, so it disappears with it.
-    - Filtering is a small preview-only script (toggles `hidden` on the
-      groups + `.is-active` on the tabs). In Shopify this maps to either the
-      same client-side toggle or real collection-filter links.
-    - Every card links to sections/product-main.html (Mimi's Chutney Pop) as
-      a placeholder PDP, same as product_carousel's cards.
+    - Standalone page (not part of index.html's homepage flow) — the
+      announcement bar, header, footer and cart drawer render around the two
+      sections so the file previews as one full page.
+    - The bundle panel deliberately reuses cart_drawer's `.cart-rewards*`
+      milestone bar and `.cart-summary*` footer, so this page must link
+      css/sections/cart-drawer.css as well as its own stylesheet.
+    - js/bundle.js holds the builder state (up to 10 products, slot bars,
+      counter, subtotal, live reward progress) and hands the finished bundle
+      to the cart via window.MunchiefCart.add(). In Liquid only that final
+      handoff changes (a /cart/add.js call with the selected variant ids).
+    - The Figma node for this page's promise band shows a lifestyle photo;
+      assets/dummy/delicious.png stands in for the `background_image`
+      setting until the real asset is wired up.
 
-  Fonts: page title uses "Anton" (same voice as product_carousel's heading);
-  group headings and card/tab text use "Fredoka"; price/rating/badge/
-  breadcrumb text uses "Inter". All Google Fonts, loaded here for preview; in
-  the Shopify build, load them through the theme's font settings or a
-  self-hosted @font-face instead.
-
-  Images: product pouches/cans are dummy placeholder art
-  (assets/dummy/pouch-*.svg, assets/dummy/can-*.svg) standing in for each
-  block's `product.featured_image`.
+  Fonts: the page heading uses "Mouse Memoirs" (plain black, no stroke, per
+  its spec) and the promise heading reuses the shared red/white
+  `.stroke-heading` skin; card and panel copy use "Fredoka"; prices use
+  "Inter"; the subtitle and terms line use "Comic Neue".
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop All — Page Preview</title>
+  <title>Build Your Bundle — Page Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@500;600&family=Comic+Neue:wght@700&family=Inter:wght@400;500;600;700&family=Poppins:wght@500&display=swap" rel="stylesheet" />
@@ -67,8 +60,8 @@
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/sections/announcement-bar.css" />
   <link rel="stylesheet" href="../css/sections/header.css" />
-  <link rel="stylesheet" href="../css/sections/shop-all.css" />
-  <link rel="stylesheet" href="../css/sections/chaos-banner.css" />
+  <link rel="stylesheet" href="../css/sections/build-your-bundle.css" />
+  <link rel="stylesheet" href="../css/sections/our-promise.css" />
   <link rel="stylesheet" href="../css/sections/footer.css" />
   <link rel="stylesheet" href="../css/sections/cart-drawer.css" />
 </head>
@@ -328,56 +321,46 @@
   <!-- ===================== /Section: Header ===================== -->
 
   <!-- ======================================================================
-       Section: Collection Grid (collection_grid)
+       Section: Build Your Bundle (bundle_builder)
        ====================================================================== -->
-  <section class="collection" aria-label="Shop all products">
-    <div class="container collection__inner">
+  <nav class="breadcrumb" aria-label="Breadcrumb" style="max-width: var(--container-max); margin-inline: auto; padding: 20px var(--container-padding) 0;">
+    <a href="../index.html" class="breadcrumb__link">Home</a>
+    <span class="breadcrumb__sep">&gt;</span>
+    <span class="breadcrumb__current">Build Your Bundle</span>
+  </nav>
 
-      <nav class="breadcrumb collection__breadcrumb" aria-label="Breadcrumb">
-        <a href="../index.html" class="breadcrumb__link">Home</a>
-        <span class="breadcrumb__sep">&gt;</span>
-        <span class="breadcrumb__current">Shop all</span>
-      </nav>
+  <section class="bundle" aria-label="Build your bundle" data-bundle data-bundle-max="10">
+    <div class="container bundle__inner">
 
-      <h1 class="collection__heading">Shop All</h1>
+      <div class="bundle__intro">
+        <h1 class="bundle__heading">Build Your Bundle</h1>
+        <p class="bundle__subtitle">Pick your size, mix any tins and cans you want, and save more the bigger you go. Your rules, your flavours.</p>
 
-      <div class="filter-tabs collection__filters" role="group" aria-label="Filter products by category">
-        <button type="button" class="filter-tab is-active" data-filter="all" aria-pressed="true">All</button>
-        <button type="button" class="filter-tab" data-filter="makhanas" aria-pressed="false">Makhanas</button>
-        <button type="button" class="filter-tab" data-filter="sodas" aria-pressed="false">Prebiotic Soda</button>
-        <button type="button" class="filter-tab" data-filter="combos" aria-pressed="false">Combos</button>
+        <div class="filter-tabs" role="group" aria-label="Filter products by category">
+          <button type="button" class="filter-tab is-active" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-tab" data-filter="makhanas" aria-pressed="false">Makhanas</button>
+          <button type="button" class="filter-tab" data-filter="sodas" aria-pressed="false">Prebiotic Soda</button>
+          <button type="button" class="filter-tab" data-filter="combos" aria-pressed="false">Combos</button>
+        </div>
       </div>
 
-      <div class="collection__groups">
+      <div class="bundle__layout">
 
-        <!-- ================================================================
-             Block: collection_group (1/3) — Makhanas
-             ================================================================ -->
-        <div class="collection__group" data-category="makhanas">
-          <h2 class="collection__group-heading">Makhanas</h2>
+        <div class="bundle__groups">
+        <!-- Block: bundle_group (Makhanas) -->
+        <div class="bundle__group" data-category="makhanas">
+          <h2 class="bundle__group-heading">Makhanas</h2>
 
-          <div class="product-grid">
+          <div class="bundle__grid">
+          <!-- Block: bundle_product (1/5) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+            <span class="badge badge--green product-card__badge">5000+ Bought This</span>
+              <img src="../assets/dummy/pouch-chutney-pop.svg" alt="Roasted Chutney Pop" />
+            </div>
 
-            <!-- Block: product_card (1/5) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--green product-card__badge">5000+ Bought This</span>
-                <img src="../assets/dummy/pouch-chutney-pop.svg" alt="Mimi's Chutney Pop pouch" />
-              </div>
-
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
-              <h3 class="product-card__title">Mimi's Chutney Pop</h3>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Roasted Chutney Pop</h3>
 
               <div class="price">
                 <span class="price__sale">₹99</span>
@@ -385,40 +368,35 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>20g Tasting Pouch — ₹99</option>
+                  <option>Tasting Pouch</option>
+                  <option>70g Tin</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (2/5) -->
-            <article class="product-card">
-              <a href="product-main-pink.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--orange product-card__badge">Best Seller</span>
-                <img src="../assets/dummy/pouch-salt-pop.svg" alt="Tantan's Salt Pop pouch" />
-              </div>
+          <!-- Block: bundle_product (2/5) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+            <span class="badge badge--orange product-card__badge">Best Seller</span>
+              <img src="../assets/dummy/pouch-salt-pop.svg" alt="Roasted Salt Pop" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
-              <h3 class="product-card__title">Tantan's Salt Pop</h3>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Roasted Salt Pop</h3>
 
               <div class="price">
                 <span class="price__sale">₹99</span>
@@ -426,40 +404,35 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>20g Tasting Pouch — ₹99</option>
+                  <option>Tasting Pouch</option>
+                  <option>70g Tin</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (3/5) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--green product-card__badge">5000+ Bought This</span>
-                <img src="../assets/dummy/pouch-noodle-blast.svg" alt="Chiku's Noodle Blast pouch" />
-              </div>
+          <!-- Block: bundle_product (3/5) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+            <span class="badge badge--green product-card__badge">5000+ Bought This</span>
+              <img src="../assets/dummy/pouch-noodle-blast.svg" alt="Roasted Noodle Blast" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
-              <h3 class="product-card__title">Chiku's Noodle Blast</h3>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Roasted Noodle Blast</h3>
 
               <div class="price">
                 <span class="price__sale">₹99</span>
@@ -467,39 +440,34 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>20g Tasting Pouch — ₹99</option>
+                  <option>Tasting Pouch</option>
+                  <option>70g Tin</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (4/5) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <img src="../assets/dummy/pouch-popn-pani.svg" alt="Pop'n'Pani pouch" />
-              </div>
+          <!-- Block: bundle_product (4/5) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+              <img src="../assets/dummy/pouch-popn-pani.svg" alt="Roasted Pop'n'Pani" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
-              <h3 class="product-card__title">Pop'n'Pani</h3>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Roasted Pop'n'Pani</h3>
 
               <div class="price">
                 <span class="price__sale">₹99</span>
@@ -507,40 +475,34 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>20g Tasting Pouch — ₹99</option>
+                  <option>Tasting Pouch</option>
+                  <option>70g Tin</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (5/5) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--green product-card__badge">5000+ Bought This</span>
-                <img src="../assets/dummy/pouch-pickle-punch.svg" alt="Pickle Punch pouch" />
-              </div>
+          <!-- Block: bundle_product (5/5) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+              <img src="../assets/dummy/pouch-pickle-punch.svg" alt="Roasted Pickle Punch" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
-              <h3 class="product-card__title">Pickle Punch</h3>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Roasted Pickle Punch</h3>
 
               <div class="price">
                 <span class="price__sale">₹99</span>
@@ -548,50 +510,41 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>20g Tasting Pouch — ₹99</option>
+                  <option>Tasting Pouch</option>
+                  <option>70g Tin</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
-
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
           </div>
         </div>
 
-        <!-- ================================================================
-             Block: collection_group (2/3) — Munchief Sodas
-             ================================================================ -->
-        <div class="collection__group" data-category="sodas">
-          <h2 class="collection__group-heading">Munchief Sodas</h2>
+        <!-- Block: bundle_group (Prebiotic Sodas) -->
+        <div class="bundle__group" data-category="sodas">
+          <h2 class="bundle__group-heading">Prebiotic Sodas</h2>
 
-          <div class="product-grid">
+          <div class="bundle__grid">
+          <!-- Block: bundle_product (1/4) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+            <span class="badge badge--green product-card__badge">5000+ Bought This</span>
+              <img src="../assets/dummy/can-guava-chilli-lime.svg" alt="Guava Chilli Lime" />
+            </div>
 
-            <!-- Block: product_card (1/4) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--green product-card__badge">5000+ Bought This</span>
-                <img src="../assets/dummy/can-guava-chilli-lime.svg" alt="Guava Chilli Lime can" />
-              </div>
-
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
+            <div class="product-card__body">
               <h3 class="product-card__title">Guava Chilli Lime</h3>
 
               <div class="price">
@@ -600,39 +553,34 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>Pack of 1 — ₹99</option>
+                  <option>Pack of 1</option>
+                  <option>Pack of 6</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (2/4) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--orange product-card__badge">Best Seller</span>
-                <img src="../assets/dummy/can-nimbu-jeera.svg" alt="Nimbu Jeera can" />
-              </div>
+          <!-- Block: bundle_product (2/4) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+            <span class="badge badge--orange product-card__badge">Best Seller</span>
+              <img src="../assets/dummy/can-nimbu-jeera.svg" alt="Nimbu Jeera" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
+            <div class="product-card__body">
               <h3 class="product-card__title">Nimbu Jeera</h3>
 
               <div class="price">
@@ -641,38 +589,33 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>Pack of 1 — ₹99</option>
+                  <option>Pack of 1</option>
+                  <option>Pack of 6</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (3/4) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <img src="../assets/dummy/can-mixed-berry.svg" alt="Mixed Berry can" />
-              </div>
+          <!-- Block: bundle_product (3/4) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+              <img src="../assets/dummy/can-mixed-berry.svg" alt="Mixed Berry" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
+            <div class="product-card__body">
               <h3 class="product-card__title">Mixed Berry</h3>
 
               <div class="price">
@@ -681,38 +624,33 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>Pack of 1 — ₹99</option>
+                  <option>Pack of 1</option>
+                  <option>Pack of 6</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (4/4) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <img src="../assets/dummy/can-jamun-jeera.svg" alt="Jamun Jeera can" />
-              </div>
+          <!-- Block: bundle_product (4/4) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+              <img src="../assets/dummy/can-jamun-jeera.svg" alt="Jamun Jeera" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
+            <div class="product-card__body">
               <h3 class="product-card__title">Jamun Jeera</h3>
 
               <div class="price">
@@ -721,50 +659,41 @@
                 <span class="badge badge--green">Save ₹200</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>Pack of 1 — ₹99</option>
+                  <option>Pack of 1</option>
+                  <option>Pack of 6</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
-
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
           </div>
         </div>
 
-        <!-- ================================================================
-             Block: collection_group (3/3) — Combos
-             ================================================================ -->
-        <div class="collection__group" data-category="combos">
-          <h2 class="collection__group-heading">Combos</h2>
+        <!-- Block: bundle_group (Combos Max Saver) -->
+        <div class="bundle__group" data-category="combos">
+          <h2 class="bundle__group-heading">Combos Max Saver</h2>
 
-          <div class="product-grid">
+          <div class="bundle__grid">
+          <!-- Block: bundle_product (1/3) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+            <span class="badge badge--green product-card__badge">Best Value</span>
+              <img src="../assets/dummy/pouch-chutney-pop.svg" alt="Munchief Variety Pack" />
+            </div>
 
-            <!-- Block: product_card (1/2) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--green product-card__badge">Best Value</span>
-                <img src="../assets/dummy/pouch-chutney-pop.svg" alt="Munchief Variety Pack" />
-              </div>
-
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
+            <div class="product-card__body">
               <h3 class="product-card__title">Munchief Variety Pack</h3>
 
               <div class="price">
@@ -773,39 +702,33 @@
                 <span class="badge badge--green">Save ₹300</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>Pack of 6 — ₹499</option>
+                  <option>Pack of 6</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
-            <!-- Block: product_card (2/2) -->
-            <article class="product-card">
-              <a href="product-main.html" class="product-card__link">
-              <div class="product-card__media">
-                <span class="badge badge--orange product-card__badge">Best Seller</span>
-                <img src="../assets/dummy/can-mixed-berry.svg" alt="Crunch Max Combo" />
-              </div>
+          <!-- Block: bundle_product (2/3) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+            <span class="badge badge--orange product-card__badge">Best Seller</span>
+              <img src="../assets/dummy/can-mixed-berry.svg" alt="Crunch Max Combo" />
+            </div>
 
-              <div class="rating">
-                <span class="rating__stars" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
-                </span>
-                <span class="rating__count">(53)</span>
-              </div>
-
+            <div class="product-card__body">
               <h3 class="product-card__title">Crunch Max Combo</h3>
 
               <div class="price">
@@ -814,62 +737,206 @@
                 <span class="badge badge--green">Save ₹300</span>
               </div>
 
-              </a>
-
               <div class="select">
                 <select class="select__input" aria-label="Variant">
-                  <option>Pack of 6 — ₹499</option>
+                  <option>Pack of 6</option>
                 </select>
                 <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
 
-              <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
-            </article>
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
 
+          <!-- Block: bundle_product (3/3) -->
+          <article class="product-card product-card--bundle">
+            <div class="product-card__media">
+              <img src="../assets/dummy/pouch-popn-pani.svg" alt="Chaat Party Combo" />
+            </div>
+
+            <div class="product-card__body">
+              <h3 class="product-card__title">Chaat Party Combo</h3>
+
+              <div class="price">
+                <span class="price__sale">₹499</span>
+                <span class="price__compare">₹799</span>
+                <span class="badge badge--green">Save ₹300</span>
+              </div>
+
+              <div class="select">
+                <select class="select__input" aria-label="Variant">
+                  <option>Pack of 6</option>
+                </select>
+                <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+
+              <button type="button" class="btn btn--pill btn--red btn--block" data-bundle-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width: 18px; height: 18px;">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add
+              </button>
+            </div>
+          </article>
           </div>
         </div>
+        </div>
+
+        <!-- Bundle panel — reuses cart_drawer's reward bar and summary footer -->
+        <aside class="bundle-panel" aria-label="Your bundle">
+
+          <div class="bundle-panel__header">
+            <h2 class="bundle-panel__title">Your Mix, Your Rules</h2>
+          </div>
+
+          <div class="bundle-panel__step bundle-panel__step--rewards">
+            <h3 class="bundle-panel__step-title">
+              <span class="bundle-panel__step-number">1</span>
+              <span data-bundle-reward-message>You are <span class="cart-rewards__amount">&#8377;299</span> away from getting 5% off!</span>
+            </h3>
+
+            <div class="cart-rewards__track" role="progressbar" aria-label="Reward progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="cart-rewards__fill" data-cart-reward-fill style="width: 0.5%;"></div>
+
+            <!-- Block: reward_milestone (1/5) — shared with cart_drawer -->
+            <div class="cart-rewards__milestone" style="left: 10%;" data-threshold="299" data-message="getting 5% off">
+              <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-tag.svg" alt="" /></span>
+              <span class="cart-rewards__label">Get 5% Off</span>
+            </div>
+
+            <!-- Block: reward_milestone (2/5) — shared with cart_drawer -->
+            <div class="cart-rewards__milestone" style="left: 30%;" data-threshold="599" data-message="free shipping">
+              <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-shipping.svg" alt="" /></span>
+              <span class="cart-rewards__label">Free Shipping</span>
+            </div>
+
+            <!-- Block: reward_milestone (3/5) — shared with cart_drawer -->
+            <div class="cart-rewards__milestone" style="left: 50%;" data-threshold="999" data-message="getting 10% off">
+              <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-discount.svg" alt="" /></span>
+              <span class="cart-rewards__label">Get 10% Off</span>
+            </div>
+
+            <!-- Block: reward_milestone (4/5) — shared with cart_drawer -->
+            <div class="cart-rewards__milestone" style="left: 70%;" data-threshold="1499" data-message="getting 15% off">
+              <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-discount.svg" alt="" /></span>
+              <span class="cart-rewards__label">Get 15% Off</span>
+            </div>
+
+            <!-- Block: reward_milestone (5/5) — shared with cart_drawer -->
+            <div class="cart-rewards__milestone" style="left: 90%;" data-threshold="1999" data-message="getting 25% off">
+              <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-discount.svg" alt="" /></span>
+              <span class="cart-rewards__label">Get 25% Off</span>
+            </div>
+            </div>
+          </div>
+
+          <div class="bundle-panel__step">
+            <h3 class="bundle-panel__step-title">
+              <span class="bundle-panel__step-number">2</span>
+              Choose your products
+            </h3>
+
+            <div class="bundle-panel__slots">
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            <span class="bundle-panel__slot"></span>
+            </div>
+
+            <p class="bundle-panel__count" data-bundle-count>0 of 10 selected</p>
+            <p class="bundle-panel__note" data-bundle-note>No items yet &mdash; tap &ldquo;Add&rdquo; on any product to start your bundle</p>
+
+            <ul class="bundle-panel__items" data-bundle-items></ul>
+          </div>
+
+          <div class="cart-summary">
+            <div class="cart-summary__row">
+              <span class="cart-summary__label">Subtotal:</span>
+              <span class="cart-summary__value" data-bundle-subtotal>&#8377;0</span>
+            </div>
+
+            <button type="button" class="cart-summary__checkout" data-bundle-submit disabled>Add bundle to cart</button>
+
+            <p class="bundle-panel__terms">Try risk-free, 100% happiness guaranteed. See terms of use.</p>
+          </div>
+
+        </aside>
 
       </div>
-
-      <p class="collection__empty" data-collection-empty hidden>No products in this category yet.</p>
-
     </div>
   </section>
-  <!-- ===================== /Section: Collection Grid ===================== -->
+  <!-- ===================== /Section: Build Your Bundle ===================== -->
 
   <!-- ======================================================================
-       Section: Chaos Banner (chaos_banner)
+       Section: Our Promise (our_promise)
        ====================================================================== -->
-  <section class="chaos-banner" aria-label="Ready to cause some chaos">
+  <section class="our-promise" aria-label="Our promise">
 
-    <div class="chaos-banner__media">
-      <img src="../assets/dummy/chos-bg.png" alt="" role="presentation" />
-
-      <div class="chaos-banner__content">
-        <h2 class="chaos-banner__heading stroke-heading">Ready to cause<br />some chaos?</h2>
-
-        <p class="chaos-banner__text">
-          Ten flavours. Five personalities. One mystery still brewing.
-          Come find out which one you are.
-        </p>
-
-        <div class="btn-group">
-          <a href="#" class="btn btn--pill btn--outline">Shop Now</a>
-
-          <a href="#" class="btn btn--icon-circle btn--outline" aria-label="Shop now">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="7" y1="17" x2="17" y2="7"></line>
-              <polyline points="7 7 17 7 17 17"></polyline>
-            </svg>
-          </a>
-        </div>
-      </div>
+    <div class="our-promise__media">
+      <img src="../assets/dummy/delicious.png" alt="" role="presentation" />
     </div>
 
+    <h2 class="our-promise__heading stroke-heading">Our Promise</h2>
+
+    <div class="our-promise__cards">
+
+      <!-- Block: promise (1/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#128293;</span>
+        <div>
+          <h3 class="promise-card__title">Roasted, Not Fried</h3>
+          <p class="promise-card__text">Every batch is roasted to keep it light and crunchy never deep-fried.</p>
+        </div>
+      </article>
+
+      <!-- Block: promise (2/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#127807;</span>
+        <div>
+          <h3 class="promise-card__title">Prebiotic, Not Probiotic</h3>
+          <p class="promise-card__text">We only say &ldquo;prebiotic&rdquo; because that&rsquo;s what&rsquo;s actually in the can and we&rsquo;ll always tell you the difference.</p>
+        </div>
+      </article>
+
+      <!-- Block: promise (3/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#128248;</span>
+        <div>
+          <h3 class="promise-card__title">Real Photography</h3>
+          <p class="promise-card__text">The people on our packs are real not stock art, not generic illustration.</p>
+        </div>
+      </article>
+
+      <!-- Block: promise (4/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#129296;</span>
+        <div>
+          <h3 class="promise-card__title">Honest About Pending</h3>
+          <p class="promise-card__text">If a number isn&rsquo;t confirmed yet, we say &ldquo;pending&rdquo; we don&rsquo;t publish a guess and hope nobody checks.</p>
+        </div>
+      </article>
+
+    </div>
   </section>
-  <!-- ===================== /Section: Chaos Banner ===================== -->
+  <!-- ===================== /Section: Our Promise ===================== -->
+
 
   <!-- ======================================================================
        Section: Footer (footer)
@@ -964,42 +1031,6 @@
   </footer>
   <!-- ===================== /Section: Footer ===================== -->
 
-  <script>
-    // Preview-only category filter: toggles `hidden` on each
-    // .collection__group and moves .is-active between the tabs. In the
-    // Shopify build this stays a small section script (or gets replaced by
-    // real collection-filter links) — no settings drive it.
-    (function () {
-      var section = document.querySelector('.collection');
-      var tabs = section.querySelectorAll('.filter-tab');
-      var groups = section.querySelectorAll('.collection__group');
-      var empty = section.querySelector('[data-collection-empty]');
-
-      function applyFilter(value) {
-        var visible = 0;
-
-        groups.forEach(function (group) {
-          var match = value === 'all' || group.dataset.category === value;
-          group.hidden = !match;
-          if (match) visible++;
-        });
-
-        empty.hidden = visible > 0;
-      }
-
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          tabs.forEach(function (other) {
-            var isCurrent = other === tab;
-            other.classList.toggle('is-active', isCurrent);
-            other.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
-          });
-
-          applyFilter(tab.dataset.filter);
-        });
-      });
-    })();
-  </script>
 
 
 
@@ -1194,6 +1225,7 @@
   <!-- ===================== /Section: Cart Drawer ===================== -->
 
   <script src="../js/cart.js"></script>
+  <script src="../js/bundle.js"></script>
 
   <script src="../js/header.js"></script>
 

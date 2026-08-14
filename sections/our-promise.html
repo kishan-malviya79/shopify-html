@@ -1,0 +1,97 @@
+<!--
+  Section: our_promise
+
+  Settings:
+    - background_image (image_picker) — dummy default: assets/dummy/delicious.png
+      (a lifestyle photo; the section lays a 20% black wash over it so the
+      heading and cards stay legible on any crop)
+    - heading (text) — default: "Our Promise"
+
+  Blocks:
+    - block type "promise" (repeatable, 4 in this build):
+        - icon (text) — an emoji, rendered at 64px
+        - title (text)
+        - text (richtext)
+
+  Notes:
+    - Also rendered directly below `bundle_builder` on the Build Your Bundle
+      page (sections/build-your-bundle.html), which is where its Figma comp
+      places it. Not added to index.html.
+    - Cards are the shared `.promise-card` component (css/components.css) —
+      cream fill, 2px orange border and a flat 10px drop shadow of the same
+      colour. Below 640px they peek-scroll instead of stacking, which would
+      otherwise make the photo band 2000px tall on a phone.
+
+  Fonts: the heading reuses the shared red-fill/white-stroke `.stroke-heading`
+  ("Mouse Memoirs") at 120px on desktop; card copy is "Fredoka" (500).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Promise — Section Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Fredoka:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/our-promise.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       Section: Our Promise (our_promise)
+       ====================================================================== -->
+  <section class="our-promise" aria-label="Our promise">
+
+    <div class="our-promise__media">
+      <img src="../assets/dummy/delicious.png" alt="" role="presentation" />
+    </div>
+
+    <h2 class="our-promise__heading stroke-heading">Our Promise</h2>
+
+    <div class="our-promise__cards">
+
+      <!-- Block: promise (1/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#128293;</span>
+        <div>
+          <h3 class="promise-card__title">Roasted, Not Fried</h3>
+          <p class="promise-card__text">Every batch is roasted to keep it light and crunchy never deep-fried.</p>
+        </div>
+      </article>
+
+      <!-- Block: promise (2/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#127807;</span>
+        <div>
+          <h3 class="promise-card__title">Prebiotic, Not Probiotic</h3>
+          <p class="promise-card__text">We only say &ldquo;prebiotic&rdquo; because that&rsquo;s what&rsquo;s actually in the can and we&rsquo;ll always tell you the difference.</p>
+        </div>
+      </article>
+
+      <!-- Block: promise (3/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#128248;</span>
+        <div>
+          <h3 class="promise-card__title">Real Photography</h3>
+          <p class="promise-card__text">The people on our packs are real not stock art, not generic illustration.</p>
+        </div>
+      </article>
+
+      <!-- Block: promise (4/4) -->
+      <article class="promise-card">
+        <span class="promise-card__icon" aria-hidden="true">&#129296;</span>
+        <div>
+          <h3 class="promise-card__title">Honest About Pending</h3>
+          <p class="promise-card__text">If a number isn&rsquo;t confirmed yet, we say &ldquo;pending&rdquo; we don&rsquo;t publish a guess and hope nobody checks.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Our Promise ===================== -->
+
+</body>
+</html>
