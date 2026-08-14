@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Section: about_hero
+   Full-bleed character photo with the headline stacked over its top third
+   and a rotated "100% Vegetarian" seal in the corner. Same media-swap
+   pattern as hero_banner/chaos_banner — the section locks to the photo's
+   aspect ratio so the cast never gets cropped at the knees.
+   ========================================================================== */
+
+/* Breadcrumb strip above the hero — its own cream band so the trail never
+   sits on the photo. */
+.about-breadcrumb {
+  background-color: var(--color-cream-bg);
+}
+
+.about-breadcrumb .breadcrumb {
+  padding-block: var(--space-sm);
+}
+
+.about-hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-block: var(--space-2xl) var(--space-xl);
+  overflow: hidden;
+  background-color: var(--color-about-sky);
+}
+
+.about-hero__media,
+.about-hero__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.about-hero__media img {
+  display: block;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.about-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  /* Keeps the copy in the photo's open sky, above the characters. */
+  min-height: clamp(340px, 40vw, 560px);
+  text-align: center;
+}
+
+.about-hero__heading {
+  margin: 0;
+  max-width: 900px;
+  font-size: var(--fs-about-hero-heading);
+  line-height: 1.05;
+}
+
+.about-hero__text {
+  margin: 0;
+  max-width: 520px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-about-hero-text);
+  line-height: var(--lh-normal);
+  color: var(--color-ink);
+}
+
+/* Seal ------------------------------------------------------------------- */
+.about-hero__seal {
+  position: absolute;
+  top: var(--space-xl);
+  right: clamp(16px, 4vw, 72px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(76px, 8vw, 110px);
+  aspect-ratio: 1;
+  padding: var(--space-xs);
+  transform: rotate(-12deg);
+  background-color: var(--color-yellow-bright);
+  border: 3px solid var(--color-white);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-btn);
+  text-align: center;
+}
+
+.about-hero__seal-value {
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: clamp(16px, 1.8vw, 24px);
+  line-height: 1;
+  color: var(--color-brand-red);
+}
+
+.about-hero__seal-label {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-bold);
+  font-size: clamp(7px, 0.8vw, 10px);
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .about-hero {
+    padding-block: var(--space-xl) var(--space-lg);
+  }
+
+  .about-hero__inner {
+    min-height: 260px;
+  }
+}

@@ -46,6 +46,10 @@
   --color-cart-meta: rgba(27, 27, 27, 0.67); /* cart_drawer line-item subtitle */
   --color-scrim: rgba(27, 27, 27, 0.57); /* full-screen overlay behind cart_drawer */
   --color-rec-price: #16433d; /* cart_drawer recommendation card price — deep green, matches its Figma spec exactly */
+  --color-about-sky: #7cb8e2; /* about_hero fallback behind the sky photo */
+  --color-about-mint: #dcefc4; /* about_manifesto band */
+  --color-crunch-band: #f4813f; /* world_band "Crunch World" instance */
+  --color-prebiotic-band: #fdf0cf; /* world_band "Prebiotic World" instance */
   --color-bundle-header-bg: #ffe3c5; /* bundle_builder panel header — warm peach, matches its Figma spec exactly */
   --color-bundle-subtitle: #5a4633; /* bundle_builder intro copy */
   --color-bundle-muted: #9a8b7a; /* bundle_builder "no items yet" note */
@@ -178,6 +182,14 @@
   --fs-menu-card-title: 22px;
   --fs-menu-card-title-wide: 20px; /* the wider "Learn" promo cards */
   /* bundle_builder + our_promise — match their Figma dev-mode specs exactly */
+  /* about page */
+  --fs-about-hero-heading: clamp(30px, 4.4vw, 62px);
+  --fs-about-hero-text: clamp(13px, 1.2vw, 16px);
+  --fs-about-eyebrow: clamp(14px, 1.5vw, 20px);
+  --fs-about-statement: clamp(20px, 2.4vw, 32px);
+  --fs-world-band-heading: clamp(36px, 5vw, 72px);
+  --fs-moments-heading: clamp(24px, 3.2vw, 44px);
+
   --fs-bundle-heading: clamp(38px, 6vw, 82px);
   --fs-bundle-subtitle: 15px;
   --fs-bundle-card-title: 16px;

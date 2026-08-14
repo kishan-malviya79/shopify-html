@@ -1,0 +1,95 @@
+/* ==========================================================================
+   Section: about_moments
+   Centred statement heading over a two-column row: a collage of overlapping
+   `.blob-photo` cloud cutouts on the left, supporting copy + CTA + a star
+   rating on the right.
+   ========================================================================== */
+
+.moments {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.moments__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.moments__heading {
+  margin: 0 auto;
+  max-width: 22ch;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-moments-heading);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--ls-heading-tight);
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-brand-red);
+}
+
+.moments__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+/* Collage: three cutouts on a loose 2-row grid, the middle one pulled up so
+   they overlap the way the comp staggers them. */
+.moments__collage {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.moments__collage .blob-photo {
+  aspect-ratio: 4 / 3;
+}
+
+.moments__collage .blob-photo:nth-child(2) {
+  margin-top: calc(var(--space-2xl) * -1);
+}
+
+.moments__collage .blob-photo:nth-child(3) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 68%;
+  margin-top: calc(var(--space-lg) * -1);
+}
+
+.moments__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.moments__text {
+  margin: 0;
+  max-width: 34ch;
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-brand-story-text);
+  line-height: var(--lh-normal);
+  color: var(--color-border);
+}
+
+.moments__rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+@media (max-width: 860px) {
+  .moments__body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .moments__collage .blob-photo:nth-child(2) {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Section: world_band
+   Full-bleed "world" band: giant display heading + blurb + ingredient chips
+   + CTA on the left, a product scene photo bleeding off the right. Two
+   instances on the about page — "Crunch World" (orange) and "Prebiotic
+   World" (cream), set by the colour modifier.
+
+   Distinct from `world_grid`, which is the homepage's two-up card layout;
+   this one is a single full-width band per world.
+   ========================================================================== */
+
+.world-band {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-crunch-band);
+}
+
+.world-band--prebiotic {
+  background-color: var(--color-prebiotic-band);
+}
+
+.world-band__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--space-xl);
+  align-items: center;
+  padding-block: var(--space-2xl);
+}
+
+.world-band__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.world-band__heading {
+  margin: 0;
+  max-width: 8ch;
+  font-size: var(--fs-world-band-heading);
+  line-height: 0.9;
+  color: var(--color-brand-red);
+}
+
+.world-band__text {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--font-ui);
+  font-size: var(--fs-price);
+  line-height: var(--lh-normal);
+  color: var(--color-border);
+}
+
+.world-band__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.world-band__media {
+  position: relative;
+}
+
+.world-band__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 860px) {
+  .world-band__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+    padding-block: var(--space-xl);
+  }
+
+  .world-band__heading {
+    max-width: none;
+  }
+}

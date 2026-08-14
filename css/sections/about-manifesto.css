@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Section: about_manifesto
+   Mint band: product photo on the left, a struck-through "what everyone else
+   does" line above the brand's counter-statement and supporting copy.
+   ========================================================================== */
+
+.manifesto {
+  background-color: var(--color-about-mint);
+  padding-block: var(--space-2xl);
+}
+
+.manifesto__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+/* The dummy packshot is a tall cut-out; cap it so the band stays a band
+   rather than stretching to the photo's full height. */
+.manifesto__media img {
+  width: auto;
+  max-width: 100%;
+  max-height: 420px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+}
+
+.manifesto__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* The design strikes this line through — it's the claim the brand rejects. */
+.manifesto__eyebrow {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-about-eyebrow);
+  line-height: var(--lh-relaxed);
+  text-transform: uppercase;
+  text-decoration: line-through;
+  text-decoration-color: var(--color-brand-red);
+  text-decoration-thickness: 2px;
+  color: var(--color-border);
+}
+
+.manifesto__statement {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-about-statement);
+  line-height: var(--lh-relaxed);
+  text-transform: uppercase;
+  color: var(--color-brand-red);
+}
+
+.manifesto__text {
+  margin: 0;
+  max-width: 620px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-price);
+  line-height: var(--lh-normal);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 860px) {
+  .manifesto__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .manifesto__media {
+    max-width: 320px;
+  }
+}
