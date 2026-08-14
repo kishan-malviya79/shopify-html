@@ -5,7 +5,11 @@
    and reuse .btn/.badge-style patterns from components.css where they fit.
    ========================================================================== */
 
+/* Positioned + stacked above the page so the full-bleed mega-menu panel can
+   anchor to the header (not to its nav item) and sit over the page scrim. */
 .site-header {
+  position: relative;
+  z-index: 50;
   background-color: var(--color-card-bg);
 }
 
@@ -25,8 +29,10 @@
   flex: 1;
 }
 
+/* Static on purpose: the mega-menu panel below is absolutely positioned
+   against .site-header so it can run the full width of the viewport. */
 .site-header__nav-item {
-  position: relative;
+  position: static;
 }
 
 .site-header__nav-link {
@@ -65,58 +71,133 @@
   transform: rotate(180deg);
 }
 
-/* Dropdown panel — shown on hover/focus (desktop pointer/keyboard) or via
-   the .is-open class the header script toggles on click (touch devices,
-   and so a click "pins" the menu open independent of the pointer). */
-.site-header__dropdown {
+/* Mega-menu panel — a full-bleed white sheet under the header, opened by the
+   nav item's .is-open class (the header script toggles it on click, and on
+   hover/focus-within for pointer + keyboard). Replaced the small stacked
+   link dropdown this section shipped with; both nav items now use it.
+   Metrics match the Figma dev-mode spec (48px padding, 96px column gap,
+   316px link column, 24px card gap). */
+.site-header__menu {
   position: absolute;
   top: 100%;
-  left: 50%;
-  min-width: 190px;
+  left: 0;
+  right: 0;
+  z-index: 40;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: var(--space-xs);
-  padding: var(--space-xs);
-  background-color: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 10px 24px rgba(27, 27, 27, 0.15);
+  gap: 96px;
+  align-items: stretch;
+  padding: var(--space-xl);
+  background-color: var(--color-white);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translate(-50%, -6px);
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
-  z-index: 30;
+  transform: translateY(-6px);
+  /* visibility flips instantly (it can't tween) — only opacity/transform
+     animate, so the panel is never stuck half-hidden mid-transition. */
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
-.site-header__nav-item:hover .site-header__dropdown,
-.site-header__nav-item:focus-within .site-header__dropdown,
-.site-header__nav-item.is-open .site-header__dropdown {
+.site-header__nav-item:hover .site-header__menu,
+.site-header__nav-item:focus-within .site-header__menu,
+.site-header__nav-item.is-open .site-header__menu {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
 }
 
-.site-header__dropdown-link {
-  display: block;
-  padding: var(--space-2xs) var(--space-sm);
+/* Link column — the last child is pushed to the bottom of the panel
+   (the "Shop All" catch-all in the products menu). */
+.site-header__menu-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-card);
+  flex-shrink: 0;
+  width: 316px;
+  padding-bottom: var(--space-sm);
+}
+
+.site-header__menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card);
+}
+
+.site-header__menu-link {
   font-family: var(--font-heading-rounded);
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: -0.1px;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-mega-link);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.32px;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-border);
-  border-radius: var(--radius-sm);
-  white-space: nowrap;
-  transition: background-color 0.15s ease;
+  transition: color 0.15s ease;
 }
 
-.site-header__dropdown-link:hover,
-.site-header__dropdown-link:focus-visible {
-  background-color: rgba(27, 27, 27, 0.06);
+.site-header__menu-link:hover,
+.site-header__menu-link:focus-visible {
+  color: var(--color-brand-red);
+}
+
+.site-header__menu-cards {
+  display: flex;
+  gap: var(--space-card);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Page scrim behind an open menu — the header script toggles .has-menu-open
+   on .site-header. Same token as the cart drawer's overlay. */
+.site-header__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background-color: var(--color-scrim);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+}
+
+.site-header.has-menu-open .site-header__scrim {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 1200px) {
+  .site-header__menu {
+    gap: var(--space-xl);
+    padding: var(--space-lg);
+  }
+
+  .site-header__menu-links {
+    width: 220px;
+  }
+}
+
+/* Tablet: the link column stops earning a whole column — it sits above the
+   cards as a wrapping row instead. */
+@media (max-width: 900px) {
+  .site-header__menu {
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .site-header__menu-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-md) var(--space-lg);
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .site-header__menu-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-lg);
+  }
 }
 
 /* Logo (center) ------------------------------------------------------------ */

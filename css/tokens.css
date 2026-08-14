@@ -46,6 +46,9 @@
   --color-cart-meta: rgba(27, 27, 27, 0.67); /* cart_drawer line-item subtitle */
   --color-scrim: rgba(27, 27, 27, 0.57); /* full-screen overlay behind cart_drawer */
   --color-rec-price: #16433d; /* cart_drawer recommendation card price — deep green, matches its Figma spec exactly */
+  --color-tile-pink: #fed8e8; /* menu-card photo tile fill — matches the nav mega-menu Figma spec exactly */
+  --color-tile-lime: #e4edac; /* menu-card photo tile fill (2nd tint) */
+  --color-tile-rose: #ffb1c1; /* menu-card photo tile fill (3rd tint) */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -163,6 +166,11 @@
   --fs-cart-rec-heading: 14.9px;
   --fs-cart-rec-title: 13px;
   --fs-cart-rec-price: 12px;
+
+  /* header mega menu — matches its Figma dev-mode spec exactly */
+  --fs-mega-link: clamp(22px, 2.4vw, 32px);
+  --fs-menu-card-title: 22px;
+  --fs-menu-card-title-wide: 20px; /* the wider "Learn" promo cards */
 
   --lh-cart-milestone: 1; /* 10/10 — matches the milestone label spec */
   --lh-cart-empty-heading: 1.19; /* 44/37 */

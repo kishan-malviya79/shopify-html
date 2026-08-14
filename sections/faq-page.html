@@ -162,22 +162,76 @@
             Products
             <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
           </button>
-          <div class="site-header__dropdown">
-            <a href="#" class="site-header__dropdown-link">Munchief Family</a>
-            <a href="#" class="site-header__dropdown-link">Munchief Sodas</a>
-            <a href="#" class="site-header__dropdown-link">Combo Bundles</a>
-          </div>
-        </div>
+          <div class="site-header__menu">
+            <div class="site-header__menu-links">
+              <div class="site-header__menu-group">
+                <a href="shop-all.html" class="site-header__menu-link">Makhanas</a>
+                <a href="shop-all.html" class="site-header__menu-link">Prebiotic Sodas</a>
+              </div>
+              <a href="shop-all.html" class="site-header__menu-link">Shop All</a>
+            </div>
+
+            <div class="site-header__menu-cards">
+              <!-- Block: menu_card (1/3) -->
+              <a href="product-main.html" class="menu-card">
+                <span class="menu-card__media">
+                  <span class="badge badge--green menu-card__badge">5000+ Bought This</span>
+                  <img src="../assets/dummy/can-guava-chilli-lime.svg" alt="" />
+                </span>
+                <h3 class="menu-card__title">Guava Chilli Lime</h3>
+              </a>
+
+              <!-- Block: menu_card (2/3) -->
+              <a href="product-main.html" class="menu-card">
+                <span class="menu-card__media menu-card__media--lime">
+                  <span class="badge badge--orange menu-card__badge">Best Seller</span>
+                  <img src="../assets/dummy/can-nimbu-jeera.svg" alt="" />
+                </span>
+                <h3 class="menu-card__title">Nimbu Jeera</h3>
+              </a>
+
+              <!-- Block: menu_card (3/3) -->
+              <a href="product-main.html" class="menu-card">
+                <span class="menu-card__media menu-card__media--rose">
+                  <img src="../assets/dummy/can-mixed-berry.svg" alt="" />
+                </span>
+                <h3 class="menu-card__title">Mixed Berry</h3>
+              </a>
+            </div>
+          </div></div>
         <div class="site-header__nav-item">
           <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
             Learn
             <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
           </button>
-          <div class="site-header__dropdown">
-            <a href="#" class="site-header__dropdown-link">Our Story</a>
-            <a href="#" class="site-header__dropdown-link">Reviews</a>
-          </div>
-        </div>
+          <div class="site-header__menu">
+            <div class="site-header__menu-links">
+              <div class="site-header__menu-group">
+                <a href="#" class="site-header__menu-link">About Us</a>
+                <a href="contact.html" class="site-header__menu-link">Contact Us</a>
+                <a href="faq-page.html" class="site-header__menu-link">FAQ&rsquo;s</a>
+              </div>
+            </div>
+
+            <div class="site-header__menu-cards">
+              <!-- Block: menu_card (1/2), style = "wide" -->
+              <a href="shop-all.html" class="menu-card menu-card--wide">
+                <span class="menu-card__media">
+                  <span class="badge badge--green menu-card__badge">Bestseller</span>
+                  <img src="../assets/dummy/CrunchWorld.png" alt="" />
+                </span>
+                <h3 class="menu-card__title">Upto 25% Off With Bundle</h3>
+              </a>
+
+              <!-- Block: menu_card (2/2), style = "wide" -->
+              <a href="shop-all.html" class="menu-card menu-card--wide">
+                <span class="menu-card__media menu-card__media--rose">
+                  <img src="../assets/dummy/PREBIOTICWorld.png" alt="" />
+                </span>
+                <h3 class="menu-card__title">Stock Up Summer Sale</h3>
+              </a>
+            </div>
+          </div></div>
       </nav>
 
       <a href="../index.html" class="site-header__logo" aria-label="Munchief home">
@@ -213,6 +267,9 @@
       </div>
 
     </div>
+
+    <!-- Page scrim behind an open mega menu -->
+    <div class="site-header__scrim" aria-hidden="true"></div>
   </header>
   <!-- ===================== /Section: Header ===================== -->
 
@@ -478,53 +535,6 @@
   </footer>
   <!-- ===================== /Section: Footer ===================== -->
 
-  <script>
-    // Dropdown menus: hover/focus-within already reveals them via CSS; this
-    // adds click-to-toggle (so touch devices and mouse clicks alike can
-    // "pin" a menu open), closes other open menus first, and closes on an
-    // outside click or Escape.
-    (function () {
-      var items = document.querySelectorAll('.site-header__nav-item');
-
-      function closeAll(except) {
-        items.forEach(function (item) {
-          if (item === except) return;
-          item.classList.remove('is-open');
-          var trigger = item.querySelector('.site-header__nav-link');
-          if (trigger) trigger.setAttribute('aria-expanded', 'false');
-        });
-      }
-
-      items.forEach(function (item) {
-        var trigger = item.querySelector('.site-header__nav-link');
-        if (!trigger) return;
-
-        trigger.addEventListener('click', function (e) {
-          e.stopPropagation();
-          var isOpen = item.classList.contains('is-open');
-          closeAll();
-          if (!isOpen) {
-            item.classList.add('is-open');
-            trigger.setAttribute('aria-expanded', 'true');
-          } else {
-            trigger.setAttribute('aria-expanded', 'false');
-          }
-        });
-      });
-
-      document.addEventListener('click', function () { closeAll(); });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key !== 'Escape') return;
-        items.forEach(function (item) {
-          if (!item.classList.contains('is-open')) return;
-          var trigger = item.querySelector('.site-header__nav-link');
-          closeAll();
-          if (trigger) trigger.focus();
-        });
-      });
-    })();
-  </script>
 
   <script>
     // Accordion toggle — same script as sections/faq.html, only one row open
@@ -743,6 +753,8 @@
   <!-- ===================== /Section: Cart Drawer ===================== -->
 
   <script src="../js/cart.js"></script>
+
+  <script src="../js/header.js"></script>
 
 </body>
 </html>

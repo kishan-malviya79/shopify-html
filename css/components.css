@@ -678,6 +678,87 @@
   text-align: center;
 }
 
+/* Menu card ----------------------------------------------------------------
+   Tinted rounded photo tile + uppercase caption, with an optional corner
+   `.badge`. Used by the header's mega menu for both product tiles (square)
+   and the wider promo cards (`--wide`). Distinct from `.product-card`, which
+   carries rating/price/variant/CTA — this one is navigation, not commerce.
+   Reuse for any future image-led link grid. */
+.menu-card {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.menu-card__media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: var(--color-tile-pink);
+  border-radius: var(--radius-lg);
+}
+
+.menu-card__media--lime {
+  background-color: var(--color-tile-lime);
+}
+
+.menu-card__media--rose {
+  background-color: var(--color-tile-rose);
+}
+
+.menu-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  padding: 6%;
+  transition: transform 0.2s ease;
+}
+
+.menu-card:hover .menu-card__media img,
+.menu-card:focus-visible .menu-card__media img {
+  transform: scale(1.04);
+}
+
+.menu-card__badge {
+  position: absolute;
+  left: 18px;
+  top: 13px;
+}
+
+.menu-card__title {
+  margin: 0;
+  padding: var(--space-md) var(--space-md) 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-menu-card-title);
+  line-height: var(--lh-relaxed);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-border);
+}
+
+/* Wider promo variant: a landscape photo that fills its tile rather than a
+   packshot floating on a tint. */
+.menu-card--wide .menu-card__media {
+  aspect-ratio: 454 / 363;
+}
+
+.menu-card--wide .menu-card__media img {
+  padding: 0;
+  object-fit: cover;
+}
+
+.menu-card--wide .menu-card__title {
+  font-size: var(--fs-menu-card-title-wide);
+}
+
 /* Outline skin for the quantity stepper and variant select ------------------
    cart_drawer's line-item controls are the same two components as
    product_main's buy box / product_carousel's card, restyled to the cart's
