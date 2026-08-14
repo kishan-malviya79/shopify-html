@@ -14,23 +14,42 @@
   background-color: var(--color-yellow-bright);
   padding-top: var(--space-2xl);
   text-align: center;
-  overflow: hidden;
+  /* clip sideways (the rotated blobs and oversized heading would otherwise
+     cause horizontal scroll) but stay visible vertically, so the cloud edge
+     below can rise out of the top of the section. `clip` rather than
+     `hidden`: hidden on one axis forces the other to scroll. */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
-/* Scalloped top edge — a row of adjoining same-color circles straddling the
-   section's top edge, so it reads as a cloud-like border against whatever
-   content sits above it. */
+/* Cloud top edge — five overlapping circles rising out of the footer into
+   whatever sits above it. The silhouette is the exported Figma vector
+   (assets/dummy/icons/footer-cloud-edge.svg, 1794x784) used as a mask over a
+   yellow band, so only the 108px of cloud tops show. Mask width is 124.6%
+   (1794/1440) at the comp's centre offset, which keeps the same five bumps
+   at any viewport width.
+
+   Replaced an earlier approximation that repeated a small radial-gradient
+   circle every 56px — close, but not the design's cloud rhythm. */
 .footer::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 34px;
-  transform: translateY(-50%);
-  background-image: radial-gradient(circle at 50% 100%, var(--color-yellow-bright) 0 17px, transparent 17px);
-  background-size: 56px 34px;
-  background-repeat: repeat-x;
+  height: 108px;
+  transform: translateY(-100%);
+  /* Five yellow bumps of uneven height, tallest in the middle — the shape is
+     inline so it stretches to any viewport width instead of tiling. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 108' preserveAspectRatio='none'%3E%3Cpath fill='%23ffd750' d='M0 108V70Q120 10 240 74Q400-20 560 66Q720-40 880 62Q1040-22 1200 72Q1320 20 1440 66V108Z'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 860px) {
+  .footer::before {
+    height: 56px;
+  }
 }
 
 .footer__logo {
