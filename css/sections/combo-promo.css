@@ -9,11 +9,14 @@
   position: relative;
   overflow: hidden;
   padding-block: var(--space-2xl);
-  background-color: var(--color-brand-orange);
+  /* Ray colors come from the themable --color-sunburst-* pair (default: the
+     warm orange skin) rather than the brand orange tokens directly, so a page
+     theme can recolor the sunburst without touching this file (.theme-pink). */
+  background-color: var(--color-sunburst-a);
   background-image: repeating-conic-gradient(
     from 0deg at 50% 50%,
-    var(--color-brand-orange) 0deg 9deg,
-    var(--color-brand-orange-light) 9deg 18deg
+    var(--color-sunburst-a) 0deg 9deg,
+    var(--color-sunburst-b) 9deg 18deg
   );
 }
 

@@ -678,6 +678,30 @@
   text-align: center;
 }
 
+/* Outline skin for the quantity stepper and variant select ------------------
+   cart_drawer's line-item controls are the same two components as
+   product_main's buy box / product_carousel's card, restyled to the cart's
+   Figma spec: white fill, a heavier near-black border, tighter type. Kept as
+   modifiers so both stay on one stepper/select implementation. */
+.qty-stepper--outline {
+  width: 83px;
+  gap: 0;
+  justify-content: space-between;
+  padding: var(--space-sm);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+}
+
+.select--outline .select__input {
+  font-family: var(--font-ui);
+  font-size: var(--fs-cart-control);
+  text-transform: none;
+  letter-spacing: 0;
+  padding: var(--space-sm) var(--space-lg) var(--space-sm) 14px;
+  border: 2px solid var(--color-border);
+  text-overflow: ellipsis;
+}
+
 /* Pincode checker ------------------------------------------------------------
    Inline pill input + submit button for delivery-availability checks.
    Reuse for any future PDP serviceability form. */

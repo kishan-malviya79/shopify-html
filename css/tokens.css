@@ -39,6 +39,13 @@
   --color-contact-placeholder: #717680; /* contact_us input placeholder text */
   --color-contact-dropdown-text: #535862; /* contact_us phone country-code select text */
   --color-contact-chevron: #a4a7ae; /* contact_us phone country-code dropdown chevron */
+  --color-cart-hairline: #f3e4cd; /* cart_drawer row/section dividers — matches its Figma dev-mode spec exactly */
+  --color-cart-tile-yellow: #fff56b; /* cart_drawer soda line-item photo tile — brighter than --color-yellow-bright, matches its Figma spec exactly */
+  --color-cart-track: rgba(27, 27, 27, 0.15); /* cart_drawer reward-progress track */
+  --color-cart-placeholder: rgba(27, 27, 27, 0.2); /* cart_drawer coupon input placeholder */
+  --color-cart-meta: rgba(27, 27, 27, 0.67); /* cart_drawer line-item subtitle */
+  --color-scrim: rgba(27, 27, 27, 0.57); /* full-screen overlay behind cart_drawer */
+  --color-rec-price: #16433d; /* cart_drawer recommendation card price — deep green, matches its Figma spec exactly */
 
   /* Color — neutrals */
   --color-white: #ffffff;
@@ -135,6 +142,32 @@
 
   --lh-legal: 1.7; /* long-form legal/FAQ body copy — looser than --lh-normal's 1.5 */
 
+  /* cart_drawer — sizes below match its Figma dev-mode spec exactly; each
+     pair is desktop-drawer / mobile-full-screen where the two differ. */
+  --fs-cart-title: 24px;
+  --fs-cart-title-mobile: 18px;
+  --fs-cart-progress: 13.7px;
+  --fs-cart-milestone: 10px;
+  --fs-cart-item-title: 24px;
+  --fs-cart-item-title-mobile: 18px;
+  --fs-cart-item-meta: 14px;
+  --fs-cart-item-meta-mobile: 12px;
+  --fs-cart-item-price: 16px;
+  --fs-cart-item-price-mobile: 14px;
+  --fs-cart-control: 13px; /* variant select + coupon input/button label */
+  --fs-cart-summary: 14px;
+  --fs-cart-checkout: 13.8px;
+  --fs-cart-checkout-mobile: 15px;
+  --fs-cart-empty-heading: clamp(26px, 4.6vw, 37px);
+  --fs-cart-empty-text: 15px;
+  --fs-cart-rec-heading: 14.9px;
+  --fs-cart-rec-title: 13px;
+  --fs-cart-rec-price: 12px;
+
+  --lh-cart-milestone: 1; /* 10/10 — matches the milestone label spec */
+  --lh-cart-empty-heading: 1.19; /* 44/37 */
+  --lh-cart-empty-text: 1.92; /* 28.8/15 */
+
   --fw-medium: 500;
   --fw-bold: 700;
   --fw-black: 900;
@@ -176,6 +209,8 @@
   --radius-thumb: 14px; /* product_main gallery thumbnail corners */
   --radius-2xl: 32px; /* contact_us card, matches its Figma dev-mode spec exactly */
   --radius-textarea: 16px; /* contact_us message field, matches its Figma dev-mode spec exactly */
+  --radius-drawer: 20px; /* cart_drawer panel corners */
+  --radius-tile: 10px; /* cart_drawer line-item photo tile + recommendation card */
 
   /* Border */
   --border-width-btn: 3px;
@@ -196,4 +231,45 @@
   /* Layout */
   --container-max: 1280px;
   --container-padding: 24px;
+
+  /* Decorative shapes
+     Wavy section edge used by product_story (top) and product_photo_banner
+     (top + flipped bottom). Applied as a *mask* over a background-color, not
+     as a colored background-image, so the edge color is a token and can be
+     re-themed (see .theme-pink below) instead of being baked into the SVG. */
+  --mask-wave-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='120' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1200V40C1100 90 950 100 800 70C650 40 520 20 380 35C250 49 130 85 0 60Z' fill='%23000000'/%3E%3C/svg%3E");
+
+  /* Color — themable section skins
+     These carry the *role* (page background, wave edge, sunburst rays) rather
+     than a fixed brand hue, so a page-level theme class can swap them. */
+  --color-wave-cream: #fbf1e4; /* filled wavy section edge — matches the Figma wave layer, slightly lighter than --color-cream-bg */
+  --color-sunburst-a: var(--color-brand-orange); /* combo_promo ray pair, default warm skin */
+  --color-sunburst-b: var(--color-brand-orange-light);
+
+  /* Color — pink theme palette (used by .theme-pink, see end of file) */
+  --color-pink-hot: #fb4b9c; /* pink counterpart to --color-terracotta: product_story background */
+  --color-pink-soft: #ffc2de; /* lighter ray/border pink */
+  --color-pink-pale: #ffeaf4; /* pink counterpart to --color-cream-bg: page/section background */
+  --color-pink-card-bg: #fff6fa; /* pink counterpart to --color-card-bg: bordered-card fill */
+}
+
+/* Theme: pink ---------------------------------------------------------------
+   Page-level color scheme, applied on <body> (see sections/product-main-pink
+   .html). It only *re-points existing tokens* — no section CSS is duplicated
+   or overridden, so every section (product_main, product_story,
+   product_photo_banner, product_reviews, combo_promo, faq_section,
+   product_carousel) picks the pink skin up automatically. In Liquid this maps
+   to a `color_scheme` section/theme setting that renders this class name.
+   Brand red (CTAs, prices, footer) is deliberately left alone — only the
+   warm cream/terracotta/orange section skins go pink. */
+.theme-pink {
+  --color-cream-bg: var(--color-pink-pale);
+  --color-card-bg: var(--color-pink-card-bg);
+  --color-terracotta: var(--color-pink-hot);
+  --color-wave-cream: var(--color-pink-pale);
+  --color-sunburst-a: var(--color-pink-hot);
+  --color-sunburst-b: var(--color-pink-soft);
+  --color-upsell-card-bg: var(--color-pink-pale);
+  --color-upsell-card-border: var(--color-pink-soft);
+  --color-gallery-thumb-border: var(--color-pink-soft);
 }

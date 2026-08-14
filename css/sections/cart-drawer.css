@@ -1,0 +1,669 @@
+/* ==========================================================================
+   Section: cart_drawer
+   Slide-over cart panel. Metrics below match its Figma dev-mode spec exactly
+   (panel width/radius/border, section padding, type sizes, milestone geometry)
+   unless a comment says otherwise. Shared pieces — .qty-stepper(--outline),
+   .select(--outline), .btn skins — live in css/components.css.
+
+   One ruleset, two layouts (rule 6): above 768px this is the 473px desktop
+   drawer floating over a scrim; at/below 768px the same markup becomes the
+   full-screen mobile cart page (back chevron instead of the X, no scrim gap,
+   stacked line-item controls).
+   ========================================================================== */
+
+.cart-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+}
+
+.cart-drawer.is-open {
+  display: block;
+}
+
+/* Several parts below are flex containers, which beats the UA's
+   `[hidden] { display: none }` — the empty/filled swap toggles `hidden` on
+   them, so they need the explicit override. */
+.cart-drawer [hidden] {
+  display: none;
+}
+
+.cart-drawer__scrim {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-scrim);
+  border: none;
+  padding: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.cart-drawer__panel {
+  position: absolute;
+  top: 26px;
+  right: 44px;
+  display: flex;
+  flex-direction: column;
+  width: 473px;
+  max-width: calc(100% - 32px);
+  max-height: calc(100vh - 52px);
+  overflow: hidden;
+  background-color: var(--color-card-bg);
+  border: var(--border-width-card) solid var(--color-white);
+  border-radius: var(--radius-drawer);
+}
+
+/* Header ------------------------------------------------------------------ */
+.cart-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-card);
+  border-bottom: 1px solid var(--color-cart-hairline);
+}
+
+.cart-drawer__title {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-title);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.cart-drawer__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: none;
+  border: 2px solid var(--color-footer-card-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.cart-drawer__close img {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+/* Back chevron is the mobile-only counterpart of the close button. */
+.cart-drawer__back {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-right: var(--space-2xs);
+  background: none;
+  border: none;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.cart-drawer__back svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Reward progress --------------------------------------------------------- */
+.cart-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-md) var(--space-md) 60px; /* bottom room for the milestone labels */
+  border-bottom: 1px solid rgba(243, 228, 205, 0.3);
+}
+
+.cart-rewards__text {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-progress);
+  line-height: 1.26;
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.cart-rewards__amount {
+  color: var(--color-brand-red-bright);
+}
+
+.cart-rewards__track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-cart-track);
+}
+
+.cart-rewards__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-brand-red-line);
+}
+
+/* Milestones sit at 10/30/50/70/90% of the track, centred on their circle. */
+.cart-rewards__milestone {
+  position: absolute;
+  top: -11px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart-rewards__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-border);
+}
+
+.cart-rewards__icon img {
+  width: 16.5px;
+  height: 16.5px;
+  display: block;
+}
+
+.cart-rewards__label {
+  margin-top: 10px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cart-milestone);
+  line-height: var(--lh-cart-milestone);
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--color-black);
+}
+
+/* Line items -------------------------------------------------------------- */
+.cart-drawer__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.cart-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-card) var(--space-md);
+  border-bottom: 1px solid var(--color-cart-hairline);
+}
+
+.cart-item__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 112px;
+  height: 148px;
+  padding: var(--space-card) 0;
+  border: 1px solid var(--color-white);
+  border-radius: var(--radius-tile);
+  background-color: var(--color-contact-card-bg);
+}
+
+/* Tile fill is per-line-item — pouches sit on the pink tile, cans on yellow. */
+.cart-item__media--yellow {
+  background-color: var(--color-cart-tile-yellow);
+}
+
+.cart-item__media img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.cart-item__body {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  gap: var(--space-card);
+  align-items: stretch;
+}
+
+.cart-item__info {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.cart-item__title {
+  margin: 0 0 7px;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-item-title);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.cart-item__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cart-item__meta {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-cart-item-meta);
+  line-height: 1.37;
+  letter-spacing: -0.8px;
+  text-transform: uppercase;
+  color: var(--color-cart-meta);
+}
+
+.cart-item__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.cart-item__controls .select {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-item__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-shrink: 0;
+  width: 64px;
+  padding-bottom: var(--space-xs);
+  text-align: right;
+}
+
+.cart-item__price {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cart-item-price);
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  color: var(--color-black);
+}
+
+.cart-item__remove {
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: var(--fs-cart-item-meta);
+  line-height: 1.37;
+  letter-spacing: -0.8px;
+  text-transform: uppercase;
+  color: var(--color-brand-red-bright);
+  cursor: pointer;
+}
+
+/* Empty state ------------------------------------------------------------- */
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+}
+
+.cart-empty__heading {
+  margin: 0;
+  max-width: 310px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cart-empty-heading);
+  line-height: var(--lh-cart-empty-heading);
+  color: var(--color-black);
+}
+
+.cart-empty__text {
+  margin: var(--space-xs) 0 0;
+  max-width: 340px;
+  font-family: var(--font-body);
+  font-size: var(--fs-cart-empty-text);
+  line-height: var(--lh-cart-empty-text);
+  color: var(--color-black);
+}
+
+.cart-empty__cta {
+  margin-top: var(--space-md);
+  width: 200px;
+}
+
+/* Recommendation rail (empty state only) ---------------------------------- */
+.cart-recs {
+  padding: 21px var(--space-md) var(--space-2xs);
+  border-top: 1px solid var(--color-cart-hairline);
+}
+
+.cart-recs__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  padding-bottom: var(--space-sm);
+}
+
+.cart-recs__heading {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-rec-heading);
+  line-height: 1;
+  color: var(--color-black);
+}
+
+.cart-recs__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.cart-recs__nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.cart-recs__nav svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cart-recs__track {
+  display: flex;
+  gap: var(--space-xs);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-sm);
+  scrollbar-width: none;
+}
+
+.cart-recs__track::-webkit-scrollbar {
+  display: none;
+}
+
+.cart-rec-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex: 0 0 307px;
+  height: 98px;
+  padding: 17px 21px 17px 13px;
+  scroll-snap-align: start;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-cart-hairline);
+  border-radius: var(--radius-tile);
+}
+
+.cart-rec-card__media {
+  flex-shrink: 0;
+  width: 49px;
+  height: 64px;
+}
+
+.cart-rec-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.cart-rec-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-rec-card__title {
+  margin: 0 0 var(--space-xs);
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-rec-title);
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.cart-rec-card__price {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-cart-rec-price);
+  line-height: 1;
+  color: var(--color-rec-price);
+}
+
+.cart-rec-card__add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.cart-rec-card__add img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Coupon row -------------------------------------------------------------- */
+.cart-promo {
+  display: flex;
+  gap: 14px;
+  padding: var(--space-md) var(--space-md);
+}
+
+.cart-promo__input {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 var(--space-md);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-select-border);
+  border-radius: 50px;
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-cart-control);
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.cart-promo__input::placeholder {
+  color: var(--color-cart-placeholder);
+}
+
+.cart-promo__submit {
+  flex-shrink: 0;
+  padding: var(--space-md) 17px;
+  background-color: var(--color-brand-red-line);
+  border: none;
+  border-radius: 44px;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-control);
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+/* Summary + checkout ------------------------------------------------------ */
+.cart-summary {
+  padding: var(--space-md);
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-cart-hairline);
+}
+
+.cart-summary__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-bottom: var(--space-2xs);
+  font-size: var(--fs-cart-summary);
+  line-height: 1.13;
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.cart-summary__label {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+}
+
+.cart-summary__value {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+}
+
+.cart-summary__checkout {
+  width: 100%;
+  margin-top: 14px;
+  padding-block: var(--space-md);
+  background-color: var(--color-brand-red-line);
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-cart-checkout);
+  line-height: 1.14;
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+/* Mobile: the same panel becomes the full-screen cart page --------------- */
+@media (max-width: 768px) {
+  .cart-drawer__scrim {
+    display: none;
+  }
+
+  .cart-drawer__panel {
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    border: none;
+    border-radius: 0;
+  }
+
+  .cart-drawer__header {
+    justify-content: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+
+  .cart-drawer__back {
+    display: flex;
+  }
+
+  .cart-drawer__close {
+    display: none;
+  }
+
+  .cart-drawer__title {
+    font-size: var(--fs-cart-title-mobile);
+  }
+
+  .cart-rewards {
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-md) var(--space-xl);
+  }
+
+  .cart-item {
+    padding: var(--space-md);
+    gap: var(--space-md);
+  }
+
+  .cart-item__media {
+    width: 108px;
+    height: 143px;
+  }
+
+  .cart-item__body,
+  .cart-item__info {
+    gap: 14px;
+  }
+
+  .cart-item__title {
+    font-size: var(--fs-cart-item-title-mobile);
+  }
+
+  .cart-item__meta {
+    font-size: var(--fs-cart-item-meta-mobile);
+  }
+
+  /* Stacked controls: stepper on its own row, full-width select below. */
+  .cart-item__controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-xs);
+  }
+
+  .cart-item__price {
+    font-size: var(--fs-cart-item-price-mobile);
+  }
+
+  .cart-item__remove {
+    font-size: var(--fs-cart-item-meta-mobile);
+  }
+
+  .cart-summary__checkout {
+    font-size: var(--fs-cart-checkout-mobile);
+  }
+}
+
+@media (max-width: 480px) {
+  /* The 5 milestone labels stop fitting side by side well below this — drop
+     to the icons alone, the copy above already states the next reward. */
+  .cart-rewards__label {
+    display: none;
+  }
+
+  .cart-rewards {
+    padding-bottom: var(--space-lg);
+  }
+}

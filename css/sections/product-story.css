@@ -20,7 +20,9 @@
 /* Wavy top edge — a single soft, asymmetric cream wave straddling the
    section's top edge, same "decorative edge" role as brand_story's stroked
    line and footer's scalloped circles, but a solid filled shape instead of
-   either of those techniques. */
+   either of those techniques. The shape comes from the shared
+   --mask-wave-edge token used as a mask, with the color supplied by
+   background-color, so a page theme can recolor the edge (.theme-pink). */
 .product-story::before {
   content: "";
   position: absolute;
@@ -28,9 +30,9 @@
   left: 0;
   right: 0;
   height: 64px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='120' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1200V40C1100 90 950 100 800 70C650 40 520 20 380 35C250 49 130 85 0 60Z' fill='%23FBF1E4'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-color: var(--color-wave-cream);
+  -webkit-mask: var(--mask-wave-edge) no-repeat center / 100% 100%;
+  mask: var(--mask-wave-edge) no-repeat center / 100% 100%;
 }
 
 /* Figma's frame is 1440px wide with 170px side padding, giving a fixed

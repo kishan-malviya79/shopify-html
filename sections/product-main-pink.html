@@ -1,10 +1,36 @@
 <!--
-  Section: product_main
+  Section: product_main — pink color scheme (color_scheme = "pink")
+
+  Same PDP as sections/product-main.html, seeded with a different product
+  (Tantan's Salt Pop) and rendered in the pink theme. The ONLY structural
+  difference is `class="theme-pink"` on <body>: that class lives in
+  css/tokens.css and re-points existing color tokens (--color-cream-bg,
+  --color-card-bg, --color-terracotta, --color-wave-cream,
+  --color-sunburst-a/b, --color-upsell-card-*, --color-gallery-thumb-border)
+  to the pink palette. No section CSS is duplicated or overridden, so every
+  section on the page (product_main, product_story, product_photo_banner,
+  product_reviews, combo_promo, faq_section, product_carousel) picks the
+  pink skin up automatically. Brand red (CTAs, prices, footer) stays red.
+
+  In Liquid this maps to a `color_scheme` setting — theme-level (rendering
+  the class on <body>) or per-section (rendering it on the section wrapper);
+  either works since the class only sets custom properties.
+
+  Two supporting refactors made the theme possible (both in the shared
+  files, so the default cream PDP is unchanged):
+    - the wavy section edge is now a mask (--mask-wave-edge) over a
+      background-color token instead of a colored SVG data URI, so the edge
+      recolors with the theme (css/sections/product-story.css,
+      css/sections/product-photo-banner.css)
+    - combo_promo's sunburst rays read --color-sunburst-a/b instead of the
+      brand orange tokens directly (css/sections/combo-promo.css)
 
   Settings:
+    - color_scheme (select: "default" | "pink") — default: "default";
+      renders the `theme-pink` class when set to "pink"
     - product (product) — Shopify product reference; supplies title, price,
       compare_at_price, description and media automatically
-    - eyebrow_text (text) — default: "Vada Pav Makhana · Chutney Pop"
+    - eyebrow_text (text) — default: "Pink Salt Makhana · Salt Pop"
     - description (richtext) — default: "An unforgettable blackberry &
       smooth vanilla combination."
     - rating_value (number, 0–5 step 0.1) — default: 4.3; static rating
@@ -40,12 +66,12 @@
   instead.
 
   Images: gallery and upsell art are dummy placeholder assets
-  (assets/dummy/chutney-pop.png, assets/dummy/pouch-chutney-pop.svg,
-  assets/dummy/can-guava-chilli-lime.svg) standing in for real product
-  media picked in Shopify.
+  (assets/dummy/pouch-salt-pop.svg, assets/dummy/can-guava-chilli-lime.svg)
+  standing in for real product media picked in Shopify.
 
-  This file assembles the full PDP for Mimi's Chutney Pop, in page order:
-  header, this buy box, product_story (sections/product-story.html),
+  This file assembles the full PDP for Tantan's Salt Pop, in page order:
+  announcement_bar, header, this buy box, product_story
+  (sections/product-story.html),
   product_photo_banner (sections/product-photo-banner.html),
   product_reviews (sections/product-reviews.html), combo_promo
   (sections/combo-promo.html), faq_section (sections/faq.html), a
@@ -59,12 +85,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Main — Section Preview</title>
+  <title>Tantan's Salt Pop (Pink) — Page Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Mouse+Memoirs&family=Fredoka:wght@500;600&family=Comic+Neue:wght@700&family=Inter:wght@400;500;600;700&family=Poppins:wght@500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections/announcement-bar.css" />
   <link rel="stylesheet" href="../css/sections/header.css" />
   <link rel="stylesheet" href="../css/sections/product-main.css" />
   <link rel="stylesheet" href="../css/sections/product-story.css" />
@@ -75,7 +102,92 @@
   <link rel="stylesheet" href="../css/sections/product-carousel.css" />
   <link rel="stylesheet" href="../css/sections/footer.css" />
 </head>
-<body>
+<!-- color_scheme = "pink": the only structural difference from
+     sections/product-main.html (see css/tokens.css .theme-pink). -->
+<body class="theme-pink">
+  <!-- ======================================================================
+       Section: Announcement Bar (announcement_bar)
+       ====================================================================== -->
+  <section class="announcement-bar ticker" aria-label="Announcements">
+    <div class="ticker__track">
+
+      <!-- Real content (announced once), followed by 5 aria-hidden duplicate
+           groups so the ticker never runs out of content mid-scroll. -->
+      <div class="ticker__group">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 1/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 2/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 3/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 4/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+      <!-- Duplicate 5/5 (aria-hidden) -->
+      <div class="ticker__group" aria-hidden="true">
+        <span class="announcement-bar__item">JOYFULLY BOLD</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">EFFORTLESSLY STYLISH</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">ALWAYS DELICIOUS</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        <span class="announcement-bar__item">JOYFULLY SHARED</span>
+        <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== /Section: Announcement Bar ===================== -->
+
 
   <!-- ======================================================================
        Section: Header (header)
@@ -159,33 +271,33 @@
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
               </svg>
             </button>
-            <img data-gallery-main src="../assets/dummy/chutney-pop.png" alt="Mimi's Chutney Pop — pouch and tin" />
+            <img data-gallery-main src="../assets/dummy/pouch-salt-pop.svg" alt="Tantan's Salt Pop — pouch and tin" />
           </div>
 
           <div class="product-main__thumbs">
             <!-- Block: gallery_image (1/4) -->
-            <button type="button" class="product-main__thumb is-active" data-gallery-thumb data-image="../assets/dummy/chutney-pop.png" aria-label="Show product photo 1">
-              <img src="../assets/dummy/chutney-pop.png" alt="" />
+            <button type="button" class="product-main__thumb is-active" data-gallery-thumb data-image="../assets/dummy/pouch-salt-pop.svg" aria-label="Show product photo 1">
+              <img src="../assets/dummy/pouch-salt-pop.svg" alt="" />
             </button>
             <!-- Block: gallery_image (2/4) -->
-            <button type="button" class="product-main__thumb" data-gallery-thumb data-image="../assets/dummy/pouch-chutney-pop.svg" aria-label="Show product photo 2">
-              <img src="../assets/dummy/pouch-chutney-pop.svg" alt="" />
+            <button type="button" class="product-main__thumb" data-gallery-thumb data-image="../assets/dummy/pouch-salt-pop.svg" aria-label="Show product photo 2">
+              <img src="../assets/dummy/pouch-salt-pop.svg" alt="" />
             </button>
             <!-- Block: gallery_image (3/4) -->
-            <button type="button" class="product-main__thumb" data-gallery-thumb data-image="../assets/dummy/chutney-pop.png" aria-label="Show product photo 3">
-              <img src="../assets/dummy/chutney-pop.png" alt="" />
+            <button type="button" class="product-main__thumb" data-gallery-thumb data-image="../assets/dummy/pouch-salt-pop.svg" aria-label="Show product photo 3">
+              <img src="../assets/dummy/pouch-salt-pop.svg" alt="" />
             </button>
             <!-- Block: gallery_image (4/4) -->
-            <button type="button" class="product-main__thumb" data-gallery-thumb data-image="../assets/dummy/pouch-chutney-pop.svg" aria-label="Show product photo 4">
-              <img src="../assets/dummy/pouch-chutney-pop.svg" alt="" />
+            <button type="button" class="product-main__thumb" data-gallery-thumb data-image="../assets/dummy/pouch-salt-pop.svg" aria-label="Show product photo 4">
+              <img src="../assets/dummy/pouch-salt-pop.svg" alt="" />
             </button>
           </div>
         </div>
 
         <!-- Buy box -------------------------------------------------------- -->
         <div class="product-main__info">
-          <p class="product-main__eyebrow">Vada Pav Makhana · Chutney Pop</p>
-          <h1 class="product-main__title">Mimi's Chutney Pop</h1>
+          <p class="product-main__eyebrow">Pink Salt Makhana · Salt Pop</p>
+          <h1 class="product-main__title">Tantan's Salt Pop</h1>
 
           <div class="rating">
             <span class="rating__stars" aria-hidden="true">
@@ -308,12 +420,12 @@
        badges sit below the buy box on the full PDP. See
        sections/product-story.html for this section on its own.
        ====================================================================== -->
-  <section class="product-story" aria-label="Mimi's Chutney Pop details">
+  <section class="product-story" aria-label="Tantan's Salt Pop details">
 
     <div class="container product-story__grid">
 
       <div class="product-story__info">
-        <h2 class="product-story__heading stroke-heading stroke-heading--black">Mimi's Chutney Pop</h2>
+        <h2 class="product-story__heading stroke-heading stroke-heading--black">Tantan's Salt Pop</h2>
 
         <p class="product-story__text">
           Made with blackberry, crisp apple, and a splash of mandarin and
@@ -494,13 +606,13 @@
 
   <!-- ======================================================================
        Section: Product Photo Banner (product_photo_banner) — same product
-       (Mimi's Chutney Pop); full-bleed wavy-framed lifestyle photo closes
+       (Tantan's Salt Pop); full-bleed wavy-framed lifestyle photo closes
        out the PDP. See sections/product-photo-banner.html for this section
        on its own.
        ====================================================================== -->
-  <section class="photo-banner" aria-label="Mimi's Chutney Pop lifestyle photo">
+  <section class="photo-banner" aria-label="Tantan's Salt Pop lifestyle photo">
     <div class="photo-banner__media">
-      <img src="../assets/dummy/pop-bg.png" alt="Roasted makhana with green chutney and Mimi's Chutney Pop tin and pouch" />
+      <img src="../assets/dummy/pop-bg.png" alt="Roasted makhana with green chutney and Tantan's Salt Pop tin and pouch" />
     </div>
   </section>
   <!-- ===================== /Section: Product Photo Banner ===================== -->
@@ -783,7 +895,7 @@
     <div class="container faq__grid">
 
       <div class="faq__photo">
-        <img src="../assets/dummy/chutney-pop.png" alt="Mimi's Chutney Pop tin" />
+        <img src="../assets/dummy/pouch-salt-pop.svg" alt="Tantan's Salt Pop tin" />
       </div>
 
       <div class="faq__content">
@@ -804,11 +916,11 @@
           <!-- Block: faq_item (2/4) -->
           <div class="accordion__item">
             <button type="button" class="accordion__trigger" aria-expanded="false">
-              Is Chutney Pop vegan?
+              Is Salt Pop vegan?
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
             <div class="accordion__panel">
-              <p>Yes — every Munchief makhana flavour, including Chutney Pop, is 100% vegan, roasted (not fried), and made with real ingredients.</p>
+              <p>Yes — every Munchief makhana flavour, including Salt Pop, is 100% vegan, roasted (not fried), and made with real ingredients.</p>
             </div>
           </div>
 
