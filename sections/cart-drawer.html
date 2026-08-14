@@ -24,9 +24,12 @@
         - threshold (number) — cart total at which it unlocks; drives the
           fill width and the reward_message copy in Liquid
 
-  Line items are NOT blocks — in Liquid they come from `cart.items`; the two
-  rendered here are static placeholders. Recommendation cards likewise come
-  from the `recommendations` product_list.
+  Line items are NOT blocks — in Liquid they come from `cart.items`. Here
+  they render from the `<template data-cart-item-template>` at the bottom of
+  the drawer via js/cart.js, so the row markup still lives in HTML: in Liquid
+  that template's contents become the body of the `{% for item in cart.items %}`
+  loop. Recommendation cards likewise come from the `recommendations`
+  product_list.
 
   Notes:
     - Three Figma states, one section (rule 6): the desktop drawer (filled),
@@ -39,12 +42,21 @@
       cart sits below the site header as its own page; here the full-screen
       panel covers the header, since this is an overlay cart and its own
       header row (back chevron + title) already carries the page identity.
-    - The state switch at the top of this preview is NOT part of the section —
-      it only exists so this file can show all three comps. Delete it when
-      porting to Liquid.
-    - The header's Cart button opens the drawer here; the same wiring belongs
-      on every page in the Shopify build (the drawer renders once in
-      theme.liquid, not per template).
+    - Behaviour lives in js/cart.js, shared by every page that renders this
+      markup: the header Cart button (`data-cart-open`) opens the drawer,
+      every `data-add-to-cart` button adds its card's product and opens the
+      drawer, and the steppers/remove/subtotal/reward bar all re-render from
+      one state object kept in localStorage. That state object is the static
+      stand-in for Shopify's Cart AJAX API — swap it for /cart/add.js +
+      /cart/change.js in the Liquid build.
+    - Reward milestones carry `data-threshold` (₹299/599/999/1499/1999) and
+      `data-message`, so the fill width and the "away from …" copy are
+      computed from the real subtotal rather than hardcoded like the comps.
+    - The "Add something to the cart" strip below the header is PREVIEW-ONLY
+      (two ordinary `product_card` blocks) so this file can exercise the
+      add-to-cart wiring. Delete it when porting to Liquid.
+    - Drawer markup is duplicated per page here, same as header/footer, since
+      static HTML has no includes. In Shopify it renders once in theme.liquid.
 
   Fonts: heading/controls use "Fredoka" (500/600); line-item meta, prices,
   milestone labels and the empty-state copy use "Comic Neue" (the repo's
@@ -71,6 +83,7 @@
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/sections/announcement-bar.css" />
   <link rel="stylesheet" href="../css/sections/header.css" />
+  <link rel="stylesheet" href="../css/sections/product-carousel.css" />
   <link rel="stylesheet" href="../css/sections/cart-drawer.css" />
 </head>
 <body>
@@ -217,17 +230,78 @@
   </header>
   <!-- ===================== /Section: Header ===================== -->
 
-  <!-- PREVIEW-ONLY state switch — not part of the section, delete on port. -->
-  <div class="container" style="padding-block: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
-    <button type="button" class="filter-tab is-active" data-preview-state="filled">Cart — filled</button>
-    <button type="button" class="filter-tab" data-preview-state="empty">Cart — empty</button>
-    <button type="button" class="filter-tab" data-cart-open>Reopen drawer</button>
-  </div>
+
+  <!-- PREVIEW-ONLY demo strip — two real product_card blocks so the drawer's
+       add-to-cart wiring can be exercised here. Not part of the section. -->
+  <section class="product-carousel" aria-label="Add something to the cart">
+    <div class="container">
+      <div class="product-carousel__header">
+        <h2 class="product-carousel__heading">Add something to the cart</h2>
+      </div>
+
+      <div class="product-grid">
+
+        <article class="product-card">
+          <a href="product-main.html" class="product-card__link">
+            <div class="product-card__media">
+              <img src="../assets/dummy/pouch-chutney-pop.svg" alt="Mimi's Chutney Pop pouch" />
+            </div>
+            <h3 class="product-card__title">Mimi's Chutney Pop</h3>
+            <div class="price">
+              <span class="price__sale">&#8377;300</span>
+              <span class="price__compare">&#8377;450</span>
+            </div>
+          </a>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>20g Tasting Pouch &#8212; &#8377;300</option>
+              <option>70g Tin &#8212; &#8377;450</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
+        </article>
+
+        <article class="product-card">
+          <a href="product-main.html" class="product-card__link">
+            <div class="product-card__media">
+              <img src="../assets/dummy/can-guava-chilli-lime.svg" alt="Guava Chilli Lime can" />
+            </div>
+            <h3 class="product-card__title">Guava Chilli Lime</h3>
+            <div class="price">
+              <span class="price__sale">&#8377;300</span>
+              <span class="price__compare">&#8377;399</span>
+            </div>
+          </a>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant">
+              <option>Can &#8212; &#8377;300</option>
+              <option>Pack of 6 &#8212; &#8377;1500</option>
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
+        </article>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ======================================================================
        Section: Cart Drawer (cart_drawer)
+       Shell only — line items render from the <template> at the bottom via
+       js/cart.js (cart.items in the Liquid build). The same markup sits on
+       every page here; in Shopify it renders once in theme.liquid.
        ====================================================================== -->
-  <div class="cart-drawer is-open" data-cart-drawer>
+  <div class="cart-drawer" data-cart-drawer>
 
     <button type="button" class="cart-drawer__scrim" data-cart-close aria-label="Close cart"></button>
 
@@ -247,41 +321,41 @@
         </button>
       </div>
 
-      <!-- Reward progress: 5 x reward_milestone blocks along one track -->
+      <!-- Reward progress: 5 x reward_milestone blocks on one track -->
       <div class="cart-rewards">
-        <p class="cart-rewards__text">
-          You are <span class="cart-rewards__amount" data-cart-reward-amount>Rs 69</span> away from getting 5% off!
+        <p class="cart-rewards__text" data-cart-reward-message>
+          You are <span class="cart-rewards__amount">&#8377;299</span> away from getting 5% off!
         </p>
 
-        <div class="cart-rewards__track" role="progressbar" aria-label="Reward progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="9">
-          <div class="cart-rewards__fill" data-cart-reward-fill style="width: 9%;"></div>
+        <div class="cart-rewards__track" role="progressbar" aria-label="Reward progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="cart-rewards__fill" data-cart-reward-fill style="width: 0.5%;"></div>
 
           <!-- Block: reward_milestone (1/5) -->
-          <div class="cart-rewards__milestone" style="left: 10%;">
+          <div class="cart-rewards__milestone" style="left: 10%;" data-threshold="299" data-message="getting 5% off">
             <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-tag.svg" alt="" /></span>
             <span class="cart-rewards__label">Get 5% Off</span>
           </div>
 
           <!-- Block: reward_milestone (2/5) -->
-          <div class="cart-rewards__milestone" style="left: 30%;">
+          <div class="cart-rewards__milestone" style="left: 30%;" data-threshold="599" data-message="free shipping">
             <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-shipping.svg" alt="" /></span>
             <span class="cart-rewards__label">Free Shipping</span>
           </div>
 
           <!-- Block: reward_milestone (3/5) -->
-          <div class="cart-rewards__milestone" style="left: 50%;">
+          <div class="cart-rewards__milestone" style="left: 50%;" data-threshold="999" data-message="getting 10% off">
             <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-discount.svg" alt="" /></span>
             <span class="cart-rewards__label">Get 10% Off</span>
           </div>
 
           <!-- Block: reward_milestone (4/5) -->
-          <div class="cart-rewards__milestone" style="left: 70%;">
+          <div class="cart-rewards__milestone" style="left: 70%;" data-threshold="1499" data-message="getting 15% off">
             <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-discount.svg" alt="" /></span>
             <span class="cart-rewards__label">Get 15% Off</span>
           </div>
 
           <!-- Block: reward_milestone (5/5) -->
-          <div class="cart-rewards__milestone" style="left: 90%;">
+          <div class="cart-rewards__milestone" style="left: 90%;" data-threshold="1999" data-message="getting 25% off">
             <span class="cart-rewards__icon"><img src="../assets/dummy/icons/reward-discount.svg" alt="" /></span>
             <span class="cart-rewards__label">Get 25% Off</span>
           </div>
@@ -290,90 +364,12 @@
 
       <div class="cart-drawer__body">
 
-        <!-- Line items (cart.items in Liquid, not blocks) -->
-        <ul class="cart-items" data-cart-items>
+        <!-- Line items — rendered from the template below (cart.items in Liquid) -->
+        <ul class="cart-items" data-cart-items></ul>
 
-          <li class="cart-item">
-            <div class="cart-item__media">
-              <img src="../assets/dummy/pouch-chutney-pop.svg" alt="Mimi's Chutney Pop pouch" />
-            </div>
-
-            <div class="cart-item__body">
-              <div class="cart-item__info">
-                <div>
-                  <h3 class="cart-item__title"><a href="product-main.html">Mimi's Chutney Pop</a></h3>
-                  <p class="cart-item__meta">Makhana Pack</p>
-                </div>
-
-                <div class="cart-item__controls">
-                  <div class="qty-stepper qty-stepper--outline">
-                    <button type="button" class="qty-stepper__btn" data-qty-decrease aria-label="Decrease quantity">−</button>
-                    <span class="qty-stepper__value" data-qty-value>1</span>
-                    <button type="button" class="qty-stepper__btn" data-qty-increase aria-label="Increase quantity">+</button>
-                  </div>
-
-                  <div class="select select--outline">
-                    <select class="select__input" aria-label="Variant">
-                      <option>Tasting Pouch</option>
-                      <option>70g Tin</option>
-                    </select>
-                    <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              <div class="cart-item__aside">
-                <span class="cart-item__price">₹300</span>
-                <button type="button" class="cart-item__remove">Remove</button>
-              </div>
-            </div>
-          </li>
-
-          <li class="cart-item">
-            <div class="cart-item__media cart-item__media--yellow">
-              <img src="../assets/dummy/can-guava-chilli-lime.svg" alt="Guava Chilli Lime can" />
-            </div>
-
-            <div class="cart-item__body">
-              <div class="cart-item__info">
-                <div>
-                  <h3 class="cart-item__title"><a href="product-main.html">Guava Chilli Lime</a></h3>
-                  <p class="cart-item__meta">Soda</p>
-                </div>
-
-                <div class="cart-item__controls">
-                  <div class="qty-stepper qty-stepper--outline">
-                    <button type="button" class="qty-stepper__btn" data-qty-decrease aria-label="Decrease quantity">−</button>
-                    <span class="qty-stepper__value" data-qty-value>1</span>
-                    <button type="button" class="qty-stepper__btn" data-qty-increase aria-label="Increase quantity">+</button>
-                  </div>
-
-                  <div class="select select--outline">
-                    <select class="select__input" aria-label="Variant">
-                      <option>Can</option>
-                      <option>Pack of 6</option>
-                    </select>
-                    <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              <div class="cart-item__aside">
-                <span class="cart-item__price">₹300</span>
-                <button type="button" class="cart-item__remove">Remove</button>
-              </div>
-            </div>
-          </li>
-
-        </ul>
-
-        <!-- Empty state (rendered when cart.item_count == 0) -->
-        <div class="cart-empty" data-cart-empty hidden>
-          <h3 class="cart-empty__heading">Where'd all the Munchiefians go?</h3>
+        <!-- Empty state (cart.item_count == 0) -->
+        <div class="cart-empty" data-cart-empty>
+          <h3 class="cart-empty__heading">Where&rsquo;d all the Munchiefians go?</h3>
           <p class="cart-empty__text">Looks like your cart is empty time to fill it up with your go-to flavors to keep things fizzy and fun!</p>
           <a href="shop-all.html" class="btn btn--pill btn--red cart-empty__cta">Shop Now</a>
         </div>
@@ -396,9 +392,9 @@
             <div class="cart-rec-card__media"><img src="../assets/dummy/can-guava-chilli-lime.svg" alt="Guava Chilli Lime can" /></div>
             <div class="cart-rec-card__body">
               <h4 class="cart-rec-card__title">Guava Chilli Lime</h4>
-              <p class="cart-rec-card__price">₹300</p>
+              <p class="cart-rec-card__price">&#8377;300</p>
             </div>
-            <button type="button" class="cart-rec-card__add" aria-label="Add Guava Chilli Lime to cart">
+            <button type="button" class="cart-rec-card__add" data-add-to-cart aria-label="Add Guava Chilli Lime to cart">
               <img src="../assets/dummy/icons/plus-circle.svg" alt="" />
             </button>
           </article>
@@ -407,9 +403,9 @@
             <div class="cart-rec-card__media"><img src="../assets/dummy/can-nimbu-jeera.svg" alt="Nimbu Jeera can" /></div>
             <div class="cart-rec-card__body">
               <h4 class="cart-rec-card__title">Nimbu Jeera</h4>
-              <p class="cart-rec-card__price">₹300</p>
+              <p class="cart-rec-card__price">&#8377;300</p>
             </div>
-            <button type="button" class="cart-rec-card__add" aria-label="Add Nimbu Jeera to cart">
+            <button type="button" class="cart-rec-card__add" data-add-to-cart aria-label="Add Nimbu Jeera to cart">
               <img src="../assets/dummy/icons/plus-circle.svg" alt="" />
             </button>
           </article>
@@ -418,9 +414,9 @@
             <div class="cart-rec-card__media"><img src="../assets/dummy/pouch-chutney-pop.svg" alt="Mimi's Chutney Pop pouch" /></div>
             <div class="cart-rec-card__body">
               <h4 class="cart-rec-card__title">Mimi's Chutney Pop</h4>
-              <p class="cart-rec-card__price">₹300</p>
+              <p class="cart-rec-card__price">&#8377;300</p>
             </div>
-            <button type="button" class="cart-rec-card__add" aria-label="Add Mimi's Chutney Pop to cart">
+            <button type="button" class="cart-rec-card__add" data-add-to-cart aria-label="Add Mimi's Chutney Pop to cart">
               <img src="../assets/dummy/icons/plus-circle.svg" alt="" />
             </button>
           </article>
@@ -429,15 +425,15 @@
       </div>
 
       <!-- Coupon + summary — filled state only -->
-      <form class="cart-promo" data-cart-promo action="#" onsubmit="return false;">
+      <form class="cart-promo" data-cart-promo action="#" onsubmit="return false;" hidden>
         <input class="cart-promo__input" type="text" name="coupon" placeholder="Coupon Code" aria-label="Coupon code" />
         <button type="submit" class="cart-promo__submit">Add Promo</button>
       </form>
 
-      <div class="cart-summary" data-cart-summary>
+      <div class="cart-summary" data-cart-summary hidden>
         <div class="cart-summary__row">
           <span class="cart-summary__label">Subtotal:</span>
-          <span class="cart-summary__value">₹600</span>
+          <span class="cart-summary__value" data-cart-subtotal>&#8377;0</span>
         </div>
         <div class="cart-summary__row">
           <span class="cart-summary__label">Shipping:</span>
@@ -446,111 +442,50 @@
         <button type="button" class="cart-summary__checkout">Continue to checkout</button>
       </div>
 
+      <!-- One line item. In Liquid this template's contents become the body
+           of the {% for item in cart.items %} loop. -->
+      <template data-cart-item-template>
+        <li class="cart-item">
+          <div class="cart-item__media">
+            <img data-item-image src="" alt="" />
+          </div>
+
+          <div class="cart-item__body">
+            <div class="cart-item__info">
+              <div>
+                <h3 class="cart-item__title"><a href="#" data-item-title></a></h3>
+                <p class="cart-item__meta" data-item-meta></p>
+              </div>
+
+              <div class="cart-item__controls">
+                <div class="qty-stepper qty-stepper--outline">
+                  <button type="button" class="qty-stepper__btn" data-qty-decrease aria-label="Decrease quantity">&#8722;</button>
+                  <span class="qty-stepper__value" data-qty-value>1</span>
+                  <button type="button" class="qty-stepper__btn" data-qty-increase aria-label="Increase quantity">+</button>
+                </div>
+
+                <div class="select select--outline">
+                  <select class="select__input" data-item-variant aria-label="Variant"></select>
+                  <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="cart-item__aside">
+              <span class="cart-item__price" data-item-price></span>
+              <button type="button" class="cart-item__remove" data-item-remove>Remove</button>
+            </div>
+          </div>
+        </li>
+      </template>
+
     </aside>
   </div>
   <!-- ===================== /Section: Cart Drawer ===================== -->
 
-  <script>
-    // Drawer open/close + per-item quantity steppers + the recommendation
-    // rail's prev/next scroll. Same "small section script" pattern as
-    // product_carousel's arrows and product_main's gallery.
-    (function () {
-      var drawer = document.querySelector('[data-cart-drawer]');
-      if (!drawer) return;
-
-      function open() {
-        drawer.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function close() {
-        drawer.classList.remove('is-open');
-        document.body.style.overflow = '';
-      }
-
-      document.querySelectorAll('[data-cart-open]').forEach(function (btn) {
-        btn.addEventListener('click', open);
-      });
-
-      drawer.querySelectorAll('[data-cart-close]').forEach(function (btn) {
-        btn.addEventListener('click', close);
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') close();
-      });
-
-      // Quantity steppers — one per line item, scoped to their own row.
-      drawer.querySelectorAll('.qty-stepper').forEach(function (stepper) {
-        var value = stepper.querySelector('[data-qty-value]');
-
-        stepper.querySelector('[data-qty-decrease]').addEventListener('click', function () {
-          var next = Math.max(1, parseInt(value.textContent, 10) - 1);
-          value.textContent = next;
-        });
-
-        stepper.querySelector('[data-qty-increase]').addEventListener('click', function () {
-          value.textContent = parseInt(value.textContent, 10) + 1;
-        });
-      });
-
-      // Remove: drops the row, and flips the drawer to its empty state when
-      // the last line item goes.
-      var list = drawer.querySelector('[data-cart-items]');
-
-      drawer.querySelectorAll('.cart-item__remove').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          btn.closest('.cart-item').remove();
-          if (!list.querySelector('.cart-item')) setState('empty');
-        });
-      });
-
-      // Recommendation rail scroll
-      var track = drawer.querySelector('[data-recs-track]');
-      var recsPrev = drawer.querySelector('[data-recs-prev]');
-      var recsNext = drawer.querySelector('[data-recs-next]');
-
-      function scrollRecs(direction) {
-        var card = track.querySelector('.cart-rec-card');
-        if (!card) return;
-        track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 8), behavior: 'smooth' });
-      }
-
-      recsPrev.addEventListener('click', function () { scrollRecs(-1); });
-      recsNext.addEventListener('click', function () { scrollRecs(1); });
-
-      // State swap. In Liquid this is `cart.item_count > 0`, not a runtime
-      // toggle — the preview switch below drives it here.
-      var empty = drawer.querySelector('[data-cart-empty]');
-      var recs = drawer.querySelector('[data-cart-recs]');
-      var promo = drawer.querySelector('[data-cart-promo]');
-      var summary = drawer.querySelector('[data-cart-summary]');
-      var rewardAmount = drawer.querySelector('[data-cart-reward-amount]');
-      var rewardFill = drawer.querySelector('[data-cart-reward-fill]');
-
-      function setState(state) {
-        var isEmpty = state === 'empty';
-        list.hidden = isEmpty;
-        empty.hidden = !isEmpty;
-        recs.hidden = !isEmpty;
-        promo.hidden = isEmpty;
-        summary.hidden = isEmpty;
-        rewardAmount.textContent = isEmpty ? 'Rs 299' : 'Rs 69';
-        rewardFill.style.width = isEmpty ? '0.5%' : '9%';
-      }
-
-      // PREVIEW-ONLY: the filled/empty switch above the drawer.
-      document.querySelectorAll('[data-preview-state]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          document.querySelectorAll('[data-preview-state]').forEach(function (other) {
-            other.classList.toggle('is-active', other === btn);
-          });
-          setState(btn.dataset.previewState);
-          open();
-        });
-      });
-    })();
-  </script>
+  <script src="../js/cart.js"></script>
 
   <script>
     // Header dropdowns — same script as every other page.
