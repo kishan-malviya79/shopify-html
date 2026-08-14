@@ -123,6 +123,8 @@
   --fs-faq-answer: 14px;
   --fs-contact-label: 14px; /* contact_us form labels + info-card label/value, matches its Figma dev-mode spec exactly */
   --fs-contact-input: 16px; /* contact_us typed field value/placeholder text, matches its Figma dev-mode spec exactly */
+  --fs-filter-tab: 13px; /* .filter-tab pill label, e.g. collection_grid's All/Makhanas/Prebiotic Soda/Combos row */
+  --fs-collection-group-heading: clamp(22px, 3vw, 32px); /* collection_grid per-category heading ("Makhanas", "Munchief Sodas") */
 
   --fw-medium: 500;
   --fw-bold: 700;

@@ -1223,3 +1223,76 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Filter tabs --------------------------------------------------------------
+   Row of toggle pills for filtering a grid/list by category (e.g.
+   collection_grid's All / Makhanas / Prebiotic Soda / Combos). `.is-active`
+   marks the current filter with a solid black fill, same active-state
+   language as .variant-pill / .pagination__page. Reuse for any future
+   filter/tab/segmented-control row instead of rebuilding. */
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.filter-tab {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs) var(--space-md);
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-white);
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-filter-tab);
+  letter-spacing: var(--ls-snug);
+  text-transform: uppercase;
+  color: var(--color-black);
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.filter-tab:hover,
+.filter-tab:focus-visible {
+  background-color: var(--color-cream);
+}
+
+.filter-tab.is-active {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Product grid -------------------------------------------------------------
+   Wrapping multi-row grid of .product-card tiles for collection/listing
+   pages — distinct from product_carousel's .product-carousel__track, which
+   is a single row that turns into a horizontal scroll-snap carousel on
+   mobile. This one keeps wrapping instead, so a long catalog stays fully
+   visible. Reuse for any future product-listing section. */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .product-grid {
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 420px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}

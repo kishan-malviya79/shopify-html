@@ -1,0 +1,95 @@
+/* ==========================================================================
+   Section: collection_grid (Shop All page)
+   Reusable pieces (product card, badge, rating, price, select, button skins,
+   breadcrumb, .filter-tabs, .product-grid) all live in css/components.css —
+   this file only holds section-specific layout: page heading, filter row
+   position, and the per-category group headings.
+   ========================================================================== */
+
+.collection {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.collection__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.collection__breadcrumb {
+  align-self: flex-start;
+}
+
+/* Page title reuses product_carousel's Anton section-heading voice, centered
+   here instead of sitting in a left-aligned header row. */
+.collection__heading {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-heading-bold);
+  font-weight: 400; /* Anton is already a single black weight */
+  font-size: var(--fs-section-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+/* Title and filter row sit tighter together than the rest of the stack. */
+.collection__heading + .collection__filters {
+  margin-top: calc(var(--space-xl) * -0.5);
+}
+
+.collection__groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.collection__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* `display: flex` above wins over the UA's `[hidden] { display: none }`, so
+   the filter script's toggle needs this explicit override to take effect. */
+.collection__group[hidden] {
+  display: none;
+}
+
+.collection__group-heading {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-collection-group-heading);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading-tight);
+  text-transform: uppercase;
+  color: var(--color-brand-red);
+}
+
+/* Empty-state line, shown only when a filter matches no products (the
+   preview script toggles it alongside the groups). */
+.collection__empty {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: var(--fs-price);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 640px) {
+  .collection {
+    padding-block: var(--space-lg) var(--space-xl);
+  }
+
+  .collection__inner,
+  .collection__group {
+    gap: var(--space-lg);
+  }
+
+  .collection__groups {
+    gap: var(--space-xl);
+  }
+}
