@@ -119,8 +119,11 @@
   --fs-review-meta: 12px;
   --fs-combo-heading: clamp(26px, 4vw, 42px); /* combo_promo "The Crunch Max Combo" */
   --fs-faq-heading: clamp(26px, 3.6vw, 36px);
+  --fs-faq-page-heading: clamp(34px, 5vw, 64px); /* faq_section layout = "page" title ("Frequently Asked Questions") — smaller than --fs-display-heading-desktop's 82px so the long single-line title still fits the container */
   --fs-faq-question: 16px;
+  --fs-faq-question-page: 14px; /* denser question type in the page layout, where 9+ rows stack */
   --fs-faq-answer: 14px;
+  --fs-faq-note: 13px; /* "Still have questions? / DM us and let's chat." note under the page layout's photo */
   --fs-contact-label: 14px; /* contact_us form labels + info-card label/value, matches its Figma dev-mode spec exactly */
   --fs-contact-input: 16px; /* contact_us typed field value/placeholder text, matches its Figma dev-mode spec exactly */
   --fs-filter-tab: 13px; /* .filter-tab pill label, e.g. collection_grid's All/Makhanas/Prebiotic Soda/Combos row */
