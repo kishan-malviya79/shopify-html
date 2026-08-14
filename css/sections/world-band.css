@@ -1,33 +1,33 @@
 /* ==========================================================================
    Section: world_band
-   Full-bleed "world" band: giant display heading + blurb + ingredient chips
-   + CTA on the left, a product scene photo bleeding off the right. Two
-   instances on the about page — "Crunch World" (orange) and "Prebiotic
-   World" (cream), set by the colour modifier.
+   Full-bleed "world" band: the product scene IS the background photo, with
+   a 112px display heading, blurb, ingredient chips and a Shop Now CTA
+   stacked over its left half. Two instances on the About page — "Crunch
+   World" (white copy) and "Prebiotic World" (red copy, `--prebiotic`).
+   Band geometry comes from `.band`; metrics match the Figma dev-mode spec
+   exactly (879px band, 140/48px padding, 16px gaps, 484px copy column).
 
-   Distinct from `world_grid`, which is the homepage's two-up card layout;
-   this one is a single full-width band per world.
+   Distinct from `world_grid`, the homepage's two-up card layout.
    ========================================================================== */
 
 .world-band {
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+  min-height: clamp(420px, 61vw, 879px);
+  padding-block: clamp(var(--space-2xl), 9.7vw, 140px);
   background-color: var(--color-crunch-band);
 }
 
 .world-band--prebiotic {
   background-color: var(--color-prebiotic-band);
-}
-
-.world-band__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: var(--space-xl);
-  align-items: center;
-  padding-block: var(--space-2xl);
+  padding-block: clamp(var(--space-2xl), 12.5vw, 180px) clamp(var(--space-xl), 6.5vw, 94px);
 }
 
 .world-band__body {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -36,45 +36,91 @@
 
 .world-band__heading {
   margin: 0;
-  max-width: 8ch;
-  font-size: var(--fs-world-band-heading);
-  line-height: 0.9;
-  color: var(--color-brand-red);
+  /* The comp wraps this to two lines at ~281px; the ch cap keeps that break
+     without hardcoding a pixel width. */
+  max-width: 7ch;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-band-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-white);
 }
 
 .world-band__text {
   margin: 0;
-  max-width: 46ch;
-  font-family: var(--font-ui);
-  font-size: var(--fs-price);
-  line-height: var(--lh-normal);
-  color: var(--color-border);
+  max-width: 484px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-band-text);
+  line-height: 1.4;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-white);
+}
+
+.world-band--prebiotic .world-band__heading,
+.world-band--prebiotic .world-band__text {
+  color: var(--color-quiz-heading-red);
+}
+
+/* Same white outline as the hero headline — on the pale soda photo the red
+   needs it; the Crunch band's white type doesn't. */
+.world-band--prebiotic .world-band__heading {
+  -webkit-text-stroke: var(--stroke-width-heading) var(--color-white);
+  paint-order: stroke fill;
+}
+
+@media (min-width: 1025px) {
+  .world-band--prebiotic .world-band__heading {
+    -webkit-text-stroke-width: 4px;
+  }
 }
 
 .world-band__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+  gap: var(--space-md);
 }
 
-.world-band__media {
-  position: relative;
+/* Chips are the shared `.badge--green`, at this band's slightly roomier
+   padding. */
+.world-band__tags .badge {
+  padding: var(--space-xs) var(--space-sm);
 }
 
-.world-band__media img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* CTA reuses the outline pill + icon-circle pair, in brand_story's warm-brown
+   ink on a cream fill (the same `--color-cta-ink` skin, not the navy default). */
+.world-band__cta.btn--outline {
+  height: 50px;
+  min-width: 123px;
+  padding-inline: 23.5px;
+  background-color: var(--color-card-bg);
+  border: 2px solid var(--color-cta-ink);
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-cart-progress);
+  color: var(--color-cta-ink);
+}
+
+.world-band__cta.btn--icon-circle {
+  width: 50px;
+  min-width: 50px;
+  padding-inline: 0;
 }
 
 @media (max-width: 860px) {
-  .world-band__inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-lg);
-    padding-block: var(--space-xl);
-  }
-
   .world-band__heading {
     max-width: none;
+  }
+
+  /* Over a busy photo at phone widths the copy needs its own ground. */
+  .world-band__body {
+    padding: var(--space-md);
+    background-color: rgba(27, 27, 27, 0.35);
+    border-radius: var(--radius-lg);
+  }
+
+  .world-band--prebiotic .world-band__body {
+    background-color: rgba(255, 255, 255, 0.55);
   }
 }

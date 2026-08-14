@@ -730,6 +730,87 @@
   padding-block: var(--space-sm);
 }
 
+/* Band ----------------------------------------------------------------------
+   The about page's stacked "cards": each full-width band has 96px rounded
+   top corners, rides 64px up over the band above it, and carries a flat
+   white lip along that top edge. Later bands paint over earlier ones purely
+   through DOM order, so no z-index is needed. Reuse for any future stacked-
+   band page. */
+/* Full-bleed: the comp is drawn on a 1440 frame, but the bands are meant to
+   run the whole viewport — no max-width cap, so wide screens get more photo
+   rather than cream margins. The copy columns inside keep their own caps. */
+.band {
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+  margin-bottom: calc(var(--band-overlap) * -1);
+  padding-inline: var(--space-xl);
+  overflow: hidden;
+  border-radius: var(--radius-band) var(--radius-band) 0 0;
+  filter: drop-shadow(0 -10px 0 var(--color-white));
+}
+
+/* First band sits under the header, so only its bottom-right corner rounds;
+   its lip points down instead of up. */
+.band--first {
+  margin-bottom: calc(var(--band-overlap) * -1);
+  border-radius: 0 0 var(--radius-band-end) 0;
+  filter: drop-shadow(0 6px 0 var(--color-card-bg));
+}
+
+.band--last {
+  margin-bottom: 0;
+  border-radius: var(--radius-band) var(--radius-band) var(--radius-band-end) var(--radius-band-end);
+}
+
+/* Full-bleed photo behind a band, clipped by the band's own radius. */
+.band__media,
+.band__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.band__media img {
+  display: block;
+  object-fit: cover;
+}
+
+.band__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Decorative sparkle — same glyph as the ticker icon, scattered over a band. */
+.band__sparkle {
+  position: absolute;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  color: var(--color-white);
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .band {
+    padding-inline: var(--space-md);
+    border-radius: var(--space-xl) var(--space-xl) 0 0;
+  }
+
+  .band--first {
+    border-radius: 0 0 var(--space-lg) 0;
+  }
+
+  .band--last {
+    border-radius: var(--space-xl) var(--space-xl) var(--space-lg) var(--space-lg);
+  }
+
+  .band__sparkle {
+    display: none;
+  }
+}
+
 /* Blob photo ----------------------------------------------------------------
    Organic cloud-shaped photo frame with a thick white border, the same idea
    as footer's `.footer__bubble` but promoted here so other sections can use
