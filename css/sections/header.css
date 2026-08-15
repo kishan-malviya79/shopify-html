@@ -5,12 +5,17 @@
    and reuse .btn/.badge-style patterns from components.css where they fit.
    ========================================================================== */
 
-/* Positioned + stacked above the page so the full-bleed mega-menu panel can
-   anchor to the header (not to its nav item) and sit over the page scrim. */
+/* Sticky at the top of the viewport (the announcement_bar above it scrolls
+   away, the nav stays). Still a positioned + stacked element, so the
+   full-bleed mega-menu panel keeps anchoring to the header (not to its nav
+   item) and sits over the page scrim. z-index stays below cart_drawer's 100
+   so the drawer + its scrim still cover the nav. */
 .site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 50;
   background-color: var(--color-card-bg);
+  box-shadow: var(--shadow-header);
 }
 
 /* Full-bleed with 48px side padding rather than the site's 1280px container,

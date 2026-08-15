@@ -57,14 +57,17 @@
   to { background-position-x: -480px; }
 }
 
+/* Each edge only ever bobs *into* the section (top moves down, bottom moves
+   up), so the travel stays yellow-on-yellow — bobbing the other way would
+   open a gap between the band and the section it belongs to. */
 @keyframes brand-story-wave-bob-top {
   0%, 100% { transform: translateY(-100%); }
-  50% { transform: translateY(calc(-100% + 10px)); }
+  50% { transform: translateY(calc(-100% + 30px)); }
 }
 
 @keyframes brand-story-wave-bob-bottom {
   0%, 100% { transform: translateY(100%) scaleY(-1); }
-  50% { transform: translateY(calc(100% - 10px)) scaleY(-1); }
+  50% { transform: translateY(calc(100% - 26px)) scaleY(-1); }
 }
 
 .brand-story::before {
@@ -72,7 +75,7 @@
   height: clamp(48px, 7.6vw, 109px);
   transform: translateY(-100%);
   animation: brand-story-wave-drift 22s linear infinite,
-             brand-story-wave-bob-top 7s ease-in-out infinite;
+             brand-story-wave-bob-top 4.5s ease-in-out infinite;
 }
 
 /* Bottom edge: the same top-wave shape flipped. Its solid side is now the
@@ -95,7 +98,7 @@
   height: clamp(36px, 4.4vw, 64px);
   transform: translateY(100%) scaleY(-1);
   animation: brand-story-wave-drift 28s linear infinite reverse,
-             brand-story-wave-bob-bottom 9s ease-in-out infinite;
+             brand-story-wave-bob-bottom 5.5s ease-in-out infinite;
 }
 
 /* Motion off-switch, same as the ticker's. */
