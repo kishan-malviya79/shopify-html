@@ -22,15 +22,11 @@
   overflow-y: visible;
 }
 
-/* Cloud top edge — five overlapping circles rising out of the footer into
-   whatever sits above it. The silhouette is the exported Figma vector
-   (assets/dummy/icons/footer-cloud-edge.svg, 1794x784) used as a mask over a
-   yellow band, so only the 108px of cloud tops show. Mask width is 124.6%
-   (1794/1440) at the comp's centre offset, which keeps the same five bumps
-   at any viewport width.
-
-   Replaced an earlier approximation that repeated a small radial-gradient
-   circle every 56px — close, but not the design's cloud rhythm. */
+/* Cloud top edge — yellow wave flowing sideways at the footer's top,
+   rising into whatever sits above. Seamlessly tiling 480px period (the curve
+   leaves and enters at the same height), so the band can scroll sideways
+   forever without visible seam. No vertical motion — only the curve flows,
+   matching the brand_story wave pattern. */
 .footer::before {
   content: "";
   position: absolute;
@@ -39,11 +35,26 @@
   right: 0;
   height: 108px;
   transform: translateY(-100%);
-  /* Five yellow bumps of uneven height, tallest in the middle — the shape is
-     inline so it stretches to any viewport width instead of tiling. */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 108' preserveAspectRatio='none'%3E%3Cpath fill='%23ffd750' d='M0 108V70Q120 10 240 74Q400-20 560 66Q720-40 880 62Q1040-22 1200 72Q1320 20 1440 66V108Z'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 108' preserveAspectRatio='none'%3E%3Cpath fill='%23ffd750' d='M0 108V70Q240 10 480 70V108H0Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 480px 100%;
+  animation: footer-wave-drift 18s linear infinite;
+  pointer-events: none;
+}
+
+/* Drift sideways one full period, then loop — the tile edges match, so the
+   restart is invisible. Slightly slower than brand_story's top edge (18s vs
+   16s) to keep the two waves from syncing. */
+@keyframes footer-wave-drift {
+  from { background-position-x: 0; }
+  to { background-position-x: -480px; }
+}
+
+/* Motion off-switch, same as brand_story's. */
+@media (prefers-reduced-motion: reduce) {
+  .footer::before {
+    animation: none;
+  }
 }
 
 @media (max-width: 860px) {
