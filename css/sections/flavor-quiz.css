@@ -157,11 +157,23 @@
   width: 100%;
 }
 
+@keyframes fadeInQuizStep {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .flavor-quiz__step.is-active {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
+  animation: fadeInQuizStep 400ms ease-out;
 }
 
 .flavor-quiz__question {
@@ -189,6 +201,27 @@
   grid-column: 1 / -1;
 }
 
+@keyframes quizButtonClick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes quizButtonHover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
 .flavor-quiz__option-icon {
   width: 16px;
   height: 16px;
@@ -196,9 +229,34 @@
   color: var(--color-star);
 }
 
+/* Quiz option button animations */
+.flavor-quiz__options .btn {
+  transition: all 200ms ease-out;
+}
+
+.flavor-quiz__options .btn:hover {
+  animation: quizButtonHover 300ms ease-out forwards;
+  filter: brightness(1.05);
+}
+
+.flavor-quiz__options .btn:active {
+  animation: quizButtonClick 300ms ease-out;
+}
+
 /* Result data is block markup the script reads from, never rendered. */
 .flavor-quiz__result-data {
   display: none;
+}
+
+@keyframes resultScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .flavor-quiz__result {
@@ -207,6 +265,7 @@
   align-items: center;
   gap: var(--space-xs);
   width: 100%;
+  animation: resultScaleIn 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .flavor-quiz__result-media {
