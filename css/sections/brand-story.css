@@ -39,16 +39,40 @@
   position: absolute;
   left: 0;
   right: 0;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  /* A seamlessly tiling 480px period (the curve leaves and enters at the
+     same height and slope), so the band can scroll sideways forever. The
+     yellow body carries a 7px red rule along its edge, same as the exported
+     Figma shape. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 120' preserveAspectRatio='none'%3E%3Cpath fill='%23ef3b34' d='M0 43C60 3 180 3 240 43C300 83 420 83 480 43V120H0Z'/%3E%3Cpath fill='%23ffd750' d='M0 50C60 10 180 10 240 50C300 90 420 90 480 50V120H0Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 480px 100%;
   pointer-events: none;
+}
+
+/* Drift sideways one full period, then loop — the tile edges match, so the
+   restart is invisible. The bob keeps its own base transform (placement) in
+   every keyframe, otherwise animating `transform` would drop it. */
+@keyframes brand-story-wave-drift {
+  from { background-position-x: 0; }
+  to { background-position-x: -480px; }
+}
+
+@keyframes brand-story-wave-bob-top {
+  0%, 100% { transform: translateY(-100%); }
+  50% { transform: translateY(calc(-100% + 10px)); }
+}
+
+@keyframes brand-story-wave-bob-bottom {
+  0%, 100% { transform: translateY(100%) scaleY(-1); }
+  50% { transform: translateY(calc(100% - 10px)) scaleY(-1); }
 }
 
 .brand-story::before {
   top: 0;
   height: clamp(48px, 7.6vw, 109px);
   transform: translateY(-100%);
-  background-image: url("../../assets/dummy/icons/wave-top.svg");
+  animation: brand-story-wave-drift 22s linear infinite,
+             brand-story-wave-bob-top 7s ease-in-out infinite;
 }
 
 /* Bottom edge: the same top-wave shape flipped. Its solid side is now the
@@ -60,13 +84,26 @@
    placement of it either left a cream sliver against the section or hid the
    curve entirely; the flipped top shape is the same drawing without that
    problem.) */
+/* Bottom edge is the same tile flipped, so its solid side continues the
+   section's yellow and the red rule lands under the curve. It drifts the
+   other way and bobs on a different period, so the two edges never look
+   like they're moving in lockstep. */
 .brand-story::after {
   bottom: 0;
   /* Capped at 64px so the tongue stays inside the next section's own top
      padding (--space-2xl) instead of running into its heading. */
   height: clamp(36px, 4.4vw, 64px);
   transform: translateY(100%) scaleY(-1);
-  background-image: url("../../assets/dummy/icons/wave-top.svg");
+  animation: brand-story-wave-drift 28s linear infinite reverse,
+             brand-story-wave-bob-bottom 9s ease-in-out infinite;
+}
+
+/* Motion off-switch, same as the ticker's. */
+@media (prefers-reduced-motion: reduce) {
+  .brand-story::before,
+  .brand-story::after {
+    animation: none;
+  }
 }
 
 /* The two waves hang outside the section, so on their own they'd sit on top
