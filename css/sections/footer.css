@@ -91,6 +91,8 @@
   border-radius: 63% 37% 54% 46% / 55% 45% 55% 45%;
   overflow: hidden;
   box-shadow: var(--shadow-btn);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
 }
 
 .footer__bubble img {
@@ -106,10 +108,18 @@
   transform: rotate(-15.88deg);
 }
 
+.footer__bubble--left:hover {
+  transform: rotate(-15.88deg) translateY(-12px) translateX(-8px) scale(1.08);
+}
+
 .footer__bubble--right {
   top: 18px;
   right: -5vw;
   transform: rotate(5.14deg);
+}
+
+.footer__bubble--right:hover {
+  transform: rotate(5.14deg) translateY(-12px) translateX(8px) scale(1.08);
 }
 
 .footer__heading {
