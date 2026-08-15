@@ -60,14 +60,17 @@
    being sliced by the section boundary. */
 .flavor-quiz__character--tl {
   top: 0;
-  left: -4%;
   width: clamp(200px, 27vw, 420px);
   transform: rotate(180deg);
+  transform: scaley(-1);
+
 }
 
 .flavor-quiz__character--tr {
-  top: 0;
-  right: -2%;
+  top: -24%;
+  right: -5%;
+  z-index: 2;
+  transform: rotate(-41.458deg);
   width: clamp(190px, 28vw, 420px);
 }
 
