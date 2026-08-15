@@ -32,6 +32,51 @@
   object-position: center;
 }
 
+/* Character cutouts ---------------------------------------------------------
+   Transparent PNG cutouts bleeding off the section's edges, clipped by
+   .flavor-quiz's overflow: hidden. Layered between the backdrop (z 0) and the
+   quiz card (z 2), and pointer-events: none so they never swallow a click on
+   an answer button. Same "decorative photo bleeding off the section" idea as
+   footer's blob callouts, but full-bleed cutouts instead of framed blobs.
+   Widths are viewport-relative so the characters keep the comp's proportions
+   as the section scales. */
+.flavor-quiz__characters {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flavor-quiz__character {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+/* Top-left: rotated 180° so the face hangs down into the section from the
+   top edge (the source art is right-side up). */
+/* Both top cutouts are pinned flush to the section's top edge (top: 0) — no
+   bleed above it — so they read as sitting in the top corners instead of
+   being sliced by the section boundary. */
+.flavor-quiz__character--tl {
+  top: 0;
+  left: -4%;
+  width: clamp(200px, 27vw, 420px);
+  transform: rotate(180deg);
+}
+
+.flavor-quiz__character--tr {
+  top: 0;
+  right: -2%;
+  width: clamp(190px, 28vw, 420px);
+}
+
+.flavor-quiz__character--bl {
+  bottom: -8%;
+  left: 1%;
+  width: clamp(150px, 20vw, 300px);
+}
+
 .flavor-quiz__inner {
   position: relative;
   z-index: 2;
@@ -213,6 +258,20 @@
 @media (max-width: 640px) {
   .flavor-quiz__heading {
     -webkit-text-stroke: 1.5px var(--color-white);
+  }
+
+  /* Phone: the section is barely wider than the quiz card, so the side
+     cutouts would sit on top of it — keep only the top-left one, pushed
+     further off-edge, and drop the two that flank the card. */
+  .flavor-quiz__character--tl {
+    top: 0;
+    left: -12%;
+    width: 130px;
+  }
+
+  .flavor-quiz__character--tr,
+  .flavor-quiz__character--bl {
+    display: none;
   }
 }
 

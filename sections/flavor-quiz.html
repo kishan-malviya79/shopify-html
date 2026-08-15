@@ -29,6 +29,17 @@
       Jeera, Mixed Berry)
     - block type "quiz_intensity_option": label (text) — 3 instances (mild /
       medium / full chaatpata). Flavour-only step, doesn't affect the match.
+    - block type "quiz_character_decor" (repeatable, purely decorative):
+        - image (image_picker) — transparent cutout; dummy defaults
+          assets/dummy/Boy-LT.png, Girl-RT.png, Girl_BL.png
+        - position (select: "top_left" | "top_right" | "bottom_left") —
+          renders the matching .flavor-quiz__character--tl/--tr/--bl class
+        - flip (checkbox) — default: false; "top_left" ships rotated 180°
+          in CSS since that cutout hangs down from the top edge
+      3 instances. They bleed off the section edges (clipped by the
+      section's overflow: hidden), sit above the backdrop but below the quiz
+      card, and are aria-hidden + pointer-events: none so they never block a
+      tap on an answer. The two flanking the card are dropped below 640px.
 
   How it works: a 4-step branching flow (crunch-or-sip → mood/craving →
   flavour intensity → result), same shape as the reference quiz build
@@ -62,6 +73,21 @@
 
     <div class="flavor-quiz__media">
       <img src="../assets/dummy/faqbg.png" alt="" role="presentation" />
+    </div>
+
+    <!-- Decorative character cutouts bleeding off the section's edges — they
+         sit above the sunburst backdrop but below .flavor-quiz__inner, and
+         are pointer-events: none so they never block the quiz buttons.
+         Block: quiz_character_decor (3 instances) -->
+    <div class="flavor-quiz__characters" aria-hidden="true">
+      <!-- Block: quiz_character_decor (1/3), position = "top_left" -->
+      <img class="flavor-quiz__character flavor-quiz__character--tl" src="../assets/dummy/Boy-LT.png" alt="" role="presentation" />
+
+      <!-- Block: quiz_character_decor (2/3), position = "top_right" -->
+      <img class="flavor-quiz__character flavor-quiz__character--tr" src="../assets/dummy/Girl-RT.png" alt="" role="presentation" />
+
+      <!-- Block: quiz_character_decor (3/3), position = "bottom_left" -->
+      <img class="flavor-quiz__character flavor-quiz__character--bl" src="../assets/dummy/Girl_BL.png" alt="" role="presentation" />
     </div>
 
     <div class="container flavor-quiz__inner">
