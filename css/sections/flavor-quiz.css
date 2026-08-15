@@ -9,6 +9,7 @@
 
 .flavor-quiz {
   position: relative;
+  overflow: hidden;
   padding-block: var(--space-2xl);
   text-align: center;
 }
