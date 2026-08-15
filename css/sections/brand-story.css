@@ -24,15 +24,10 @@
   overflow-y: visible;
 }
 
-/* Wavy top/bottom edges — the exported Figma "Vector" layers
-   (assets/dummy/icons/wave-top.svg / wave-bottom.svg). Each is the yellow
-   band's own wavy edge with the red rule baked in as the shape's offset drop
-   shadow (dy -9 on top, +8 on bottom), so the red line always sits on the
-   outside of the curve exactly as drawn. Replaced a hand-derived sine path
-   that only approximated the rhythm.
-
-   They sit outside the section (translate ±100%) and are 1440-wide shapes
-   stretched to the viewport, so the wave keeps its proportions at any width. */
+/* Wavy top/bottom edges — the yellow band's own wavy edge with the red rule
+   along it, drawn from the Figma "Vector" layers. They sit outside the
+   section (translate ±100%) and scroll sideways; the band itself never
+   moves, so it can't drift over neighbouring content. */
 .brand-story::before,
 .brand-story::after {
   content: "";
@@ -50,55 +45,36 @@
 }
 
 /* Drift sideways one full period, then loop — the tile edges match, so the
-   restart is invisible. The bob keeps its own base transform (placement) in
-   every keyframe, otherwise animating `transform` would drop it. */
+   restart is invisible. */
 @keyframes brand-story-wave-drift {
   from { background-position-x: 0; }
   to { background-position-x: -480px; }
 }
 
-/* Each edge only ever bobs *into* the section (top moves down, bottom moves
-   up), so the travel stays yellow-on-yellow — bobbing the other way would
-   open a gap between the band and the section it belongs to. */
-@keyframes brand-story-wave-bob-top {
-  0%, 100% { transform: translateY(-100%); }
-  50% { transform: translateY(calc(-100% + 30px)); }
-}
-
-@keyframes brand-story-wave-bob-bottom {
-  0%, 100% { transform: translateY(100%) scaleY(-1); }
-  50% { transform: translateY(calc(100% - 26px)) scaleY(-1); }
-}
+/* No vertical motion: the band itself stays parked on its edge. Moving the
+   whole band up/down slid it over the neighbouring content (it covered the
+   "About Munchiefam" CTA), so the animation is the curve flowing sideways —
+   the crests travel past a fixed edge, which is the effect on the reference
+   site. */
 
 .brand-story::before {
   top: 0;
   height: clamp(48px, 7.6vw, 109px);
   transform: translateY(-100%);
-  animation: brand-story-wave-drift 22s linear infinite,
-             brand-story-wave-bob-top 4.5s ease-in-out infinite;
+  animation: brand-story-wave-drift 16s linear infinite;
 }
 
-/* Bottom edge: the same top-wave shape flipped. Its solid side is now the
-   top, so it continues the section's yellow with no seam, its wavy edge dips
-   into whatever follows, and the shape's red shadow lands just under that
-   curve — the look in the reference.
-
-   (The exported wave-bottom.svg is filled only *below* its wavy edge, so any
-   placement of it either left a cream sliver against the section or hid the
-   curve entirely; the flipped top shape is the same drawing without that
-   problem.) */
-/* Bottom edge is the same tile flipped, so its solid side continues the
-   section's yellow and the red rule lands under the curve. It drifts the
-   other way and bobs on a different period, so the two edges never look
-   like they're moving in lockstep. */
+/* Bottom edge is the same tile flipped: its solid side continues the
+   section's yellow with no seam, the curve dips into whatever follows, and
+   the red rule lands under it. Drifts the other way on a slower period, so
+   the two edges never look like they're moving in lockstep. */
 .brand-story::after {
   bottom: 0;
   /* Capped at 64px so the tongue stays inside the next section's own top
      padding (--space-2xl) instead of running into its heading. */
   height: clamp(36px, 4.4vw, 64px);
   transform: translateY(100%) scaleY(-1);
-  animation: brand-story-wave-drift 28s linear infinite reverse,
-             brand-story-wave-bob-bottom 5.5s ease-in-out infinite;
+  animation: brand-story-wave-drift 20s linear infinite reverse;
 }
 
 /* Motion off-switch, same as the ticker's. */
