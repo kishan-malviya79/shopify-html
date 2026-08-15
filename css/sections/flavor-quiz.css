@@ -9,7 +9,6 @@
 
 .flavor-quiz {
   position: relative;
-  overflow: hidden;
   padding-block: var(--space-2xl);
   text-align: center;
 }
@@ -68,8 +67,7 @@
 
 .flavor-quiz__character--tr {
   top: -24%;
-  right: -5%;
-  z-index: 2;
+  right: -9%;
   transform: rotate(-41.458deg);
   width: clamp(190px, 28vw, 420px);
 }
