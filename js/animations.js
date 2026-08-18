@@ -147,6 +147,38 @@
   }
 
   /* --------------------------------------------------------------------
+     Brand story "about" row (character photo, subheading, body copy, CTA
+     pair): reveals one piece at a time, scroll-triggered since the row
+     sits below the fold. Unlike the generic fade-up-stagger below, the
+     four pieces here aren't direct siblings (heading/text/CTA are nested
+     inside .brand-story__content alongside the photo), so this targets
+     them explicitly instead of relying on childNodes order.
+     -------------------------------------------------------------------- */
+  function animateBrandStoryAbout() {
+    if (typeof ScrollTrigger === 'undefined') return;
+
+    document.querySelectorAll('.brand-story__row--about').forEach(function (row) {
+      var items = [
+        row.querySelector('.brand-story__characters'),
+        row.querySelector('.brand-story__subheading'),
+        row.querySelector('.brand-story__text'),
+        row.querySelector('.btn-group')
+      ].filter(Boolean);
+      if (!items.length) return;
+
+      gsap.set(items, { opacity: 0, y: 30 });
+      gsap.to(items, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        stagger: 0.15,
+        scrollTrigger: { trigger: row, start: 'top 85%' }
+      });
+    });
+  }
+
+  /* --------------------------------------------------------------------
      Generic scroll-reveal, opt-in per element via a data attribute:
        data-animate="fade-up"          fades/slides the element itself in
        data-animate="fade-up-stagger"  fades/slides its direct children in,
@@ -393,6 +425,7 @@
     initSmoothScroll();
     animateHeroHeading();
     animateHeroSideImages();
+    animateBrandStoryAbout();
     animateOnScroll();
     animateChaosFooterTransition();
     animateChaosBannerBackground();
