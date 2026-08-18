@@ -12,7 +12,7 @@
 
 .testimonial-carousel__heading {
   text-align: center;
-  font-size: clamp(28px, 4vw, 42px);
+  font-size: var(--fs-testimonial-heading);
   line-height: var(--lh-relaxed);
   margin: 0 auto var(--space-lg);
   max-width: 640px;
