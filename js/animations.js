@@ -229,11 +229,59 @@
     });
   }
 
+  /* --------------------------------------------------------------------
+     Hero side-image parallax: while the cursor is over the hero section,
+     the left/right cutouts (.hero__side--left/--right) drift a little
+     toward the cursor — left moves a touch more than right so the two
+     read as sitting at slightly different depths — and spring back to
+     rest on mouseleave. gsap.quickTo instead of gsap.to since this fires
+     on every mousemove and needs to be cheap.
+     -------------------------------------------------------------------- */
+  function initHeroParallax() {
+    var hero = document.querySelector('.hero');
+    if (!hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var left = hero.querySelector('.hero__side--left');
+    var right = hero.querySelector('.hero__side--right');
+    if (!left && !right) return;
+
+    function quickMover(el, strength) {
+      if (!el) return null;
+      return {
+        x: gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' }),
+        y: gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3.out' }),
+        strength: strength
+      };
+    }
+
+    var movers = [quickMover(left, 26), quickMover(right, 16)].filter(Boolean);
+
+    hero.addEventListener('mousemove', function (e) {
+      var rect = hero.getBoundingClientRect();
+      var relX = (e.clientX - rect.left) / rect.width - 0.5;
+      var relY = (e.clientY - rect.top) / rect.height - 0.5;
+
+      movers.forEach(function (mover) {
+        mover.x(relX * mover.strength);
+        mover.y(relY * mover.strength * 0.6);
+      });
+    });
+
+    hero.addEventListener('mouseleave', function () {
+      movers.forEach(function (mover) {
+        mover.x(0);
+        mover.y(0);
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     animateHeroHeading();
     animateOnScroll();
     animateChaosFooterTransition();
     animateFooterHeading();
     initShopBtnGroupHover();
+    initHeroParallax();
   });
 })();
