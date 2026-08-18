@@ -7,8 +7,6 @@
 .marquee {
   overflow: hidden;
   background-color: var(--color-brand-red);
-  border-top: 2px solid var(--color-brand-blue);
-  border-bottom: 2px solid var(--color-brand-blue);
   padding-block: var(--space-sm);
 }
 
