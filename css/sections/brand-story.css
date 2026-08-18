@@ -175,6 +175,13 @@
   margin: 0;
 }
 
+/* Accent the opening stat line ("5 Characters. 5 Flavours.") in the same red
+   as the section's own top/bottom wave rule, so it reads as the hook before
+   the punchline ("Zero Boring Snacks.") settles back to body ink. */
+.brand-story__subheading-accent {
+  color: var(--color-brand-red-line);
+}
+
 .brand-story__text {
   font-family: var(--font-body);
   font-weight: var(--fw-bold);

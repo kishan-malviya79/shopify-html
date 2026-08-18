@@ -38,7 +38,7 @@
 .chaos-banner__content {
   position: absolute;
   z-index: 2;
-  top: 5%;
+  top: 9%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -97,6 +97,15 @@
 }
 
 @media (max-width: 640px) {
+  /* Keep the tighter original top offset here — .chaos-banner__media's
+     fixed aspect-ratio leaves little headroom on narrow phones before
+     .chaos-banner__content runs into the product art baked into the photo
+     below it (see the img comment above); the bigger 9% only applies from
+     tablet up, where there's room to spare. */
+  .chaos-banner__content {
+    top: 5%;
+  }
+
   .chaos-banner .btn--pill {
     padding: var(--space-2xs) var(--space-md);
     font-size: clamp(10px, 1.2vw, 14px);
