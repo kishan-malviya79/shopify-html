@@ -65,12 +65,14 @@
 
 .hero__side--left {
   left: clamp(-24px, -2vw, 0px);
-  height: clamp(240px, 40vw, 560px);
+  bottom: clamp(-24px, -2vw, 0px);
+  height: clamp(300px, 58vw, 760px);
 }
 
 .hero__side--right {
   right: clamp(-16px, -1.5vw, 24px);
-  height: clamp(220px, 36vw, 520px);
+  bottom: clamp(-16px, -1.5vw, 0px);
+  height: clamp(280px, 52vw, 700px);
 }
 
 /* Optional darkening layer for readability — off by default since the
