@@ -147,6 +147,39 @@
   }
 
   /* --------------------------------------------------------------------
+     Brand story "intro" row ("Crunch it. Sip it. Repeat." + hero photo):
+     on scroll into view, the heading slides in from off-screen left and
+     the photo slides in from off-screen right, both converging on their
+     normal resting position (the photo's own resting rotate(1.85deg) is
+     untouched — gsap's x/y are a separate transform component from the
+     CSS transform already on the element, so they compose instead of
+     replacing it). Scroll-triggered rather than on-load since this row is
+     well below the fold (7th section on the home page).
+     -------------------------------------------------------------------- */
+  function animateBrandStoryIntro() {
+    if (typeof ScrollTrigger === 'undefined') return;
+
+    document.querySelectorAll('.brand-story__row--intro').forEach(function (row) {
+      var heading = row.querySelector('.brand-story__heading');
+      var photo = row.querySelector('.brand-story__photo');
+      if (!heading && !photo) return;
+
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: row, start: 'top 80%' }
+      });
+
+      if (heading) {
+        gsap.set(heading, { x: '-15vw', opacity: 0 });
+        tl.to(heading, { x: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }, 0);
+      }
+      if (photo) {
+        gsap.set(photo, { x: '15vw', opacity: 0 });
+        tl.to(photo, { x: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }, 0.1);
+      }
+    });
+  }
+
+  /* --------------------------------------------------------------------
      Brand story "about" row (character photo, subheading, body copy, CTA
      pair): reveals one piece at a time, scroll-triggered since the row
      sits below the fold. Unlike the generic fade-up-stagger below, the
@@ -425,6 +458,7 @@
     initSmoothScroll();
     animateHeroHeading();
     animateHeroSideImages();
+    animateBrandStoryIntro();
     animateBrandStoryAbout();
     animateOnScroll();
     animateChaosFooterTransition();
