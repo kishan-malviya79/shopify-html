@@ -13,7 +13,7 @@
 .testimonial-carousel__heading {
   text-align: center;
   font-size: var(--fs-testimonial-heading);
-  line-height: var(--lh-relaxed);
+  line-height: var(--lh-testimonial-heading);
   margin: 0 auto var(--space-lg);
   max-width: 640px;
 }

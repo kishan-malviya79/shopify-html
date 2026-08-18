@@ -227,6 +227,7 @@
   --lh-footer-heading: 0.8; /* 160/200 — matches the footer heading spec */
   --lh-brand-story-heading: 0.96; /* matches the brand_story heading spec */
   --lh-quiz-heading: 1.12; /* 112% — matches the flavor_quiz heading spec */
+  --lh-testimonial-heading: 0.9; /* 90% — matches the testimonial_carousel heading's Figma dev-mode spec exactly */
 
   /* Spacing scale */
   --space-2xs: 4px;
