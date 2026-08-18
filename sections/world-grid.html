@@ -39,7 +39,7 @@
        Section: World Grid (world_grid)
        ====================================================================== -->
   <section class="world-grid" aria-label="Explore our worlds">
-    <div class="container world-grid__grid">
+    <div class="container world-grid__grid" data-animate="fade-up-stagger">
 
       <!-- Block: world_card (background_style = "orange", heading_style = "white") -->
       <a href="#" class="world-card world-card--orange">
@@ -71,5 +71,8 @@
   </section>
   <!-- ===================== /Section: World Grid ===================== -->
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="../js/animations.js"></script>
 </body>
 </html>

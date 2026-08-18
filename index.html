@@ -429,7 +429,7 @@
   <section id="munchief-family" class="product-carousel" aria-label="Featured products">
     <div class="container">
 
-      <div class="product-carousel__header">
+      <div class="product-carousel__header" data-animate="fade-up">
         <h2 class="product-carousel__heading">Meet the Munchief Family</h2>
 
         <div class="product-carousel__nav">
@@ -446,7 +446,7 @@
         </div>
       </div>
 
-      <div class="product-carousel__track" data-carousel-track>
+      <div class="product-carousel__track" data-carousel-track data-animate="fade-up-stagger">
 
         <!-- Block: product_card (1/3) -->
         <article class="product-card">
@@ -579,7 +579,7 @@
        Section: World Grid (world_grid)
        ====================================================================== -->
   <section class="world-grid" aria-label="Explore our worlds">
-    <div class="container world-grid__grid">
+    <div class="container world-grid__grid" data-animate="fade-up-stagger">
 
       <!-- Block: world_card (background_style = "orange", heading_style = "white") -->
       <a href="#" class="world-card world-card--orange">
@@ -618,7 +618,7 @@
   <section id="munchief-sodas" class="product-carousel" aria-label="Featured sodas">
     <div class="container">
 
-      <div class="product-carousel__header">
+      <div class="product-carousel__header" data-animate="fade-up">
         <h2 class="product-carousel__heading">Meet the Munchief Sodas</h2>
 
         <div class="product-carousel__nav">
@@ -635,7 +635,7 @@
         </div>
       </div>
 
-      <div class="product-carousel__track" data-carousel-track>
+      <div class="product-carousel__track" data-carousel-track data-animate="fade-up-stagger">
 
         <!-- Block: product_card (1/3) -->
         <article class="product-card">
@@ -770,7 +770,7 @@
   <section id="our-story" class="brand-story" aria-label="About Munchief">
 
     <div class="container brand-story__row brand-story__row--intro">
-      <h2 class="brand-story__heading stroke-heading">Crunch it.<br />Sip it.<br />Repeat.</h2>
+      <h2 class="brand-story__heading stroke-heading" data-animate="fade-up">Crunch it.<br />Sip it.<br />Repeat.</h2>
 
       <div class="brand-story__photo">
         <img src="assets/dummy/delicious.png" alt="Woman holding a Munchief Noodle Blast pouch and drinking a Munchief Mixed Berry can" />
@@ -816,7 +816,7 @@
   <section id="combo-bundles" class="product-carousel" aria-label="Build your combo">
     <div class="container">
 
-      <div class="product-carousel__header">
+      <div class="product-carousel__header" data-animate="fade-up">
         <h2 class="product-carousel__heading--display stroke-heading stroke-heading--black">Combo. Don't Choose One Mood.</h2>
 
         <div class="product-carousel__nav">
@@ -832,7 +832,7 @@
         </div>
       </div>
 
-      <div class="product-carousel__track" data-carousel-track>
+      <div class="product-carousel__track" data-carousel-track data-animate="fade-up-stagger">
 
         <!-- Block: product_card (1/3) -->
         <article class="product-card">
@@ -984,7 +984,7 @@
     </div>
 
     <div class="container flavor-quiz__inner">
-      <h2 class="flavor-quiz__heading stroke-heading">Which One Are You<br />Brave Enough To Try?</h2>
+      <h2 class="flavor-quiz__heading stroke-heading" data-animate="fade-up">Which One Are You<br />Brave Enough To Try?</h2>
 
       <p class="flavor-quiz__text">
         Answer honestly. We'll match you to your Munchief character or soda.
@@ -1118,7 +1118,7 @@
   <section id="reviews" class="testimonial-carousel" aria-label="Customer testimonials">
     <div class="container">
 
-      <h2 class="testimonial-carousel__heading stroke-heading">Don't take our<br />word for it</h2>
+      <h2 class="testimonial-carousel__heading stroke-heading" data-animate="fade-up">Don't take our<br />word for it</h2>
 
       <div class="testimonial-carousel__nav">
         <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous testimonial">
@@ -1133,7 +1133,7 @@
         </button>
       </div>
 
-      <div class="testimonial-carousel__track" data-carousel-track>
+      <div class="testimonial-carousel__track" data-carousel-track data-animate="fade-up-stagger">
 
         <!-- Block: testimonial (1/3) -->
         <article class="testimonial-card">
@@ -1337,7 +1337,7 @@
       <img src="assets/dummy/chos-bg.png" alt="" role="presentation" />
 
       <div class="chaos-banner__content">
-        <h2 class="chaos-banner__heading stroke-heading">Ready to cause<br />some chaos?</h2>
+        <h2 class="chaos-banner__heading stroke-heading" data-animate="fade-up">Ready to cause<br />some chaos?</h2>
 
         <p class="chaos-banner__text">
           Ten flavours. Five personalities. One mystery still brewing.
@@ -1643,6 +1643,10 @@
     </aside>
   </div>
   <!-- ===================== /Section: Cart Drawer ===================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="js/animations.js"></script>
 
   <script src="js/cart.js"></script>
 

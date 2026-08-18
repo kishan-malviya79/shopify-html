@@ -57,7 +57,7 @@
   <section class="product-carousel" aria-label="Featured products">
     <div class="container">
 
-      <div class="product-carousel__header">
+      <div class="product-carousel__header" data-animate="fade-up">
         <h2 class="product-carousel__heading">Meet the Munchief Family</h2>
 
         <div class="product-carousel__nav">
@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <div class="product-carousel__track" data-carousel-track>
+      <div class="product-carousel__track" data-carousel-track data-animate="fade-up-stagger">
 
         <!-- Block: product_card (1/3) -->
         <article class="product-card">
@@ -225,5 +225,8 @@
     })();
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="../js/animations.js"></script>
 </body>
 </html>

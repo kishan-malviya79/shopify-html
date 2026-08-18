@@ -44,7 +44,7 @@
   <section class="testimonial-carousel" aria-label="Customer testimonials">
     <div class="container">
 
-      <h2 class="testimonial-carousel__heading stroke-heading">Don't take our<br />word for it</h2>
+      <h2 class="testimonial-carousel__heading stroke-heading" data-animate="fade-up">Don't take our<br />word for it</h2>
 
       <div class="testimonial-carousel__nav">
         <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous testimonial">
@@ -59,7 +59,7 @@
         </button>
       </div>
 
-      <div class="testimonial-carousel__track" data-carousel-track>
+      <div class="testimonial-carousel__track" data-carousel-track data-animate="fade-up-stagger">
 
         <!-- Block: testimonial (1/3) -->
         <article class="testimonial-card">
@@ -160,5 +160,8 @@
     })();
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="../js/animations.js"></script>
 </body>
 </html>
