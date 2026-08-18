@@ -395,6 +395,7 @@
     animateHeroSideImages();
     animateOnScroll();
     animateChaosFooterTransition();
+    animateChaosBannerBackground();
     animateFooterHeading();
     initShopBtnGroupHover();
     initHeroParallax();
