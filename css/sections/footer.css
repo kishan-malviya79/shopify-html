@@ -78,19 +78,17 @@
   padding-inline: var(--container-padding);
 }
 
-/* Blob-photo callout — stands in for the design's pre-composited
-   footer-cloud-left/right.png assets (a cloud-shaped cutout of a lifestyle
-   photo); approximated here with an organic border-radius + thick white
-   edge since only flat dummy photos are available in this repo. */
+/* Cloud-shaped photo callout — a pre-composited cutout (footer-cloud-left/
+   right.webp: scalloped cloud outline + white edge already baked into the
+   image), so no border/border-radius is added here. drop-shadow (not
+   box-shadow) since the element's own box is a plain rectangle — box-shadow
+   would draw a rectangular shadow behind the transparent PNG edges. */
 .footer__bubble {
   position: absolute;
   z-index: 3;
   width: clamp(96px, 16vw, 220px);
-  aspect-ratio: 240 / 185;
-  border: 7px solid var(--color-white);
-  border-radius: 63% 37% 54% 46% / 55% 45% 55% 45%;
-  overflow: hidden;
-  box-shadow: var(--shadow-btn);
+  aspect-ratio: 487 / 376;
+  filter: drop-shadow(var(--shadow-btn));
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
 }
@@ -99,27 +97,25 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
+/* Base rotation only — no :hover transform rule here. The mouse-parallax
+   drift (js/animations.js initFooterBubbleParallax, same mechanic as the
+   hero side images) takes over the transform on pointer devices; keeping a
+   CSS :hover rule too would fight it (both write to `transform`, and JS's
+   inline style always wins, so the CSS rule would just cause a one-frame
+   jump on mouseenter). */
 .footer__bubble--left {
   top: 4px;
   left: -5vw;
   transform: rotate(-15.88deg);
 }
 
-.footer__bubble--left:hover {
-  transform: rotate(-15.88deg) translateY(-12px) translateX(-8px) scale(1.08);
-}
-
 .footer__bubble--right {
   top: 18px;
   right: -5vw;
   transform: rotate(5.14deg);
-}
-
-.footer__bubble--right:hover {
-  transform: rotate(5.14deg) translateY(-12px) translateX(8px) scale(1.08);
 }
 
 .footer__heading {

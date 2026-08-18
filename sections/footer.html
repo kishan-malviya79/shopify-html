@@ -4,8 +4,8 @@
   Settings:
     - logo_image (image_picker) — default: assets/dummy/logo.png
     - heading (text) — default: "More Munch<br>More Crunch"
-    - bubble_image_left (image_picker) — default: assets/dummy/Perfect.png
-    - bubble_image_right (image_picker) — default: assets/dummy/favorite.png
+    - bubble_image_left (image_picker) — default: assets/dummy/footer-cloud-left.webp
+    - bubble_image_right (image_picker) — default: assets/dummy/footer-cloud-right.webp
     - newsletter_placeholder (text) — default: "Enter your email..."
     - newsletter_button_label (text) — default: "Notify Me"
     - copyright_text (text) — default: "©2026 Munchief. All rights reserved."
@@ -24,11 +24,10 @@
 
   Images: logo uses the real Munchief wordmark PNG (assets/dummy/logo.png)
   standing in for the `logo_image` image_picker — same asset reused by the
-  header section's logo. Bubble photos reuse the existing testimonial dummy
-  assets (Perfect.png, favorite.png) as placeholders for the two
-  thought-bubble callouts standing in for bubble_image_left/right (the
-  source design uses pre-composited footer-cloud-left/right.png cutouts we
-  don't have here).
+  header section's logo. Bubble photos are the pre-composited cloud-shaped
+  cutouts (footer-cloud-left.webp, footer-cloud-right.webp) standing in for
+  bubble_image_left/right — the scalloped white cloud edge is baked into the
+  image itself, so .footer__bubble adds no border/border-radius of its own.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -55,13 +54,13 @@
     <div class="footer__hero" data-animate="fade-up">
 
       <div class="footer__bubble footer__bubble--left">
-        <img src="../assets/dummy/Perfect.png" alt="" role="presentation" />
+        <img src="../assets/dummy/footer-cloud-left.webp" alt="" role="presentation" />
       </div>
 
       <h2 class="footer__heading">More Munch<br />More Crunch</h2>
 
       <div class="footer__bubble footer__bubble--right">
-        <img src="../assets/dummy/favorite.png" alt="" role="presentation" />
+        <img src="../assets/dummy/footer-cloud-right.webp" alt="" role="presentation" />
       </div>
 
       <form class="footer__newsletter newsletter-form" action="#" method="post">

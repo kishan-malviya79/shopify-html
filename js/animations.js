@@ -276,21 +276,17 @@
   }
 
   /* --------------------------------------------------------------------
-     Hero side-image parallax: while the cursor is over the hero section,
-     the left/right cutouts (.hero__side--left/--right) drift a little
-     toward the cursor — left moves a touch more than right so the two
-     read as sitting at slightly different depths — and spring back to
-     rest on mouseleave. gsap.quickTo instead of gsap.to since this fires
-     on every mousemove and needs to be cheap.
+     Mouse-parallax hover: while the cursor is over `container`, `leftEl`/
+     `rightEl` drift toward it (leftEl moves more than rightEl so the two
+     read as sitting at slightly different depths), springing back to rest
+     on mouseleave. gsap.quickTo instead of gsap.to since this fires on
+     every mousemove and needs to be cheap. Shared by the hero side images
+     and the footer's two cloud-photo bubbles.
      -------------------------------------------------------------------- */
-  function initHeroParallax() {
-    var hero = document.querySelector('.hero');
-    if (!hero) return;
+  function initParallaxHover(container, leftEl, rightEl, leftStrength, rightStrength) {
+    if (!container) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var left = hero.querySelector('.hero__side--left');
-    var right = hero.querySelector('.hero__side--right');
-    if (!left && !right) return;
+    if (!leftEl && !rightEl) return;
 
     function quickMover(el, strength) {
       if (!el) return null;
@@ -301,10 +297,10 @@
       };
     }
 
-    var movers = [quickMover(left, 26), quickMover(right, 16)].filter(Boolean);
+    var movers = [quickMover(leftEl, leftStrength), quickMover(rightEl, rightStrength)].filter(Boolean);
 
-    hero.addEventListener('mousemove', function (e) {
-      var rect = hero.getBoundingClientRect();
+    container.addEventListener('mousemove', function (e) {
+      var rect = container.getBoundingClientRect();
       var relX = (e.clientX - rect.left) / rect.width - 0.5;
       var relY = (e.clientY - rect.top) / rect.height - 0.5;
 
@@ -314,12 +310,42 @@
       });
     });
 
-    hero.addEventListener('mouseleave', function () {
+    container.addEventListener('mouseleave', function () {
       movers.forEach(function (mover) {
         mover.x(0);
         mover.y(0);
       });
     });
+  }
+
+  function initHeroParallax() {
+    var hero = document.querySelector('.hero');
+    if (!hero) return;
+    initParallaxHover(
+      hero,
+      hero.querySelector('.hero__side--left'),
+      hero.querySelector('.hero__side--right'),
+      26,
+      16
+    );
+  }
+
+  /* --------------------------------------------------------------------
+     Footer bubble parallax: same mechanic as the hero, applied to the two
+     cloud-photo callouts (.footer__bubble--left/--right) — see
+     initParallaxHover above. Smaller strengths since the bubbles are much
+     smaller than the hero's side images.
+     -------------------------------------------------------------------- */
+  function initFooterBubbleParallax() {
+    var footerHero = document.querySelector('.footer__hero');
+    if (!footerHero) return;
+    initParallaxHover(
+      footerHero,
+      footerHero.querySelector('.footer__bubble--left'),
+      footerHero.querySelector('.footer__bubble--right'),
+      18,
+      14
+    );
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -331,5 +357,6 @@
     animateFooterHeading();
     initShopBtnGroupHover();
     initHeroParallax();
+    initFooterBubbleParallax();
   });
 })();
