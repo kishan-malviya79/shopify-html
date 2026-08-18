@@ -63,11 +63,24 @@
   padding: 0;
   border-radius: var(--radius-pill);
   flex-shrink: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn--icon-circle svg {
   width: 18px;
   height: 18px;
+}
+
+/* Hover-swap fill state — toggled by js/animations.js
+   (initShopBtnGroupHover) at the same time it swaps the icon to the pill's
+   side of the group, so the icon reads as "activated" once it lands on
+   the left: solid navy fill, cream arrow, instead of its resting
+   cream-fill/navy-icon look. */
+.btn--icon-circle.is-swapped {
+  background-color: var(--color-btn-ink);
+  color: var(--color-cream);
+  border-color: var(--color-btn-ink);
 }
 
 /* Skin: primary — cream fill, navy-ink border + label/icon color. Compose

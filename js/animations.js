@@ -105,6 +105,12 @@
        data-animate="fade-up"          fades/slides the element itself in
        data-animate="fade-up-stagger"  fades/slides its direct children in,
                                         staggered (use on a card grid/row)
+       data-animate="word-reveal"      splits the heading's own text into
+                                        words and reveals them one at a
+                                        time, same mechanic as the hero/
+                                        footer headings (see splitIntoWords
+                                        above) — use on big display
+                                        headings (.stroke-heading etc.)
      -------------------------------------------------------------------- */
   function animateOnScroll() {
     if (typeof ScrollTrigger === 'undefined') return;
@@ -131,6 +137,24 @@
         ease: 'power2.out',
         stagger: 0.1,
         scrollTrigger: { trigger: group, start: 'top 85%' }
+      });
+    });
+
+    document.querySelectorAll('[data-animate="word-reveal"]').forEach(function (heading) {
+      var words = splitIntoWords(heading);
+      if (!words.length) return;
+
+      var fontSize = parseFloat(getComputedStyle(heading).fontSize) || 32;
+      var offset = Math.min(40, fontSize * 0.3);
+
+      gsap.set(words, { display: 'inline-block', opacity: 0, y: offset });
+      gsap.to(words, {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: 'power3.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger: heading, start: 'top 85%' }
       });
     });
   }
@@ -166,10 +190,50 @@
     });
   }
 
+  /* --------------------------------------------------------------------
+     Shop-now button group (.btn-group pairing a .btn--pill with a
+     .btn--icon-circle, e.g. the hero's "Shop Now" + arrow CTA): on hover,
+     the pair swaps sides — the icon slides to the pill's spot on the left,
+     the pill slides to the icon's spot on the right — and the icon fills
+     solid (see .btn--icon-circle.is-swapped in components.css) to read as
+     the now-active control. Springs back apart on mouseleave. Distances
+     are measured per pair (not hardcoded) so it works regardless of label
+     length. Applies to every btn-group with both a pill and an
+     icon-circle, not just the hero, since that pairing is the shared
+     component used across sections.
+     -------------------------------------------------------------------- */
+  function initShopBtnGroupHover() {
+    document.querySelectorAll('.btn-group').forEach(function (group) {
+      var pill = group.querySelector('.btn--pill');
+      var icon = group.querySelector('.btn--icon-circle');
+      if (!pill || !icon) return;
+
+      var pillRect = pill.getBoundingClientRect();
+      var iconRect = icon.getBoundingClientRect();
+      var iconShift = pillRect.left - iconRect.left;
+      var pillShift = iconRect.right - pillRect.right;
+
+      var pillTween = gsap.to(pill, { x: pillShift, duration: 0.4, ease: 'power3.inOut', paused: true });
+      var iconTween = gsap.to(icon, { x: iconShift, duration: 0.4, ease: 'power3.inOut', paused: true });
+
+      group.addEventListener('mouseenter', function () {
+        pillTween.play();
+        iconTween.play();
+        icon.classList.add('is-swapped');
+      });
+      group.addEventListener('mouseleave', function () {
+        pillTween.reverse();
+        iconTween.reverse();
+        icon.classList.remove('is-swapped');
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     animateHeroHeading();
     animateOnScroll();
     animateChaosFooterTransition();
     animateFooterHeading();
+    initShopBtnGroupHover();
   });
 })();
