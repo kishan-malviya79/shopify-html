@@ -48,7 +48,8 @@ body {
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .btn:hover,
@@ -69,8 +70,6 @@ body {
   padding: 0;
   border-radius: var(--radius-pill);
   flex-shrink: 0;
-  transition: transform 0.15s ease, box-shadow 0.15s ease,
-    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn--icon-circle svg {
@@ -122,6 +121,18 @@ body {
   background-color: transparent;
   color: var(--color-btn-ink);
   border: var(--border-width-thin) solid var(--color-btn-ink);
+}
+
+/* Hover fill — icon-only buttons (arrows, carousel prev/next) invert to a
+   solid navy circle on hover; label buttons (.btn--pill) keep their resting
+   colors and only lift (base .btn:hover), so a button's own text never
+   flips color on hover — just the plain icon controls. */
+.btn--icon-circle.btn--primary:hover,
+.btn--icon-circle.btn--primary:focus-visible,
+.btn--icon-circle.btn--outline:hover,
+.btn--icon-circle.btn--outline:focus-visible {
+  background-color: var(--color-btn-ink);
+  color: var(--color-cream);
 }
 
 /* Modifier: block — stretches a button to fill its container's width. */

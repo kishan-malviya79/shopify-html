@@ -69,6 +69,36 @@
   color: var(--color-ink);
 }
 
-/* Buttons intentionally left at the shared .btn/.btn--pill/.btn--icon-circle
-   base size (css/components.css) — same full size hero_banner's CTA pair
-   uses, no chaos_banner-specific shrink. */
+/* Buttons scale up to the shared .btn/.btn--pill/.btn--icon-circle base
+   size (css/components.css, same full size hero_banner's CTA pair uses) on
+   wide viewports, but stay fluid rather than jumping straight to that fixed
+   size everywhere — .chaos-banner__media is locked to the source photo's
+   aspect ratio (see above), so on narrow phones there's a hard height
+   budget for .chaos-banner__content before it overflows the photo's
+   reserved blank zone into the product art below. */
+.chaos-banner .btn--pill {
+  padding: clamp(6px, 2.2vw, var(--space-sm)) clamp(16px, 6vw, var(--space-lg));
+  font-size: clamp(11px, 3vw, var(--fs-btn));
+}
+
+.chaos-banner .btn--icon-circle {
+  width: clamp(30px, 9vw, 48px);
+  height: clamp(30px, 9vw, 48px);
+}
+
+.chaos-banner .btn--icon-circle svg {
+  width: 40%;
+  height: 40%;
+}
+
+@media (max-width: 640px) {
+  .chaos-banner .btn--pill {
+    padding: var(--space-2xs) var(--space-md);
+    font-size: clamp(10px, 1.2vw, 14px);
+  }
+
+  .chaos-banner .btn--icon-circle {
+    width: clamp(28px, 3vw, 40px);
+    height: clamp(28px, 3vw, 40px);
+  }
+}
