@@ -13,13 +13,12 @@
   if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
   /* --------------------------------------------------------------------
-     Hero heading: split into words, reveal one word at a time on load.
-     Keeps the heading's authored <br> line break intact.
+     Splits a heading's text into one <span class="word-reveal__word">
+     per word, keeping its authored <br> line breaks intact. Returns the
+     word spans so the caller can animate them. Shared by the hero and
+     footer heading reveals below.
      -------------------------------------------------------------------- */
-  function animateHeroHeading() {
-    var heading = document.querySelector('.hero__heading');
-    if (!heading) return;
-
+  function splitIntoWords(heading) {
     var lines = heading.innerHTML.split(/<br\s*\/?>/i);
     heading.textContent = '';
 
@@ -29,7 +28,7 @@
       line.trim().split(/\s+/).forEach(function (word) {
         if (!word) return;
         var span = document.createElement('span');
-        span.className = 'hero__word';
+        span.className = 'word-reveal__word';
         span.textContent = word;
         heading.appendChild(span);
         heading.appendChild(document.createTextNode(' '));
@@ -37,6 +36,17 @@
       });
     });
 
+    return words;
+  }
+
+  /* --------------------------------------------------------------------
+     Hero heading: split into words, reveal one word at a time on load.
+     -------------------------------------------------------------------- */
+  function animateHeroHeading() {
+    var heading = document.querySelector('.hero__heading');
+    if (!heading) return;
+
+    var words = splitIntoWords(heading);
     if (!words.length) return;
 
     gsap.set(words, { display: 'inline-block', opacity: 0, y: '0.6em' });
@@ -61,6 +71,33 @@
         stagger: 0.1
       }, '-=0.25');
     }
+  }
+
+  /* --------------------------------------------------------------------
+     Footer heading ("More Munch / More Crunch"): same word-by-word
+     reveal as the hero, but scroll-triggered (it's below the fold) and
+     with a smaller, fixed pixel offset per word instead of an em-based
+     one — at the footer heading's huge font size, 0.6em would be a
+     100px+ jump per word.
+     -------------------------------------------------------------------- */
+  function animateFooterHeading() {
+    if (typeof ScrollTrigger === 'undefined') return;
+
+    var heading = document.querySelector('.footer__heading');
+    if (!heading) return;
+
+    var words = splitIntoWords(heading);
+    if (!words.length) return;
+
+    gsap.set(words, { display: 'inline-block', opacity: 0, y: 30 });
+    gsap.to(words, {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: 'power3.out',
+      stagger: 0.09,
+      scrollTrigger: { trigger: heading, start: 'top 85%' }
+    });
   }
 
   /* --------------------------------------------------------------------
@@ -133,5 +170,6 @@
     animateHeroHeading();
     animateOnScroll();
     animateChaosFooterTransition();
+    animateFooterHeading();
   });
 })();
