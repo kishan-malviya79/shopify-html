@@ -12,6 +12,12 @@
   if (typeof gsap === 'undefined') return;
   if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
+  /* Shared Lenis instance, set by initSmoothScroll below — other init
+     functions (e.g. initWorldCardLinks' anchor scroll) read this so their
+     jumps stay in Lenis' eased/virtual scroll space instead of fighting it
+     with a raw native scrollIntoView. Stays null if Lenis didn't load. */
+  var lenis = null;
+
   /* --------------------------------------------------------------------
      Smooth scroll (Lenis), driven off gsap.ticker so its raf loop stays
      in lockstep with every ScrollTrigger-based animation above/below —
@@ -23,7 +29,7 @@
     if (typeof Lenis === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    var lenis = new Lenis();
+    lenis = new Lenis();
 
     if (typeof ScrollTrigger !== 'undefined') {
       lenis.on('scroll', ScrollTrigger.update);
@@ -370,6 +376,40 @@
   }
 
   /* --------------------------------------------------------------------
+     World grid cards ("Crunch World" / "Prebiotic World"): each links to
+     the matching product carousel further down the page (#munchief-family,
+     #munchief-sodas) instead of navigating away. Intercepts the click and
+     scrolls there smoothly — through Lenis if it's running (keeps the jump
+     in the same eased scroll space as everything else), falling back to
+     native smooth scrollIntoView otherwise — offset by the sticky header's
+     current height so the target section's own heading isn't hidden under
+     it on landing.
+     -------------------------------------------------------------------- */
+  function initWorldCardLinks() {
+    document.querySelectorAll('.world-card[href^="#"]').forEach(function (card) {
+      var id = card.getAttribute('href').slice(1);
+      if (!id) return;
+
+      card.addEventListener('click', function (e) {
+        var target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        var header = document.querySelector('.site-header');
+        var offset = header ? header.getBoundingClientRect().height : 0;
+
+        if (lenis) {
+          lenis.scrollTo(target, { offset: -offset });
+        } else {
+          var y = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  /* --------------------------------------------------------------------
      Mouse-parallax hover: while the cursor is over `container`, each
      entry's element drifts toward the cursor (higher strength = more
      drift, so entries read as sitting at slightly different depths),
@@ -465,6 +505,7 @@
     animateChaosBannerBackground();
     animateFooterHeading();
     initShopBtnGroupHover();
+    initWorldCardLinks();
     initHeroParallax();
     initFooterBubbleParallax();
     initFlavorQuizParallax();
