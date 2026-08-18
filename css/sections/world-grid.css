@@ -69,7 +69,7 @@
 .world-card__heading {
   margin: 0;
   max-width: 60%;
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(32px, 5.5vw, 56px);
   line-height: var(--lh-tight);
   letter-spacing: 0;
 }
