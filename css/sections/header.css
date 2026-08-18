@@ -309,6 +309,12 @@
   width: auto;
 }
 
+@media (max-width: 640px) {
+  .site-header__logo img {
+    height: 28px;
+  }
+}
+
 /* Actions (right) ------------------------------------------------------------ */
 .site-header__actions {
   display: flex;
