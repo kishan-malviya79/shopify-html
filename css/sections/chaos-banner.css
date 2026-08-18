@@ -21,11 +21,16 @@
   overflow: hidden;
 }
 
+/* 30% taller than its container (js/animations.js scrolls it top-to-bottom
+   as the section passes through the viewport) so the parallax travel never
+   reveals an edge — .chaos-banner__media's overflow: hidden crops it back
+   down to the section's own bounds. */
 .chaos-banner__media img {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: -15%;
   width: 100%;
-  height: 100%;
+  height: 130%;
   display: block;
   object-fit: cover;
 }

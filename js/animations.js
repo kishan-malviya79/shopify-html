@@ -237,6 +237,35 @@
   }
 
   /* --------------------------------------------------------------------
+     Chaos banner background parallax: the photo drifts top-to-bottom,
+     scrubbed to how far the section has scrolled through the viewport
+     (top bottom -> bottom top covers the section's whole time on screen,
+     so this is already "live" right on load if the section starts in
+     view, and keeps tracking as the visitor scrolls). The img is sized
+     30% taller than its box in CSS (chaos-banner.css) so this travel
+     never reveals an edge past the section's own overflow: hidden crop.
+     -------------------------------------------------------------------- */
+  function animateChaosBannerBackground() {
+    if (typeof ScrollTrigger === 'undefined') return;
+
+    document.querySelectorAll('.chaos-banner__media img').forEach(function (img) {
+      gsap.fromTo(img,
+        { yPercent: -10 },
+        {
+          yPercent: 10,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img.closest('.chaos-banner'),
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+    });
+  }
+
+  /* --------------------------------------------------------------------
      Shop-now button group (.btn-group pairing a .btn--pill with a
      .btn--icon-circle, e.g. the hero's "Shop Now" + arrow CTA): on hover,
      the pair swaps sides — the icon slides to the pill's spot on the left,
@@ -276,28 +305,30 @@
   }
 
   /* --------------------------------------------------------------------
-     Mouse-parallax hover: while the cursor is over `container`, `leftEl`/
-     `rightEl` drift toward it (leftEl moves more than rightEl so the two
-     read as sitting at slightly different depths), springing back to rest
-     on mouseleave. gsap.quickTo instead of gsap.to since this fires on
-     every mousemove and needs to be cheap. Shared by the hero side images
-     and the footer's two cloud-photo bubbles.
+     Mouse-parallax hover: while the cursor is over `container`, each
+     entry's element drifts toward the cursor (higher strength = more
+     drift, so entries read as sitting at slightly different depths),
+     springing back to rest on mouseleave. gsap.quickTo instead of gsap.to
+     since this fires on every mousemove and needs to be cheap. Shared by
+     the hero side images, the footer's two cloud-photo bubbles, and the
+     flavor quiz's three character cutouts. `entries` is an array of
+     { el, strength }; entries with no el (or a falsy el) are skipped, so
+     callers can pass a fixed-shape array even when an element is missing.
      -------------------------------------------------------------------- */
-  function initParallaxHover(container, leftEl, rightEl, leftStrength, rightStrength) {
+  function initParallaxHover(container, entries) {
     if (!container) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!leftEl && !rightEl) return;
 
-    function quickMover(el, strength) {
-      if (!el) return null;
+    var movers = entries.filter(function (entry) {
+      return entry && entry.el;
+    }).map(function (entry) {
       return {
-        x: gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' }),
-        y: gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3.out' }),
-        strength: strength
+        x: gsap.quickTo(entry.el, 'x', { duration: 0.6, ease: 'power3.out' }),
+        y: gsap.quickTo(entry.el, 'y', { duration: 0.6, ease: 'power3.out' }),
+        strength: entry.strength
       };
-    }
-
-    var movers = [quickMover(leftEl, leftStrength), quickMover(rightEl, rightStrength)].filter(Boolean);
+    });
+    if (!movers.length) return;
 
     container.addEventListener('mousemove', function (e) {
       var rect = container.getBoundingClientRect();
@@ -321,13 +352,10 @@
   function initHeroParallax() {
     var hero = document.querySelector('.hero');
     if (!hero) return;
-    initParallaxHover(
-      hero,
-      hero.querySelector('.hero__side--left'),
-      hero.querySelector('.hero__side--right'),
-      26,
-      16
-    );
+    initParallaxHover(hero, [
+      { el: hero.querySelector('.hero__side--left'), strength: 26 },
+      { el: hero.querySelector('.hero__side--right'), strength: 16 }
+    ]);
   }
 
   /* --------------------------------------------------------------------
@@ -339,13 +367,26 @@
   function initFooterBubbleParallax() {
     var footerHero = document.querySelector('.footer__hero');
     if (!footerHero) return;
-    initParallaxHover(
-      footerHero,
-      footerHero.querySelector('.footer__bubble--left'),
-      footerHero.querySelector('.footer__bubble--right'),
-      18,
-      14
-    );
+    initParallaxHover(footerHero, [
+      { el: footerHero.querySelector('.footer__bubble--left'), strength: 18 },
+      { el: footerHero.querySelector('.footer__bubble--right'), strength: 14 }
+    ]);
+  }
+
+  /* --------------------------------------------------------------------
+     Flavor quiz character parallax: same mechanic as the hero, applied to
+     the three decorative cutouts bleeding off the section's edges (see
+     initParallaxHover above). tl is the largest/closest cutout so it gets
+     the most drift; tr and bl are smaller and sit further back.
+     -------------------------------------------------------------------- */
+  function initFlavorQuizParallax() {
+    var quiz = document.querySelector('.flavor-quiz');
+    if (!quiz) return;
+    initParallaxHover(quiz, [
+      { el: quiz.querySelector('.flavor-quiz__character--tl'), strength: 22 },
+      { el: quiz.querySelector('.flavor-quiz__character--tr'), strength: 16 },
+      { el: quiz.querySelector('.flavor-quiz__character--bl'), strength: 14 }
+    ]);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -358,5 +399,6 @@
     initShopBtnGroupHover();
     initHeroParallax();
     initFooterBubbleParallax();
+    initFlavorQuizParallax();
   });
 })();
