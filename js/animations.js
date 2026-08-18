@@ -69,6 +69,37 @@
   }
 
   /* --------------------------------------------------------------------
+     Splits a heading's text into one <span class="word-reveal__char">
+     per non-space character, keeping its authored <br> line breaks intact
+     and a plain text-node space between words (so wrapping still behaves
+     normally — only the letters themselves are animated spans). Used by
+     the footer heading for a per-character reveal instead of the hero's
+     per-word one.
+     -------------------------------------------------------------------- */
+  function splitIntoChars(heading) {
+    var lines = heading.innerHTML.split(/<br\s*\/?>/i);
+    heading.textContent = '';
+
+    var chars = [];
+    lines.forEach(function (line, lineIndex) {
+      if (lineIndex > 0) heading.appendChild(document.createElement('br'));
+      line.trim().split(/\s+/).forEach(function (word, wordIndex) {
+        if (!word) return;
+        if (wordIndex > 0) heading.appendChild(document.createTextNode(' '));
+        word.split('').forEach(function (char) {
+          var span = document.createElement('span');
+          span.className = 'word-reveal__char';
+          span.textContent = char;
+          heading.appendChild(span);
+          chars.push(span);
+        });
+      });
+    });
+
+    return chars;
+  }
+
+  /* --------------------------------------------------------------------
      Hero heading: split into words, reveal one word at a time on load.
      -------------------------------------------------------------------- */
   function animateHeroHeading() {
@@ -126,11 +157,12 @@
   }
 
   /* --------------------------------------------------------------------
-     Footer heading ("More Munch / More Crunch"): same word-by-word
-     reveal as the hero, but scroll-triggered (it's below the fold) and
-     with a smaller, fixed pixel offset per word instead of an em-based
-     one — at the footer heading's huge font size, 0.6em would be a
-     100px+ jump per word.
+     Footer heading ("More Munch / More Crunch"): per-character reveal,
+     scroll-triggered (it's below the fold). Character-level rather than
+     the hero's word-level split since at this heading's huge font size a
+     handful of long words reveal too slowly one at a time. Stagger is
+     slow enough (0.06s/char) that each letter visibly pops in one after
+     another rather than reading as one near-simultaneous flash.
      -------------------------------------------------------------------- */
   function animateFooterHeading() {
     if (typeof ScrollTrigger === 'undefined') return;
@@ -138,16 +170,16 @@
     var heading = document.querySelector('.footer__heading');
     if (!heading) return;
 
-    var words = splitIntoWords(heading);
-    if (!words.length) return;
+    var chars = splitIntoChars(heading);
+    if (!chars.length) return;
 
-    gsap.set(words, { display: 'inline-block', opacity: 0, y: 30 });
-    gsap.to(words, {
+    gsap.set(chars, { display: 'inline-block', opacity: 0, y: 24 });
+    gsap.to(chars, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
+      duration: 0.45,
       ease: 'power3.out',
-      stagger: 0.09,
+      stagger: 0.06,
       scrollTrigger: { trigger: heading, start: 'top 85%' }
     });
   }
