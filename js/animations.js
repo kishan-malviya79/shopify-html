@@ -97,6 +97,29 @@
   }
 
   /* --------------------------------------------------------------------
+     Hero side images: on load, left_image/right_image rise up from below
+     into their resting spot (same anchor point CSS already gives them),
+     fading in as they arrive. Runs alongside the heading's word reveal,
+     not blocking it — both start together.
+     -------------------------------------------------------------------- */
+  function animateHeroSideImages() {
+    var left = document.querySelector('.hero__side--left');
+    var right = document.querySelector('.hero__side--right');
+    if (!left && !right) return;
+
+    var tl = gsap.timeline({ delay: 0.1 });
+
+    if (left) {
+      gsap.set(left, { y: 140, opacity: 0 });
+      tl.to(left, { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }, 0);
+    }
+    if (right) {
+      gsap.set(right, { y: 140, opacity: 0 });
+      tl.to(right, { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }, 0.12);
+    }
+  }
+
+  /* --------------------------------------------------------------------
      Footer heading ("More Munch / More Crunch"): same word-by-word
      reveal as the hero, but scroll-triggered (it's below the fold) and
      with a smaller, fixed pixel offset per word instead of an em-based
@@ -302,6 +325,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     initSmoothScroll();
     animateHeroHeading();
+    animateHeroSideImages();
     animateOnScroll();
     animateChaosFooterTransition();
     animateFooterHeading();
