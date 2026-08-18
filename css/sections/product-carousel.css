@@ -10,11 +10,23 @@
   padding-block: var(--space-2xl);
 }
 
+/* flex-wrap: wrap matters most for the nav_style = "cta" instance ("Combo.
+   Don't Choose One Mood." + a "Build Your Bundle" pill button): on a narrow
+   row, a non-wrapping flex container falls back to shrinking the heading
+   via its default min-width: auto — normally bounded by its longest
+   unbreakable word, but the word-reveal char spans (js/animations.js, each
+   letter its own inline-block) let that min-content shrink to a single
+   glyph, squeezing the heading to a sliver and wrapping it one character
+   per line. Wrapping the row into a heading-then-nav column sidesteps the
+   squeeze entirely — harmless for the default arrows nav_style too, since
+   wrap only activates when a line's content doesn't already fit. */
 .product-carousel__header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
+  row-gap: var(--space-sm);
   margin-bottom: var(--space-xl);
 }
 
@@ -28,10 +40,11 @@
   margin: 0;
 }
 
-/* Layout-only variant for the "Combo" instance — compose with
+/* Layout-only variant for the section's big display-style titles ("Meet
+   the Munchief Family/Sodas", "Combo") — compose with
    .stroke-heading.stroke-heading--black (css/components.css) for the
    Mouse Memoirs black-fill/white-stroke skin instead of this section's
-   default Anton heading. */
+   default (smaller, Anton) .product-carousel__heading. */
 .product-carousel__heading--display {
   margin: 0;
   font-size: clamp(32px, 5vw, 64px);
