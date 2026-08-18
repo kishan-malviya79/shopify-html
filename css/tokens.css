@@ -116,7 +116,7 @@
   --fs-price-compare: 16px;
   --fs-select: 14px;
   --fs-rating-count: 14px;
-  --fs-testimonial-heading: clamp(32px, 5.5vw, 56px); /* testimonial_carousel's "Don't take our word for it" — same scale as world_grid's card headings */
+  --fs-testimonial-heading: clamp(18px, 3.6vw, 40px); /* testimonial_carousel's "Don't take our word for it" — same fluid scale as chaos_banner's heading; locks to --fs-display-heading-desktop at the desktop breakpoint too, see section CSS */
   --fs-testimonial-title: 28px;
   --fs-testimonial-text: 14px;
   --fs-testimonial-author: 24px;

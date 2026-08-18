@@ -18,6 +18,14 @@
   max-width: 640px;
 }
 
+/* Desktop locks to the same fixed size as chaos_banner's heading instead
+   of continuing to scale with viewport, same pattern as .hero__heading. */
+@media (min-width: 1025px) {
+  .testimonial-carousel__heading {
+    font-size: var(--fs-display-heading-desktop);
+  }
+}
+
 .testimonial-carousel__nav {
   display: flex;
   align-items: center;
