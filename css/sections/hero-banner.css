@@ -14,13 +14,25 @@
   text-align: center;
 }
 
-/* Background media layer — holds either the background image or the
-   background video, cropped to cover the section (see hero-banner.html for
-   the image/video swap). */
+/* Background layer — background_type = "image" (default) fills this with
+   the sunburst photo (background_image, Hero-bg.png); "sunburst" instead
+   falls back to a pure-CSS ray pattern (the same themable --color-sunburst-*
+   pair combo_promo uses, so .theme-pink recolors it) when no image asset is
+   supplied; "video" swaps in the <video> variant. See hero-banner.html for
+   the swap between the three. */
 .hero__media {
   position: absolute;
   inset: 0;
   z-index: 0;
+}
+
+.hero__media--sunburst {
+  background-color: var(--color-sunburst-a);
+  background-image: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    var(--color-sunburst-a) 0deg 9deg,
+    var(--color-sunburst-b) 9deg 18deg
+  );
 }
 
 .hero__media img,
@@ -30,6 +42,35 @@
   display: block;
   object-fit: cover;
   object-position: center;
+}
+
+/* Left/right side art — bleeds off the section's edges, layered between the
+   background (z-index 0) and the text content (z-index 2). Both left_image
+   and right_image are pre-composited transparent cutouts (hero-left.png,
+   hero-right.png), so no frame/border is added — they float directly over
+   the background like they're part of the same photo. */
+.hero__side {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.hero__side img {
+  display: block;
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.hero__side--left {
+  left: clamp(-24px, -2vw, 0px);
+  height: clamp(240px, 40vw, 560px);
+}
+
+.hero__side--right {
+  right: clamp(-16px, -1.5vw, 24px);
+  height: clamp(220px, 36vw, 520px);
 }
 
 /* Optional darkening layer for readability — off by default since the
@@ -83,6 +124,8 @@
   }
 }
 
+/* Below tablet, the side art crowds the centered text — fade it back to a
+   quieter corner accent instead of removing it outright. */
 @media (max-width: 640px) {
   .hero {
     min-height: 480px;
@@ -90,5 +133,15 @@
 
   .hero__heading {
     -webkit-text-stroke: 1.5px var(--color-white);
+  }
+
+  .hero__side--left {
+    height: clamp(160px, 40vw, 240px);
+    opacity: 0.85;
+  }
+
+  .hero__side--right {
+    height: clamp(140px, 36vw, 220px);
+    opacity: 0.85;
   }
 }

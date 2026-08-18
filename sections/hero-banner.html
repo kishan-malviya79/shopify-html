@@ -2,9 +2,11 @@
   Section: hero_banner
 
   Settings:
-    - background_type (select: "image" | "video") — default: "image"
-    - background_image (image_picker) — used when background_type = "image"; dummy default: assets/dummy/Hero.png
+    - background_type (select: "image" | "sunburst" | "video") — default: "image"
+    - background_image (image_picker) — used when background_type = "image"; dummy default: assets/dummy/Hero-bg.png
     - background_video (video) — Shopify native video setting, used when background_type = "video"
+    - left_image (image_picker) — product cutout bleeding off the left edge, pre-composited/transparent; dummy default: assets/dummy/hero-left.png
+    - right_image (image_picker) — character cutout bleeding off the right edge, pre-composited/transparent; dummy default: assets/dummy/hero-right.png
     - heading (text) — default: "This is not a snack. This is a scene."
     - text (richtext) — default: "Roasted makhana with big Indian flavour and even bigger personality. Meet the Munchief family and find out which one you are."
     - button_label (text) — default: "Shop Now"
@@ -17,6 +19,11 @@
   "Comic Neue" (weight 700). Both are Google Fonts, loaded here for preview;
   in the Shopify build, load them through the theme's font settings or a
   self-hosted @font-face instead.
+
+  Images: background_image (Hero-bg.png) is a full-bleed sunburst photo;
+  left_image (hero-left.png) and right_image (hero-right.png) are
+  pre-composited transparent cutouts (product lineup / character group) that
+  float directly over it — none of the three need any extra framing/border.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -38,17 +45,36 @@
        ====================================================================== -->
   <section class="hero" aria-label="Hero banner">
 
-    <!-- Background media: image variant shown by default. Swap for the
-         <video> block below when background_type = "video". -->
-    <div class="hero__media">
-      <img src="../assets/dummy/Hero.png" alt="" role="presentation" />
+    <!-- Background: image variant shown by default (background_type =
+         "image"). Swap for the sunburst/video variants below when no image
+         asset is supplied / background_type = "video". -->
+    <div class="hero__media" aria-hidden="true">
+      <img src="../assets/dummy/Hero-bg.png" alt="" role="presentation" />
+
+      <!--
+      Sunburst variant (background_type = "sunburst", no image asset needed —
+      pure CSS, see .hero__media--sunburst in hero-banner.css):
+      <div class="hero__media hero__media--sunburst" aria-hidden="true"></div>
+      -->
 
       <!--
       Video variant (background_type = "video"):
-      <video autoplay muted loop playsinline poster="../assets/dummy/Hero.png">
+      <video autoplay muted loop playsinline poster="../assets/dummy/Hero-bg.png">
         <source src="../assets/dummy/hero-banner-bg.mp4" type="video/mp4" />
       </video>
       -->
+    </div>
+
+    <!-- Left-side product cutout (left_image), bleeds off the section's
+         left edge — a pre-composited transparent PNG, no frame needed. -->
+    <div class="hero__side hero__side--left">
+      <img src="../assets/dummy/hero-left.png" alt="" role="presentation" />
+    </div>
+
+    <!-- Right-side character cutout (right_image), bleeds off the section's
+         right edge — same pre-composited/transparent treatment as left_image. -->
+    <div class="hero__side hero__side--right">
+      <img src="../assets/dummy/hero-right.png" alt="" role="presentation" />
     </div>
 
     <div class="hero__content">
