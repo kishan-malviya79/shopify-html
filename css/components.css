@@ -5,6 +5,21 @@
    existing component instead of duplicating it.
    ========================================================================== */
 
+/* Page transition overlay — the curtain js/animations.js's
+   initPageTransitions() slides across the viewport on load (reveal) and on
+   internal link clicks (cover, then navigate). The element itself is
+   injected by that script, not authored per-page, so every section preview
+   file and index.html get the same transition without needing markup added
+   to each. z-index 999 clears every other layered element in the site
+   (cart-drawer's 100 is the next highest) so the curtain always sits on top. */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background-color: var(--color-brand-red);
+  pointer-events: none;
+}
+
 /* Global box model — every component here pairs a set width with padding
    and/or a border (.container's width:100% + padding-inline, cards, pills,
    the quiz option grid, ...). Without border-box, padding/border add on top

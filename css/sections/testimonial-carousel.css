@@ -34,25 +34,41 @@
   margin-bottom: var(--space-xl);
 }
 
+/* A real horizontally-scrolling carousel at every breakpoint (not a grid
+   that just wraps extra cards to new rows) — the prev/next buttons
+   (.testimonial-carousel__nav, scripted at the bottom of the section)
+   scroll this by one card width. proximity rather than mandatory snap:
+   a mandatory snap can cancel the arrows' smooth programmatic scroll
+   mid-animation and spring back to the card it started on (same fix
+   character_carousel already uses). */
 .testimonial-carousel__track {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--container-padding);
+  scrollbar-width: none;
 }
 
-/* Tablet: 2 cards, third scrolls into view */
+.testimonial-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonial-carousel__track .testimonial-card {
+  flex: 0 0 calc((100% - 2 * var(--space-lg)) / 3);
+  scroll-snap-align: start;
+}
+
+/* Tablet: 2 cards in view, rest scroll in */
 @media (max-width: 1024px) {
-  .testimonial-carousel__track {
-    grid-template-columns: repeat(2, 1fr);
+  .testimonial-carousel__track .testimonial-card {
+    flex-basis: calc((100% - var(--space-lg)) / 2);
   }
 }
 
-/* Mobile: horizontal scroll-snap carousel, one card per view */
+/* Mobile: one card per view */
 @media (max-width: 640px) {
   .testimonial-carousel__track {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
     gap: var(--space-md);
     margin-inline: calc(var(--container-padding) * -1);
     padding-inline: var(--container-padding);
@@ -60,7 +76,6 @@
   }
 
   .testimonial-carousel__track .testimonial-card {
-    flex: 0 0 82%;
-    scroll-snap-align: start;
+    flex-basis: 82%;
   }
 }

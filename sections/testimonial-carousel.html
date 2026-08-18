@@ -21,7 +21,8 @@
 
   Images: customer photos are dummy assets (assets/dummy/Perfect.png,
   favorite.png, delicious.png) standing in for each block's `photo`
-  image_picker.
+  image_picker — Perfect.png and delicious.png are each reused across two
+  blocks since there are only 3 people/lifestyle photos in assets/dummy/.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +62,7 @@
 
       <div class="testimonial-carousel__track" data-carousel-track data-animate="fade-up-stagger">
 
-        <!-- Block: testimonial (1/3) -->
+        <!-- Block: testimonial (1/5) -->
         <article class="testimonial-card">
           <div class="testimonial-card__media">
             <img src="../assets/dummy/Perfect.png" alt="Tina A holding a Munchief pouch and drinking a Munchief soda" />
@@ -85,7 +86,7 @@
           </div>
         </article>
 
-        <!-- Block: testimonial (2/3) -->
+        <!-- Block: testimonial (2/5) -->
         <article class="testimonial-card">
           <div class="testimonial-card__media">
             <img src="../assets/dummy/favorite.png" alt="Munchief soda can lineup on a shelf" />
@@ -109,7 +110,7 @@
           </div>
         </article>
 
-        <!-- Block: testimonial (3/3) -->
+        <!-- Block: testimonial (3/5) -->
         <article class="testimonial-card">
           <div class="testimonial-card__media">
             <img src="../assets/dummy/delicious.png" alt="Nina K holding a Munchief pouch and drinking a Munchief soda" />
@@ -130,6 +131,54 @@
             </p>
             <hr class="testimonial-card__divider" />
             <span class="testimonial-card__author">Nina K</span>
+          </div>
+        </article>
+
+        <!-- Block: testimonial (4/5) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/Perfect.png" alt="Rohan D holding a Munchief pouch and drinking a Munchief soda" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">Can't stop snacking</h3>
+            <p class="testimonial-card__text">
+              The Chaatpata flavour is dangerously good. I bought one bag to try and ended up ordering the variety pack within the week.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Rohan D</span>
+          </div>
+        </article>
+
+        <!-- Block: testimonial (5/5) -->
+        <article class="testimonial-card">
+          <div class="testimonial-card__media">
+            <img src="../assets/dummy/delicious.png" alt="Meera P holding a Munchief pouch and drinking a Munchief soda" />
+          </div>
+          <div class="testimonial-card__body">
+            <div class="rating rating--lg">
+              <span class="rating__stars" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              </span>
+            </div>
+            <h3 class="testimonial-card__title">Exactly what I needed</h3>
+            <p class="testimonial-card__text">
+              Pairing the soda with a pouch has become my afternoon reset. Great flavour, nothing artificial-tasting about it.
+            </p>
+            <hr class="testimonial-card__divider" />
+            <span class="testimonial-card__author">Meera P</span>
           </div>
         </article>
 

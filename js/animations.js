@@ -19,6 +19,71 @@
   var lenis = null;
 
   /* --------------------------------------------------------------------
+     Page transition curtain: a full-screen overlay (.page-transition, see
+     css/components.css) that slides up and off on load — revealing the
+     page — and slides back up to cover the screen before any internal
+     link navigates away. This is a static multi-page build (every section
+     preview + index.html is a separate .html file, not an SPA route), so
+     without this a click between pages is a hard, uncovered reload cut;
+     this makes it read as one continuous motion instead. Injected into
+     <body> here rather than authored per-page, so every page gets it
+     automatically just by loading this shared script.
+     -------------------------------------------------------------------- */
+  function initPageTransitions() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var overlay = document.createElement('div');
+    overlay.className = 'page-transition';
+    document.body.appendChild(overlay);
+
+    gsap.set(overlay, { yPercent: 0 });
+    gsap.to(overlay, { yPercent: -100, duration: 0.7, ease: 'power2.inOut', delay: 0.05 });
+
+    // Back/forward nav restoring the page from bfcache: snap the curtain
+    // out of the way instantly instead of replaying the reveal, since the
+    // page never actually reloaded.
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) gsap.set(overlay, { yPercent: -100 });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      if (link.target && link.target !== '_self') return;
+      if (link.hasAttribute('download')) return;
+
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return;
+
+      var url;
+      try {
+        url = new URL(href, window.location.href);
+      } catch (err) {
+        return;
+      }
+      if (url.origin !== window.location.origin) return;
+      // Same-page anchor jump (e.g. a "#reviews" link on the page that
+      // already has that id) — let native/Lenis scroll handle it, no curtain.
+      if (url.pathname === window.location.pathname && url.hash) return;
+
+      e.preventDefault();
+      gsap.set(overlay, { yPercent: 100 });
+      gsap.to(overlay, {
+        yPercent: 0,
+        duration: 0.5,
+        ease: 'power2.inOut',
+        onComplete: function () {
+          window.location.href = url.href;
+        }
+      });
+    });
+  }
+
+  /* --------------------------------------------------------------------
      Smooth scroll (Lenis), driven off gsap.ticker so its raf loop stays
      in lockstep with every ScrollTrigger-based animation above/below —
      without this, scroll-triggered reveals can fire a frame or two out
@@ -503,6 +568,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    initPageTransitions();
     initSmoothScroll();
     animateHeroHeading();
     animateHeroSideImages();
