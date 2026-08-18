@@ -98,8 +98,40 @@
     });
   }
 
+  /* --------------------------------------------------------------------
+     Chaos banner -> footer transition: wherever a chaos_banner section
+     sits directly above the footer, its content drifts upward slightly
+     faster than the page scrolls (scrubbed to scroll position), so the
+     footer's wavy top edge (footer.css's .footer::before, which already
+     rises 108px into whatever precedes it) reads as sliding up and over
+     the banner rather than the two sections just being stacked.
+     -------------------------------------------------------------------- */
+  function animateChaosFooterTransition() {
+    if (typeof ScrollTrigger === 'undefined') return;
+
+    document.querySelectorAll('.footer').forEach(function (footer) {
+      var prev = footer.previousElementSibling;
+      if (!prev || !prev.classList.contains('chaos-banner')) return;
+
+      var content = prev.querySelector('.chaos-banner__content');
+      if (!content) return;
+
+      gsap.to(content, {
+        yPercent: -18,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: prev,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     animateHeroHeading();
     animateOnScroll();
+    animateChaosFooterTransition();
   });
 })();

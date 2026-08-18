@@ -53,6 +53,7 @@
   <link rel="stylesheet" href="../css/sections/announcement-bar.css" />
   <link rel="stylesheet" href="../css/sections/header.css" />
   <link rel="stylesheet" href="../css/sections/legal.css" />
+  <link rel="stylesheet" href="../css/sections/chaos-banner.css" />
   <link rel="stylesheet" href="../css/sections/footer.css" />
   <link rel="stylesheet" href="../css/sections/cart-drawer.css" />
 </head>
@@ -530,13 +531,47 @@
   <!-- ===================== /Section: Legal Page ===================== -->
 
   <!-- ======================================================================
+       Section: Chaos Banner (chaos_banner) — see sections/chaos-banner.html
+       for this section's settings; placed here as the CTA break right above
+       the footer, same pattern as index.html/about.html/shop-all.html
+       ====================================================================== -->
+  <section class="chaos-banner" aria-label="Ready to cause some chaos">
+
+    <div class="chaos-banner__media">
+      <img src="../assets/dummy/chos-bg.png" alt="" role="presentation" />
+
+      <div class="chaos-banner__content">
+        <h2 class="chaos-banner__heading stroke-heading" data-animate="fade-up">Ready to cause<br />some chaos?</h2>
+
+        <p class="chaos-banner__text">
+          Ten flavours. Five personalities. One mystery still brewing.
+          Come find out which one you are.
+        </p>
+
+        <div class="btn-group">
+          <a href="#" class="btn btn--pill btn--outline">Shop Now</a>
+
+          <a href="#" class="btn btn--icon-circle btn--outline" aria-label="Shop now">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- ===================== /Section: Chaos Banner ===================== -->
+
+  <!-- ======================================================================
        Section: Footer (footer)
        ====================================================================== -->
   <footer class="footer" aria-label="Site footer">
 
     <img class="footer__logo" src="../assets/dummy/logo.png" alt="Munchief" />
 
-    <div class="footer__hero">
+    <div class="footer__hero" data-animate="fade-up">
 
       <div class="footer__bubble footer__bubble--left">
         <img src="../assets/dummy/Perfect.png" alt="" role="presentation" />
@@ -555,7 +590,7 @@
 
     </div>
 
-    <div class="footer__columns">
+    <div class="footer__columns" data-animate="fade-up-stagger">
 
       <!-- Block: footer_column (1/5) -->
       <div class="footer__column">
@@ -813,6 +848,10 @@
     </aside>
   </div>
   <!-- ===================== /Section: Cart Drawer ===================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="../js/animations.js"></script>
 
   <script src="../js/cart.js"></script>
 
