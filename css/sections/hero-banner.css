@@ -138,12 +138,12 @@
   }
 
   .hero__side--left {
-    height: clamp(160px, 40vw, 240px);
+    height: clamp(200px, 52vw, 300px);
     opacity: 0.85;
   }
 
   .hero__side--right {
-    height: clamp(140px, 36vw, 220px);
+    height: clamp(180px, 46vw, 280px);
     opacity: 0.85;
   }
 }
