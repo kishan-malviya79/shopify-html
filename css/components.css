@@ -612,22 +612,23 @@ body {
   min-width: 90px;
   height: 46px;
   padding: 13px 16.7px;
-  background-color: var(--color-brand-red-bright);
-  color: var(--color-white);
+  background-color: var(--color-card-bg);
+  color: var(--color-brand-red-bright);
   font-family: var(--font-ui);
   font-weight: var(--fw-bold);
   font-size: var(--fs-newsletter-btn);
   letter-spacing: -0.14px;
   text-transform: uppercase;
-  border: none;
+  border: var(--border-width-thin) solid var(--color-brand-red-bright);
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 .newsletter-form__submit:hover,
 .newsletter-form__submit:focus-visible {
-  background-color: var(--color-brand-red-dark);
+  background-color: var(--color-brand-red-bright);
+  color: var(--color-white);
   transform: translateY(-2px);
 }
 

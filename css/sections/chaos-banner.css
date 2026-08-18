@@ -69,17 +69,6 @@
   color: var(--color-ink);
 }
 
-.chaos-banner .btn--pill {
-  padding: var(--space-2xs) var(--space-md);
-  font-size: clamp(10px, 1.2vw, 14px);
-}
-
-.chaos-banner .btn--icon-circle {
-  width: clamp(28px, 3vw, 40px);
-  height: clamp(28px, 3vw, 40px);
-}
-
-.chaos-banner .btn--icon-circle svg {
-  width: 40%;
-  height: 40%;
-}
+/* Buttons intentionally left at the shared .btn/.btn--pill/.btn--icon-circle
+   base size (css/components.css) — same full size hero_banner's CTA pair
+   uses, no chaos_banner-specific shrink. */
