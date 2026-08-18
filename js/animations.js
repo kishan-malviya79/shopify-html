@@ -42,39 +42,12 @@
   }
 
   /* --------------------------------------------------------------------
-     Splits a heading's text into one <span class="word-reveal__word">
-     per word, keeping its authored <br> line breaks intact. Returns the
-     word spans so the caller can animate them. Shared by the hero and
-     footer heading reveals below.
-     -------------------------------------------------------------------- */
-  function splitIntoWords(heading) {
-    var lines = heading.innerHTML.split(/<br\s*\/?>/i);
-    heading.textContent = '';
-
-    var words = [];
-    lines.forEach(function (line, lineIndex) {
-      if (lineIndex > 0) heading.appendChild(document.createElement('br'));
-      line.trim().split(/\s+/).forEach(function (word) {
-        if (!word) return;
-        var span = document.createElement('span');
-        span.className = 'word-reveal__word';
-        span.textContent = word;
-        heading.appendChild(span);
-        heading.appendChild(document.createTextNode(' '));
-        words.push(span);
-      });
-    });
-
-    return words;
-  }
-
-  /* --------------------------------------------------------------------
      Splits a heading's text into one <span class="word-reveal__char">
      per non-space character, keeping its authored <br> line breaks intact
      and a plain text-node space between words (so wrapping still behaves
-     normally — only the letters themselves are animated spans). Used by
-     the footer heading for a per-character reveal instead of the hero's
-     per-word one.
+     normally — only the letters themselves are animated spans). Every
+     section title's reveal runs through this: the hero heading below, the
+     footer heading, and the generic data-animate="char-reveal" hook.
      -------------------------------------------------------------------- */
   function splitIntoChars(heading) {
     var lines = heading.innerHTML.split(/<br\s*\/?>/i);
@@ -100,24 +73,26 @@
   }
 
   /* --------------------------------------------------------------------
-     Hero heading: split into words, reveal one word at a time on load.
+     Hero heading: split into characters, reveal one at a time on load —
+     same per-character mechanic as every other section title (see
+     splitIntoChars above).
      -------------------------------------------------------------------- */
   function animateHeroHeading() {
     var heading = document.querySelector('.hero__heading');
     if (!heading) return;
 
-    var words = splitIntoWords(heading);
-    if (!words.length) return;
+    var chars = splitIntoChars(heading);
+    if (!chars.length) return;
 
-    gsap.set(words, { display: 'inline-block', opacity: 0, y: '0.6em' });
+    gsap.set(chars, { display: 'inline-block', opacity: 0, y: '0.3em' });
 
     var tl = gsap.timeline({ delay: 0.15 });
-    tl.to(words, {
+    tl.to(chars, {
       opacity: 1,
       y: 0,
-      duration: 0.65,
+      duration: 0.45,
       ease: 'power3.out',
-      stagger: 0.12
+      stagger: 0.045
     });
 
     var rest = document.querySelectorAll('.hero__text, .hero .btn-group');
@@ -136,7 +111,7 @@
   /* --------------------------------------------------------------------
      Hero side images: on load, left_image/right_image rise up from below
      into their resting spot (same anchor point CSS already gives them),
-     fading in as they arrive. Runs alongside the heading's word reveal,
+     fading in as they arrive. Runs alongside the heading's char reveal,
      not blocking it — both start together.
      -------------------------------------------------------------------- */
   function animateHeroSideImages() {
@@ -158,11 +133,10 @@
 
   /* --------------------------------------------------------------------
      Footer heading ("More Munch / More Crunch"): per-character reveal,
-     scroll-triggered (it's below the fold). Character-level rather than
-     the hero's word-level split since at this heading's huge font size a
-     handful of long words reveal too slowly one at a time. Stagger is
-     slow enough (0.06s/char) that each letter visibly pops in one after
-     another rather than reading as one near-simultaneous flash.
+     scroll-triggered (it's below the fold) — same mechanic as every other
+     section title (see splitIntoChars above). Stagger is slow enough
+     (0.06s/char) that each letter visibly pops in one after another
+     rather than reading as one near-simultaneous flash.
      -------------------------------------------------------------------- */
   function animateFooterHeading() {
     if (typeof ScrollTrigger === 'undefined') return;
@@ -254,12 +228,14 @@
        data-animate="fade-up"          fades/slides the element itself in
        data-animate="fade-up-stagger"  fades/slides its direct children in,
                                         staggered (use on a card grid/row)
-       data-animate="word-reveal"      splits the heading's own text into
-                                        words and reveals them one at a
-                                        time, same mechanic as the hero/
-                                        footer headings (see splitIntoWords
-                                        above) — use on big display
-                                        headings (.stroke-heading etc.)
+       data-animate="char-reveal"      splits the heading's own text into
+                                        characters and reveals them one at
+                                        a time, same mechanic as the hero/
+                                        footer headings (see splitIntoChars
+                                        above) — use on every section title
+                                        (.stroke-heading etc.) so every
+                                        page heading animates in the same
+                                        letter-by-letter way
      -------------------------------------------------------------------- */
   function animateOnScroll() {
     if (typeof ScrollTrigger === 'undefined') return;
@@ -289,20 +265,20 @@
       });
     });
 
-    document.querySelectorAll('[data-animate="word-reveal"]').forEach(function (heading) {
-      var words = splitIntoWords(heading);
-      if (!words.length) return;
+    document.querySelectorAll('[data-animate="char-reveal"]').forEach(function (heading) {
+      var chars = splitIntoChars(heading);
+      if (!chars.length) return;
 
       var fontSize = parseFloat(getComputedStyle(heading).fontSize) || 32;
-      var offset = Math.min(40, fontSize * 0.3);
+      var offset = Math.min(24, fontSize * 0.2);
 
-      gsap.set(words, { display: 'inline-block', opacity: 0, y: offset });
-      gsap.to(words, {
+      gsap.set(chars, { display: 'inline-block', opacity: 0, y: offset });
+      gsap.to(chars, {
         opacity: 1,
         y: 0,
-        duration: 0.55,
+        duration: 0.45,
         ease: 'power3.out',
-        stagger: 0.08,
+        stagger: 0.06,
         scrollTrigger: { trigger: heading, start: 'top 85%' }
       });
     });
