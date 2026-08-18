@@ -13,6 +13,29 @@
   if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
   /* --------------------------------------------------------------------
+     Smooth scroll (Lenis), driven off gsap.ticker so its raf loop stays
+     in lockstep with every ScrollTrigger-based animation above/below —
+     without this, scroll-triggered reveals can fire a frame or two out
+     of sync with the eased scroll position. Skipped entirely (native
+     scroll) if Lenis didn't load or the visitor prefers reduced motion.
+     -------------------------------------------------------------------- */
+  function initSmoothScroll() {
+    if (typeof Lenis === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var lenis = new Lenis();
+
+    if (typeof ScrollTrigger !== 'undefined') {
+      lenis.on('scroll', ScrollTrigger.update);
+    }
+
+    gsap.ticker.add(function (time) {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* --------------------------------------------------------------------
      Splits a heading's text into one <span class="word-reveal__word">
      per word, keeping its authored <br> line breaks intact. Returns the
      word spans so the caller can animate them. Shared by the hero and
@@ -277,6 +300,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    initSmoothScroll();
     animateHeroHeading();
     animateOnScroll();
     animateChaosFooterTransition();
