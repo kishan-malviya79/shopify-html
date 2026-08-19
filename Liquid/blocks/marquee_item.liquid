@@ -1,0 +1,30 @@
+{% comment %}
+  Block: marquee_item
+  Source: sections/marquee.html (section: promo_marquee)
+
+  Settings:
+    - text (text) — default: "GLUTEN FREE"
+
+  Renders one marquee item plus its trailing sparkle divider. The parent
+  section renders the block loop 6 times back-to-back (1 real group + 5
+  aria-hidden duplicate groups) — see @keyframes marquee-scroll in
+  css/sections/marquee.css.
+{% endcomment %}
+
+<span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+<svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+
+{% schema %}
+{
+  "name": "Marquee item",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "GLUTEN FREE"
+    }
+  ],
+  "presets": [{ "name": "Marquee item" }]
+}
+{% endschema %}

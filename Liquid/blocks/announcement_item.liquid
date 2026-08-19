@@ -1,0 +1,30 @@
+{% comment %}
+  Block: announcement_item
+  Source: sections/announcement-bar.html (section: announcement_bar)
+
+  Settings:
+    - text (text) — default: "JOYFULLY BOLD"
+
+  Renders one ticker item plus its trailing sparkle divider. The parent
+  section renders the block loop 6 times back-to-back (1 real group + 5
+  aria-hidden duplicate groups) so the ticker never runs out of content
+  mid-scroll on wide viewports.
+{% endcomment %}
+
+<span class="announcement-bar__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+<svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+
+{% schema %}
+{
+  "name": "Announcement item",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "JOYFULLY BOLD"
+    }
+  ],
+  "presets": [{ "name": "Announcement item" }]
+}
+{% endschema %}

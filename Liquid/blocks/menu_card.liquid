@@ -1,0 +1,86 @@
+{% comment %}
+  Block: menu_card
+  Source: sections/header.html (section: header) — nested inside nav_link
+
+  Settings:
+    - image (image_picker) — dummy default: assets/dummy/can-guava-chilli-lime.svg
+    - tile_color (select: "pink" | "lime" | "rose") — tile fill, default "pink"
+    - badge_text (text, optional) — blank hides the badge
+    - badge_style (select: "green" | "orange") — default "green"
+    - title (text), link (url)
+    - style (select: "square" | "wide") — "wide" is the Learn menu's
+      landscape promo card (.menu-card--wide)
+
+  Also reused by the mobile menu's peek-scroll promo row (same markup,
+  layout differs in CSS only).
+{% endcomment %}
+
+{%- liquid
+  assign card_class = 'menu-card'
+  if block.settings.style == 'wide'
+    assign card_class = 'menu-card menu-card--wide'
+  endif
+
+  assign media_class = 'menu-card__media'
+  if block.settings.tile_color == 'lime'
+    assign media_class = 'menu-card__media menu-card__media--lime'
+  elsif block.settings.tile_color == 'rose'
+    assign media_class = 'menu-card__media menu-card__media--rose'
+  endif
+-%}
+
+<a href="{{ block.settings.link | default: '#' }}" class="{{ card_class }}" {{ block.shopify_attributes }}>
+  <span class="{{ media_class }}">
+    {%- if block.settings.badge_text != blank -%}
+      <span class="badge badge--{{ block.settings.badge_style }} menu-card__badge">{{ block.settings.badge_text }}</span>
+    {%- endif -%}
+    {%- if block.settings.image != blank -%}
+      {{ block.settings.image | image_url: width: 600 | image_tag: alt: '', loading: 'lazy' }}
+    {%- endif -%}
+  </span>
+  <h3 class="menu-card__title">{{ block.settings.title }}</h3>
+</a>
+
+{% schema %}
+{
+  "name": "Menu card",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "tile_color",
+      "label": "Tile color",
+      "options": [
+        { "value": "pink", "label": "Pink" },
+        { "value": "lime", "label": "Lime" },
+        { "value": "rose", "label": "Rose" }
+      ],
+      "default": "pink"
+    },
+    { "type": "text", "id": "badge_text", "label": "Badge text" },
+    {
+      "type": "select",
+      "id": "badge_style",
+      "label": "Badge style",
+      "options": [
+        { "value": "green", "label": "Green" },
+        { "value": "orange", "label": "Orange" }
+      ],
+      "default": "green"
+    },
+    { "type": "text", "id": "title", "label": "Title", "default": "Guava Chilli Lime" },
+    { "type": "url", "id": "link", "label": "Link" },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Card style",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "wide", "label": "Wide (landscape promo)" }
+      ],
+      "default": "square"
+    }
+  ],
+  "presets": [{ "name": "Menu card" }]
+}
+{% endschema %}

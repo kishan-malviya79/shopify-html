@@ -106,3 +106,13 @@ Registry of reusable blocks/components so new sections can reuse existing HTML +
 | Sunburst rays (`--color-sunburst-a` / `--color-sunburst-b`) | `combo_promo` | css/tokens.css + css/sections/combo-promo.css | Role tokens for the `repeating-conic-gradient` ray pair, defaulting to the warm `--color-brand-orange`/`--color-brand-orange-light` skin. `.theme-pink` swaps them for hot/soft pink without touching the section file. |
 
 `marquee_item` (used in `promo_marquee`) is the first true Shopify block type (repeater content) implemented.
+
+## Liquid conversion
+
+Shopify theme-block (`blocks/*.liquid`) versions of every home-page block live in
+[`Liquid/blocks/`](Liquid/blocks/) — markup plus its own `{% schema %}` per file.
+See `Liquid/blocks/README.md` for the file-to-section map and conversion notes.
+Covered: `announcement_item`, `nav_link`, `menu_card`, `marquee_item`,
+`product_card`, `world_card`, `testimonial`, `quiz_character_result`,
+`quiz_soda_result`, `quiz_intensity_option`, `quiz_character_decor`,
+`footer_column`, `reward_milestone`.

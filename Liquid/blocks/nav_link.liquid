@@ -1,0 +1,65 @@
+{% comment %}
+  Block: nav_link
+  Source: sections/header.html (section: header)
+
+  Settings:
+    - label (text) — e.g. "Products", "Learn"
+    - link (url) — used when the item has no menu
+    - menu_links (link_list, optional) — when set, the item renders as a
+      disclosure button instead of a plain link and opens a full-bleed
+      mega-menu panel: these links fill the left column, and the LAST one
+      is pushed to the bottom of the panel (e.g. "Shop All")
+
+  Nested blocks:
+    - "menu_card" (2-3 per menu) — see blocks/menu_card.liquid
+
+  Panel opens on :hover/:focus-within (pointer + keyboard) or on click,
+  where js/header.js toggles .is-open on the nav item and .has-menu-open
+  on the header (which fades in the page scrim).
+{% endcomment %}
+
+<div class="site-header__nav-item" {{ block.shopify_attributes }}>
+  {%- if block.settings.menu_links != blank -%}
+    <button type="button" class="site-header__nav-link" aria-haspopup="true" aria-expanded="false">
+      {{ block.settings.label }}
+      <svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3.5 5.25 7 8.75l3.5-3.5H3.5z"/></svg>
+    </button>
+
+    <div class="site-header__menu">
+      <div class="site-header__menu-links">
+        {%- assign menu = block.settings.menu_links -%}
+        {%- assign last_index = menu.links.size | minus: 1 -%}
+        <div class="site-header__menu-group">
+          {%- for link in menu.links -%}
+            {%- unless forloop.index0 == last_index -%}
+              <a href="{{ link.url }}" class="site-header__menu-link">{{ link.title }}</a>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+        {%- if last_index >= 0 -%}
+          {%- assign last_link = menu.links[last_index] -%}
+          <a href="{{ last_link.url }}" class="site-header__menu-link">{{ last_link.title }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="site-header__menu-cards">
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  {%- else -%}
+    <a href="{{ block.settings.link | default: '#' }}" class="site-header__nav-link">{{ block.settings.label }}</a>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Nav link",
+  "blocks": [{ "type": "menu_card" }],
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Products" },
+    { "type": "url", "id": "link", "label": "Link (used when no menu is set)" },
+    { "type": "link_list", "id": "menu_links", "label": "Mega menu links" }
+  ],
+  "presets": [{ "name": "Nav link" }]
+}
+{% endschema %}

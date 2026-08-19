@@ -1,0 +1,42 @@
+{% comment %}
+  Block: reward_milestone
+  Source: sections/cart-drawer.html (section: cart_drawer)
+
+  Settings:
+    - icon (image_picker) — dummy defaults in assets/dummy/icons/
+    - label (text) — e.g. "Get 5% Off"
+    - position (range 0-100) — percent along the progress track
+      (this build: 10 / 30 / 50 / 70 / 90)
+    - threshold (number) — cart total at which it unlocks
+    - message (text) — fills the "You are X away from ___" copy
+
+  js/cart.js reads data-threshold + data-message to compute the fill width
+  and the reward message from the real cart subtotal.
+{% endcomment %}
+
+<div class="cart-rewards__milestone"
+     style="left: {{ block.settings.position }}%;"
+     data-threshold="{{ block.settings.threshold }}"
+     data-message="{{ block.settings.message | escape }}"
+     {{ block.shopify_attributes }}>
+  <span class="cart-rewards__icon">
+    {%- if block.settings.icon != blank -%}
+      {{ block.settings.icon | image_url: width: 80 | image_tag: alt: '' }}
+    {%- endif -%}
+  </span>
+  <span class="cart-rewards__label">{{ block.settings.label }}</span>
+</div>
+
+{% schema %}
+{
+  "name": "Reward milestone",
+  "settings": [
+    { "type": "image_picker", "id": "icon", "label": "Icon" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Get 5% Off" },
+    { "type": "range", "id": "position", "label": "Position on track", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 10 },
+    { "type": "number", "id": "threshold", "label": "Cart total to unlock", "default": 299 },
+    { "type": "text", "id": "message", "label": "Reward message", "default": "getting 5% off" }
+  ],
+  "presets": [{ "name": "Reward milestone" }]
+}
+{% endschema %}

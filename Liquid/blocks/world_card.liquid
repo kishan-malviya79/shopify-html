@@ -1,0 +1,72 @@
+{% comment %}
+  Block: world_card
+  Source: sections/world-grid.html (section: world_grid)
+
+  Settings:
+    - heading (text) — line breaks allowed, e.g. "Crunch<br />World"
+    - text (richtext)
+    - image (image_picker) — dummy defaults: assets/dummy/CrunchWorld.png,
+      assets/dummy/PREBIOTICWorld.png
+    - link (url)
+    - background_style (select: "orange" | "cream") — default "orange"
+    - heading_style (select: "white" | "outline") — white heading on the
+      orange card, red-outline heading on the cream card
+
+  Renders a rounded card with the photo as a full-bleed background:
+  heading top-left, supporting text bottom-left, over the photo's
+  solid-color side.
+{% endcomment %}
+
+{%- liquid
+  assign heading_class = 'world-card__heading stroke-heading'
+  assign text_class = 'world-card__text world-card__text--red'
+  if block.settings.heading_style == 'white'
+    assign heading_class = 'world-card__heading stroke-heading stroke-heading--white'
+    assign text_class = 'world-card__text world-card__text--white'
+  endif
+-%}
+
+<a href="{{ block.settings.link | default: '#' }}" class="world-card world-card--{{ block.settings.background_style }}" {{ block.shopify_attributes }}>
+  <div class="world-card__media">
+    {%- if block.settings.image != blank -%}
+      {{ block.settings.image | image_url: width: 1200 | image_tag: alt: '', role: 'presentation', loading: 'lazy' }}
+    {%- endif -%}
+  </div>
+  <div class="world-card__content">
+    <h2 class="{{ heading_class }}">{{ block.settings.heading }}</h2>
+    <p class="{{ text_class }}">{{ block.settings.text }}</p>
+  </div>
+</a>
+
+{% schema %}
+{
+  "name": "World card",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Crunch<br />World", "info": "Use <br /> for a line break." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>5 real people. 5 roasted makhana flavours. Big Indian street-food energy in a tin.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "url", "id": "link", "label": "Link" },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Background",
+      "options": [
+        { "value": "orange", "label": "Orange" },
+        { "value": "cream", "label": "Cream" }
+      ],
+      "default": "orange"
+    },
+    {
+      "type": "select",
+      "id": "heading_style",
+      "label": "Heading style",
+      "options": [
+        { "value": "white", "label": "White fill" },
+        { "value": "outline", "label": "Red outline" }
+      ],
+      "default": "white"
+    }
+  ],
+  "presets": [{ "name": "World card" }]
+}
+{% endschema %}

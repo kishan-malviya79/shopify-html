@@ -1,0 +1,59 @@
+{% comment %}
+  Block: quiz_soda_result
+  Source: sections/flavor-quiz.html (section: flavor_quiz)
+  4 instances: Guava Chilli Lime, Nimbu Jeera, Jamun Jeera, Mixed Berry
+
+  Settings:
+    - match_key (text) — e.g. "guava"; ties the option button to its result
+    - craving_label (text) — the step-2 (sip branch) option button copy
+    - product_name (text), product_image (image_picker)
+    - quote (text), shop_link (url), cta_text (text)
+    - wide (checkbox) — renders the long option full-width
+      (.flavor-quiz__option--wide) — unused by the soda branch
+
+  One block emits BOTH the step-2 option button and its hidden result-data
+  node. The inline quiz script looks the result up with
+  section.querySelector('[data-quiz-key="..."]'), so the data node does not
+  have to live in .flavor-quiz__result-data — keeping the pair together
+  means one block owns one whole result. No content lives in JS.
+{% endcomment %}
+
+{%- liquid
+  assign option_class = 'btn btn--pill btn--quiz-option'
+  if block.settings.wide
+    assign option_class = 'btn btn--pill btn--quiz-option flavor-quiz__option--wide'
+  endif
+-%}
+
+<button type="button"
+        class="{{ option_class }}"
+        data-quiz-match="{{ block.settings.match_key }}"
+        {{ block.shopify_attributes }}>{{ block.settings.craving_label }}</button>
+
+<div hidden
+     data-quiz-key="{{ block.settings.match_key }}"
+     data-name="{{ block.settings.product_name | escape }}"
+     data-quote="{{ block.settings.quote | escape }}"
+     data-cta="{{ block.settings.cta_text | escape }}"
+     data-link="{{ block.settings.shop_link | default: '#' }}">
+  {%- if block.settings.product_image != blank -%}
+    {{ block.settings.product_image | image_url: width: 800 | image_tag: alt: block.settings.product_name, loading: 'lazy' }}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Quiz soda result",
+  "settings": [
+    { "type": "text", "id": "match_key", "label": "Match key", "default": "guava", "info": "Lowercase, no spaces. Must be unique within the section." },
+    { "type": "text", "id": "craving_label", "label": "Option label", "default": "Tropical & adventurous" },
+    { "type": "checkbox", "id": "wide", "label": "Full-width option", "default": false },
+    { "type": "text", "id": "product_name", "label": "Product name", "default": "Guava Chilli Lime" },
+    { "type": "image_picker", "id": "product_image", "label": "Product image" },
+    { "type": "text", "id": "quote", "label": "Quote", "default": "\"Bold. Tropical. Zesty kick.\"" },
+    { "type": "url", "id": "shop_link", "label": "Shop link" },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Shop Guava Chilli Lime →" }
+  ],
+  "presets": [{ "name": "Quiz soda result" }]
+}
+{% endschema %}

@@ -1,0 +1,65 @@
+{% comment %}
+  Block: quiz_character_decor
+  Source: sections/flavor-quiz.html (section: flavor_quiz)
+  3 instances — purely decorative
+
+  Settings:
+    - image (image_picker) — transparent cutout; dummy defaults
+      assets/dummy/Boy-LT.png, Girl-RT.png, Girl_BL.png
+    - position (select: "top_left" | "top_right" | "bottom_left") —
+      renders the matching .flavor-quiz__character--tl/--tr/--bl class
+    - flip (checkbox) — default false; "top_left" already ships rotated
+      180deg in CSS since that cutout hangs down from the top edge
+
+  These bleed off the section edges (clipped by the section's
+  overflow: hidden), sit above the backdrop but below the quiz card, and
+  are aria-hidden + pointer-events: none so they never block a tap on an
+  answer. The two flanking the card are dropped below 640px.
+
+  Render inside the section's <div class="flavor-quiz__characters"
+  aria-hidden="true"> wrapper.
+{% endcomment %}
+
+{%- liquid
+  case block.settings.position
+    when 'top_right'
+      assign pos_class = 'flavor-quiz__character--tr'
+    when 'bottom_left'
+      assign pos_class = 'flavor-quiz__character--bl'
+    else
+      assign pos_class = 'flavor-quiz__character--tl'
+  endcase
+
+  assign classes = 'flavor-quiz__character ' | append: pos_class
+  if block.settings.flip
+    assign classes = classes | append: ' flavor-quiz__character--flip'
+  endif
+-%}
+
+{%- if block.settings.image != blank -%}
+  {{ block.settings.image
+     | image_url: width: 900
+     | image_tag: class: classes, alt: '', role: 'presentation', loading: 'lazy' }}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Quiz character decor",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        { "value": "top_left", "label": "Top left" },
+        { "value": "top_right", "label": "Top right" },
+        { "value": "bottom_left", "label": "Bottom left" }
+      ],
+      "default": "top_left"
+    },
+    { "type": "checkbox", "id": "flip", "label": "Flip 180°", "default": false }
+  ],
+  "presets": [{ "name": "Quiz character decor" }]
+}
+{% endschema %}

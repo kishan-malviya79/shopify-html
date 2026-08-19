@@ -1,0 +1,104 @@
+{% comment %}
+  Block: product_card
+  Source: sections/product-carousel.html (section: product_carousel)
+  Also reused by: cart_drawer's recommendation rail markup.
+
+  Settings:
+    - product (product) — supplies title, price, compare_at_price and
+      featured_image automatically
+    - badge_text (text) — optional corner badge, e.g. "Best Seller";
+      blank hides the badge
+    - badge_style (select: "green" | "orange") — default "green"
+    - rating_value (range 0-5, step 0.5) — default 5; static until a
+      reviews app is wired up
+    - rating_count (number) — default 0
+    - variant_label (text) — default "20g Tasting Pouch"; shown in the
+      variant select alongside the variant price
+
+  Note: the variant select lists the product's real variants; variant_label
+  is the fallback label when the product has a single default variant.
+{% endcomment %}
+
+{%- liquid
+  assign product = block.settings.product
+  assign rating = block.settings.rating_value | default: 5
+  assign full_stars = rating | floor
+-%}
+
+<article class="product-card" {{ block.shopify_attributes }}>
+  <a href="{{ product.url | default: '#' }}" class="product-card__link">
+    <div class="product-card__media">
+      {%- if block.settings.badge_text != blank -%}
+        <span class="badge badge--{{ block.settings.badge_style }} product-card__badge">{{ block.settings.badge_text }}</span>
+      {%- endif -%}
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 800 | image_tag: alt: product.title, loading: 'lazy' }}
+      {%- endif -%}
+    </div>
+
+    <div class="rating">
+      <span class="rating__stars" aria-hidden="true">
+        {%- for i in (1..5) -%}
+          {%- if i <= full_stars -%}
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+          {%- endif -%}
+        {%- endfor -%}
+      </span>
+      <span class="rating__count">({{ block.settings.rating_count }})</span>
+    </div>
+
+    <h3 class="product-card__title">{{ product.title }}</h3>
+
+    <div class="price">
+      <span class="price__sale">{{ product.price | money }}</span>
+      {%- if product.compare_at_price > product.price -%}
+        <span class="price__compare">{{ product.compare_at_price | money }}</span>
+        {%- assign saving = product.compare_at_price | minus: product.price -%}
+        <span class="badge badge--green">Save {{ saving | money }}</span>
+      {%- endif -%}
+    </div>
+  </a>
+
+  <div class="select">
+    <select class="select__input" aria-label="Variant" name="id" data-variant-select>
+      {%- for variant in product.variants -%}
+        {%- if product.has_only_default_variant -%}
+          <option value="{{ variant.id }}">{{ block.settings.variant_label }} &mdash; {{ variant.price | money }}</option>
+        {%- else -%}
+          <option value="{{ variant.id }}"{% unless variant.available %} disabled{% endunless %}>{{ variant.title }} &mdash; {{ variant.price | money }}</option>
+        {%- endif -%}
+      {%- else -%}
+        <option>{{ block.settings.variant_label }}</option>
+      {%- endfor -%}
+    </select>
+    <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+
+  <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
+</article>
+
+{% schema %}
+{
+  "name": "Product card",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "badge_text", "label": "Badge text" },
+    {
+      "type": "select",
+      "id": "badge_style",
+      "label": "Badge style",
+      "options": [
+        { "value": "green", "label": "Green" },
+        { "value": "orange", "label": "Orange" }
+      ],
+      "default": "green"
+    },
+    { "type": "range", "id": "rating_value", "label": "Rating", "min": 0, "max": 5, "step": 0.5, "default": 5 },
+    { "type": "number", "id": "rating_count", "label": "Rating count", "default": 0 },
+    { "type": "text", "id": "variant_label", "label": "Variant label", "default": "20g Tasting Pouch" }
+  ],
+  "presets": [{ "name": "Product card" }]
+}
+{% endschema %}

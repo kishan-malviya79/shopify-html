@@ -1,0 +1,30 @@
+{% comment %}
+  Block: footer_column
+  Source: sections/footer.html (section: footer)
+
+  Settings:
+    - column_heading (text) — e.g. "Drinks"
+    - links (link_list) — the static build used a repeated
+      link_label/link_url pair per row; in Liquid that becomes one menu
+      picker so merchants edit the group in Navigation instead
+{% endcomment %}
+
+<div class="footer__column" {{ block.shopify_attributes }}>
+  <h3 class="footer__column-heading">{{ block.settings.column_heading }}</h3>
+  <ul class="footer__links">
+    {%- for link in block.settings.links.links -%}
+      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Footer column",
+  "settings": [
+    { "type": "text", "id": "column_heading", "label": "Heading", "default": "Drinks" },
+    { "type": "link_list", "id": "links", "label": "Menu" }
+  ],
+  "presets": [{ "name": "Footer column" }]
+}
+{% endschema %}

@@ -1,0 +1,50 @@
+{% comment %}
+  Block: testimonial
+  Source: sections/testimonial-carousel.html (section: testimonial_carousel)
+
+  Settings:
+    - photo (image_picker) — customer/UGC photo
+    - rating_value (range 0-5, step 0.5) — default 5
+    - title (text) — short pull-quote style headline
+    - review_text (richtext)
+    - author_name (text)
+{% endcomment %}
+
+{%- assign full_stars = block.settings.rating_value | default: 5 | floor -%}
+
+<article class="testimonial-card" {{ block.shopify_attributes }}>
+  <div class="testimonial-card__media">
+    {%- if block.settings.photo != blank -%}
+      {{ block.settings.photo | image_url: width: 900 | image_tag: alt: block.settings.author_name, loading: 'lazy' }}
+    {%- endif -%}
+  </div>
+  <div class="testimonial-card__body">
+    <div class="rating rating--lg">
+      <span class="rating__stars" aria-hidden="true">
+        {%- for i in (1..5) -%}
+          {%- if i <= full_stars -%}
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+          {%- endif -%}
+        {%- endfor -%}
+      </span>
+    </div>
+    <h3 class="testimonial-card__title">{{ block.settings.title }}</h3>
+    <div class="testimonial-card__text">{{ block.settings.review_text }}</div>
+    <hr class="testimonial-card__divider" />
+    <span class="testimonial-card__author">{{ block.settings.author_name }}</span>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Testimonial",
+  "settings": [
+    { "type": "image_picker", "id": "photo", "label": "Photo" },
+    { "type": "range", "id": "rating_value", "label": "Rating", "min": 0, "max": 5, "step": 0.5, "default": 5 },
+    { "type": "text", "id": "title", "label": "Title", "default": "Perfect way to unwind" },
+    { "type": "richtext", "id": "review_text", "label": "Review" },
+    { "type": "text", "id": "author_name", "label": "Author", "default": "Tina A" }
+  ],
+  "presets": [{ "name": "Testimonial" }]
+}
+{% endschema %}

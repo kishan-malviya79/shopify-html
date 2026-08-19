@@ -1,0 +1,38 @@
+{% comment %}
+  Block: quiz_intensity_option
+  Source: sections/flavor-quiz.html (section: flavor_quiz)
+  3 instances: mild / medium / full chaatpata
+
+  Settings:
+    - value (text) — e.g. "mild"; read by the quiz script as
+      data-quiz-intensity
+    - label (text) — button copy
+    - wide (checkbox) — renders the option full-width
+      (.flavor-quiz__option--wide), used by "Bring the full chaatpata"
+
+  Flavour-only step — does not affect the match.
+{% endcomment %}
+
+{%- liquid
+  assign option_class = 'btn btn--pill btn--quiz-option'
+  if block.settings.wide
+    assign option_class = 'btn btn--pill btn--quiz-option flavor-quiz__option--wide'
+  endif
+-%}
+
+<button type="button"
+        class="{{ option_class }}"
+        data-quiz-intensity="{{ block.settings.value }}"
+        {{ block.shopify_attributes }}>{{ block.settings.label }}</button>
+
+{% schema %}
+{
+  "name": "Quiz intensity option",
+  "settings": [
+    { "type": "text", "id": "value", "label": "Value", "default": "mild", "info": "Lowercase, no spaces." },
+    { "type": "text", "id": "label", "label": "Label", "default": "Keep it mild" },
+    { "type": "checkbox", "id": "wide", "label": "Full-width option", "default": false }
+  ],
+  "presets": [{ "name": "Quiz intensity option" }]
+}
+{% endschema %}
