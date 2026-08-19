@@ -1,0 +1,60 @@
+{% comment %}
+  Section: world_grid
+  Source: sections/world-grid.html + index.html
+  CSS: section-world-grid.css (loaded here, used by this section only)
+  Shared: .stroke-heading, .container live in components.css (theme.liquid)
+
+  Settings:
+    - COLOR: background_color (#f6efdd --color-cream-bg)
+    - STYLE: columns (range 1-3), gap (range), corner_radius (range)
+
+  Blocks:
+    - theme block "world_card" — heading, text, image (image_picker), link,
+      background_style (orange | cream), heading_style (white | outline),
+      plus per-block color/radius overrides.
+      See blocks/world_card.liquid.
+
+  Each card links to an in-page anchor by default (#munchief-family,
+  #munchief-sodas) — those ids come from product_carousel's anchor_id
+  setting.
+{% endcomment %}
+
+{{ 'section-world-grid.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .world-grid {
+    background-color: {{ section.settings.background_color }};
+    padding-block: {{ section.settings.padding_block }}px;
+  }
+  #shopify-section-{{ section.id }} .world-grid__grid {
+    gap: {{ section.settings.gap }}px;
+  }
+  @media (min-width: 900px) {
+    #shopify-section-{{ section.id }} .world-grid__grid {
+      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    }
+  }
+{%- endstyle -%}
+
+<section class="world-grid" aria-label="Explore our worlds">
+  <div class="container world-grid__grid" data-animate="fade-up-stagger">
+    {% content_for 'blocks' %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "World grid",
+  "tag": "div",
+  "blocks": [{ "type": "world_card" }],
+  "settings": [
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f6efdd" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 8, "max": 64, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_block", "label": "Vertical padding", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 64 }
+  ],
+  "presets": [{ "name": "World grid" }]
+}
+{% endschema %}

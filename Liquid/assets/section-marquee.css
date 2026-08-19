@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Section: promo_marquee
+   Infinite horizontal scrolling ticker. Anything reusable here already lives
+   in css/components.css — don't duplicate.
+   ========================================================================== */
+
+.marquee {
+  overflow: hidden;
+  background-color: var(--color-brand-red);
+  padding-block: var(--space-sm);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 25s linear infinite;
+}
+
+/* Pause on hover/focus so the text is easier to read on demand. */
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marquee__item {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-style: italic;
+  font-size: var(--fs-marquee);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  white-space: nowrap;
+  padding-inline: var(--space-md);
+}
+
+.marquee__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-white);
+}
+
+/* Track is 6 identical groups placed side by side (see marquee.html);
+   animating exactly one group-width (-100%/6) produces a seamless loop
+   with no visible reset. 2 groups isn't enough here — this item set is
+   short, so on a wide screen one copy alone doesn't reach the edge of the
+   viewport, leaving a visible gap of bare background right before the
+   loop restarts. 6 copies keeps that from happening up to very wide
+   (~4K) screens. Same fix as announcement_bar's .ticker__track override. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-16.6667%);
+  }
+}
+
+/* Respect reduced-motion preference — freeze on the first frame. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+}

@@ -8,11 +8,28 @@
     - title (text) — short pull-quote style headline
     - review_text (richtext)
     - author_name (text)
+    - COLOR (per block): card_background, title_color, text_color,
+      star_color — configurational CSS scoped to #block-{{ block.id }}, so
+      testimonial 1 and testimonial 2 can carry different styles inside the
+      same section.
+
+  Shared classes (.testimonial-card, .rating, .btn) live in components.css,
+  loaded once in layout/theme.liquid.
 {% endcomment %}
+
+{%- style -%}
+  #block-{{ block.id }} {
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.corner_radius }}px;
+  }
+  #block-{{ block.id }} .testimonial-card__title { color: {{ block.settings.title_color }}; }
+  #block-{{ block.id }} .testimonial-card__text  { color: {{ block.settings.text_color }}; }
+  #block-{{ block.id }} .rating__stars svg       { color: {{ block.settings.star_color }}; }
+{%- endstyle -%}
 
 {%- assign full_stars = block.settings.rating_value | default: 5 | floor -%}
 
-<article class="testimonial-card" {{ block.shopify_attributes }}>
+<article id="block-{{ block.id }}" class="testimonial-card" {{ block.shopify_attributes }}>
   <div class="testimonial-card__media">
     {%- if block.settings.photo != blank -%}
       {{ block.settings.photo | image_url: width: 900 | image_tag: alt: block.settings.author_name, loading: 'lazy' }}
@@ -43,7 +60,14 @@
     { "type": "range", "id": "rating_value", "label": "Rating", "min": 0, "max": 5, "step": 0.5, "default": 5 },
     { "type": "text", "id": "title", "label": "Title", "default": "Perfect way to unwind" },
     { "type": "richtext", "id": "review_text", "label": "Review" },
-    { "type": "text", "id": "author_name", "label": "Author", "default": "Tina A" }
+    { "type": "text", "id": "author_name", "label": "Author", "default": "Tina A" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
+    { "type": "color", "id": "title_color", "label": "Title", "default": "#2b2b2b" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2b2b2b" },
+    { "type": "color", "id": "star_color", "label": "Stars", "default": "#e2241a" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 24 }
   ],
   "presets": [{ "name": "Testimonial" }]
 }

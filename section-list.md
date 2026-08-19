@@ -32,3 +32,25 @@ Registry of every implemented section. Check here before starting a new page —
 | `our_promise` | [sections/our-promise.html](sections/our-promise.html) | Full-bleed photo band (20% black wash) with a giant red/white `.stroke-heading` "Our Promise" and a row of 4 `.promise-card` sticker cards over the bottom of the photo — cream fill, 2px orange border, flat 10px drop shadow, oversized emoji + title + copy. 900px tall on desktop, 2-up at tablet, peek-scroll on phones. Also rendered below `bundle_builder` on the Build Your Bundle page, which is where its comp places it. Not on index.html | `promise` |
 | `cart_drawer` | [sections/cart-drawer.html](sections/cart-drawer.html) | Slide-over cart, built from 3 Figma nodes merged into one section (rule 6): scrim + 473px rounded panel on desktop, full-screen panel below 768px (X swaps to a back chevron, line-item controls stack). Panel = header, a 5-milestone reward progress bar (`reward_milestone` blocks at 10/30/50/70/90% with a red fill showing progress), then either the filled state (line items with `.qty-stepper--outline` + `.select--outline` + price/remove column, coupon row, subtotal/shipping + "Continue to checkout") or the empty state ("Where'd all the Munchiefians go?" + Shop Now, plus a scrollable "Stock up on your favorite flavors" recommendation rail). Line items come from `cart.items` in Liquid, not blocks — here they render from the drawer's `<template data-cart-item-template>` via `js/cart.js`. **Live on every page with a header** (index.html, shop-all, product-main, product-main-pink, contact, legal, faq-page, plus this preview): the header Cart button opens it, every `data-add-to-cart` button adds that card's product and opens it, and quantity/remove/subtotal/reward-progress all recompute from a localStorage cart (the static stand-in for Shopify's Cart AJAX API). Milestone thresholds are ₹299/599/999/1499/1999 via `data-threshold` | `reward_milestone` |
 | `legal_page` | [sections/legal.html](sections/legal.html) | Standalone long-form legal/policy document page (not a homepage section, not wired into `index.html` — same call as `contact_us`/`collection_grid`): left-aligned breadcrumb ("Home > Legal Page") + centered red `.stroke-heading.stroke-heading--page` "Legal Page" title, then a 780px-measure document column of 5 policy groups (Hours & Visiting, Reservations & Booking, Cover Charges, VIP Cabanas, Private & Corporate Events) — each a Fredoka group heading + a small "N Questions" meta line + fully-expanded question/answer pairs in Inter. Deliberately not `faq_section`'s `.accordion`: this page keeps every answer open so the whole policy reads (and crawls) in one pass. `announcement_bar` + `header` render above and `footer` below, so the file previews as one full page. Q&A copy is the comp's placeholder venue-policy text (THRöW Social DC), not Munchief's own | `legal_group`, `legal_qa` |
+
+## Liquid conversion — home page
+
+The home page is fully converted under [`Liquid/`](Liquid/): `sections/*.liquid`
+(one file per section, own `{% schema %}`), `blocks/*.liquid` (theme blocks),
+`layout/theme.liquid`, `templates/index.json` (sections in on-page order), and
+`assets/` (tokens.css + components.css global, `section-*.css` per section,
+page-wise JS).
+
+Converted sections: `announcement_bar`, `header`, `hero_banner`, `promo_marquee`,
+`product_carousel` (backs all 3 home-page instances via settings), `world_grid`,
+`brand_story`, `flavor_quiz`, `testimonial_carousel`, `chaos_banner`, `footer`,
+`cart_drawer`.
+
+Conventions to follow when converting the remaining pages — see `Liquid/README.md`:
+- shared component CSS is global, section CSS is loaded by its own section only;
+- JS is imported page-wise by the section that needs it (`defer`), binds every
+  instance on the page, and re-inits on `shopify:section:load`;
+- merchant-editable values are emitted as scoped `{% style %}` — per section on
+  `#shopify-section-{{ section.id }}`, per block on `#block-{{ block.id }}` so
+  card 1 and card 2 can carry different styles in the same section.
+

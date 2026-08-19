@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Section: world_grid
+   Two-up grid of "world" cards. Heading skin reuses .stroke-heading from
+   css/components.css — don't duplicate that here.
+   ========================================================================== */
+
+.world-grid {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.world-grid__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+.world-card {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  min-height: 420px;
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  isolation: isolate;
+}
+
+/* Solid-color fallback shown while the photo loads (and if the image
+   setting is ever left empty) — matches the photo's own background tone. */
+.world-card--orange {
+  background-color: var(--color-brand-orange);
+}
+
+.world-card--cream {
+  background: linear-gradient(135deg, #fff6e5 0%, var(--color-brand-orange-light) 100%);
+}
+
+.world-card__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.world-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* CrunchWorld.png is a wide product-lineup shot with the products clustered
+   toward the right — bias the crop right so cover-cropping doesn't cut them
+   off (the plain-orange left side can afford to lose width instead). */
+.world-card--orange .world-card__media img {
+  object-position: 75% center;
+}
+
+.world-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-lg);
+}
+
+.world-card__heading {
+  margin: 0;
+  max-width: 60%;
+  font-size: clamp(32px, 5.5vw, 56px);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
+}
+
+.world-card__text {
+  margin: 0;
+  max-width: 260px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 13px;
+  line-height: var(--lh-normal);
+  text-transform: uppercase;
+}
+
+.world-card__text--white {
+  color: var(--color-white);
+}
+
+.world-card__text--red {
+  color: var(--color-brand-red);
+}
+
+/* Responsive ---------------------------------------------------------------
+   Two columns from tablet up (per the breakpoint reference in tokens.css). */
+@media (min-width: 641px) {
+  .world-grid__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .world-card {
+    min-height: 360px;
+  }
+
+  .world-card__heading {
+    max-width: 70%;
+  }
+}

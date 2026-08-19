@@ -1,0 +1,101 @@
+{% comment %}
+  Section: chaos_banner
+  Source: sections/chaos-banner.html + index.html
+  CSS: section-chaos-banner.css (loaded here, used by this section only)
+  Shared: .stroke-heading, .btn-group, .btn--pill, .btn--icon-circle live
+  in components.css (loaded once in theme.liquid)
+
+  Settings:
+    - IMAGES: background_image (image_picker) — callout bubbles + product
+      lineup are baked into the photo, with a blank zone reserved up top
+      for the heading/text/CTA; the section locks to the photo's own aspect
+      ratio so it never crops
+    - CONTENT: heading (text), text (richtext), button_label, button_link
+    - COLOR: heading_color, text_color, background_color (shows behind the
+      photo while it loads / on very wide viewports)
+    - STYLE: content_align (left | center), content_width (range)
+
+  Blocks: none — single banner instance, no repeater content.
+{% endcomment %}
+
+{{ 'section-chaos-banner.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .chaos-banner {
+    background-color: {{ section.settings.background_color }};
+  }
+  #shopify-section-{{ section.id }} .chaos-banner__heading { color: {{ section.settings.heading_color }}; }
+  #shopify-section-{{ section.id }} .chaos-banner__text { color: {{ section.settings.text_color }}; }
+  #shopify-section-{{ section.id }} .chaos-banner__content {
+    max-width: {{ section.settings.content_width }}px;
+    {% if section.settings.content_align == 'center' %}
+      margin-inline: auto;
+      text-align: center;
+    {% endif %}
+  }
+  {% if section.settings.content_align == 'center' %}
+    #shopify-section-{{ section.id }} .chaos-banner__content .btn-group { justify-content: center; }
+  {% endif %}
+{%- endstyle -%}
+
+<section class="chaos-banner" aria-label="{{ section.settings.heading | escape }}">
+
+  <div class="chaos-banner__media">
+    {%- if section.settings.background_image != blank -%}
+      {{ section.settings.background_image | image_url: width: 2400 | image_tag: alt: '', role: 'presentation', loading: 'lazy' }}
+    {%- endif -%}
+
+    <div class="chaos-banner__content">
+      <h2 class="chaos-banner__heading stroke-heading" data-animate="char-reveal">{{ section.settings.heading }}</h2>
+
+      <div class="chaos-banner__text">{{ section.settings.text }}</div>
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="btn-group">
+          <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn--pill btn--outline">{{ section.settings.button_label }}</a>
+
+          <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn--icon-circle btn--outline" aria-label="{{ section.settings.button_label | escape }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Chaos banner",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ready to cause<br />some chaos?", "info": "Use <br /> for a line break." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Ten flavours. Five personalities. One mystery still brewing. Come find out which one you are.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f6efdd" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#f6efdd" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#f6efdd" },
+    { "type": "header", "content": "Style" },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    { "type": "range", "id": "content_width", "label": "Content width", "min": 320, "max": 900, "step": 20, "unit": "px", "default": 620 }
+  ],
+  "presets": [{ "name": "Chaos banner" }]
+}
+{% endschema %}

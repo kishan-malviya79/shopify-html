@@ -1,0 +1,196 @@
+{
+  "sections": {
+    "hero_banner": {
+      "type": "hero_banner",
+      "settings": {
+        "background_type": "image",
+        "heading": "This is not a snack.<br />This is a scene.",
+        "text": "<p>Roasted makhana with big Indian flavour and even bigger personality. Meet the Munchief family and find out which one you are.</p>",
+        "button_label": "Shop Now",
+        "heading_style": "outline",
+        "content_align": "left",
+        "min_height": 720,
+        "overlay_opacity": 100
+      }
+    },
+    "promo_marquee": {
+      "type": "promo_marquee",
+      "blocks": {
+        "item-1": { "type": "marquee_item", "settings": { "text": "GLUTEN FREE" } },
+        "item-2": { "type": "marquee_item", "settings": { "text": "LOW CALORIE" } },
+        "item-3": { "type": "marquee_item", "settings": { "text": "CRUNCH CRUNCH CRUNCH" } },
+        "item-4": { "type": "marquee_item", "settings": { "text": "NO ADDED SUGARS" } },
+        "item-5": { "type": "marquee_item", "settings": { "text": "MUNCH MUNCH MUNCH" } }
+      },
+      "block_order": ["item-1", "item-2", "item-3", "item-4", "item-5"],
+      "settings": {
+        "background_color": "#e2241a",
+        "text_color": "#ffffff",
+        "border_color": "#2f6fed",
+        "show_borders": false,
+        "font_size": 24,
+        "speed_seconds": 30,
+        "direction": "left"
+      }
+    },
+    "product_carousel_family": {
+      "type": "product_carousel",
+      "blocks": {
+        "card-1": { "type": "product_card", "settings": { "badge_text": "5000+ Bought This", "badge_style": "green", "rating_value": 5, "rating_count": 53, "variant_label": "20g Tasting Pouch" } },
+        "card-2": { "type": "product_card", "settings": { "badge_text": "Best Seller", "badge_style": "orange", "rating_value": 5, "rating_count": 41, "variant_label": "20g Tasting Pouch" } },
+        "card-3": { "type": "product_card", "settings": { "rating_value": 5, "rating_count": 28, "variant_label": "20g Tasting Pouch" } }
+      },
+      "block_order": ["card-1", "card-2", "card-3"],
+      "settings": {
+        "heading": "Meet the Munchief Family",
+        "anchor_id": "munchief-family",
+        "nav_style": "arrows",
+        "heading_font": "display",
+        "cards_per_row": 3,
+        "show_borders": true
+      }
+    },
+    "world_grid": {
+      "type": "world_grid",
+      "blocks": {
+        "card-crunch": {
+          "type": "world_card",
+          "settings": {
+            "heading": "Crunch<br />World",
+            "text": "<p>5 real people. 5 roasted makhana flavours. Big Indian street-food energy in a tin.</p>",
+            "link": "#munchief-family",
+            "background_style": "orange",
+            "heading_style": "white"
+          }
+        },
+        "card-prebiotic": {
+          "type": "world_card",
+          "settings": {
+            "heading": "Prebiotic<br />World",
+            "text": "<p>Prebiotic sodas built for chaatpata cravings. One flavour is still a secret.</p>",
+            "link": "#munchief-sodas",
+            "background_style": "cream",
+            "heading_style": "outline"
+          }
+        }
+      },
+      "block_order": ["card-crunch", "card-prebiotic"],
+      "settings": { "background_color": "#f6efdd", "columns": 2, "gap": 24, "padding_block": 64 }
+    },
+    "product_carousel_sodas": {
+      "type": "product_carousel",
+      "blocks": {
+        "card-1": { "type": "product_card", "settings": { "badge_text": "Best Seller", "badge_style": "orange", "rating_value": 5, "rating_count": 36, "variant_label": "250ml Can" } },
+        "card-2": { "type": "product_card", "settings": { "rating_value": 5, "rating_count": 22, "variant_label": "250ml Can" } },
+        "card-3": { "type": "product_card", "settings": { "rating_value": 5, "rating_count": 19, "variant_label": "250ml Can" } }
+      },
+      "block_order": ["card-1", "card-2", "card-3"],
+      "settings": {
+        "heading": "Munchief Sodas",
+        "anchor_id": "munchief-sodas",
+        "nav_style": "arrows",
+        "heading_font": "display",
+        "cards_per_row": 3
+      }
+    },
+    "brand_story": {
+      "type": "brand_story",
+      "settings": {
+        "anchor_id": "our-story",
+        "heading": "Crunch it.<br />Sip it.<br />Repeat.",
+        "subheading": "5 Characters. 5 Flavours.<br />Zero Boring Snacks.",
+        "text": "<p>Munchief started with a simple idea: snacking should feel like a personality, not a nutrition label. Every flavour is built around a real person's mood, their cravings, their chaos. Roasted, not fried. Loud, not quiet.</p>",
+        "cta_text": "About Munchiefam",
+        "layout": "image_right"
+      }
+    },
+    "product_carousel_combo": {
+      "type": "product_carousel",
+      "blocks": {
+        "card-1": { "type": "product_card", "settings": { "badge_text": "5000+ Bought This", "badge_style": "green", "rating_value": 5, "rating_count": 53, "variant_label": "Combo Pack" } },
+        "card-2": { "type": "product_card", "settings": { "rating_value": 5, "rating_count": 31, "variant_label": "Combo Pack" } },
+        "card-3": { "type": "product_card", "settings": { "rating_value": 5, "rating_count": 24, "variant_label": "Combo Pack" } }
+      },
+      "block_order": ["card-1", "card-2", "card-3"],
+      "settings": {
+        "heading": "Combo. Don't Choose One Mood.",
+        "anchor_id": "combo-bundles",
+        "nav_style": "cta",
+        "cta_text": "Build Your Bundle",
+        "heading_font": "stroke",
+        "cards_per_row": 3
+      }
+    },
+    "flavor_quiz": {
+      "type": "flavor_quiz",
+      "blocks": {
+        "decor-1": { "type": "quiz_character_decor", "static": true, "settings": { "position": "top_left" } },
+        "decor-2": { "type": "quiz_character_decor", "static": true, "settings": { "position": "top_right" } },
+        "decor-3": { "type": "quiz_character_decor", "static": true, "settings": { "position": "bottom_left" } },
+        "crunch-1": { "type": "quiz_character_result", "static": true, "settings": { "match_key": "mimi", "mood_label": "Loud & hungry", "product_name": "Mimi's Chutney Pop", "quote": "\"Crunch Max. Mumbai mood on.\"", "cta_text": "Shop Mimi's Chutney Pop →" } },
+        "crunch-2": { "type": "quiz_character_result", "static": true, "settings": { "match_key": "tantan", "mood_label": "Calm & steady", "product_name": "Tantan's Salt Pop", "quote": "\"Your gut-friendly bestie in a crunch.\"", "cta_text": "Shop Tantan's Salt Pop →" } },
+        "crunch-3": { "type": "quiz_character_result", "static": true, "settings": { "match_key": "chiku", "mood_label": "Wide awake at midnight", "product_name": "Chiku's Noodle Blast", "quote": "\"Midnight called. Chiku answered.\"", "cta_text": "Shop Chiku's Noodle Blast →" } },
+        "crunch-4": { "type": "quiz_character_result", "static": true, "settings": { "match_key": "kunnu", "mood_label": "Like you've earned a win", "product_name": "Kunnu's Pickle Punch", "quote": "\"Tangy, punchy, and fully justified.\"", "cta_text": "Shop Kunnu's Pickle Punch →" } },
+        "crunch-5": { "type": "quiz_character_result", "static": true, "settings": { "match_key": "sunny", "mood_label": "Ready to cause some chaos with friends", "wide": true, "product_name": "Sunny's Pop'n'Pani", "quote": "\"Perfectly chaatpata. Fully Sunny.\"", "cta_text": "Shop Sunny's Pop'n'Pani →" } },
+        "sip-1": { "type": "quiz_soda_result", "static": true, "settings": { "match_key": "guava", "craving_label": "Tropical & adventurous", "product_name": "Guava Chilli Lime", "quote": "\"Bold. Tropical. Zesty kick.\"", "cta_text": "Shop Guava Chilli Lime →" } },
+        "sip-2": { "type": "quiz_soda_result", "static": true, "settings": { "match_key": "nimbu", "craving_label": "Classic & familiar", "product_name": "Nimbu Jeera", "quote": "\"Classic desi refresher, zesty and familiar.\"", "cta_text": "Shop Nimbu Jeera →" } },
+        "sip-3": { "type": "quiz_soda_result", "static": true, "settings": { "match_key": "jamun", "craving_label": "Nostalgic & rooted", "product_name": "Jamun Jeera", "quote": "\"Nostalgic Indian summer, tangy and rooted.\"", "cta_text": "Shop Jamun Jeera →" } },
+        "sip-4": { "type": "quiz_soda_result", "static": true, "settings": { "match_key": "berry", "craving_label": "Bright & social", "product_name": "Mixed Berry", "quote": "\"Berry bright. Fizzy light.\"", "cta_text": "Shop Mixed Berry →" } },
+        "intensity-1": { "type": "quiz_intensity_option", "static": true, "settings": { "value": "mild", "label": "Keep it mild" } },
+        "intensity-2": { "type": "quiz_intensity_option", "static": true, "settings": { "value": "medium", "label": "Medium heat, I can handle it" } },
+        "intensity-3": { "type": "quiz_intensity_option", "static": true, "settings": { "value": "full", "label": "Bring the full chaatpata", "wide": true } }
+      },
+      "settings": {
+        "heading": "Which One Are You<br />Brave Enough To Try?",
+        "text": "<p>Answer honestly. We'll match you to your Munchief character or soda.</p>",
+        "question_step1": "Right now, you're craving...",
+        "world_crunch_label": "A crunch — something to munch",
+        "world_sip_label": "A sip — something to sip",
+        "question_step2_crunch": "Right now, you're feeling...",
+        "question_step2_sip": "Your soda mood is...",
+        "question_step3": "Your flavour intensity comfort zone is...",
+        "show_decor": true
+      }
+    },
+    "testimonial_carousel": {
+      "type": "testimonial_carousel",
+      "blocks": {
+        "review-1": { "type": "testimonial", "settings": { "title": "Perfect way to unwind", "review_text": "<p>I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>", "author_name": "Tina A", "rating_value": 5 } },
+        "review-2": { "type": "testimonial", "settings": { "title": "New favorite snack", "review_text": "<p>Roasted, not fried, and the flavour is unreal. It disappears way too fast.</p>", "author_name": "Rahul M", "rating_value": 5 } },
+        "review-3": { "type": "testimonial", "settings": { "title": "Delicious and light", "review_text": "<p>Tastes like street food but somehow doesn't feel heavy. The combo pack is the move.</p>", "author_name": "Priya S", "rating_value": 5 } },
+        "review-4": { "type": "testimonial", "settings": { "title": "Fizzy and fun", "review_text": "<p>The prebiotic sodas are genuinely refreshing — Nimbu Jeera is my daily.</p>", "author_name": "Aditya K", "rating_value": 5 } },
+        "review-5": { "type": "testimonial", "settings": { "title": "Great for sharing", "review_text": "<p>Brought these to a party and everyone asked where to buy them.</p>", "author_name": "Meera R", "rating_value": 5 } }
+      },
+      "block_order": ["review-1", "review-2", "review-3", "review-4", "review-5"],
+      "settings": {
+        "heading": "Don't take our<br />word for it",
+        "anchor_id": "reviews",
+        "enable_arrows": true,
+        "cards_per_row": 3,
+        "gap": 32
+      }
+    },
+    "chaos_banner": {
+      "type": "chaos_banner",
+      "settings": {
+        "heading": "Ready to cause<br />some chaos?",
+        "text": "<p>Ten flavours. Five personalities. One mystery still brewing. Come find out which one you are.</p>",
+        "button_label": "Shop Now",
+        "content_align": "left",
+        "content_width": 620
+      }
+    }
+  },
+  "order": [
+    "hero_banner",
+    "promo_marquee",
+    "product_carousel_family",
+    "world_grid",
+    "product_carousel_sodas",
+    "brand_story",
+    "product_carousel_combo",
+    "flavor_quiz",
+    "testimonial_carousel",
+    "chaos_banner"
+  ]
+}

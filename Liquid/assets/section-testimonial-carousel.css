@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Section: testimonial_carousel
+   Reusable pieces (testimonial-card, rating, button skins) already live in
+   css/components.css — this file only holds section-specific layout: the
+   centered heading/nav stack and the card grid/scroll track.
+   ========================================================================== */
+
+.testimonial-carousel {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.testimonial-carousel__heading {
+  text-align: center;
+  font-size: var(--fs-testimonial-heading);
+  line-height: var(--lh-testimonial-heading);
+  margin: 0 auto var(--space-lg);
+  max-width: 640px;
+}
+
+/* Desktop locks to the same fixed size as chaos_banner's heading instead
+   of continuing to scale with viewport, same pattern as .hero__heading. */
+@media (min-width: 1025px) {
+  .testimonial-carousel__heading {
+    font-size: var(--fs-display-heading-desktop);
+  }
+}
+
+.testimonial-carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+/* A real horizontally-scrolling carousel at every breakpoint (not a grid
+   that just wraps extra cards to new rows) — the prev/next buttons
+   (.testimonial-carousel__nav, scripted at the bottom of the section)
+   scroll this by one card width. proximity rather than mandatory snap:
+   a mandatory snap can cancel the arrows' smooth programmatic scroll
+   mid-animation and spring back to the card it started on (same fix
+   character_carousel already uses). */
+.testimonial-carousel__track {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--container-padding);
+  scrollbar-width: none;
+}
+
+.testimonial-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonial-carousel__track .testimonial-card {
+  flex: 0 0 calc((100% - 2 * var(--space-lg)) / 3);
+  scroll-snap-align: start;
+}
+
+/* Tablet: 2 cards in view, rest scroll in */
+@media (max-width: 1024px) {
+  .testimonial-carousel__track .testimonial-card {
+    flex-basis: calc((100% - var(--space-lg)) / 2);
+  }
+}
+
+/* Mobile: one card per view */
+@media (max-width: 640px) {
+  .testimonial-carousel__track {
+    gap: var(--space-md);
+    margin-inline: calc(var(--container-padding) * -1);
+    padding-inline: var(--container-padding);
+    padding-bottom: var(--space-xs);
+  }
+
+  .testimonial-carousel__track .testimonial-card {
+    flex-basis: 82%;
+  }
+}

@@ -15,7 +15,19 @@
   Renders a rounded card with the photo as a full-bleed background:
   heading top-left, supporting text bottom-left, over the photo's
   solid-color side.
+
+  Configurational CSS: background_color / text_color / corner_radius are
+  scoped to #block-{{ block.id }}, so card 1 and card 2 can differ beyond
+  the two preset background_style values. Shared classes (.world-card,
+  .stroke-heading) live in components.css + section-world-grid.css.
 {% endcomment %}
+
+{%- style -%}
+  #block-{{ block.id }} {
+    {% if block.settings.background_color != blank %}background-color: {{ block.settings.background_color }};{% endif %}
+    border-radius: {{ block.settings.corner_radius }}px;
+  }
+{%- endstyle -%}
 
 {%- liquid
   assign heading_class = 'world-card__heading stroke-heading'
@@ -26,7 +38,7 @@
   endif
 -%}
 
-<a href="{{ block.settings.link | default: '#' }}" class="world-card world-card--{{ block.settings.background_style }}" {{ block.shopify_attributes }}>
+<a id="block-{{ block.id }}" href="{{ block.settings.link | default: '#' }}" class="world-card world-card--{{ block.settings.background_style }}" {{ block.shopify_attributes }}>
   <div class="world-card__media">
     {%- if block.settings.image != blank -%}
       {{ block.settings.image | image_url: width: 1200 | image_tag: alt: '', role: 'presentation', loading: 'lazy' }}
@@ -65,7 +77,10 @@
         { "value": "outline", "label": "Red outline" }
       ],
       "default": "white"
-    }
+    },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Card background", "info": "Overrides the background style preset." },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 32 }
   ],
   "presets": [{ "name": "World card" }]
 }

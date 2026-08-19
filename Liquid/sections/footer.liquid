@@ -1,0 +1,131 @@
+{% comment %}
+  Section: footer
+  Source: sections/footer.html + index.html
+  CSS: section-footer.css (loaded here, this section only)
+  Shared: .newsletter-form, .container live in components.css (loaded once
+  in theme.liquid)
+
+  Settings:
+    - IMAGES: logo_image (image_picker), logo_width (range),
+      bubble_image_left (image_picker), bubble_image_right (image_picker)
+      — the scalloped white cloud edge is baked into the bubble images, so
+      .footer__bubble adds no border/radius of its own
+    - CONTENT: heading (text, <br /> allowed), newsletter_placeholder,
+      newsletter_button_label, show_newsletter (checkbox), copyright_text,
+      legal_text
+    - COLOR: background_color, heading_color, text_color, link_color,
+      divider_color, newsletter_button_color
+    - STYLE: columns (range), padding_block (range), heading_size (range)
+
+  Blocks:
+    - theme block "footer_column" — column_heading (text) + links
+      (link_list). See blocks/footer_column.liquid.
+
+  The newsletter form posts to Shopify's customer sign-up endpoint, not a
+  static action="#".
+{% endcomment %}
+
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .footer {
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    padding-block: {{ section.settings.padding_block }}px;
+  }
+  #shopify-section-{{ section.id }} .footer__logo { width: {{ section.settings.logo_width }}px; }
+  #shopify-section-{{ section.id }} .footer__heading {
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size }}px;
+  }
+  #shopify-section-{{ section.id }} .footer__links a { color: {{ section.settings.link_color }}; }
+  #shopify-section-{{ section.id }} .footer__divider { border-color: {{ section.settings.divider_color }}; }
+  #shopify-section-{{ section.id }} .newsletter-form__submit { background-color: {{ section.settings.newsletter_button_color }}; }
+  @media (min-width: 900px) {
+    #shopify-section-{{ section.id }} .footer__columns {
+      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    }
+  }
+{%- endstyle -%}
+
+<footer class="footer" aria-label="Site footer">
+
+  {%- if section.settings.logo_image != blank -%}
+    {{ section.settings.logo_image | image_url: width: 600 | image_tag: class: 'footer__logo', alt: shop.name, loading: 'lazy' }}
+  {%- endif -%}
+
+  <div class="footer__hero" data-animate="fade-up">
+
+    {%- if section.settings.bubble_image_left != blank -%}
+      <div class="footer__bubble footer__bubble--left">
+        {{ section.settings.bubble_image_left | image_url: width: 800 | image_tag: alt: '', role: 'presentation', loading: 'lazy' }}
+      </div>
+    {%- endif -%}
+
+    <h2 class="footer__heading">{{ section.settings.heading }}</h2>
+
+    {%- if section.settings.bubble_image_right != blank -%}
+      <div class="footer__bubble footer__bubble--right">
+        {{ section.settings.bubble_image_right | image_url: width: 800 | image_tag: alt: '', role: 'presentation', loading: 'lazy' }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_newsletter -%}
+      {%- form 'customer', class: 'footer__newsletter newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter" />
+        <input class="newsletter-form__input"
+               type="email"
+               name="contact[email]"
+               placeholder="{{ section.settings.newsletter_placeholder | escape }}"
+               aria-label="Email address"
+               required />
+        <button type="submit" class="newsletter-form__submit">{{ section.settings.newsletter_button_label }}</button>
+      {%- endform -%}
+    {%- endif -%}
+
+  </div>
+
+  <div class="footer__columns" data-animate="fade-up-stagger">
+    {% content_for 'blocks' %}
+  </div>
+
+  <hr class="footer__divider" />
+
+  <p class="footer__copyright">{{ section.settings.copyright_text }}</p>
+
+  <p class="footer__legal">{{ section.settings.legal_text }}</p>
+
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "div",
+  "blocks": [{ "type": "footer_column" }],
+  "settings": [
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 400, "step": 4, "unit": "px", "default": 180 },
+    { "type": "image_picker", "id": "bubble_image_left", "label": "Left bubble" },
+    { "type": "image_picker", "id": "bubble_image_right", "label": "Right bubble" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "More Munch<br />More Crunch", "info": "Use <br /> for a line break." },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter form", "default": true },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Newsletter placeholder", "default": "Enter your email..." },
+    { "type": "text", "id": "newsletter_button_label", "label": "Newsletter button", "default": "Notify Me" },
+    { "type": "text", "id": "copyright_text", "label": "Copyright", "default": "©2026 Munchief. All rights reserved." },
+    { "type": "text", "id": "legal_text", "label": "Legal line", "default": "Munchief · Magical Foods & Beverages LLP" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#2f6fed" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
+    { "type": "color", "id": "link_color", "label": "Links", "default": "#ffffff" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "rgba(255,255,255,0.4)" },
+    { "type": "color", "id": "newsletter_button_color", "label": "Newsletter button", "default": "#e2241a" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 6, "step": 1, "default": 5 },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 96, "step": 2, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_block", "label": "Vertical padding", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 64 }
+  ]
+}
+{% endschema %}

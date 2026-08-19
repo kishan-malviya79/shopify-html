@@ -1,0 +1,90 @@
+{% comment %}
+  Section: testimonial_carousel
+  Source: sections/testimonial-carousel.html + index.html
+  CSS: section-testimonial-carousel.css (loaded here, this section only)
+  JS:  testimonial-carousel.js — imported page-wise (defer); binds every
+       instance on the page
+  Shared: .stroke-heading, .rating, .btn--icon-circle, .testimonial-card
+  live in components.css (loaded once in theme.liquid)
+
+  Settings:
+    - CONTENT: heading (text), anchor_id (text — e.g. "reviews")
+    - STYLE: enable_arrows (checkbox), cards_per_row (range),
+      gap (range), padding_block (range)
+    - COLOR: background_color, heading_color
+
+  Blocks:
+    - theme block "testimonial" — photo (image_picker), rating_value,
+      title, review_text, author_name + per-block color/radius overrides.
+      See blocks/testimonial.liquid.
+{% endcomment %}
+
+{{ 'section-testimonial-carousel.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'testimonial-carousel.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .testimonial-carousel {
+    background-color: {{ section.settings.background_color }};
+    padding-block: {{ section.settings.padding_block }}px;
+  }
+  #shopify-section-{{ section.id }} .testimonial-carousel__heading {
+    color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }} .testimonial-carousel__track {
+    gap: {{ section.settings.gap }}px;
+  }
+  @media (min-width: 900px) {
+    #shopify-section-{{ section.id }} .testimonial-carousel__track {
+      grid-auto-columns: calc((100% - ({{ section.settings.gap }}px * {{ section.settings.cards_per_row | minus: 1 }})) / {{ section.settings.cards_per_row }});
+    }
+  }
+{%- endstyle -%}
+
+<section id="{{ section.settings.anchor_id | default: section.id }}" class="testimonial-carousel" aria-label="Customer testimonials">
+  <div class="container">
+
+    <h2 class="testimonial-carousel__heading stroke-heading" data-animate="char-reveal">{{ section.settings.heading }}</h2>
+
+    {%- if section.settings.enable_arrows -%}
+      <div class="testimonial-carousel__nav">
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 6 9 12 15 18"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 6 15 12 9 18"></polyline>
+          </svg>
+        </button>
+      </div>
+    {%- endif -%}
+
+    <div class="testimonial-carousel__track" data-carousel-track data-animate="fade-up-stagger">
+      {% content_for 'blocks' %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonial carousel",
+  "tag": "div",
+  "blocks": [{ "type": "testimonial" }],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Don't take our<br />word for it", "info": "Use <br /> for a line break." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "info": "e.g. reviews" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f6efdd" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#e2241a" },
+    { "type": "header", "content": "Style" },
+    { "type": "checkbox", "id": "enable_arrows", "label": "Show prev/next arrows", "default": true },
+    { "type": "range", "id": "cards_per_row", "label": "Cards per row (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 8, "max": 64, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_block", "label": "Vertical padding", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 64 }
+  ],
+  "presets": [{ "name": "Testimonial carousel" }]
+}
+{% endschema %}

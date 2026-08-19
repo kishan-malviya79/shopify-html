@@ -1,0 +1,65 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement_bar": {
+      "type": "announcement_bar",
+      "blocks": {
+        "item-1": { "type": "announcement_item", "settings": { "text": "JOYFULLY BOLD" } },
+        "item-2": { "type": "announcement_item", "settings": { "text": "EFFORTLESSLY STYLISH" } },
+        "item-3": { "type": "announcement_item", "settings": { "text": "ALWAYS DELICIOUS" } },
+        "item-4": { "type": "announcement_item", "settings": { "text": "JOYFULLY SHARED" } }
+      },
+      "block_order": ["item-1", "item-2", "item-3", "item-4"],
+      "settings": {
+        "background_color": "#f0429c",
+        "text_color": "#9a1902",
+        "font_size": 14,
+        "speed_seconds": 25,
+        "direction": "left"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "nav-products": {
+          "type": "nav_link",
+          "settings": { "label": "Products" },
+          "blocks": {
+            "card-1": { "type": "menu_card", "settings": { "title": "Guava Chilli Lime", "tile_color": "pink", "badge_text": "5000+ Bought This", "badge_style": "green", "style": "square" } },
+            "card-2": { "type": "menu_card", "settings": { "title": "Nimbu Jeera", "tile_color": "lime", "badge_text": "Best Seller", "badge_style": "orange", "style": "square" } },
+            "card-3": { "type": "menu_card", "settings": { "title": "Mixed Berry", "tile_color": "rose", "style": "square" } }
+          },
+          "block_order": ["card-1", "card-2", "card-3"]
+        },
+        "nav-learn": {
+          "type": "nav_link",
+          "settings": { "label": "Learn" },
+          "blocks": {
+            "card-1": { "type": "menu_card", "settings": { "title": "Upto 25% Off With Bundle", "tile_color": "pink", "badge_text": "Bestseller", "badge_style": "green", "style": "wide" } },
+            "card-2": { "type": "menu_card", "settings": { "title": "Stock Up Summer Sale", "tile_color": "rose", "style": "wide" } }
+          },
+          "block_order": ["card-1", "card-2"]
+        },
+        "mobile-promo-1": { "type": "menu_card", "static": true, "settings": { "title": "Upto 25% Off With Bundle", "tile_color": "pink", "badge_text": "Bestseller", "badge_style": "green", "style": "wide" } },
+        "mobile-promo-2": { "type": "menu_card", "static": true, "settings": { "title": "Stock Up Summer Sale", "tile_color": "rose", "style": "wide" } }
+      },
+      "block_order": ["nav-products", "nav-learn"],
+      "settings": {
+        "bundle_cta_text": "Build Your Bundle",
+        "show_bundle_badge": true,
+        "bundle_badge_text": "Bestseller",
+        "mobile_cta_text": "Shop All",
+        "background_color": "#f6efdd",
+        "text_color": "#2b2b2b",
+        "ribbon_color": "#3aa757",
+        "cart_count_color": "#e2241a",
+        "logo_width": 160,
+        "nav_gap": 24,
+        "sticky": false,
+        "border_bottom": true
+      }
+    }
+  },
+  "order": ["announcement_bar", "header"]
+}

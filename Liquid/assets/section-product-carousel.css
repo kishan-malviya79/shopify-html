@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Section: product_carousel
+   Reusable pieces (badge, price, rating, select, product-card, button skins)
+   already live in css/components.css — this file only holds section-specific
+   layout: heading row, nav arrows, and the card grid/scroll track.
+   ========================================================================== */
+
+.product-carousel {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+/* flex-wrap: wrap matters most for the nav_style = "cta" instance ("Combo.
+   Don't Choose One Mood." + a "Build Your Bundle" pill button): on a narrow
+   row, a non-wrapping flex container falls back to shrinking the heading
+   via its default min-width: auto — normally bounded by its longest
+   unbreakable word, but the word-reveal char spans (js/animations.js, each
+   letter its own inline-block) let that min-content shrink to a single
+   glyph, squeezing the heading to a sliver and wrapping it one character
+   per line. Wrapping the row into a heading-then-nav column sidesteps the
+   squeeze entirely — harmless for the default arrows nav_style too, since
+   wrap only activates when a line's content doesn't already fit. */
+.product-carousel__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  row-gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.product-carousel__heading {
+  font-family: var(--font-heading-bold);
+  font-weight: 400; /* Anton/Archivo Black are already a single black weight */
+  font-size: var(--fs-section-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin: 0;
+}
+
+/* Layout-only variant for the section's big display-style titles ("Meet
+   the Munchief Family/Sodas", "Combo") — compose with
+   .stroke-heading.stroke-heading--black (css/components.css) for the
+   Mouse Memoirs black-fill/white-stroke skin instead of this section's
+   default (smaller, Anton) .product-carousel__heading. */
+.product-carousel__heading--display {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: var(--lh-tight);
+}
+
+/* Desktop locks to a fixed size instead of continuing to scale with
+   viewport, same pattern as .hero__heading. */
+@media (min-width: 1025px) {
+  .product-carousel__heading--display {
+    font-size: var(--fs-display-heading-desktop);
+  }
+}
+
+.product-carousel__nav {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.product-carousel__track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* Tablet: 2 cards, third scrolls into view */
+@media (max-width: 1024px) {
+  .product-carousel__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: horizontal scroll-snap carousel, one card per view */
+@media (max-width: 640px) {
+  .product-carousel__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-md);
+    margin-inline: calc(var(--container-padding) * -1);
+    padding-inline: var(--container-padding);
+    padding-bottom: var(--space-xs);
+  }
+
+  .product-carousel__track .product-card {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+}

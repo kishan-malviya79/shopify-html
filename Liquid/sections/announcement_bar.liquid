@@ -1,0 +1,97 @@
+{% comment %}
+  Section: announcement_bar
+  Source: sections/announcement-bar.html + index.html
+  CSS: css/sections/announcement-bar.css (+ .ticker in css/components.css)
+
+  Settings:
+    - COLOR: background_color (#f0429c --color-brand-pink),
+      text_color (#9a1902 --color-rust)
+    - STYLE: speed_seconds (range 10-60, default 25 — one full scroll loop),
+      font_size (range), direction (select: left | right)
+
+  Blocks:
+    - "announcement_item": text (text) — default: "JOYFULLY BOLD"
+
+  These blocks are LOCAL section blocks, not theme blocks: the item set has
+  to render 6 times back-to-back (1 announced group + 5 aria-hidden
+  duplicates) so the ticker never runs out of content mid-scroll on wide
+  viewports, and {% raw %}{% content_for "blocks" %}{% endraw %} can only be called once per
+  section. blocks/announcement_item.liquid is the theme-block equivalent.
+
+  Font: ticker text uses "Inter" 700 (--font-ui) — load it through the
+  theme's font settings or a self-hosted @font-face.
+{% endcomment %}
+
+{{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .announcement-bar {
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #shopify-section-{{ section.id }} .announcement-bar__item {
+    font-size: {{ section.settings.font_size }}px;
+  }
+  #shopify-section-{{ section.id }} .ticker__track {
+    animation-duration: {{ section.settings.speed_seconds }}s;
+    animation-direction: {% if section.settings.direction == 'right' %}reverse{% else %}normal{% endif %};
+  }
+{%- endstyle -%}
+
+<section class="announcement-bar ticker" aria-label="Announcements">
+  <div class="ticker__track">
+    {%- for group in (1..6) -%}
+      <div class="ticker__group"{% unless forloop.first %} aria-hidden="true"{% endunless %}>
+        {%- for block in section.blocks -%}
+          <span class="announcement-bar__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          <svg class="ticker__icon announcement-bar__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f0429c" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#9a1902" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "font_size", "label": "Item size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "speed_seconds", "label": "Scroll duration", "min": 10, "max": 60, "step": 1, "unit": "s", "default": 25 },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        { "value": "left", "label": "Right to left" },
+        { "value": "right", "label": "Left to right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement_item",
+      "name": "Announcement item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "JOYFULLY BOLD" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "announcement_item", "settings": { "text": "JOYFULLY BOLD" } },
+        { "type": "announcement_item", "settings": { "text": "EFFORTLESSLY STYLISH" } },
+        { "type": "announcement_item", "settings": { "text": "ALWAYS DELICIOUS" } },
+        { "type": "announcement_item", "settings": { "text": "JOYFULLY SHARED" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

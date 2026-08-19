@@ -1,0 +1,35 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "col-drinks": { "type": "footer_column", "settings": { "column_heading": "Drinks" } },
+        "col-makhanas": { "type": "footer_column", "settings": { "column_heading": "Makhanas" } },
+        "col-shop": { "type": "footer_column", "settings": { "column_heading": "Shop" } },
+        "col-company": { "type": "footer_column", "settings": { "column_heading": "Company" } },
+        "col-legal": { "type": "footer_column", "settings": { "column_heading": "Legal" } }
+      },
+      "block_order": ["col-drinks", "col-makhanas", "col-shop", "col-company", "col-legal"],
+      "settings": {
+        "heading": "More Munch<br />More Crunch",
+        "show_newsletter": true,
+        "newsletter_placeholder": "Enter your email...",
+        "newsletter_button_label": "Notify Me",
+        "copyright_text": "©2026 Munchief. All rights reserved.",
+        "legal_text": "Munchief · Magical Foods & Beverages LLP — Demo build for internal review. Pricing shown is placeholder",
+        "background_color": "#2f6fed",
+        "heading_color": "#ffffff",
+        "text_color": "#ffffff",
+        "link_color": "#ffffff",
+        "newsletter_button_color": "#e2241a",
+        "columns": 5,
+        "heading_size": 56,
+        "logo_width": 180,
+        "padding_block": 64
+      }
+    }
+  },
+  "order": ["footer"]
+}

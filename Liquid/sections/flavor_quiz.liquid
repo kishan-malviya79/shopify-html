@@ -1,0 +1,195 @@
+{% comment %}
+  Section: flavor_quiz
+  Source: sections/flavor-quiz.html + index.html
+  CSS: section-flavor-quiz.css (loaded here, this section only)
+  JS:  flavor-quiz.js — imported page-wise (defer)
+  Shared: .stroke-heading, .btn--pill, .btn--quiz-option, .container live
+  in components.css (loaded once in theme.liquid)
+
+  Settings:
+    - IMAGES: background_image (image_picker) — illustrated comic-sunburst
+      backdrop, cover-fit (nothing in it is position-critical)
+    - CONTENT: heading, text (richtext), question_step1,
+      question_step2_crunch, question_step2_sip, question_step3,
+      world_crunch_label, world_sip_label, result_cta_fallback,
+      restart_label
+    - COLOR: heading_color, text_color, card_background, question_color,
+      option_color
+    - STYLE: card_width (range), corner_radius (range), show_decor
+      (checkbox), padding_block (range)
+
+  Blocks (theme blocks, placed STATICALLY because each type lands in a
+  different container — {% raw %}{% content_for "blocks" %}{% endraw %} would dump them all in
+  one spot):
+    - "quiz_character_decor" x3 — ids decor-1..3, inside
+      .flavor-quiz__characters
+    - "quiz_character_result" x5 — ids crunch-1..5, inside the step 2
+      crunch branch; each emits its option button + hidden result data
+    - "quiz_soda_result" x4 — ids sip-1..4, step 2 sip branch
+    - "quiz_intensity_option" x3 — ids intensity-1..3, step 3
+
+  Flow: crunch-or-sip -> mood/craving -> flavour intensity -> result. The
+  step-2 pick is the match key; step 3 is cosmetic. Every possible result
+  renders as real block markup, so no content lives in JS.
+{% endcomment %}
+
+{{ 'section-flavor-quiz.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'flavor-quiz.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .flavor-quiz {
+    padding-block: {{ section.settings.padding_block }}px;
+  }
+  #shopify-section-{{ section.id }} .flavor-quiz__heading { color: {{ section.settings.heading_color }}; }
+  #shopify-section-{{ section.id }} .flavor-quiz__text { color: {{ section.settings.text_color }}; }
+  #shopify-section-{{ section.id }} .flavor-quiz__question { color: {{ section.settings.question_color }}; }
+  #shopify-section-{{ section.id }} .btn--quiz-option { color: {{ section.settings.option_color }}; }
+  #shopify-section-{{ section.id }} .flavor-quiz__card {
+    background-color: {{ section.settings.card_background }};
+    max-width: {{ section.settings.card_width }}px;
+    border-radius: {{ section.settings.corner_radius }}px;
+  }
+  {% unless section.settings.show_decor %}
+    #shopify-section-{{ section.id }} .flavor-quiz__characters { display: none; }
+  {% endunless %}
+{%- endstyle -%}
+
+<section class="flavor-quiz" aria-label="Take the flavor quiz">
+
+  <div class="flavor-quiz__media">
+    {%- if section.settings.background_image != blank -%}
+      {{ section.settings.background_image | image_url: width: 2400 | image_tag: alt: '', role: 'presentation', loading: 'lazy' }}
+    {%- endif -%}
+  </div>
+
+  {%- comment -%}
+    Decorative cutouts bleeding off the section edges — clipped by the
+    section's overflow: hidden, above the backdrop but below the card,
+    aria-hidden + pointer-events: none so they never block a tap.
+  {%- endcomment -%}
+  <div class="flavor-quiz__characters" aria-hidden="true">
+    {% content_for "block", type: "quiz_character_decor", id: "decor-1" %}
+    {% content_for "block", type: "quiz_character_decor", id: "decor-2" %}
+    {% content_for "block", type: "quiz_character_decor", id: "decor-3" %}
+  </div>
+
+  <div class="container flavor-quiz__inner">
+    <h2 class="flavor-quiz__heading stroke-heading" data-animate="char-reveal">{{ section.settings.heading }}</h2>
+
+    <div class="flavor-quiz__text">{{ section.settings.text }}</div>
+
+    <div class="flavor-quiz__card">
+
+      <div class="flavor-quiz__progress" aria-hidden="true">
+        <span class="flavor-quiz__dot" data-quiz-dot></span>
+        <span class="flavor-quiz__dot" data-quiz-dot></span>
+        <span class="flavor-quiz__dot" data-quiz-dot></span>
+        <span class="flavor-quiz__dot" data-quiz-dot></span>
+      </div>
+
+      {%- comment -%} Step 1: world select {%- endcomment -%}
+      <div class="flavor-quiz__step is-active" data-quiz-step="1">
+        <p class="flavor-quiz__question">{{ section.settings.question_step1 }}</p>
+        <div class="flavor-quiz__options">
+          <button type="button" class="btn btn--pill btn--quiz-option flavor-quiz__option--wide" data-quiz-world="crunch">
+            {{ section.settings.world_crunch_label }}
+          </button>
+          <button type="button" class="btn btn--pill btn--quiz-option flavor-quiz__option--wide" data-quiz-world="sip">
+            <svg class="flavor-quiz__option-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>
+            {{ section.settings.world_sip_label }}
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Step 2 (crunch branch): mood -> quiz_character_result {%- endcomment -%}
+      <div class="flavor-quiz__step" data-quiz-step="2-crunch">
+        <p class="flavor-quiz__question">{{ section.settings.question_step2_crunch }}</p>
+        <div class="flavor-quiz__options">
+          {% content_for "block", type: "quiz_character_result", id: "crunch-1" %}
+          {% content_for "block", type: "quiz_character_result", id: "crunch-2" %}
+          {% content_for "block", type: "quiz_character_result", id: "crunch-3" %}
+          {% content_for "block", type: "quiz_character_result", id: "crunch-4" %}
+          {% content_for "block", type: "quiz_character_result", id: "crunch-5" %}
+        </div>
+      </div>
+
+      {%- comment -%} Step 2 (sip branch): craving -> quiz_soda_result {%- endcomment -%}
+      <div class="flavor-quiz__step" data-quiz-step="2-sip">
+        <p class="flavor-quiz__question">{{ section.settings.question_step2_sip }}</p>
+        <div class="flavor-quiz__options">
+          {% content_for "block", type: "quiz_soda_result", id: "sip-1" %}
+          {% content_for "block", type: "quiz_soda_result", id: "sip-2" %}
+          {% content_for "block", type: "quiz_soda_result", id: "sip-3" %}
+          {% content_for "block", type: "quiz_soda_result", id: "sip-4" %}
+        </div>
+      </div>
+
+      {%- comment -%} Step 3: flavour intensity — cosmetic, no effect on the match {%- endcomment -%}
+      <div class="flavor-quiz__step" data-quiz-step="3">
+        <p class="flavor-quiz__question">{{ section.settings.question_step3 }}</p>
+        <div class="flavor-quiz__options">
+          {% content_for "block", type: "quiz_intensity_option", id: "intensity-1" %}
+          {% content_for "block", type: "quiz_intensity_option", id: "intensity-2" %}
+          {% content_for "block", type: "quiz_intensity_option", id: "intensity-3" %}
+        </div>
+      </div>
+
+      {%- comment -%} Step 4: result, filled by flavor-quiz.js from the matched block {%- endcomment -%}
+      <div class="flavor-quiz__step" data-quiz-step="4">
+        <div class="flavor-quiz__result" aria-live="polite">
+          <div class="flavor-quiz__result-media">
+            <img data-quiz-result-img src="" alt="" />
+          </div>
+          <h3 class="flavor-quiz__result-name" data-quiz-result-name></h3>
+          <p class="flavor-quiz__result-quote" data-quiz-result-quote></p>
+          <div class="flavor-quiz__result-actions">
+            <a class="btn btn--pill btn--primary" data-quiz-result-cta href="#">{{ section.settings.result_cta_fallback }}</a>
+            <button type="button" class="btn btn--pill btn--outline btn--sm" data-quiz-restart>{{ section.settings.restart_label }}</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Flavor quiz",
+  "tag": "div",
+  "blocks": [
+    { "type": "quiz_character_decor" },
+    { "type": "quiz_character_result" },
+    { "type": "quiz_soda_result" },
+    { "type": "quiz_intensity_option" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Which One Are You<br />Brave Enough To Try?", "info": "Use <br /> for a line break." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Answer honestly. We'll match you to your Munchief character or soda.</p>" },
+    { "type": "text", "id": "question_step1", "label": "Question 1", "default": "Right now, you're craving..." },
+    { "type": "text", "id": "world_crunch_label", "label": "Crunch option", "default": "A crunch — something to munch" },
+    { "type": "text", "id": "world_sip_label", "label": "Sip option", "default": "A sip — something to sip" },
+    { "type": "text", "id": "question_step2_crunch", "label": "Question 2 (crunch)", "default": "Right now, you're feeling..." },
+    { "type": "text", "id": "question_step2_sip", "label": "Question 2 (sip)", "default": "Your soda mood is..." },
+    { "type": "text", "id": "question_step3", "label": "Question 3", "default": "Your flavour intensity comfort zone is..." },
+    { "type": "text", "id": "result_cta_fallback", "label": "Result CTA fallback", "default": "Shop this →" },
+    { "type": "text", "id": "restart_label", "label": "Restart label", "default": "Try again" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#f6efdd" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#f6efdd" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
+    { "type": "color", "id": "question_color", "label": "Question", "default": "#2b2b2b" },
+    { "type": "color", "id": "option_color", "label": "Option text", "default": "#2b2b2b" },
+    { "type": "header", "content": "Style" },
+    { "type": "checkbox", "id": "show_decor", "label": "Show character cutouts", "default": true },
+    { "type": "range", "id": "card_width", "label": "Card width", "min": 480, "max": 1000, "step": 20, "unit": "px", "default": 720 },
+    { "type": "range", "id": "corner_radius", "label": "Card corner radius", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_block", "label": "Vertical padding", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 96 }
+  ],
+  "presets": [{ "name": "Flavor quiz" }]
+}
+{% endschema %}

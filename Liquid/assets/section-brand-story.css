@@ -1,0 +1,295 @@
+/* ==========================================================================
+   Section: brand_story
+   Yellow full-bleed "about the brand" section framed top and bottom by the
+   Figma "Vector" layer: a big, lazy red wave (not a tight scallop), colored
+   by the path's own stroke — the layer's "Drop shadow" effect is defined
+   in Figma but toggled off, so don't add it here either. Intro row (stroked
+   heading + framed hero
+   photo) over an "about" row (framed character lineup + copy + CTA pill +
+   icon-circle pair). Heading skin reuses .stroke-heading; CTA reuses
+   .btn-group/.btn--pill/.btn--icon-circle/.btn--outline (all
+   css/components.css) with a local brown color override (see below) — the
+   Figma spec's CTA ink (#5B3419) is a one-off, not the shared navy
+   --color-btn-ink used by every other outline CTA on the site.
+   ========================================================================== */
+
+.brand-story {
+  position: relative;
+  background-color: var(--color-yellow-bright);
+  padding-block: var(--space-2xl);
+  /* clip sideways (the rotated photos overhang) but stay visible vertically,
+     so the wave edges below can sit outside the section. `clip` not `hidden`:
+     hidden on one axis forces the other to scroll. */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* Wavy top/bottom edges — the yellow band's own wavy edge with the red rule
+   along it, drawn from the Figma "Vector" layers. They sit outside the
+   section (translate ±100%) and scroll sideways; the band itself never
+   moves, so it can't drift over neighbouring content. */
+.brand-story::before,
+.brand-story::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* A seamlessly tiling 480px period (the curve leaves and enters at the
+     same height and slope), so the band can scroll sideways forever. The
+     yellow body carries a 7px red rule along its edge, same as the exported
+     Figma shape. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 120' preserveAspectRatio='none'%3E%3Cpath fill='%23ef3b34' d='M0 43C60 3 180 3 240 43C300 83 420 83 480 43V120H0Z'/%3E%3Cpath fill='%23ffd750' d='M0 50C60 10 180 10 240 50C300 90 420 90 480 50V120H0Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 480px 100%;
+  pointer-events: none;
+}
+
+/* Drift sideways one full period, then loop — the tile edges match, so the
+   restart is invisible. */
+@keyframes brand-story-wave-drift {
+  from { background-position-x: 0; }
+  to { background-position-x: -480px; }
+}
+
+/* No vertical motion: the band itself stays parked on its edge. Moving the
+   whole band up/down slid it over the neighbouring content (it covered the
+   "About Munchiefam" CTA), so the animation is the curve flowing sideways —
+   the crests travel past a fixed edge, which is the effect on the reference
+   site. */
+
+.brand-story::before {
+  top: 0;
+  height: clamp(48px, 7.6vw, 109px);
+  transform: translateY(-100%);
+  animation: brand-story-wave-drift 16s linear infinite;
+}
+
+/* Bottom edge is the same tile flipped: its solid side continues the
+   section's yellow with no seam, the curve dips into whatever follows, and
+   the red rule lands under it. Drifts the other way on a slower period, so
+   the two edges never look like they're moving in lockstep. */
+.brand-story::after {
+  bottom: 0;
+  /* Capped at 64px so the tongue stays inside the next section's own top
+     padding (--space-2xl) instead of running into its heading. */
+  height: clamp(36px, 4.4vw, 64px);
+  transform: translateY(100%) scaleY(-1);
+  animation: brand-story-wave-drift 20s linear infinite reverse;
+}
+
+/* Motion off-switch, same as the ticker's. */
+@media (prefers-reduced-motion: reduce) {
+  .brand-story::before,
+  .brand-story::after {
+    animation: none;
+  }
+}
+
+/* The two waves hang outside the section, so on their own they'd sit on top
+   of whatever the neighbouring sections have near their edges (the row of
+   Add to Cart buttons above, the "Combo" heading below). These reserve that
+   room in the neighbours themselves — the section pays for its own overhang
+   rather than every adjacent section needing to know about it. */
+:has(+ .brand-story) {
+  padding-bottom: calc(var(--space-2xl) + clamp(48px, 7.6vw, 109px));
+}
+
+.brand-story + * {
+  padding-top: calc(var(--space-2xl) + clamp(36px, 4.4vw, 64px));
+}
+
+.brand-story__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.brand-story__row--intro {
+  padding-bottom: var(--space-2xl);
+}
+
+/* Heading — the spec's literal 233px in its own 729px box, one word-group
+   per line. It was previously capped at ~120px because the heading shared a
+   grid column with the photo; the photo is now absolutely placed (as in the
+   comp), so the headline has the width to run at full size. */
+.brand-story__heading {
+  font-size: var(--fs-brand-story-heading);
+  line-height: var(--lh-brand-story-heading);
+  max-width: 729px;
+  margin: 0;
+}
+
+@media (min-width: 1025px) {
+  .brand-story__heading {
+    font-size: var(--fs-brand-story-heading-desktop);
+    -webkit-text-stroke-width: var(--stroke-width-brand-story-desktop);
+  }
+}
+
+.brand-story__photo,
+.brand-story__characters {
+  border-radius: var(--radius-photo-frame);
+  border-style: solid;
+  border-color: var(--color-photo-border-gold);
+  overflow: hidden;
+  box-shadow: var(--shadow-btn);
+}
+
+.brand-story__photo img,
+.brand-story__characters img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-story__photo {
+  aspect-ratio: 812 / 901;
+  border-width: 7px;
+  width: 100%;
+  transform: rotate(1.85deg);
+}
+
+.brand-story__characters {
+  aspect-ratio: 639 / 387;
+  border-width: 6px;
+  transform: rotate(-2.8deg);
+}
+
+.brand-story__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.brand-story__subheading {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-brand-story-subheading);
+  line-height: 1.11; /* 50/45 — matches the Figma spec */
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.brand-story__text {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-brand-story-text);
+  line-height: 1.4; /* 30.8/22 — matches the Figma spec */
+  letter-spacing: var(--ls-tight);
+  color: var(--color-ink);
+  max-width: 645px; /* the spec's copy column */
+  margin: 0;
+}
+
+/* CTA — pill + separate icon-circle (.btn-group), same shape as
+   hero_banner/chaos_banner's CTA pairs, but with the Figma spec's warm
+   brown ink instead of the shared navy .btn--outline skin. Scoped to this
+   section only, same "local skin override" precedent as testimonial-card's
+   monochrome .rating__stars override in components.css. */
+.brand-story__cta.btn--outline {
+  height: 50px;
+  background-color: transparent;
+  border: 2px solid var(--color-cta-ink);
+  font-size: var(--fs-select);
+  letter-spacing: -0.56px;
+  color: var(--color-cta-ink);
+}
+
+.brand-story__cta.btn--pill {
+  min-width: 123px;
+  padding-inline: 23.5px;
+}
+
+.brand-story__cta.btn--icon-circle {
+  width: 50px;
+  min-width: 50px;
+  padding-inline: 0;
+}
+
+/* Hover/swap fill — same mechanic as css/components.css's generic
+   .btn--icon-circle hover + .is-swapped (js/animations.js's
+   initShopBtnGroupHover, shared by every .btn-group pill+icon-circle pair
+   incl. hero_banner's "Shop Now"), but inverting to this section's own
+   brown ink instead of the shared navy skin, so the icon reads as filling
+   with its own border color rather than an unrelated one. Needs the extra
+   .brand-story__cta specificity to win over the plain .btn--outline color
+   override above. */
+.brand-story__cta.btn--icon-circle:hover,
+.brand-story__cta.btn--icon-circle:focus-visible,
+.brand-story__cta.btn--icon-circle.is-swapped {
+  background-color: var(--color-cta-ink);
+  color: var(--color-cream);
+  border-color: var(--color-cta-ink);
+}
+
+/* Responsive ---------------------------------------------------------------
+   Two columns from tablet up (per the breakpoint reference in tokens.css). */
+@media (min-width: 641px) {
+  .brand-story__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Heading needs more than an even 50/50 split to fit "Crunch it."/"Repeat."
+   on one line each at this size — give it the larger share and let the
+   photo fill whatever's left instead of being capped to a fixed width.
+   Placed after the 641px rule above so it wins the cascade tie (both are
+   single-class selectors of equal specificity) at viewports ≥1025px. */
+@media (min-width: 1025px) {
+  .brand-story__row--intro {
+    grid-template-columns: 1.3fr 1fr;
+  }
+}
+
+/* Desktop: the comp doesn't put the heading and hero photo in two columns —
+   the photo is pinned to the right edge and the 729px headline runs beneath
+   it, which is what lets the type reach 233px. The about row then starts
+   200px lower with a 62px gutter. */
+@media (min-width: 1025px) {
+  /* Bottom padding is small on purpose: the wave band below adds its own
+     ~72px of yellow, so the spec's 50px here would read as dead space. */
+  .brand-story {
+    padding-block: 106px var(--space-md);
+  }
+
+  .brand-story__row--intro {
+    position: relative;
+    display: block;
+    padding-bottom: 0;
+  }
+
+  .brand-story__heading {
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand-story__photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 56.4%; /* 812/1440 */
+    max-width: 812px;
+  }
+
+  .brand-story__row--about {
+    gap: 62px;
+    padding-top: 200px;
+  }
+
+  /* The copy column sits 90px lower than the character photo. */
+  .brand-story__content {
+    padding-top: 90px;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-story__photo {
+    max-width: 320px;
+  }
+}

@@ -111,7 +111,10 @@ Registry of reusable blocks/components so new sections can reuse existing HTML +
 
 Shopify theme-block (`blocks/*.liquid`) versions of every home-page block live in
 [`Liquid/blocks/`](Liquid/blocks/) — markup plus its own `{% schema %}` per file.
-See `Liquid/blocks/README.md` for the file-to-section map and conversion notes.
+The sections that render them are in [`Liquid/sections/`](Liquid/sections/), wired
+into the home page by `Liquid/templates/index.json`. See `Liquid/README.md` for the
+CSS/JS loading rules (shared component CSS global, section CSS per section,
+JS imported page-wise) and `Liquid/blocks/README.md` for the block map.
 Covered: `announcement_item`, `nav_link`, `menu_card`, `marquee_item`,
 `product_card`, `world_card`, `testimonial`, `quiz_character_result`,
 `quiz_soda_result`, `quiz_intensity_option`, `quiz_character_decor`,

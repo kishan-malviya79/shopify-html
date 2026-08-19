@@ -1,0 +1,356 @@
+/* ==========================================================================
+   Section: flavor_quiz
+   Full-bleed interactive quiz (4-step branching flow — see
+   sections/flavor-quiz.html for the JS) over a swappable illustrated
+   sunburst backdrop (background_image, same media-swap pattern as
+   hero_banner). Heading skin reuses .stroke-heading (css/components.css) —
+   don't duplicate it here.
+   ========================================================================== */
+
+.flavor-quiz {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-2xl);
+  text-align: center;
+}
+
+/* Background media layer — same pattern as hero__media (css/sections/
+   hero-banner.css): absolutely positioned, cover-fit. faqbg.png already
+   bakes in the sunburst rays, halftone dots, and star/squiggle accents, so
+   nothing else needs to be drawn here. */
+.flavor-quiz__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.flavor-quiz__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Character cutouts ---------------------------------------------------------
+   Transparent PNG cutouts bleeding off the section's edges, clipped by
+   .flavor-quiz's overflow: hidden. Layered between the backdrop (z 0) and the
+   quiz card (z 2), and pointer-events: none so they never swallow a click on
+   an answer button. Same "decorative photo bleeding off the section" idea as
+   footer's blob callouts, but full-bleed cutouts instead of framed blobs.
+   Widths are viewport-relative so the characters keep the comp's proportions
+   as the section scales. */
+.flavor-quiz__characters {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flavor-quiz__character {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+/* Top-left: rotated 180° so the face hangs down into the section from the
+   top edge (the source art is right-side up). */
+/* Both top cutouts are pinned flush to the section's top edge (top: 0) — no
+   bleed above it — so they read as sitting in the top corners instead of
+   being sliced by the section boundary. */
+.flavor-quiz__character--tl {
+  top: 0;
+  width: clamp(200px, 27vw, 420px);
+  transform: rotate(180deg);
+  transform: scaley(-1);
+
+}
+
+/* Optional horizontal flip, exposed as the quiz_character_decor block's
+   `flip` setting. Uses the standalone `scale` property so it stacks with
+   the position rules' own `transform` instead of overriding it. */
+.flavor-quiz__character--flip {
+  scale: -1 1;
+}
+
+.flavor-quiz__character--tr {
+  top: -24%;
+  right: -9%;
+  transform: rotate(-41.458deg);
+  width: clamp(190px, 28vw, 420px);
+}
+
+.flavor-quiz__character--bl {
+  bottom: -8%;
+  left: 1%;
+  width: clamp(150px, 20vw, 300px);
+}
+
+.flavor-quiz__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  max-width: 720px;
+}
+
+/* Fill/stroke/size match the heading's own Figma spec exactly (red fill,
+   thick white stroke, 96px at desktop) — deliberately not
+   .stroke-heading--white (that's for a different white-fill/coral-stroke
+   heading elsewhere). Responsive strategy mirrors hero__heading: fluid
+   clamp() through mobile/tablet, locked 96px + thicker stroke at desktop. */
+.flavor-quiz__heading {
+  margin: 0;
+  max-width: 646px;
+  font-size: var(--fs-hero-heading);
+  line-height: var(--lh-quiz-heading);
+  letter-spacing: 0;
+  color: var(--color-quiz-heading-red);
+}
+
+.flavor-quiz__text {
+  margin: 0;
+  max-width: 380px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: clamp(13px, 1.6vw, 16px);
+  line-height: var(--lh-normal);
+  color: var(--color-ink);
+}
+
+.flavor-quiz__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 440px;
+  min-height: 280px;
+  margin-top: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  background-color: var(--color-quiz-card-bg);
+  border: var(--border-width-thin) solid var(--color-photo-border-gold);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-btn);
+}
+
+/* Progress dots — one per step, filled in as the quiz advances. */
+.flavor-quiz__progress {
+  display: flex;
+  gap: var(--space-xs);
+  justify-content: center;
+}
+
+.flavor-quiz__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.flavor-quiz__dot.is-done {
+  background-color: var(--color-photo-border-gold);
+}
+
+/* Steps — only the active one renders; JS toggles .is-active. */
+.flavor-quiz__step {
+  display: none;
+  width: 100%;
+}
+
+@keyframes fadeInQuizStep {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flavor-quiz__step.is-active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  animation: fadeInQuizStep 400ms ease-out;
+}
+
+.flavor-quiz__question {
+  margin: 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-black);
+}
+
+.flavor-quiz__options {
+  display: grid;
+  /* minmax(0, 1fr), not 1fr — a bare 1fr track still floors at the content's
+     min-content width, so a long label (e.g. "Like you've earned a win")
+     pushes the grid (and the card) wider than the viewport instead of
+     wrapping. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+/* Odd option out in a row (e.g. a lone 5th mood, or step 1's two world
+   picks) spans both columns instead of leaving a gap. */
+.flavor-quiz__option--wide {
+  grid-column: 1 / -1;
+}
+
+@keyframes quizButtonClick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes quizButtonHover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+.flavor-quiz__option-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-star);
+}
+
+/* Quiz option button animations */
+.flavor-quiz__options .btn {
+  transition: all 200ms ease-out;
+}
+
+.flavor-quiz__options .btn:hover {
+  animation: quizButtonHover 300ms ease-out forwards;
+  filter: brightness(1.05);
+}
+
+.flavor-quiz__options .btn:active {
+  animation: quizButtonClick 300ms ease-out;
+}
+
+/* Result data is block markup the script reads from, never rendered. */
+.flavor-quiz__result-data {
+  display: none;
+}
+
+@keyframes resultScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.flavor-quiz__result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+  animation: resultScaleIn 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.flavor-quiz__result-media {
+  width: 130px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-btn);
+}
+
+.flavor-quiz__result-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.flavor-quiz__result-name {
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--color-black);
+}
+
+.flavor-quiz__result-quote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: 14px;
+  color: var(--color-rust);
+}
+
+.flavor-quiz__result-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+/* Responsive heading — same strategy as hero__heading (css/sections/
+   hero-banner.css): fluid clamp() through mobile/tablet, locked to the
+   spec's fixed size at desktop instead of continuing to scale. */
+@media (min-width: 1025px) {
+  .flavor-quiz__heading {
+    font-size: var(--fs-hero-heading-desktop);
+    -webkit-text-stroke: var(--stroke-width-quiz-heading-desktop) var(--color-white);
+    /* -webkit-text-stroke paints outside the glyph without expanding the
+       line box, so this heading's thick 8px stroke visually bleeds past its
+       own bottom edge — pad it out so the subtext below doesn't crowd it. */
+    margin-bottom: var(--space-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .flavor-quiz__heading {
+    -webkit-text-stroke: 1.5px var(--color-white);
+  }
+
+  /* Phone: the section is barely wider than the quiz card, so the side
+     cutouts would sit on top of it — keep only the top-left one, pushed
+     further off-edge, and drop the two that flank the card. */
+  .flavor-quiz__character--tl {
+    top: 0;
+    left: -12%;
+    width: 130px;
+  }
+
+  .flavor-quiz__character--tr,
+  .flavor-quiz__character--bl {
+    display: none;
+  }
+}
+
+/* Below this width the 2-column option grid gets cramped — stack every
+   option full-width instead (the --wide modifier is then a no-op). */
+@media (max-width: 480px) {
+  .flavor-quiz__options {
+    grid-template-columns: 1fr;
+  }
+}

@@ -6,7 +6,8 @@ Shopify **theme blocks** (`blocks/*.liquid`) converted from the home-page
 `product_card`).
 
 Drop this folder in at the theme root as `blocks/` — theme blocks live at
-`blocks/`, not `sections/blocks/`.
+`blocks/`, not `sections/blocks/`. See `../README.md` for how the sections
+render them and for the CSS/JS loading rules.
 
 | File | Home-page section | Notes |
 |---|---|---|
@@ -26,18 +27,27 @@ Drop this folder in at the theme root as `blocks/` — theme blocks live at
 
 ## Conversion notes
 
-- **CSS is unchanged.** Every class matches `css/components.css` and
-  `css/sections/*.css` as-is, so styling ports 1:1. The one addition made
-  during conversion: `.flavor-quiz__character--flip` in
-  `css/sections/flavor-quiz.css`, backing the decor block's `flip` setting.
+- **Blocks reuse CSS, they never ship it.** No block loads a stylesheet:
+  the shared component classes come from `assets/components.css`, loaded
+  once in `layout/theme.liquid`. Section-specific CSS is loaded by the
+  section itself.
+- **Configurational CSS is per block.** `product_card`, `testimonial` and
+  `world_card` render `id="block-{{ block.id }}"` plus a scoped
+  `{% style %}` block, so product 1 can run one style and product 2 another
+  inside the same section (background, border, media tint, title color,
+  corner radius).
+- **CSS class names are unchanged.** Everything matches
+  `css/components.css` and `css/sections/*.css` as-is, so styling ports
+  1:1. The one addition made during conversion:
+  `.flavor-quiz__character--flip` in `css/sections/flavor-quiz.css`,
+  backing the decor block's `flip` setting.
 - **Star ratings** are inlined in `product_card` and `testimonial` rather
   than shared. If more blocks need them, lift the 5-star loop into
   `snippets/rating-stars.liquid` and `{% render %}` it.
 - **`{{ block.shopify_attributes }}`** is on every block's root element so
   theme-editor selection works. Where a block emits two roots
   (`quiz_*_result`), it sits on the option button — the visible one.
-- **Sections are not converted here** — only blocks, per the request. The
-  parent sections still live as static markup in `/sections/*.html`; each
-  file's comment header lists the section-level settings to carry over.
+- **Sections live in `../sections/`.** Each one lists which block types it
+  accepts and where it places them.
 - **Line items and cart recommendations are not blocks** — they come from
   `cart.items` and the `recommendations` product_list.

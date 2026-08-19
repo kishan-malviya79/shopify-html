@@ -1,0 +1,258 @@
+{% comment %}
+  Section: cart_drawer
+  Source: sections/cart-drawer.html + index.html
+  CSS: section-cart-drawer.css (loaded here, this section only)
+  JS:  cart.js — imported page-wise (defer). The static build keeps cart
+       state in localStorage as a stand-in for Shopify's Cart AJAX API;
+       swap those calls for /cart/add.js + /cart/change.js. Line items now
+       render server-side from cart.items, so the <template> row of the
+       static build is gone.
+  Shared: .btn, .badge, .price, .qty-stepper, .select live in
+  components.css (loaded once in theme.liquid)
+
+  Render this ONCE in layout/theme.liquid (as a section, not per template)
+  — the header's Cart button (data-cart-open) and every data-add-to-cart
+  button on the page open it.
+
+  Settings:
+    - PRODUCT: recommendations (product_list) — shown in the empty state
+      only; recommendations_heading (text)
+    - CONTENT: heading, empty_heading, empty_text (richtext),
+      empty_cta_text/link, coupon_placeholder, coupon_button_text,
+      checkout_text, reward_message_prefix/suffix
+    - COLOR: panel_background, text_color, reward_fill_color,
+      reward_amount_color, checkout_background, checkout_text_color,
+      scrim_color
+    - STYLE: panel_width (range), corner_radius (range), show_scrim,
+      show_rewards, show_coupon (checkboxes)
+
+  Blocks:
+    - theme block "reward_milestone" (5 on one track) — icon, label,
+      position (% along the track), threshold, message.
+      See blocks/reward_milestone.liquid.
+
+  Line items are NOT blocks — they come from cart.items. Recommendation
+  cards come from the recommendations product_list.
+{% endcomment %}
+
+{{ 'section-cart-drawer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cart.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .cart-drawer__panel {
+    background-color: {{ section.settings.panel_background }};
+    color: {{ section.settings.text_color }};
+    width: {{ section.settings.panel_width }}px;
+    border-radius: {{ section.settings.corner_radius }}px 0 0 {{ section.settings.corner_radius }}px;
+  }
+  #shopify-section-{{ section.id }} .cart-drawer__scrim {
+    background-color: {{ section.settings.scrim_color }};
+    {% unless section.settings.show_scrim %}display: none;{% endunless %}
+  }
+  #shopify-section-{{ section.id }} .cart-rewards__fill { background-color: {{ section.settings.reward_fill_color }}; }
+  #shopify-section-{{ section.id }} .cart-rewards__amount { color: {{ section.settings.reward_amount_color }}; }
+  #shopify-section-{{ section.id }} .cart-summary__checkout {
+    background-color: {{ section.settings.checkout_background }};
+    color: {{ section.settings.checkout_text_color }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .cart-drawer__panel { width: 100%; border-radius: 0; }
+  }
+{%- endstyle -%}
+
+<div class="cart-drawer" data-cart-drawer>
+
+  <button type="button" class="cart-drawer__scrim" data-cart-close aria-label="Close cart"></button>
+
+  <aside class="cart-drawer__panel" role="dialog" aria-modal="true" aria-label="{{ section.settings.heading | escape }}">
+
+    <div class="cart-drawer__header">
+      <button type="button" class="cart-drawer__back" data-cart-close aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 5 8 12 15 19"></polyline>
+        </svg>
+      </button>
+
+      <h2 class="cart-drawer__title">{{ section.settings.heading }}</h2>
+
+      <button type="button" class="cart-drawer__close" data-cart-close aria-label="Close cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    {%- if section.settings.show_rewards -%}
+      {%- comment -%} Reward progress: the reward_milestone blocks sit on one track. {%- endcomment -%}
+      <div class="cart-rewards">
+        <p class="cart-rewards__text" data-cart-reward-message>
+          {{ section.settings.reward_message_prefix }}
+          <span class="cart-rewards__amount">{{ 0 | money }}</span>
+          {{ section.settings.reward_message_suffix }}
+        </p>
+
+        <div class="cart-rewards__track" role="progressbar" aria-label="Reward progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="cart-rewards__fill" data-cart-reward-fill style="width: 0.5%;"></div>
+          {% content_for 'blocks' %}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="cart-drawer__body">
+
+      {%- comment -%} Line items — server-rendered from the real cart. {%- endcomment -%}
+      <ul class="cart-items" data-cart-items>
+        {%- for item in cart.items -%}
+          <li class="cart-item" data-line-item="{{ item.key }}">
+            <div class="cart-item__media">
+              {%- if item.image -%}
+                {{ item.image | image_url: width: 300 | image_tag: alt: item.product.title, loading: 'lazy' }}
+              {%- endif -%}
+            </div>
+
+            <div class="cart-item__body">
+              <div class="cart-item__info">
+                <div>
+                  <h3 class="cart-item__title"><a href="{{ item.url }}">{{ item.product.title }}</a></h3>
+                  <p class="cart-item__meta">{{ item.variant.title }}</p>
+                </div>
+
+                <div class="cart-item__controls">
+                  <div class="qty-stepper qty-stepper--outline">
+                    <button type="button" class="qty-stepper__btn" data-qty-decrease aria-label="Decrease quantity">&#8722;</button>
+                    <span class="qty-stepper__value" data-qty-value>{{ item.quantity }}</span>
+                    <button type="button" class="qty-stepper__btn" data-qty-increase aria-label="Increase quantity">+</button>
+                  </div>
+
+                  <div class="select select--outline">
+                    <select class="select__input" data-item-variant aria-label="Variant">
+                      {%- for variant in item.product.variants -%}
+                        <option value="{{ variant.id }}"{% if variant.id == item.variant.id %} selected{% endif %}>{{ variant.title }}</option>
+                      {%- endfor -%}
+                    </select>
+                    <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cart-item__aside">
+                <span class="cart-item__price">{{ item.final_line_price | money }}</span>
+                <button type="button" class="cart-item__remove" data-item-remove>Remove</button>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if cart.item_count == 0 -%}
+        <div class="cart-empty" data-cart-empty>
+          <h3 class="cart-empty__heading">{{ section.settings.empty_heading }}</h3>
+          <div class="cart-empty__text">{{ section.settings.empty_text }}</div>
+          <a href="{{ section.settings.empty_cta_link | default: routes.all_products_collection_url }}" class="btn btn--pill btn--red cart-empty__cta">{{ section.settings.empty_cta_text }}</a>
+        </div>
+      {%- endif -%}
+
+    </div>
+
+    {%- comment -%} Recommendation rail — empty state only. {%- endcomment -%}
+    {%- if section.settings.recommendations != blank -%}
+      <div class="cart-recs" data-cart-recs {% if cart.item_count > 0 %}hidden{% endif %}>
+        <div class="cart-recs__header">
+          <h3 class="cart-recs__heading">{{ section.settings.recommendations_heading }}</h3>
+          <div class="cart-recs__nav">
+            <button type="button" data-recs-prev aria-label="Previous">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"></polyline></svg>
+            </button>
+            <button type="button" data-recs-next aria-label="Next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="cart-recs__track" data-recs-track>
+          {%- for product in section.settings.recommendations -%}
+            <article class="cart-rec-card">
+              <div class="cart-rec-card__media">
+                {%- if product.featured_image -%}
+                  {{ product.featured_image | image_url: width: 300 | image_tag: alt: product.title, loading: 'lazy' }}
+                {%- endif -%}
+              </div>
+              <div class="cart-rec-card__body">
+                <h4 class="cart-rec-card__title">{{ product.title }}</h4>
+                <p class="cart-rec-card__price">{{ product.price | money }}</p>
+              </div>
+              <button type="button"
+                      class="cart-rec-card__add"
+                      data-add-to-cart
+                      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                      aria-label="Add {{ product.title | escape }} to cart">+</button>
+            </article>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_coupon -%}
+      <form class="cart-promo" data-cart-promo action="{{ routes.cart_url }}" method="post" {% if cart.item_count == 0 %}hidden{% endif %}>
+        <input class="cart-promo__input" type="text" name="discount" placeholder="{{ section.settings.coupon_placeholder | escape }}" aria-label="Coupon code" />
+        <button type="submit" class="cart-promo__submit">{{ section.settings.coupon_button_text }}</button>
+      </form>
+    {%- endif -%}
+
+    <div class="cart-summary" data-cart-summary {% if cart.item_count == 0 %}hidden{% endif %}>
+      <div class="cart-summary__row">
+        <span class="cart-summary__label">Subtotal:</span>
+        <span class="cart-summary__value" data-cart-subtotal>{{ cart.total_price | money }}</span>
+      </div>
+      <div class="cart-summary__row">
+        <span class="cart-summary__label">Shipping:</span>
+        <span class="cart-summary__value">Calculated at checkout</span>
+      </div>
+      <form action="{{ routes.cart_url }}" method="post">
+        <button type="submit" name="checkout" class="cart-summary__checkout">{{ section.settings.checkout_text }}</button>
+      </form>
+    </div>
+
+  </aside>
+</div>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "tag": "div",
+  "blocks": [{ "type": "reward_milestone" }],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your Cart" },
+    { "type": "text", "id": "reward_message_prefix", "label": "Reward message prefix", "default": "You are" },
+    { "type": "text", "id": "reward_message_suffix", "label": "Reward message suffix", "default": "away from getting 5% off!" },
+    { "type": "text", "id": "empty_heading", "label": "Empty heading", "default": "Where'd all the Munchiefians go?" },
+    { "type": "richtext", "id": "empty_text", "label": "Empty text", "default": "<p>Looks like your cart is empty — time to fill it up.</p>" },
+    { "type": "text", "id": "empty_cta_text", "label": "Empty CTA text", "default": "Shop Now" },
+    { "type": "url", "id": "empty_cta_link", "label": "Empty CTA link" },
+    { "type": "text", "id": "coupon_placeholder", "label": "Coupon placeholder", "default": "Coupon Code" },
+    { "type": "text", "id": "coupon_button_text", "label": "Coupon button", "default": "Add Promo" },
+    { "type": "text", "id": "checkout_text", "label": "Checkout button", "default": "Continue to checkout" },
+    { "type": "header", "content": "Products" },
+    { "type": "text", "id": "recommendations_heading", "label": "Recommendations heading", "default": "Stock up on your favorite flavors" },
+    { "type": "product_list", "id": "recommendations", "label": "Recommendations", "limit": 8 },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "panel_background", "label": "Panel background", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2b2b2b" },
+    { "type": "color", "id": "reward_fill_color", "label": "Reward progress fill", "default": "#3aa757" },
+    { "type": "color", "id": "reward_amount_color", "label": "Reward amount", "default": "#e2241a" },
+    { "type": "color", "id": "checkout_background", "label": "Checkout button", "default": "#e2241a" },
+    { "type": "color", "id": "checkout_text_color", "label": "Checkout label", "default": "#ffffff" },
+    { "type": "color", "id": "scrim_color", "label": "Scrim", "default": "rgba(0,0,0,0.45)" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "panel_width", "label": "Panel width", "min": 360, "max": 640, "step": 1, "unit": "px", "default": 473 },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "show_scrim", "label": "Show scrim", "default": true },
+    { "type": "checkbox", "id": "show_rewards", "label": "Show reward progress", "default": true },
+    { "type": "checkbox", "id": "show_coupon", "label": "Show coupon field", "default": true }
+  ]
+}
+{% endschema %}

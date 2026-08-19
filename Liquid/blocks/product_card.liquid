@@ -15,9 +15,32 @@
     - variant_label (text) — default "20g Tasting Pouch"; shown in the
       variant select alongside the variant price
 
+  Configurational CSS: every card carries id="block-{{ block.id }}" and its
+  own scoped {% raw %}{% style %}{% endraw %} block, so product 1 can run one style
+  (colors, media tint, radius) and product 2 another inside the SAME
+  section — the styling is per-block configuration, not per-section.
+
+  Shared classes (.product-card, .badge, .price, .rating, .select, .btn)
+  live in components.css, loaded once in layout/theme.liquid — this block
+  adds no CSS file of its own, it only overrides tokens per instance.
+
   Note: the variant select lists the product's real variants; variant_label
   is the fallback label when the product has a single default variant.
 {% endcomment %}
+
+{%- style -%}
+  #block-{{ block.id }} {
+    background-color: {{ block.settings.card_background }};
+    border-color: {{ block.settings.border_color }};
+    border-radius: {{ block.settings.corner_radius }}px;
+  }
+  #block-{{ block.id }} .product-card__media {
+    background-color: {{ block.settings.media_background }};
+  }
+  #block-{{ block.id }} .product-card__title {
+    color: {{ block.settings.title_color }};
+  }
+{%- endstyle -%}
 
 {%- liquid
   assign product = block.settings.product
@@ -25,7 +48,7 @@
   assign full_stars = rating | floor
 -%}
 
-<article class="product-card" {{ block.shopify_attributes }}>
+<article id="block-{{ block.id }}" class="product-card" {{ block.shopify_attributes }}>
   <a href="{{ product.url | default: '#' }}" class="product-card__link">
     <div class="product-card__media">
       {%- if block.settings.badge_text != blank -%}
@@ -36,6 +59,7 @@
       {%- endif -%}
     </div>
 
+    {%- if block.settings.show_rating -%}
     <div class="rating">
       <span class="rating__stars" aria-hidden="true">
         {%- for i in (1..5) -%}
@@ -46,6 +70,7 @@
       </span>
       <span class="rating__count">({{ block.settings.rating_count }})</span>
     </div>
+    {%- endif -%}
 
     <h3 class="product-card__title">{{ product.title }}</h3>
 
@@ -83,7 +108,9 @@
 {
   "name": "Product card",
   "settings": [
+    { "type": "header", "content": "Product" },
     { "type": "product", "id": "product", "label": "Product" },
+    { "type": "header", "content": "Content" },
     { "type": "text", "id": "badge_text", "label": "Badge text" },
     {
       "type": "select",
@@ -95,9 +122,17 @@
       ],
       "default": "green"
     },
+    { "type": "checkbox", "id": "show_rating", "label": "Show rating", "default": true },
     { "type": "range", "id": "rating_value", "label": "Rating", "min": 0, "max": 5, "step": 0.5, "default": 5 },
     { "type": "number", "id": "rating_count", "label": "Rating count", "default": 0 },
-    { "type": "text", "id": "variant_label", "label": "Variant label", "default": "20g Tasting Pouch" }
+    { "type": "text", "id": "variant_label", "label": "Variant label", "default": "20g Tasting Pouch" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
+    { "type": "color", "id": "border_color", "label": "Card border", "default": "#2b2b2b" },
+    { "type": "color", "id": "media_background", "label": "Image area", "default": "#f6efdd" },
+    { "type": "color", "id": "title_color", "label": "Title", "default": "#2b2b2b" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 24 }
   ],
   "presets": [{ "name": "Product card" }]
 }

@@ -1,0 +1,55 @@
+{% comment %}
+  Layout: theme.liquid
+
+  Loads only what is GLOBAL:
+    - tokens.css      design tokens (color, type, spacing, radius, shadow)
+    - components.css  reusable component classes every block reuses
+                      (.btn, .badge, .price, .rating, .select, .container,
+                      .stroke-heading, .menu-card, .product-card,
+                      .testimonial-card, .newsletter-form, .qty-stepper)
+    - animations.js   scroll/reveal behaviour shared by every page
+
+  Section-specific CSS is NOT loaded here — each section loads its own
+  section-*.css file, so a page only downloads the CSS for the sections it
+  actually renders. Section JS is likewise imported by the section itself
+  (page-wise, defer), never bundled globally.
+
+  header-group.json / footer-group.json render the header + announcement
+  bar and the footer. cart_drawer renders once here, since the header's
+  Cart button and every add-to-cart button on the page opens it.
+{% endcomment %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}" />
+  {%- endif -%}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Anton&family=Fredoka:wght@500;600&family=Comic+Neue:wght@700&family=Inter:wght@400;500;700&family=Poppins:wght@500&display=swap" rel="stylesheet" />
+
+  {{ 'tokens.css' | asset_url | stylesheet_tag }}
+  {{ 'components.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'animations.js' | asset_url }}" defer></script>
+
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template.name }}">
+
+  {% sections 'header-group' %}
+
+  <main id="MainContent" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  {% section 'cart_drawer' %}
+
+</body>
+</html>

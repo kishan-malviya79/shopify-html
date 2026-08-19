@@ -1,0 +1,466 @@
+/* ==========================================================================
+   Section: header
+   Site nav bar: left nav links, centered logo, right action pills. Only
+   header-specific layout lives here — colors/fonts/radii pull from tokens
+   and reuse .btn/.badge-style patterns from components.css where they fit.
+   ========================================================================== */
+
+/* Sticky at the top of the viewport (the announcement_bar above it scrolls
+   away, the nav stays). Still a positioned + stacked element, so the
+   full-bleed mega-menu panel keeps anchoring to the header (not to its nav
+   item) and sits over the page scrim. z-index stays below cart_drawer's 100
+   so the drawer + its scrim still cover the nav. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-card-bg);
+  box-shadow: var(--shadow-header);
+}
+
+/* Full-bleed with 48px side padding rather than the site's 1280px container,
+   matching the nav-bar Figma spec (1440 wide, 48px gutters, 61px tall). */
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  height: 61px;
+  max-width: none;
+  padding-inline: var(--space-xl);
+}
+
+@media (max-width: 720px) {
+  .site-header__inner {
+    height: 58px;
+    padding-inline: var(--space-md);
+  }
+}
+
+/* Nav links (left) --------------------------------------------------------- */
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex: 1;
+}
+
+/* Static on purpose: the mega-menu panel below is absolutely positioned
+   against .site-header so it can run the full width of the viewport. */
+.site-header__nav-item {
+  position: static;
+}
+
+.site-header__nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-heading-rounded);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-border);
+  background: none;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs) var(--space-xs);
+  margin-inline: calc(var(--space-2xs) * -1);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.site-header__nav-link:hover,
+.site-header__nav-link:focus-visible {
+  background-color: rgba(27, 27, 27, 0.06);
+}
+
+.site-header__nav-link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.site-header__nav-link[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+/* Mega-menu panel — a full-bleed white sheet under the header, opened by the
+   nav item's .is-open class (the header script toggles it on click, and on
+   hover/focus-within for pointer + keyboard). Replaced the small stacked
+   link dropdown this section shipped with; both nav items now use it.
+   Metrics match the Figma dev-mode spec (48px padding, 96px column gap,
+   316px link column, 24px card gap). */
+.site-header__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  gap: 96px;
+  align-items: stretch;
+  padding: var(--space-xl);
+  background-color: var(--color-white);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-6px);
+  /* visibility flips instantly (it can't tween) — only opacity/transform
+     animate, so the panel is never stuck half-hidden mid-transition. */
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.site-header__nav-item:hover .site-header__menu,
+.site-header__nav-item:focus-within .site-header__menu,
+.site-header__nav-item.is-open .site-header__menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Link column — the last child is pushed to the bottom of the panel
+   (the "Shop All" catch-all in the products menu). */
+.site-header__menu-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-card);
+  flex-shrink: 0;
+  width: 316px;
+  padding-bottom: var(--space-sm);
+}
+
+.site-header__menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card);
+}
+
+.site-header__menu-link {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-mega-link);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.32px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-border);
+  transition: color 0.15s ease;
+}
+
+.site-header__menu-link:hover,
+.site-header__menu-link:focus-visible {
+  color: var(--color-brand-red);
+}
+
+.site-header__menu-cards {
+  display: flex;
+  gap: var(--space-card);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Page scrim behind an open menu — the header script toggles .has-menu-open
+   on .site-header. Same token as the cart drawer's overlay. */
+.site-header__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background-color: var(--color-scrim);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+}
+
+.site-header.has-menu-open .site-header__scrim {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 1200px) {
+  .site-header__menu {
+    gap: var(--space-xl);
+    padding: var(--space-lg);
+  }
+
+  .site-header__menu-links {
+    width: 220px;
+  }
+}
+
+/* Tablet: the link column stops earning a whole column — it sits above the
+   cards as a wrapping row instead. */
+@media (max-width: 900px) {
+  .site-header__menu {
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .site-header__menu-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-md) var(--space-lg);
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .site-header__menu-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-lg);
+  }
+}
+
+/* Mobile menu -------------------------------------------------------------
+   Below 720px the desktop mega menus are gone (the nav row is hidden), so
+   the hamburger opens this full-height sheet instead: a stacked link list up
+   top and, pinned to the bottom, a peek-scrolling pair of promo cards over a
+   full-width "Shop All" CTA. Metrics match the mobile Figma comp (32/16px
+   padding, 13px link gap, 18px links, 16px card gap, 24px stack gap). */
+.site-header__mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  /* 88px = announcement bar + nav row, i.e. this sheet's own offset. */
+  height: calc(100vh - 88px);
+  height: calc(100dvh - 88px);
+  padding: var(--space-lg) var(--space-md);
+  overflow-y: auto;
+  background-color: var(--color-card-bg);
+}
+
+.site-header.has-mobile-menu .site-header__mobile-menu {
+  display: flex;
+}
+
+.site-header__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.site-header__mobile-link {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-mobile-menu-link);
+  line-height: 1.3;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-border);
+}
+
+.site-header__mobile-promo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card);
+}
+
+/* Wider than the viewport on purpose — the second card peeks, same
+   peek-scroll pattern as product_story's review track. */
+.site-header__mobile-cards {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-inline: calc(var(--space-md) * -1);
+  padding-inline: var(--space-md);
+  scrollbar-width: none;
+}
+
+.site-header__mobile-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.site-header__mobile-cards .menu-card {
+  flex: 0 0 74%;
+  scroll-snap-align: start;
+}
+
+.site-header__mobile-cards .menu-card__media {
+  border: 2px solid var(--color-white);
+  border-radius: var(--radius-md);
+}
+
+.site-header__mobile-cards .menu-card__title {
+  padding: var(--space-sm) var(--space-md) 0;
+  font-size: var(--fs-mobile-menu-card-title);
+}
+
+/* Logo (center) ------------------------------------------------------------ */
+.site-header__logo {
+  display: block;
+  flex-shrink: 0;
+}
+
+.site-header__logo img {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+
+@media (max-width: 640px) {
+  .site-header__logo img {
+    height: 28px;
+  }
+}
+
+/* Actions (right) ------------------------------------------------------------ */
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.site-header__action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 13px;
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: 11.8px;
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-border);
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.site-header__action svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* The hamburger is a mobile-only action pill. Declared after .site-header__action
+   (same specificity) so it actually wins and stays hidden on desktop, where
+   the nav row + mega menus are the navigation. */
+.site-header__burger {
+  display: none;
+}
+
+/* Skin: the bright-yellow "Build Your Bundle" CTA with a flat black pop
+   shadow and a floating ribbon badge above it. */
+.site-header__action--bundle {
+  background-color: var(--color-yellow-bright);
+  box-shadow: var(--shadow-nav-cta);
+}
+
+.site-header__action--bundle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.site-header__ribbon {
+  position: absolute;
+  left: 50%;
+  top: -9px;
+  transform: translateX(-50%);
+  padding: 3px 5px;
+  font-family: var(--font-ribbon);
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-purple);
+  background: linear-gradient(90deg, #bfeefe 0%, #faec76 100%);
+  border-radius: 2px;
+}
+
+/* Cart count bubble — hidden (opacity 0) at 0 items; a cart-count > 0
+   would flip this to opacity 1 once wired to the `cart_count` setting. */
+.site-header__cart-count {
+  position: absolute;
+  right: 6px;
+  top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 13.5px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--color-card-bg);
+  background-color: var(--color-border);
+  border: 1px solid var(--color-card-bg);
+  border-radius: 6px;
+  opacity: 0;
+}
+
+.site-header__cart-count[data-count]:not([data-count="0"]) {
+  opacity: 1;
+}
+
+/* Mobile: the left nav collapses into the hamburger sheet above, and the
+   Account pill drops out (the sheet carries "My Account" as a link), which
+   is exactly the 3-pill row — bundle / cart / menu — in the mobile comp. */
+@media (max-width: 720px) {
+  .site-header__nav {
+    display: none;
+  }
+
+  .site-header__actions {
+    flex: none;
+  }
+
+  .site-header__action--account {
+    display: none;
+  }
+
+  .site-header__burger {
+    display: inline-flex;
+  }
+}
+
+/* Desktop: the hamburger and its sheet never render. */
+@media (min-width: 721px) {
+  .site-header__mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Mobile: the action pills' text labels no longer fit next to the logo
+   without overflowing, and the mobile comp shows them as a row of three
+   icon-only pills (bundle / cart / menu) anyway. Drop each to icon-only;
+   aria-label on the buttons and the visually-hidden text below keep them
+   accessible. Was scoped to 420px while the header still had no hamburger —
+   raised to the mobile breakpoint once the burger joined the row. */
+@media (max-width: 720px) {
+  .site-header__action span:not(.site-header__ribbon):not(.site-header__cart-count) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .site-header__action {
+    padding: 9px;
+  }
+
+  .site-header__ribbon {
+    display: none;
+  }
+}

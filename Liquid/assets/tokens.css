@@ -1,0 +1,323 @@
+/* ==========================================================================
+   Design Tokens
+   Single source of truth for the design system. Any value repeated across
+   sections (color, type, spacing, radius, shadow) must be added here and
+   referenced via var(--token-name) — never hardcoded in a section file.
+   ========================================================================== */
+
+:root {
+  /* Breakpoints (reference only — CSS vars can't be used inside @media)
+     mobile:  < 640px
+     tablet:  641px – 1024px
+     desktop: > 1024px                                                    */
+
+  /* Color — brand */
+  --color-brand-red: #ee2a2a;
+  --color-brand-red-dark: #c41c14;
+  --color-brand-orange: #ff7a2e;
+  --color-brand-orange-light: #ffb347;
+  --color-brand-blue: #2f6fed;
+  --color-brand-coral: #ff7972; /* outline stroke for white display headings on saturated backgrounds */
+  --color-brand-pink: #f0429c; /* announcement bar background */
+  --color-yellow-bright: #ffd750; /* site-header "Build Your Bundle" CTA fill; also footer background */
+  --color-purple: #3f0791; /* site-header "Bestseller" ribbon text */
+  --color-rust: #9a1902; /* announcement bar ticker text/icon */
+  --color-brand-red-bright: #f12622; /* footer links/CTA/copyright/legal — distinct from --color-brand-red, matches Figma footer spec exactly */
+  --color-brand-red-line: #ef3b34; /* brand_story top/bottom wavy divider rule — distinct hex from --color-brand-red/--color-brand-red-bright, matches Figma "Vector" layer spec exactly */
+  --color-quiz-heading-red: #ee2823; /* flavor_quiz heading fill — distinct hex from --color-brand-red (#ee2a2a), matches its Figma text layer spec exactly */
+  --color-photo-border-gold: #e2af00; /* brand_story hero/character photo frame border — gold, distinct from footer's white blob-callout border */
+  --color-cta-ink: #5b3419; /* brand_story CTA pill/icon-circle border + label — warm brown, distinct from --color-btn-ink's navy used by other outline CTAs */
+  --color-footer-card-border: #2f1948; /* newsletter card border on the footer */
+  --color-footer-heading-muted: rgba(217, 15, 4, 0.6); /* footer column headings */
+  --color-footer-placeholder: rgba(254, 67, 26, 0.4); /* footer newsletter input placeholder */
+  --color-upsell-card-border: #f0d9b5; /* product_main "Must Try" upsell card border, warm tan */
+  --color-upsell-card-bg: #fff8ec; /* product_main "Must Try" upsell card fill */
+  --color-terracotta: #d05835; /* product_story background — matches its Figma dev-mode spec exactly, distinct from the brighter --color-brand-orange used elsewhere */
+  --color-contact-card-bg: #ffede3; /* contact_us info+form card background — matches its Figma dev-mode spec exactly */
+  --color-contact-pin: #ff66b6; /* contact_us location-pin icon stroke color — matches its Figma dev-mode spec exactly */
+  --color-contact-label: #414651; /* contact_us form field label text */
+  --color-contact-placeholder: #717680; /* contact_us input placeholder text */
+  --color-contact-dropdown-text: #535862; /* contact_us phone country-code select text */
+  --color-contact-chevron: #a4a7ae; /* contact_us phone country-code dropdown chevron */
+  --color-cart-hairline: #f3e4cd; /* cart_drawer row/section dividers — matches its Figma dev-mode spec exactly */
+  --color-cart-tile-yellow: #fff56b; /* cart_drawer soda line-item photo tile — brighter than --color-yellow-bright, matches its Figma spec exactly */
+  --color-cart-track: rgba(27, 27, 27, 0.15); /* cart_drawer reward-progress track */
+  --color-cart-placeholder: rgba(27, 27, 27, 0.2); /* cart_drawer coupon input placeholder */
+  --color-cart-meta: rgba(27, 27, 27, 0.67); /* cart_drawer line-item subtitle */
+  --color-scrim: rgba(27, 27, 27, 0.57); /* full-screen overlay behind cart_drawer */
+  --color-rec-price: #16433d; /* cart_drawer recommendation card price — deep green, matches its Figma spec exactly */
+  --color-about-sky: #7cb8e2; /* about_hero fallback behind the sky photo */
+  --color-about-mint: #d7ecb9; /* about_manifesto band — matches its Figma spec exactly */
+  --color-about-red: #f83e1c; /* about_hero + about_manifesto display headings — distinct hex from --color-brand-red */
+  --color-crunch-band: #f4813f; /* world_band "Crunch World" instance */
+  --color-prebiotic-band: #fdf0cf; /* world_band "Prebiotic World" instance */
+  --color-bundle-header-bg: #ffe3c5; /* bundle_builder panel header — warm peach, matches its Figma spec exactly */
+  --color-bundle-subtitle: #5a4633; /* bundle_builder intro copy */
+  --color-bundle-muted: #9a8b7a; /* bundle_builder "no items yet" note */
+  --color-slot-empty: rgba(27, 27, 27, 0.12); /* bundle_builder empty slot bar */
+  --color-promise-border: #fe431a; /* our_promise card border + its flat 10px drop shadow */
+  --color-promise-ink: #2f1948; /* our_promise card text — deep indigo (same hex as --color-footer-card-border, different role) */
+  /* character_carousel card tints — the peach one is --color-contact-card-bg */
+  --color-tint-pink: #ffd4e6;
+  --color-tint-butter: #ffefb8;
+  --color-tint-gold: #fbdf86;
+  --color-tile-pink: #fed8e8; /* menu-card photo tile fill — matches the nav mega-menu Figma spec exactly */
+  --color-tile-lime: #e4edac; /* menu-card photo tile fill (2nd tint) */
+  --color-tile-rose: #ffb1c1; /* menu-card photo tile fill (3rd tint) */
+
+  /* Color — neutrals */
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-cream: #f7f1e2; /* warm off-white used for primary button fill */
+  --color-cream-bg: #f6efdd; /* warm page/section background, slightly deeper than --color-cream */
+  --color-ink: #5f0e00; /* dark maroon, used for body copy on warm backgrounds */
+  --color-btn-ink: #211c3d; /* dark navy-indigo used for button labels/icons/borders, not pure black */
+  --color-overlay: rgba(0, 0, 0, 0.15);
+  --color-text-muted: #7b7b7b; /* struck-through compare-at prices, secondary text */
+  --color-text-secondary: #6f6a63; /* body copy on cream backgrounds, e.g. testimonial review text */
+  --color-border: #1b1b1b; /* default rounded-card border, e.g. testimonial cards */
+  --color-card-bg: #fbf6ed; /* bordered-card fill, e.g. testimonial cards — lighter than --color-cream */
+  --color-quiz-card-bg: #fabd5b; /* flavor_quiz card fill — warm gold, distinct from --color-cream-bg used elsewhere */
+
+  /* Color — commerce UI (badges, ratings, product cards) */
+  --color-badge-green-bg: #d3fa99;
+  --color-badge-green-text: #1c3a13;
+  --color-badge-orange-bg: #ffc247;
+  --color-badge-orange-text: #1c3a13; /* both badge skins share the same dark-ink text per spec, regardless of pill color */
+  --color-star: #f7a81c;
+  --color-star-empty: #ddd6cc; /* unfilled star, e.g. product_main's partial 4.3-of-5 rating */
+  --color-select-border: rgba(0, 0, 0, 0.37);
+  --color-shadow-pop: #8a3216; /* skeuomorphic "pop" shadow under solid CTA buttons, e.g. Add to Cart */
+  --color-gallery-thumb-border: #e7e1d4; /* product_main thumbnail rail border, active state swaps to --color-black */
+
+  /* Typography
+     --font-display requires "Mouse Memoirs" and --font-body requires "Comic
+     Neue" (both Google Fonts) — loaded via the link tags in each page's
+     <head> (see sections/hero-banner.html, index.html). In the Shopify
+     build, load them via the theme's font settings or a manual @font-face
+     instead of hardcoding the Google Fonts link.                        */
+  --font-display: 'Mouse Memoirs', 'Baloo 2', 'Arial Black', sans-serif;
+  --font-body: 'Comic Neue', 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-heading-bold: 'Anton', 'Archivo Black', 'Arial Black', sans-serif; /* condensed black-weight headings, e.g. product-carousel heading */
+  --font-ui: 'Inter', 'Helvetica Neue', Arial, sans-serif; /* tight/dense small UI text, e.g. announcement_bar ticker items — distinct from --font-body's display voice */
+  --font-heading-rounded: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', sans-serif; /* rounded friendly display font, e.g. testimonial card titles */
+  --font-ribbon: 'Poppins', 'Helvetica Neue', Arial, sans-serif; /* site-header "Bestseller" ribbon only — distinct from --font-ui's Inter */
+
+  --fs-hero-heading: clamp(28px, 7vw, 64px); /* fluid size for mobile/tablet */
+  --fs-hero-heading-desktop: 96px; /* explicit size at the desktop breakpoint (see section CSS) */
+  --fs-display-heading-desktop: 82px; /* explicit size at the desktop breakpoint for secondary display headings — product_carousel's "Combo" heading, chaos_banner's heading (see section CSS) */
+  --fs-hero-text: clamp(14px, 1.6vw, 18px); /* fluid, tops out at the spec's 18px on desktop */
+  --fs-btn: 16px;
+  --fs-marquee: clamp(13px, 1.4vw, 16px);
+  --fs-section-heading: clamp(24px, 3.6vw, 38px);
+  --fs-badge: 12px;
+  --fs-card-title: 22px;
+  --fs-price: 16px;
+  --fs-price-compare: 16px;
+  --fs-select: 14px;
+  --fs-rating-count: 14px;
+  --fs-testimonial-heading: clamp(18px, 3.6vw, 40px); /* testimonial_carousel's "Don't take our word for it" — same fluid scale as chaos_banner's heading; locks to --fs-display-heading-desktop at the desktop breakpoint too, see section CSS */
+  --fs-testimonial-title: 28px;
+  --fs-testimonial-text: 14px;
+  --fs-testimonial-author: 24px;
+  --fs-ticker-item: 12px;
+  --fs-footer-heading: clamp(44px, 13vw, 150px); /* fluid size for mobile/tablet */
+  --fs-footer-heading-desktop: 200px; /* explicit size at the desktop breakpoint (see section CSS) */
+  --fs-footer-col-heading: 16px;
+  --fs-footer-link: 16px;
+  --fs-footer-copyright: 13.8px;
+  --fs-footer-legal: 11.8px;
+  --fs-newsletter-input: 13.3px; /* .newsletter-form__input, css/components.css */
+  --fs-newsletter-btn: 13.9px; /* .newsletter-form__submit, css/components.css */
+  --fs-brand-story-heading: clamp(32px, 9vw, 96px); /* fluid size for mobile/tablet */
+  --fs-brand-story-heading-desktop: clamp(96px, 16vw, 233px); /* the Figma spec's literal 233px, in its own 729px box — reachable now that the hero photo is absolutely placed instead of sharing a grid column with the heading */
+  --fs-brand-story-subheading: clamp(22px, 3.4vw, 45px);
+  --fs-brand-story-text: clamp(14px, 1.6vw, 22px);
+  --fs-product-title: clamp(28px, 3.4vw, 38px); /* product_main title */
+  --fs-product-eyebrow: 13px;
+  --fs-product-description: 15px;
+  --fs-product-note: 13px; /* product_main tax note, checkout note, trust badge labels */
+  --fs-product-variant-label: 13px;
+  --fs-review-score-value: 20px; /* product_reviews summary "4.75 out of 5" */
+  --fs-review-score-count: 13px;
+  --fs-review-title: 15px;
+  --fs-review-text: 13px;
+  --fs-review-meta: 12px;
+  --fs-combo-heading: clamp(26px, 4vw, 42px); /* combo_promo "The Crunch Max Combo" */
+  --fs-faq-heading: clamp(26px, 3.6vw, 36px);
+  --fs-faq-page-heading: clamp(34px, 5vw, 64px); /* faq_section layout = "page" title ("Frequently Asked Questions") — smaller than --fs-display-heading-desktop's 82px so the long single-line title still fits the container */
+  --fs-faq-question: 16px;
+  --fs-faq-question-page: 14px; /* denser question type in the page layout, where 9+ rows stack */
+  --fs-faq-answer: 14px;
+  --fs-faq-note: 13px; /* "Still have questions? / DM us and let's chat." note under the page layout's photo */
+  --fs-contact-label: 14px; /* contact_us form labels + info-card label/value, matches its Figma dev-mode spec exactly */
+  --fs-contact-input: 16px; /* contact_us typed field value/placeholder text, matches its Figma dev-mode spec exactly */
+  --fs-filter-tab: 13px; /* .filter-tab pill label, e.g. collection_grid's All/Makhanas/Prebiotic Soda/Combos row */
+  --fs-collection-group-heading: clamp(22px, 3vw, 32px); /* collection_grid per-category heading ("Makhanas", "Munchief Sodas") */
+  --fs-legal-group-heading: clamp(21px, 2.4vw, 26px); /* legal_page group heading ("Hours & Visiting") */
+  --fs-legal-meta: 12px; /* legal_page group meta line ("6 Questions") */
+  --fs-legal-question: 13px; /* legal_page question line */
+  --fs-legal-answer: 13px; /* legal_page answer copy */
+
+  --lh-legal: 1.7; /* long-form legal/FAQ body copy — looser than --lh-normal's 1.5 */
+
+  /* cart_drawer — sizes below match its Figma dev-mode spec exactly; each
+     pair is desktop-drawer / mobile-full-screen where the two differ. */
+  --fs-cart-title: 24px;
+  --fs-cart-title-mobile: 18px;
+  --fs-cart-progress: 13.7px;
+  --fs-cart-milestone: 10px;
+  --fs-cart-item-title: 24px;
+  --fs-cart-item-title-mobile: 18px;
+  --fs-cart-item-meta: 14px;
+  --fs-cart-item-meta-mobile: 12px;
+  --fs-cart-item-price: 16px;
+  --fs-cart-item-price-mobile: 14px;
+  --fs-cart-control: 13px; /* variant select + coupon input/button label */
+  --fs-cart-summary: 14px;
+  --fs-cart-checkout: 13.8px;
+  --fs-cart-checkout-mobile: 15px;
+  --fs-cart-empty-heading: clamp(26px, 4.6vw, 37px);
+  --fs-cart-empty-text: 15px;
+  --fs-cart-rec-heading: 14.9px;
+  --fs-cart-rec-title: 13px;
+  --fs-cart-rec-price: 12px;
+
+  /* header mega menu — matches its Figma dev-mode spec exactly */
+  --fs-mega-link: clamp(22px, 2.4vw, 32px);
+  --fs-menu-card-title: 22px;
+  --fs-menu-card-title-wide: 20px; /* the wider "Learn" promo cards */
+  /* bundle_builder + our_promise — match their Figma dev-mode specs exactly */
+  /* about page — sizes match its Figma dev-mode spec exactly */
+  --fs-about-hero-heading: clamp(38px, 8.3vw, 120px);
+  --fs-band-heading: clamp(44px, 7.8vw, 112px); /* "Crunch World" / "Prebiotic World" */
+  --fs-about-statement: clamp(26px, 3.9vw, 56px);
+  --fs-band-text: clamp(15px, 1.3vw, 18px); /* every band's body copy */
+  --fs-moments-heading: clamp(24px, 3.2vw, 44px);
+
+  --fs-bundle-heading: clamp(38px, 6vw, 82px);
+  --fs-bundle-subtitle: 15px;
+  --fs-bundle-card-title: 16px;
+  --fs-bundle-panel-title: 24px;
+  --fs-bundle-slot-note: 12px;
+  --fs-promise-heading: clamp(48px, 8.5vw, 120px);
+  --fs-promise-card-title: clamp(22px, 2.2vw, 28px);
+  --fs-promise-card-text: 15px;
+
+  --fs-mobile-menu-link: 18px; /* hamburger sheet link list */
+  --fs-mobile-menu-card-title: 14px; /* hamburger sheet promo card caption */
+
+  --lh-cart-milestone: 1; /* 10/10 — matches the milestone label spec */
+  --lh-cart-empty-heading: 1.19; /* 44/37 */
+  --lh-cart-empty-text: 1.92; /* 28.8/15 */
+
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  --lh-tight: 1; /* 100% — matches the hero heading spec */
+  --lh-relaxed: 1.2; /* 120% — matches the hero body-copy spec */
+  --lh-normal: 1.5;
+
+  --ls-tight: -0.2px; /* matches the hero body-copy spec */
+  --ls-snug: -0.12px; /* matches the announcement-bar ticker-item spec */
+  --ls-heading-tight: -0.04em; /* large rounded headings, e.g. testimonial card title/author */
+  --ls-body-snug: -0.16px; /* matches the testimonial card review-text spec */
+  --ls-footer-heading-desktop: -7px; /* footer heading letter-spacing at the desktop breakpoint */
+  --lh-footer-heading: 0.8; /* 160/200 — matches the footer heading spec */
+  --lh-brand-story-heading: 0.96; /* matches the brand_story heading spec */
+  --lh-quiz-heading: 1.12; /* 112% — matches the flavor_quiz heading spec */
+  --lh-testimonial-heading: 0.9; /* 90% — matches the testimonial_carousel heading's Figma dev-mode spec exactly */
+
+  /* Spacing scale */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-card: 24px; /* bordered-card interior padding, e.g. testimonial cards */
+  --space-tight: 6px; /* contact_us info-card label/value gap and form-field label/input gap, matches its Figma dev-mode spec exactly */
+  --space-form-input-y: 10px; /* contact_us form field vertical padding, matches its Figma dev-mode spec exactly */
+  --space-form-input-x: 14px; /* contact_us form field horizontal padding, matches its Figma dev-mode spec exactly */
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-xl: 30px; /* e.g. testimonial cards */
+  --radius-image: 21px; /* inset photo inside a padded bordered card, e.g. testimonial cards */
+  --radius-photo-frame: 15px; /* brand_story hero/character photo corner radius */
+  --radius-pill: 999px;
+  --radius-thumb: 14px; /* product_main gallery thumbnail corners */
+  --radius-2xl: 32px; /* contact_us card, matches its Figma dev-mode spec exactly */
+  --radius-textarea: 16px; /* contact_us message field, matches its Figma dev-mode spec exactly */
+  --radius-band: 96px; /* about-page band top corners */
+  --radius-band-end: 64px; /* the first band's bottom-right and the last band's bottom corners */
+  --band-overlap: 64px; /* how far each band rides up over the one above it */
+  --radius-drawer: 20px; /* cart_drawer panel corners */
+  --radius-tile: 10px; /* cart_drawer line-item photo tile + recommendation card */
+
+  /* Border */
+  --border-width-btn: 3px;
+  --border-width-thin: 1.5px;
+  --border-width-card: 3px;
+  --stroke-width-heading: 2px; /* mobile/tablet text-stroke weight */
+  --stroke-width-heading-desktop: 5px; /* matches the 96px desktop heading spec */
+  --stroke-width-brand-story-desktop: 7px; /* scaled to match --fs-brand-story-heading-desktop's capped size */
+  --stroke-width-quiz-heading-desktop: 8px; /* flavor_quiz heading at 96px desktop — thicker than --stroke-width-heading-desktop's 5px despite the same 96px size; matches that heading's own Figma spec exactly */
+
+  /* Shadow */
+  --shadow-btn: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-btn-pop: 0 6px 0 var(--color-shadow-pop); /* skeuomorphic "pop" edge under solid CTA buttons */
+  --shadow-nav-cta: 0 3px 0 #000000; /* site-header "Build Your Bundle" CTA edge — flat black, distinct from --shadow-btn-pop's brand-tinted shadow */
+  --shadow-xs: 0 1px 2px rgba(10, 13, 18, 0.05); /* subtle input-field edge, e.g. contact_us form fields */
+  --shadow-header: 0 2px 10px rgba(0, 0, 0, 0.08); /* sticky site-header edge — separates the nav from content scrolling under it */
+  --shadow-btn-dark: 0 1px 2px rgba(10, 13, 18, 0.05), inset 0 0 0 1px rgba(10, 13, 18, 0.18), inset 0 -2px 0 rgba(10, 13, 18, 0.05); /* skeuomorphic edge for dark buttons, e.g. contact_us "Send Message" */
+
+  /* Layout */
+  --container-max: 1280px;
+  --container-padding: 24px;
+
+  /* Decorative shapes
+     Wavy section edge used by product_story (top) and product_photo_banner
+     (top + flipped bottom). Applied as a *mask* over a background-color, not
+     as a colored background-image, so the edge color is a token and can be
+     re-themed (see .theme-pink below) instead of being baked into the SVG. */
+  --mask-wave-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='120' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1200V40C1100 90 950 100 800 70C650 40 520 20 380 35C250 49 130 85 0 60Z' fill='%23000000'/%3E%3C/svg%3E");
+
+  /* Color — themable section skins
+     These carry the *role* (page background, wave edge, sunburst rays) rather
+     than a fixed brand hue, so a page-level theme class can swap them. */
+  --color-wave-cream: #fbf1e4; /* filled wavy section edge — matches the Figma wave layer, slightly lighter than --color-cream-bg */
+  --color-sunburst-a: var(--color-brand-orange); /* combo_promo ray pair, default warm skin */
+  --color-sunburst-b: var(--color-brand-orange-light);
+
+  /* Color — pink theme palette (used by .theme-pink, see end of file) */
+  --color-pink-hot: #fb4b9c; /* pink counterpart to --color-terracotta: product_story background */
+  --color-pink-soft: #ffc2de; /* lighter ray/border pink */
+  --color-pink-pale: #ffeaf4; /* pink counterpart to --color-cream-bg: page/section background */
+  --color-pink-card-bg: #fff6fa; /* pink counterpart to --color-card-bg: bordered-card fill */
+}
+
+/* Theme: pink ---------------------------------------------------------------
+   Page-level color scheme, applied on <body> (see sections/product-main-pink
+   .html). It only *re-points existing tokens* — no section CSS is duplicated
+   or overridden, so every section (product_main, product_story,
+   product_photo_banner, product_reviews, combo_promo, faq_section,
+   product_carousel) picks the pink skin up automatically. In Liquid this maps
+   to a `color_scheme` section/theme setting that renders this class name.
+   Brand red (CTAs, prices, footer) is deliberately left alone — only the
+   warm cream/terracotta/orange section skins go pink. */
+.theme-pink {
+  --color-cream-bg: var(--color-pink-pale);
+  --color-card-bg: var(--color-pink-card-bg);
+  --color-terracotta: var(--color-pink-hot);
+  --color-wave-cream: var(--color-pink-pale);
+  --color-sunburst-a: var(--color-pink-hot);
+  --color-sunburst-b: var(--color-pink-soft);
+  --color-upsell-card-bg: var(--color-pink-pale);
+  --color-upsell-card-border: var(--color-pink-soft);
+  --color-gallery-thumb-border: var(--color-pink-soft);
+}

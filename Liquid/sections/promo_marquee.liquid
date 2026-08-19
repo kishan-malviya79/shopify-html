@@ -1,0 +1,103 @@
+{% comment %}
+  Section: promo_marquee
+  Source: sections/marquee.html + index.html
+  CSS: css/sections/marquee.css
+
+  Settings:
+    - COLOR: background_color (#e2241a --color-brand-red),
+      text_color (#ffffff), border_color (#2f6fed --color-brand-blue)
+    - STYLE: speed_seconds (range 10-60, default 30), show_borders
+      (checkbox), font_size (range), direction (select: left | right)
+
+  Blocks:
+    - "marquee_item": text (text) — default: "GLUTEN FREE"
+
+  LOCAL section blocks, not theme blocks — the item set renders 6 times
+  back-to-back (1 announced group + 5 aria-hidden duplicates) so the
+  marquee never runs out of content mid-scroll, and
+  {% raw %}{% content_for "blocks" %}{% endraw %} can only be called once per section.
+  blocks/marquee_item.liquid is the theme-block equivalent.
+{% endcomment %}
+
+{{ 'section-marquee.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .marquee {
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    {% if section.settings.show_borders %}
+      border-top: var(--border-width-btn, 3px) solid {{ section.settings.border_color }};
+      border-bottom: var(--border-width-btn, 3px) solid {{ section.settings.border_color }};
+    {% else %}
+      border: 0;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .marquee__item {
+    font-size: {{ section.settings.font_size }}px;
+  }
+  #shopify-section-{{ section.id }} .marquee__track {
+    animation-duration: {{ section.settings.speed_seconds }}s;
+    animation-direction: {% if section.settings.direction == 'right' %}reverse{% else %}normal{% endif %};
+  }
+{%- endstyle -%}
+
+<section class="marquee" aria-label="Product highlights">
+  <div class="marquee__track">
+    {%- for group in (1..6) -%}
+      <div class="marquee__group"{% unless forloop.first %} aria-hidden="true"{% endunless %}>
+        {%- for block in section.blocks -%}
+          <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          <svg class="marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo marquee",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#e2241a" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#2f6fed" },
+    { "type": "header", "content": "Style" },
+    { "type": "checkbox", "id": "show_borders", "label": "Show top/bottom borders", "default": false },
+    { "type": "range", "id": "font_size", "label": "Item size", "min": 14, "max": 48, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "speed_seconds", "label": "Scroll duration", "min": 10, "max": 60, "step": 1, "unit": "s", "default": 30 },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        { "value": "left", "label": "Right to left" },
+        { "value": "right", "label": "Left to right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marquee_item",
+      "name": "Marquee item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "GLUTEN FREE" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo marquee",
+      "blocks": [
+        { "type": "marquee_item", "settings": { "text": "GLUTEN FREE" } },
+        { "type": "marquee_item", "settings": { "text": "LOW CALORIE" } },
+        { "type": "marquee_item", "settings": { "text": "CRUNCH CRUNCH CRUNCH" } },
+        { "type": "marquee_item", "settings": { "text": "NO ADDED SUGARS" } },
+        { "type": "marquee_item", "settings": { "text": "MUNCH MUNCH MUNCH" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
