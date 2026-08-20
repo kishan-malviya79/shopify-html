@@ -1,0 +1,69 @@
+{% comment %}
+  Block: review
+  Source: sections/product-reviews.html (section: product_reviews)
+
+  One card in the PDP review grid. Static content until a reviews app is
+  wired up — when one is, swap the whole grid for that app's block.
+
+  Settings:
+    - rating_value (range 0-5, step 0.5) — default 5
+    - verified (checkbox) — default true; shows the green "Verified" badge
+    - title (text)
+    - body (richtext) — the short snippet the comp shows; read_more_link
+      appends the "Read more" link that closes it
+    - read_more_link (url)
+    - author (text)
+    - date (text) — the comp uses MM/DD/YYYY
+
+  Shared classes (.review-card, .rating, .badge) live in components.css,
+  loaded once in layout/theme.liquid. This block ships no CSS.
+{% endcomment %}
+
+{%- assign full_stars = block.settings.rating_value | default: 5 | floor -%}
+
+<article class="review-card" {{ block.shopify_attributes }}>
+  <div class="review-card__header">
+    <div class="rating">
+      <span class="rating__stars" aria-hidden="true">
+        {%- for i in (1..5) -%}
+          {%- if i <= full_stars -%}
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+          {%- endif -%}
+        {%- endfor -%}
+      </span>
+    </div>
+    {%- if block.settings.verified -%}
+      <span class="badge badge--green">Verified</span>
+    {%- endif -%}
+  </div>
+
+  <h3 class="review-card__title">{{ block.settings.title }}</h3>
+
+  <div class="review-card__text">
+    {{ block.settings.body }}
+    {%- if block.settings.read_more_link != blank -%}
+      <a href="{{ block.settings.read_more_link }}">Read more</a>
+    {%- endif -%}
+  </div>
+
+  <div class="review-card__footer">
+    <span class="review-card__author">{{ block.settings.author }}</span>
+    <span class="review-card__date">{{ block.settings.date }}</span>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Review",
+  "settings": [
+    { "type": "range", "id": "rating_value", "label": "Rating", "min": 0, "max": 5, "step": 0.5, "default": 5 },
+    { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true },
+    { "type": "text", "id": "title", "label": "Title", "default": "Perfectly chatpata, not overpowering" },
+    { "type": "richtext", "id": "body", "label": "Review" },
+    { "type": "url", "id": "read_more_link", "label": "Read more link" },
+    { "type": "text", "id": "author", "label": "Author", "default": "Ankit Bansal" },
+    { "type": "text", "id": "date", "label": "Date", "default": "08/21/2025" }
+  ],
+  "presets": [{ "name": "Review" }]
+}
+{% endschema %}

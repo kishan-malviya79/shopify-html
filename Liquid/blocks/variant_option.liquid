@@ -1,0 +1,67 @@
+{% comment %}
+  Block: variant_option
+  Source: sections/product-main.html (section: product_main)
+
+  One weight/size pill in the buy box. Clicking it re-labels the Add to
+  cart button with that pill's price and hands the variant id to the cart.
+
+  Settings:
+    - variant_id (text) — the numeric variant id from the admin URL
+      (…/variants/1234567890). Shopify has NO `product_variant` setting
+      type (theme check rejects it), so the id is entered as text and
+      matched against `closest.product`'s variants below — which also keeps
+      the block usable on any product template without naming the product
+      twice.
+    - label (text) — fallback label, e.g. "70g Tin"
+    - price (text) — fallback price, printed as-is, e.g. "₹300"
+    - default_selected (checkbox) — default false. The first block with it
+      checked opens pre-selected; if no block has it, product-main.js
+      selects the first pill.
+
+  Shared classes: .variant-pill / .variant-pills live in components.css,
+  loaded once in layout/theme.liquid.
+{% endcomment %}
+
+{%- liquid
+  assign target_id = block.settings.variant_id
+  assign matched = null
+
+  if target_id != blank
+    assign target_number = target_id | times: 1
+    for candidate in closest.product.variants
+      if candidate.id == target_number
+        assign matched = candidate
+        break
+      endif
+    endfor
+  endif
+
+  if matched != null
+    assign pill_label = matched.title
+    assign pill_price = matched.price | money
+  else
+    assign pill_label = block.settings.label
+    assign pill_price = block.settings.price
+  endif
+-%}
+
+<button
+  type="button"
+  class="variant-pill{% if block.settings.default_selected %} is-selected{% endif %}"
+  data-variant-price="{{ pill_price }}"
+  {% if matched != null %}data-variant-id="{{ matched.id }}"{% endif %}
+  {{ block.shopify_attributes }}
+>{{ pill_label }} &mdash; {{ pill_price }}</button>
+
+{% schema %}
+{
+  "name": "Variant option",
+  "settings": [
+    { "type": "text", "id": "variant_id", "label": "Variant id", "info": "The number at the end of the variant's admin URL. Leave blank to use the fallback label and price." },
+    { "type": "text", "id": "label", "label": "Label", "default": "70g Tin" },
+    { "type": "text", "id": "price", "label": "Price", "default": "₹300" },
+    { "type": "checkbox", "id": "default_selected", "label": "Selected by default", "default": false }
+  ],
+  "presets": [{ "name": "Variant option" }]
+}
+{% endschema %}

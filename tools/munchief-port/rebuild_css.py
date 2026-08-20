@@ -1,14 +1,28 @@
 # -*- coding: utf-8 -*-
 """
-Regenerate only the CSS assets (the Liquid files have since been hand-fixed
-and must not be rebuilt), then re-append the two hand-written blocks that
-live at the end of munchief-base.css.
+Regenerate CSS assets (the Liquid files have since been hand-fixed and must
+not be rebuilt), re-appending the hand-written blocks that live at the end
+of munchief-base.css.
 
-Why: the first scoping pass mangled every at-rule that had a comment above
-it into `.munchief @media ...` / `.munchief @keyframes ...`, which browsers
-drop — so 25 media queries and all four keyframe animations were missing.
-That is what killed the footer/brand-story wave drift, the ticker and
-marquee scroll, and every responsive rule.
+Why it exists: the first scoping pass mangled every at-rule that had a
+comment above it into `.munchief @media ...` / `.munchief @keyframes ...`,
+which browsers drop — so 25 media queries and all four keyframe animations
+went missing. That is what killed the footer/brand-story wave drift, the
+ticker and marquee scroll, and every responsive rule.
+
+READ BEFORE A FULL RUN. Some stems have since been refined *in the theme
+only*, so regenerating them from this repo throws that work away. A full run
+was measured dropping the world grid's 485px cards, its 4px white keyline
+and hover zoom, plus edits in munchief-base.css and
+munchief-product-carousel.css. Those edits are in neither css/sections/ nor
+.munchief-backup/*-extra.css, so nothing puts them back but git.
+
+So name the stems you actually want:
+
+    python tools/munchief-port/rebuild_css.py product-main product-story
+    python tools/munchief-port/rebuild_css.py --all   # only if you then diff
+
+Stems are the SOURCE names — the keys of CSS_SOURCES below, plus `base`.
 """
 import io
 import os
@@ -34,6 +48,12 @@ CSS_SOURCES = {
     'testimonial-carousel': 'testimonials',
     'chaos-banner': 'chaos-banner',
     'footer': 'footer',
+    # Product page
+    'product-main': 'product-main',
+    'product-story': 'product-story',
+    'product-photo-banner': 'product-photo-banner',
+    'product-reviews': 'product-reviews',
+    'combo-promo': 'combo-promo',
 }
 
 TAIL = '''
@@ -102,13 +122,29 @@ def write(p, s):
     io.open(p, 'w', encoding='utf-8', newline='\n').write(s)
 
 
-base = BANNER + scope(read(os.path.join(SRC, 'css/tokens.css')))
-base += '\n\n' + scope(read(os.path.join(SRC, 'css/components.css')))
-base += TAIL
-write(os.path.join(DST, 'assets/munchief-base.css'), base)
-print('rebuilt munchief-base.css (+ hand-written tail)')
+argv = [a for a in sys.argv[1:] if a]
+rebuild_all = '--all' in argv
+wanted = [a for a in argv if not a.startswith('--')]
+
+if not rebuild_all and not wanted:
+    print(__doc__)
+    raise SystemExit('nothing to do: name the stems, or pass --all')
+
+unknown = [w for w in wanted if w != 'base' and w not in CSS_SOURCES]
+if unknown:
+    raise SystemExit('unknown stem(s): %s\nknown: base, %s'
+                     % (', '.join(unknown), ', '.join(sorted(CSS_SOURCES))))
+
+if rebuild_all or 'base' in wanted:
+    base = BANNER + scope(read(os.path.join(SRC, 'css/tokens.css')))
+    base += '\n\n' + scope(read(os.path.join(SRC, 'css/components.css')))
+    base += TAIL
+    write(os.path.join(DST, 'assets/munchief-base.css'), base)
+    print('rebuilt munchief-base.css (+ hand-written tail)')
 
 for src_stem, dst_stem in CSS_SOURCES.items():
+    if not rebuild_all and src_stem not in wanted:
+        continue
     css = BANNER + scope(read(os.path.join(SRC, 'css/sections/%s.css' % src_stem)))
     css += extra_for(dst_stem)
     write(os.path.join(DST, 'assets/munchief-%s.css' % dst_stem), css)

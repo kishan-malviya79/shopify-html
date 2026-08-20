@@ -1,0 +1,188 @@
+/* ==========================================================================
+   Section: faq_section
+   Reusable accordion mechanics already live in css/components.css (.accordion)
+   — this file holds section-specific layout: the two-column grid and the
+   rotated framed photo (same "border + shadow + rotate" recipe as
+   brand_story's .brand-story__photo, kept section-local rather than
+   promoted to a shared class since brand_story's own version isn't
+   refactored to one yet).
+   ========================================================================== */
+
+.faq {
+  background-color: var(--color-white);
+  padding-block: var(--space-2xl);
+}
+
+.faq__grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.faq__photo {
+  border: 6px solid var(--color-white);
+  border-radius: var(--radius-photo-frame);
+  box-shadow: var(--shadow-btn), 0 12px 30px rgba(0, 0, 0, 0.12);
+  transform: rotate(-3deg);
+  overflow: hidden;
+}
+
+.faq__photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.faq__heading {
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: var(--fs-faq-heading);
+  line-height: var(--lh-relaxed);
+  color: var(--color-black);
+  margin: 0 0 var(--space-md);
+}
+
+.faq__more {
+  margin: var(--space-md) 0 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-faq-answer);
+  color: var(--color-text-secondary);
+}
+
+.faq__more a {
+  color: var(--color-black);
+  font-weight: var(--fw-bold);
+}
+
+/* Page layout (layout = "page") ---------------------------------------------
+   Same section, standalone-page variant (sections/faq-page.html): cream page
+   background, breadcrumb + centered stroked page title stacked above the
+   grid, a flat (un-rotated, un-framed) photo with the "still have questions?"
+   note under it, and no in-column Fredoka heading. Everything below is a
+   modifier on the shared markup/component classes — nothing is duplicated. */
+.faq--page {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.faq__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.faq__breadcrumb {
+  align-self: flex-start;
+}
+
+/* Title composes the shared .stroke-heading skin but overrides color/stroke
+   width/shadow to the page spec — same "local skin override" precedent as
+   contact_us's .contact__heading (distinct red hex, no drop shadow). */
+.faq__page-heading {
+  margin: 0;
+  text-align: center;
+  font-size: var(--fs-faq-page-heading);
+  line-height: var(--lh-tight);
+  color: var(--color-brand-red-line);
+  -webkit-text-stroke: var(--stroke-width-heading) var(--color-white);
+  text-shadow: none;
+}
+
+.faq--page .faq__grid {
+  grid-template-columns: 320px 1fr;
+  align-items: start;
+}
+
+.faq__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Photo sits flat here (no rotation/white frame/shadow) — the page layout
+   already carries the breadcrumb + display title, so the playful frame the
+   PDP block uses would fight them. */
+.faq--page .faq__photo {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-photo-frame);
+  box-shadow: none;
+  transform: none;
+}
+
+.faq--page .faq__photo img {
+  aspect-ratio: 3 / 4;
+}
+
+.faq--page .faq__more {
+  margin: 0;
+  font-size: var(--fs-faq-note);
+  line-height: var(--lh-relaxed);
+}
+
+.faq--page .faq__more a {
+  text-decoration: underline;
+}
+
+/* Denser accordion rows than the PDP block's, since the page stacks 9+ of
+   them, and italic answers per the page comp. */
+.faq--page .accordion__trigger {
+  padding-block: var(--space-sm);
+  font-size: var(--fs-faq-question-page);
+}
+
+.faq--page .accordion__panel p {
+  margin-bottom: var(--space-sm);
+  font-style: italic;
+}
+
+/* Toggle glyph reads as a minus when open (plus with its vertical bar hidden)
+   rather than the shared component's plus-rotated-to-an-x. */
+.faq--page .accordion__item.is-open .accordion__trigger svg {
+  transform: none;
+}
+
+.faq--page .accordion__item.is-open .accordion__trigger svg line:first-of-type {
+  opacity: 0;
+}
+
+/* Responsive ---------------------------------------------------------------- */
+@media (min-width: 1025px) {
+  .faq__page-heading {
+    -webkit-text-stroke-width: var(--stroke-width-heading-desktop);
+  }
+}
+
+@media (max-width: 900px) {
+  .faq__grid,
+  .faq--page .faq__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq__photo {
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .faq__aside {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .faq--page {
+    padding-block: var(--space-lg) var(--space-xl);
+  }
+}
+
+/* Liquid build only ---------------------------------------------------------
+   The "still have questions?" line is a `richtext` setting inside a
+   .faq__more <div> (a <p> parent would auto-close Shopify's own <p>). Render
+   that inner <p> inline so the sentence and its link stay on one line. */
+.faq__more > p {
+  display: inline;
+  margin: 0;
+}

@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Section: product_reviews
+   Reusable pieces (badge, rating, review-breakdown, review-card, pagination)
+   already live in css/components.css — this file only holds section-specific
+   layout: heading, summary row, and the review grid.
+   ========================================================================== */
+
+.product-reviews {
+  background-color: var(--color-cream-bg);
+  padding-block: var(--space-2xl);
+}
+
+.product-reviews__heading {
+  font-family: var(--font-heading-bold);
+  font-weight: 400; /* Anton is already a single black weight */
+  font-size: var(--fs-section-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-black);
+  margin: 0 0 var(--space-xl);
+}
+
+.product-reviews__summary {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-2xl);
+  max-width: 900px;
+  margin: 0 auto var(--space-2xl);
+  padding: var(--space-lg);
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+}
+
+.product-reviews__score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  text-align: center;
+}
+
+.product-reviews__score-value {
+  font-family: var(--font-heading-rounded);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-review-score-value);
+  color: var(--color-black);
+}
+
+.product-reviews__score-count {
+  font-family: var(--font-ui);
+  font-size: var(--fs-review-score-count);
+  color: var(--color-text-muted);
+}
+
+.review-breakdown {
+  width: 100%;
+}
+
+.product-reviews__write-btn {
+  white-space: nowrap;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+/* Responsive ---------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .product-reviews__summary {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .review-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Liquid build only ---------------------------------------------------------
+   The review body is a `richtext` setting, so Shopify wraps it in a <p>. The
+   card is a flex column with its own gap, so the <p> carries no margin of its
+   own; stacked paragraphs get the small gap back. */
+.review-card__text > p {
+  margin: 0;
+}
+
+.review-card__text > p + p {
+  margin-top: var(--space-2xs);
+}

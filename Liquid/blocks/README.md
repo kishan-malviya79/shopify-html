@@ -1,7 +1,8 @@
 # Liquid theme blocks
 
 Shopify **theme blocks** (`blocks/*.liquid`) converted from the home-page
-(`index.html`) static markup. Each file is standalone: markup + its own
+(`index.html`) and product-page (`sections/product-main.html`) static
+markup. Each file is standalone: markup + its own
 `{% schema %}`, addressed by filename (`product_card.liquid` = block type
 `product_card`).
 
@@ -9,7 +10,7 @@ Drop this folder in at the theme root as `blocks/` — theme blocks live at
 `blocks/`, not `sections/blocks/`. See `../README.md` for how the sections
 render them and for the CSS/JS loading rules.
 
-| File | Home-page section | Notes |
+| File | Section | Notes |
 |---|---|---|
 | `announcement_item.liquid` | `announcement_bar` | Ticker item + trailing sparkle. Section renders the loop 6x (1 real + 5 aria-hidden). |
 | `nav_link.liquid` | `header` | Mega-menu disclosure; accepts nested `menu_card` blocks via `{% content_for 'blocks' %}`. Last link in `menu_links` is pushed to the panel bottom. |
@@ -24,6 +25,12 @@ render them and for the CSS/JS loading rules.
 | `quiz_character_decor.liquid` | `flavor_quiz` | Decorative cutouts; render inside `.flavor-quiz__characters`. |
 | `footer_column.liquid` | `footer` | Static build's label/url pairs become one `link_list` menu picker. |
 | `reward_milestone.liquid` | `cart_drawer` | Carries `data-threshold` + `data-message` for `js/cart.js`. |
+| `gallery_image.liquid` | `product_main` | One PDP thumbnail; carries `data-image` for the viewer swap. Static block (`gallery-1`…`gallery-4`) — `product-main.js` marks the first one active, since a block can't know its own index. |
+| `variant_option.liquid` | `product_main` | Weight/size pill. Matches a variant id (entered as text — there is no `product_variant` setting type) against `closest.product`; the two text fields are the fallback. Static block (`variant-1`, `variant-2`). |
+| `trust_badge.liquid` | `product_main` | Icon + label in the buy box's reassurance row. Static block (`trust-1`…`trust-4`). |
+| `feature_badge.liquid` | `product_story` | Icon + label in the 6-up trust row; `highlight` swaps in the filled-red circle. Static block (`story-badge-1`…`story-badge-6`). |
+| `review.liquid` | `product_reviews` | Repeatable — the grid is one container. |
+| `faq_item.liquid` | `faq_section` | Repeatable; backs both the compact PDP layout and the standalone FAQ page. |
 
 ## Conversion notes
 
@@ -49,5 +56,15 @@ render them and for the CSS/JS loading rules.
   (`quiz_*_result`), it sits on the option button — the visible one.
 - **Sections live in `../sections/`.** Each one lists which block types it
   accepts and where it places them.
+- **`product_story` reuses `testimonial` as-is.** The static build tagged
+  those cards with an extra `.product-story__card` modifier; the Liquid
+  section CSS targets `.product-story__reviews-track .testimonial-card`
+  instead, so the block stays identical between `testimonial_carousel` and
+  the PDP.
+- **Richtext settings render inside a `<p>`.** Where a static `<p class=…>`
+  became a `<div>` wrapping a richtext value (`product_main`'s description,
+  `product_story`'s copy, `review`'s body, `combo_promo`'s description), the
+  owning section's CSS resets that inner `<p>` — see the "Liquid build only"
+  block at the end of each `assets/section-*.css`.
 - **Line items and cart recommendations are not blocks** — they come from
   `cart.items` and the `recommendations` product_list.

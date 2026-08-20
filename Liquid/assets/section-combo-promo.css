@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Section: combo_promo
+   Reusable pieces (combo-card, rating, price, badge, qty-stepper, buttons)
+   already live in css/components.css — this file only holds section-specific
+   layout: the sunburst background and heading sizing.
+   ========================================================================== */
+
+.combo-promo {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-2xl);
+  /* Ray colors come from the themable --color-sunburst-* pair (default: the
+     warm orange skin) rather than the brand orange tokens directly, so a page
+     theme can recolor the sunburst without touching this file (.theme-pink). */
+  background-color: var(--color-sunburst-a);
+  background-image: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    var(--color-sunburst-a) 0deg 9deg,
+    var(--color-sunburst-b) 9deg 18deg
+  );
+}
+
+.combo-promo__heading {
+  margin: 0 0 var(--space-xl);
+  font-size: var(--fs-combo-heading);
+  line-height: var(--lh-tight);
+  text-align: center;
+}
+
+.combo-promo .combo-card {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+/* Liquid build only ---------------------------------------------------------
+   The combo description is a `richtext` setting, so Shopify wraps it in a <p>;
+   .combo-card__text's own bottom margin lives on the wrapper. */
+.combo-card__text > p {
+  margin: 0;
+}

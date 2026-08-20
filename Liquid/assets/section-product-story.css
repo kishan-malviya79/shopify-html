@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Section: product_story
+   Terracotta full-bleed product detail, matching the Figma dev-mode spec:
+   50/50 info column + horizontal peek-scroll testimonial-card track, with a
+   row of icon-badges below. Review cards reuse .testimonial-card as-is
+   (css/components.css) — don't duplicate that here. Heading reuses
+   .stroke-heading/.stroke-heading--black (also css/components.css) at
+   product_carousel's existing 82px "Combo" size — don't duplicate that
+   either. Icon badges reuse .icon-badge (css/components.css).
+   ========================================================================== */
+
+.product-story {
+  position: relative;
+  background-color: var(--color-terracotta);
+  padding-top: calc(var(--space-2xl) + 40px);
+  padding-bottom: var(--space-2xl);
+  overflow: hidden;
+}
+
+/* Wavy top edge — a single soft, asymmetric cream wave straddling the
+   section's top edge, same "decorative edge" role as brand_story's stroked
+   line and footer's scalloped circles, but a solid filled shape instead of
+   either of those techniques. The shape comes from the shared
+   --mask-wave-edge token used as a mask, with the color supplied by
+   background-color, so a page theme can recolor the edge (.theme-pink). */
+.product-story::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: var(--color-wave-cream);
+  -webkit-mask: var(--mask-wave-edge) no-repeat center / 100% 100%;
+  mask: var(--mask-wave-edge) no-repeat center / 100% 100%;
+}
+
+/* Figma's frame is 1440px wide with 170px side padding, giving a fixed
+   1100px content column — narrower than the site's shared --container-max
+   (1280px), so this section caps its own .container instance instead of
+   using the shared width. */
+.product-story__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+  max-width: 1100px;
+}
+
+.product-story__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.product-story__heading {
+  margin: 0;
+  font-size: var(--fs-display-heading-desktop);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
+}
+
+.product-story__text {
+  margin: 0;
+  max-width: 460px;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-product-description);
+  line-height: 24px;
+  color: var(--color-white);
+}
+
+.product-story__text strong {
+  font-weight: var(--fw-bold);
+}
+
+.product-story__footnote {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-product-description);
+  line-height: 24px;
+  color: var(--color-white);
+}
+
+/* Reviews: horizontal peek-scroll track, no prev/next nav — the next card
+   is meant to show a sliver at the column's edge as a scroll affordance. */
+.product-story__reviews {
+  overflow: hidden;
+}
+
+.product-story__reviews-track {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-2xs);
+}
+
+.product-story__reviews-track .testimonial-card {
+  flex: 0 0 453px;
+  scroll-snap-align: start;
+}
+
+.product-story__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--space-lg) var(--space-xl);
+  max-width: 1100px;
+  margin-top: var(--space-2xl);
+  color: var(--color-cream);
+}
+
+/* Responsive ---------------------------------------------------------------
+   Below tablet, stack info above reviews and let the badge row wrap to a
+   3-column grid instead of squeezing 6 across. */
+@media (max-width: 900px) {
+  .product-story__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-story__text {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .product-story__badges .icon-badge {
+    flex: 0 0 calc(33.333% - var(--space-md));
+  }
+
+  .product-story__reviews-track .testimonial-card {
+    flex-basis: 82%;
+  }
+}
+
+/* Liquid build only ---------------------------------------------------------
+   description / storage_text / ingredients_text are `richtext` settings, so
+   Shopify wraps each in a <p>. Rendering them inline keeps the comp's
+   "<strong>Storage:</strong> copy…" single-line-flow paragraphs. */
+.product-story__text > p {
+  display: inline;
+  margin: 0;
+}

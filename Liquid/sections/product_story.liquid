@@ -1,0 +1,153 @@
+{% comment %}
+  Section: product_story
+  Source: sections/product-story.html (also rendered directly below the buy
+  box on the full PDP)
+  CSS: css/sections/product-story.css
+
+  Terracotta full-bleed PDP band with a cream wavy top edge: a 50/50 split
+  of description / storage / ingredients copy beside a horizontal
+  peek-scroll testimonial track, with a 6-up row of trust badges below.
+
+  Settings:
+    - CONTENT: heading (text), description (richtext), storage_label
+      (text), storage_text (richtext), ingredients_label (text),
+      ingredients_text (richtext), footnote (text)
+    - STYLE: color_scheme (select — see product_main), show_wave (checkbox)
+    - COLOR: background_color, wave_color, text_color
+
+  Blocks — two containers, so both types are placed as STATIC blocks by id
+  (a single {% content_for 'blocks' %} can only be called once; same
+  technique product_main and flavor_quiz use). The ids below are the ones
+  templates/product.json declares:
+    - "testimonial"   x3 — story-review-1 … story-review-3. The SAME block
+      type testimonial_carousel uses — reuse its content, don't re-author
+      it. No prev/next nav here; the track peek-scrolls.
+    - "feature_badge" x6 — story-badge-1 … story-badge-6, one of which
+      normally sets highlight (the comp highlights "Vegan").
+
+  CSS/JS loading:
+    - section-product-story.css is loaded HERE, by this section only. It
+      also carries the one Liquid-build addition:
+      `.product-story__reviews-track .testimonial-card` replaces the static
+      build's `.product-story__card` modifier, because the shared
+      testimonial block emits a plain .testimonial-card and must stay
+      reusable between this section and testimonial_carousel.
+    - Shared component CSS (.stroke-heading, .testimonial-card,
+      .icon-badge) lives in components.css, loaded once in
+      layout/theme.liquid.
+    - No JS — the track is a native scroll-snap rail.
+{% endcomment %}
+
+{{ 'section-product-story.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  The color pickers below only apply on the default scheme. `theme-pink`
+  works by re-pointing the color TOKENS this section's CSS reads, so
+  hardcoding the same properties here would win over the class and the pink
+  PDP would come out terracotta. One or the other, never both.
+{%- endcomment -%}
+{%- style -%}
+  {% if section.settings.color_scheme == 'default' %}
+    #shopify-section-{{ section.id }} .product-story {
+      background-color: {{ section.settings.background_color }};
+    }
+    #shopify-section-{{ section.id }} .product-story::before {
+      background-color: {{ section.settings.wave_color }};
+    }
+    #shopify-section-{{ section.id }} .product-story__text,
+    #shopify-section-{{ section.id }} .product-story__footnote,
+    #shopify-section-{{ section.id }} .product-story__badges {
+      color: {{ section.settings.text_color }};
+    }
+  {% endif %}
+  {% unless section.settings.show_wave %}
+    #shopify-section-{{ section.id }} .product-story::before { display: none; }
+  {% endunless %}
+{%- endstyle -%}
+
+<section class="product-story{% if section.settings.color_scheme == 'pink' %} theme-pink{% endif %}" aria-label="{{ section.settings.heading | escape }}">
+
+  <div class="container product-story__grid">
+
+    <div class="product-story__info">
+      <h2 class="product-story__heading stroke-heading stroke-heading--black" data-animate="char-reveal">{{ section.settings.heading }}</h2>
+
+      <div class="product-story__text">{{ section.settings.description }}</div>
+
+      {%- if section.settings.storage_text != blank -%}
+        <div class="product-story__text">
+          <strong>{{ section.settings.storage_label }}</strong>
+          {{ section.settings.storage_text }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.ingredients_text != blank -%}
+        <div class="product-story__text product-story__text--ingredients">
+          <strong>{{ section.settings.ingredients_label }}</strong>
+          {{ section.settings.ingredients_text }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.footnote != blank -%}
+        <p class="product-story__footnote">{{ section.settings.footnote }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="product-story__reviews">
+      <div class="product-story__reviews-track">
+        {% content_for "block", type: "testimonial", id: "story-review-1" %}
+        {% content_for "block", type: "testimonial", id: "story-review-2" %}
+        {% content_for "block", type: "testimonial", id: "story-review-3" %}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container product-story__badges" data-animate="fade-up-stagger">
+    {% content_for "block", type: "feature_badge", id: "story-badge-1" %}
+    {% content_for "block", type: "feature_badge", id: "story-badge-2" %}
+    {% content_for "block", type: "feature_badge", id: "story-badge-3" %}
+    {% content_for "block", type: "feature_badge", id: "story-badge-4" %}
+    {% content_for "block", type: "feature_badge", id: "story-badge-5" %}
+    {% content_for "block", type: "feature_badge", id: "story-badge-6" %}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Product story",
+  "tag": "div",
+  "blocks": [
+    { "type": "testimonial" },
+    { "type": "feature_badge" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Mimi's Chutney Pop" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "text", "id": "storage_label", "label": "Storage label", "default": "Storage:" },
+    { "type": "richtext", "id": "storage_text", "label": "Storage copy" },
+    { "type": "text", "id": "ingredients_label", "label": "Ingredients label", "default": "Ingredients:" },
+    { "type": "richtext", "id": "ingredients_text", "label": "Ingredients copy" },
+    { "type": "text", "id": "footnote", "label": "Footnote", "default": "*Extract" },
+    { "type": "header", "content": "Style" },
+    { "type": "checkbox", "id": "show_wave", "label": "Wavy top edge", "default": true },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "default", "label": "Cream / terracotta" },
+        { "value": "pink", "label": "Pink" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#d05835" },
+    { "type": "color", "id": "wave_color", "label": "Wave edge", "default": "#fbf1e4" },
+    { "type": "color", "id": "text_color", "label": "Body text", "default": "#ffffff" }
+  ],
+  "presets": [{ "name": "Product story" }]
+}
+{% endschema %}

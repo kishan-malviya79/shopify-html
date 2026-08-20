@@ -11,13 +11,14 @@ Run them from anywhere with `python tools/munchief-port/<script>.py`.
 |---|---|
 | `scope_css.py` | Rewrites a stylesheet under a `.munchief` wrapper so it can't collide with Horizon's own class names. Used as a library by the two build scripts. |
 | `build_munchief.py` | Full first-time port: CSS, JS, blocks and sections. **Do not re-run** — the theme's Liquid has been hand-fixed since and this would overwrite it. Kept as the record of how the port was generated. |
-| `rebuild_css.py` | Safe to re-run. Regenerates only `assets/munchief-*.css` from this repo's stylesheets, re-appending the hand-written tails (see below). |
+| `rebuild_css.py` | Regenerates `assets/munchief-*.css` from this repo's stylesheets, re-appending the hand-written tails (see below). **Name the stems you want** — `rebuild_css.py product-main product-story`. A blanket `--all` overwrites theme-side hand-edits (see trap 3). |
 | `port_original_animations.py` | Regenerates `assets/munchief-animations.js` from `js/animations.js`, applying the eight adaptations needed to run inside a live theme. Calls `speed_and_safety.py` itself. |
 | `speed_and_safety.py` | The adaptations that aren't a clean one-line diff: retimed constants, reveal safety net, start-at-top, the rAF-driven chaos scrub. |
 | `copy_images.py` | Re-encodes the home page art to WebP and copies it into the theme's `assets/`. 31MB of source PNGs became 1.5MB. |
+| `copy_product_images.py` | The same for the two images the product page adds (`munchief-product-photo.webp`, `munchief-photo-banner.webp`). Safe to re-run. |
 | `test_scrub.js` | Node harness that exercises the chaos-banner scrub against a stub DOM — proves the loop tracks scroll position, composes with the existing transform, and idles off screen. `node test_scrub.js`. |
 
-## Two traps worth knowing before you touch `scope_css.py`
+## Three traps worth knowing before you run these
 
 1. **A comment above an at-rule is part of that rule's prelude.** A naive
    rewrite turns `/* … */ @media (min-width: 641px)` into
@@ -31,6 +32,15 @@ Run them from anywhere with `python tools/munchief-port/<script>.py`.
    this repo's stylesheets goes in `munchief/.munchief-backup/<stem>-extra.css`
    and is re-appended by `rebuild_css.py`; `munchief-base.css` has its tail
    inline in that script. Otherwise a regeneration drops them.
+
+3. **A full CSS regeneration is destructive.** Some stems were refined *in
+   the theme* after the port, and those edits are in neither this repo's
+   `css/sections/` nor `.munchief-backup/*-extra.css`. Running everything
+   dropped the world grid's 485px cards, its 4px white keyline and its hover
+   zoom, plus edits in `munchief-base.css` and
+   `munchief-product-carousel.css` — restored from git. `rebuild_css.py` now
+   refuses to run without arguments; pass the stems you actually changed, and
+   diff after any `--all`.
 
 See `munchief/MUNCHIEF-HANDOFF.md` for the full picture of what is in the
 theme and what is left to do.

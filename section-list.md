@@ -33,7 +33,7 @@ Registry of every implemented section. Check here before starting a new page —
 | `cart_drawer` | [sections/cart-drawer.html](sections/cart-drawer.html) | Slide-over cart, built from 3 Figma nodes merged into one section (rule 6): scrim + 473px rounded panel on desktop, full-screen panel below 768px (X swaps to a back chevron, line-item controls stack). Panel = header, a 5-milestone reward progress bar (`reward_milestone` blocks at 10/30/50/70/90% with a red fill showing progress), then either the filled state (line items with `.qty-stepper--outline` + `.select--outline` + price/remove column, coupon row, subtotal/shipping + "Continue to checkout") or the empty state ("Where'd all the Munchiefians go?" + Shop Now, plus a scrollable "Stock up on your favorite flavors" recommendation rail). Line items come from `cart.items` in Liquid, not blocks — here they render from the drawer's `<template data-cart-item-template>` via `js/cart.js`. **Live on every page with a header** (index.html, shop-all, product-main, product-main-pink, contact, legal, faq-page, plus this preview): the header Cart button opens it, every `data-add-to-cart` button adds that card's product and opens it, and quantity/remove/subtotal/reward-progress all recompute from a localStorage cart (the static stand-in for Shopify's Cart AJAX API). Milestone thresholds are ₹299/599/999/1499/1999 via `data-threshold` | `reward_milestone` |
 | `legal_page` | [sections/legal.html](sections/legal.html) | Standalone long-form legal/policy document page (not a homepage section, not wired into `index.html` — same call as `contact_us`/`collection_grid`): left-aligned breadcrumb ("Home > Legal Page") + centered red `.stroke-heading.stroke-heading--page` "Legal Page" title, then a 780px-measure document column of 5 policy groups (Hours & Visiting, Reservations & Booking, Cover Charges, VIP Cabanas, Private & Corporate Events) — each a Fredoka group heading + a small "N Questions" meta line + fully-expanded question/answer pairs in Inter. Deliberately not `faq_section`'s `.accordion`: this page keeps every answer open so the whole policy reads (and crawls) in one pass. `announcement_bar` + `header` render above and `footer` below, so the file previews as one full page. Q&A copy is the comp's placeholder venue-policy text (THRöW Social DC), not Munchief's own | `legal_group`, `legal_qa` |
 
-## Liquid conversion — home page
+## Liquid conversion — home page and product page
 
 The home page is fully converted under [`Liquid/`](Liquid/): `sections/*.liquid`
 (one file per section, own `{% schema %}`), `blocks/*.liquid` (theme blocks),
@@ -54,6 +54,39 @@ Conventions to follow when converting the remaining pages — see `Liquid/README
   `#shopify-section-{{ section.id }}`, per block on `#block-{{ block.id }}` so
   card 1 and card 2 can carry different styles in the same section.
 
+### Product page
+
+The product detail page is converted too: `templates/product.json` renders
+`product_main` → `product_story` → `product_photo_banner` → `product_reviews` →
+`combo_promo` → `faq_section` → a `product_carousel` instance ("Meet the Rest of
+the Family") → `chaos_banner`, matching sections/product-main.html end to end.
+
+New sections: `product_main`, `product_story`, `product_photo_banner`,
+`product_reviews`, `combo_promo`, `faq_section` (both layouts — `layout: page`
+also backs the standalone FAQ page).
+New blocks: `gallery_image`, `variant_option`, `trust_badge`, `feature_badge`,
+`review`, `faq_item`. `product_story` reuses `testimonial` and the carousel
+reuses `product_card`, unchanged.
+New page-wise JS: `product-main.js` (thumbnail swap, variant pill re-labels the
+Add to cart button, qty stepper), `combo-promo.js` (its own qty stepper, own
+`data-combo-qty-*` attributes so the two steppers on one PDP can't collide),
+`faq.js` (accordion, one row open at a time).
+
+Two conversion decisions worth carrying forward:
+
+- **Pink PDP = one setting, not a second template's worth of CSS.** Every PDP
+  section takes a `color_scheme` select that renders `theme-pink` on its own
+  root, and its color pickers are emitted *only* on the default scheme — a
+  hardcoded `background-color` would otherwise beat the class that re-points the
+  token. `templates/product.pink.json` is that flag flipped, standing in for
+  sections/product-main-pink.html.
+- **Three block types, three containers.** `product_main` (gallery / variant
+  pills / trust badges) and `product_story` (testimonials / feature badges) place
+  their blocks as **static blocks by id**, because `{% content_for 'blocks' %}`
+  can only be called once per section — the same technique `flavor_quiz` already
+  uses. `product_reviews` and `faq_section` have a single container each, so they
+  use the repeatable `{% content_for 'blocks' %}` form.
+
 ## Ported into the live theme
 
 The home page of this build is running in the Horizon theme at
@@ -61,6 +94,16 @@ The home page of this build is running in the Horizon theme at
 prefixed `munchief-`). The scripts that did it live in
 [tools/munchief-port/](tools/munchief-port/) and are re-runnable.
 
+The **product page is ported too**: `munchief-product-main`,
+`munchief-product-story`, `munchief-product-photo-banner`,
+`munchief-product-reviews` and `munchief-combo-promo`, with
+`munchief-gallery-image`, `munchief-variant-option`, `munchief-trust-badge`,
+`munchief-feature-badge` and `munchief-review` as blocks, wired up by the
+theme's rewritten `templates/product.json`. Two deviations from this repo's
+version: the PDP FAQ reuses the theme's existing `munchief-faq` section
+instead of adding the comp's compact layout, and add-to-cart posts through
+real Shopify product forms rather than the static build's localStorage cart.
+
 `munchief/MUNCHIEF-HANDOFF.md` is the entry point for continuing that work —
 conventions to follow, traps already hit, and the backlog of pages (about,
-contact, legal, shop all, product, build your bundle) plus the blog.
+contact, legal, shop all, build your bundle) plus the blog.

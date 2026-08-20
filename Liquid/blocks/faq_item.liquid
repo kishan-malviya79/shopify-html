@@ -1,0 +1,40 @@
+{% comment %}
+  Block: faq_item
+  Source: sections/faq.html + sections/faq-page.html (section: faq_section)
+
+  One accordion row. Both faq_section layouts ("compact" on the PDP,
+  "page" on the standalone FAQ page) render the same block — the layout
+  setting only changes what sits around the accordion.
+
+  Settings:
+    - question (text)
+    - answer (richtext)
+    - open_by_default (checkbox, default false) — assets/faq.js keeps one
+      row open at a time, so if several blocks set this the first wins.
+
+  Shared classes (.accordion, .accordion__item/__trigger/__panel) live in
+  components.css, loaded once in layout/theme.liquid. This block ships no
+  CSS.
+{% endcomment %}
+
+<div class="accordion__item{% if block.settings.open_by_default %} is-open{% endif %}" {{ block.shopify_attributes }}>
+  <button type="button" class="accordion__trigger" aria-expanded="{% if block.settings.open_by_default %}true{% else %}false{% endif %}">
+    {{ block.settings.question }}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+  </button>
+  <div class="accordion__panel">
+    {{ block.settings.answer }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ item",
+  "settings": [
+    { "type": "text", "id": "question", "label": "Question", "default": "How long does shipping take?" },
+    { "type": "richtext", "id": "answer", "label": "Answer" },
+    { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+  ],
+  "presets": [{ "name": "FAQ item" }]
+}
+{% endschema %}

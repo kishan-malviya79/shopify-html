@@ -1,0 +1,76 @@
+{% comment %}
+  Block: feature_badge
+  Source: sections/product-story.html (section: product_story)
+
+  One badge in product_story's 6-up trust row (Less Sugar, Real
+  Ingredients, Supports Digestive Health, Vegan, Roasted Not Fried,
+  Prebiotic).
+
+  Settings:
+    - icon (select: less_sugar | real_ingredients | digestive | vegan |
+      roasted_not_fried | prebiotic) — picks one of the six inline SVGs;
+      swap for an icon_picker if the theme ever ships an icon library
+    - label (text)
+    - highlight (checkbox, default false) — renders the filled-red
+      .icon-badge__circle--solid skin instead of the outline one (the comp
+      highlights exactly one badge, "Vegan")
+
+  Shared classes: .icon-badge / .icon-badge__circle live in components.css,
+  loaded once in layout/theme.liquid. This block ships no CSS.
+{% endcomment %}
+
+<div class="icon-badge" {{ block.shopify_attributes }}>
+  <span class="icon-badge__circle{% if block.settings.highlight %} icon-badge__circle--solid{% endif %}">
+    {%- if block.settings.icon == 'vegan' -%}
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <text x="12" y="17" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="16" fill="currentColor">V</text>
+      </svg>
+    {%- else -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        {%- case block.settings.icon -%}
+          {%- when 'real_ingredients' -%}
+            <path d="M11 20A7 7 0 0 1 4 13c0-5 5-11 11-11 0 6-1 8-2 10-1.5 3-4 6-2 8Z"></path>
+            <path d="M4 13c3 0 6 1 8 4"></path>
+          {%- when 'digestive' -%}
+            <path d="M12 3a4 4 0 0 1 4 4c0 2-2 3-2 5a3 3 0 0 0 3 3 4 4 0 0 1 0 8H9a5 5 0 0 1 0-10c2 0 3-1.5 3-3a4 4 0 0 0-4-4"></path>
+          {%- when 'roasted_not_fried' -%}
+            <path d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c1 1 2 3 2 5a5 5 0 0 1-10 0c0-4 3-5 3-9 0-2 1-3 2-4Z"></path>
+          {%- when 'prebiotic' -%}
+            <path d="M12 21V10"></path>
+            <path d="M12 10c0-4-3-6-7-6 0 4 3 6 7 6Z"></path>
+            <path d="M12 14c0-3 3-5 7-5 0 3-3 5-7 5Z"></path>
+          {%- else -%}
+            <path d="M21 8 12 3 3 8l9 5 9-5Z"></path>
+            <path d="M3 8v8l9 5 9-5V8"></path>
+            <path d="M12 13v8"></path>
+        {%- endcase -%}
+      </svg>
+    {%- endif -%}
+  </span>
+  <span class="icon-badge__label">{{ block.settings.label }}</span>
+</div>
+
+{% schema %}
+{
+  "name": "Feature badge",
+  "settings": [
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        { "value": "less_sugar", "label": "Less sugar (cube)" },
+        { "value": "real_ingredients", "label": "Real ingredients (leaf)" },
+        { "value": "digestive", "label": "Digestive health (gut)" },
+        { "value": "vegan", "label": "Vegan (V)" },
+        { "value": "roasted_not_fried", "label": "Roasted not fried (flame)" },
+        { "value": "prebiotic", "label": "Prebiotic (sprout)" }
+      ],
+      "default": "less_sugar"
+    },
+    { "type": "text", "id": "label", "label": "Label", "default": "Less Sugar" },
+    { "type": "checkbox", "id": "highlight", "label": "Highlight (filled circle)", "default": false }
+  ],
+  "presets": [{ "name": "Feature badge" }]
+}
+{% endschema %}

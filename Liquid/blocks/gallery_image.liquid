@@ -1,0 +1,45 @@
+{% comment %}
+  Block: gallery_image
+  Source: sections/product-main.html (section: product_main)
+
+  One thumbnail in the PDP gallery grid. Clicking it swaps the big image in
+  product_main's viewer — the thumb carries data-image, and
+  assets/product-main.js does the swap. The first thumb on the page is
+  marked is-active by that script, so no block needs to know its own index.
+
+  Settings:
+    - image (image_picker) — the photo shown in the viewer AND the thumb
+    - alt (text) — alt text; falls back to the section's product title
+
+  Shared classes: none of its own — .product-main__thumb lives in
+  assets/section-product-main.css, loaded by the section.
+{% endcomment %}
+
+{%- liquid
+  assign img = block.settings.image
+  assign alt = block.settings.alt | default: img.alt
+-%}
+
+<button
+  type="button"
+  class="product-main__thumb"
+  data-gallery-thumb
+  data-image="{{ img | image_url: width: 1200 }}"
+  aria-label="{{ alt | default: 'Show product photo' | escape }}"
+  {{ block.shopify_attributes }}
+>
+  {%- if img != blank -%}
+    {{ img | image_url: width: 300 | image_tag: alt: '', loading: 'lazy' }}
+  {%- endif -%}
+</button>
+
+{% schema %}
+{
+  "name": "Gallery image",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "alt", "label": "Alt text" }
+  ],
+  "presets": [{ "name": "Gallery image" }]
+}
+{% endschema %}

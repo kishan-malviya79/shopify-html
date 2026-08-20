@@ -10,7 +10,7 @@ Liquid/
   blocks/     theme blocks (one file = one block type, own {% schema %})
   layout/     theme.liquid — global CSS/JS + header/footer groups + cart drawer
   sections/   one file per section + header-group.json / footer-group.json
-  templates/  index.json — the home page, sections in on-page order
+  templates/  index.json (home), product.json + product.pink.json (PDP)
 ```
 
 ## Home page (`templates/index.json`)
@@ -35,6 +35,52 @@ Liquid/
 One `product_carousel.liquid` file backs all three carousel instances — the
 differences (heading, anchor, arrows vs CTA pair, heading font) are
 settings, not separate files.
+
+## Product page (`templates/product.json`)
+
+| Order | Section | File |
+|---|---|---|
+| 1 | product_main | `sections/product_main.liquid` |
+| 2 | product_story | `sections/product_story.liquid` |
+| 3 | product_photo_banner | `sections/product_photo_banner.liquid` |
+| 4 | product_reviews | `sections/product_reviews.liquid` |
+| 5 | combo_promo | `sections/combo_promo.liquid` |
+| 6 | faq_section (`layout: compact`) | `sections/faq_section.liquid` |
+| 7 | product_carousel — "Meet the Rest of the Family" | `sections/product_carousel.liquid` (4th instance of the same file) |
+| 8 | chaos_banner | `sections/chaos_banner.liquid` |
+
+`templates/product.pink.json` is the same template with every section's
+`color_scheme` set to `pink` — the alternate-template stand-in for the
+static build's `sections/product-main-pink.html`. Assign it per product in
+the admin.
+
+One `faq_section.liquid` backs both FAQ layouts: `layout: compact` is the
+PDP block, `layout: page` is the standalone FAQ page (breadcrumb + stroked
+page title, note moved under the photo). Same markup, same blocks, one
+extra setting — not a second file.
+
+### Color schemes
+
+Every PDP section carries a `color_scheme` select. Picking `pink` renders
+the `theme-pink` class from `assets/tokens.css` on that section's root;
+that class only *re-points color tokens*, so the pink PDP costs no
+duplicated section CSS.
+
+Because of that, each of those sections emits its color pickers **only on
+the default scheme** — a hardcoded `background-color` in the scoped
+`{% style %}` block would win over the class and the pink page would come
+out cream. A section is driven by the scheme or by the pickers, never both.
+
+### Blocks in more than one container
+
+`{% content_for 'blocks' %}` can only be called once per section, so
+`product_main` (gallery / variant pills / trust badges) and `product_story`
+(testimonials / feature badges) place their blocks as **static blocks by
+id**, the same way `flavor_quiz` does. The ids are declared in
+`templates/product.json`; adding e.g. a 5th gallery thumb means one more
+`{% content_for "block", ... %}` line in the section plus one more entry in
+the template. `product_reviews` and `faq_section` fill one container each,
+so they use the repeatable single-call form.
 
 ## CSS rules
 
@@ -87,6 +133,9 @@ blocks, not hardcoded in the stylesheet:
 | `product-carousel.js` | `sections/product_carousel.liquid` |
 | `testimonial-carousel.js` | `sections/testimonial_carousel.liquid` |
 | `flavor-quiz.js` | `sections/flavor_quiz.liquid` |
+| `product-main.js` | `sections/product_main.liquid` |
+| `combo-promo.js` | `sections/combo_promo.liquid` |
+| `faq.js` | `sections/faq_section.liquid` |
 
 ## Blocks
 
@@ -95,11 +144,13 @@ Sections render them three ways:
 
 1. `{% content_for 'blocks' %}` — all blocks into one container
    (`product_carousel`, `world_grid`, `testimonial_carousel`, `footer`,
-   `cart_drawer`, `header`'s desktop nav).
+   `cart_drawer`, `header`'s desktop nav, `product_reviews`, `faq_section`).
 2. `{% content_for "block", type: "...", id: "..." %}` — **static** blocks,
    used where one section places different block types in different
    containers: `flavor_quiz` (decor, crunch results, sip results, intensity
-   options) and `header`'s two mobile promo cards.
+   options), `header`'s two mobile promo cards, `product_main` (gallery
+   thumbs, variant pills, trust badges) and `product_story` (testimonials,
+   feature badges).
 3. Local section blocks declared in the section's own schema —
    `announcement_bar` and `promo_marquee` only, because their item set has
    to render six times back-to-back for the ticker loop and

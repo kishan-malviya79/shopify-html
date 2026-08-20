@@ -1,0 +1,215 @@
+{% comment %}
+  Section: product_reviews
+  Source: sections/product-reviews.html (also rendered on the full PDP)
+  CSS: css/sections/product-reviews.css
+
+  Cream reviews section that owns the #reviews anchor product_main's rating
+  link jumps to: centered heading, a white summary card (big rating +
+  score + 5-to-1-star histogram + "Write a review"), a 3-up grid of review
+  cards, and a pagination row.
+
+  Settings:
+    - PRODUCT: product — blank on a product template means the page's own
+      product. When it carries the standard `reviews.rating` /
+      `reviews.rating_count` metafields those win over the two settings
+      below, so installing a reviews app takes over the summary card with
+      no template edit.
+    - CONTENT: heading (text), anchor_id (text), rating_value (text —
+      Shopify allows only one decimal digit on number/range settings and
+      the design shows 4.75), rating_count, write_review_text,
+      write_review_link
+    - HISTOGRAM: star_5_count … star_1_count (number) — the bar widths are
+      computed from these as a share of their own total, so they stay
+      correct no matter what the merchant enters
+    - PAGINATION: show_pagination (checkbox), pagination_pages (range) —
+      placeholder controls until a reviews app owns the paging
+    - STYLE: columns (range), color_scheme (select — see product_main)
+    - COLOR: background_color, heading_color, summary_background
+
+  Blocks:
+    - theme block "review" (repeatable) — all of them land in one grid, so
+      this section can use a single {% content_for 'blocks' %}.
+
+  CSS/JS loading:
+    - section-product-reviews.css is loaded HERE, by this section only.
+    - Shared component CSS (.rating, .badge, .review-breakdown,
+      .review-card, .pagination, .btn) lives in components.css, loaded once
+      in layout/theme.liquid.
+    - No JS — the pagination buttons are inert until a reviews app is
+      wired up.
+{% endcomment %}
+
+{{ 'section-product-reviews.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign review_product = section.settings.product | default: product
+
+  assign rating_display = section.settings.rating_value
+  assign rating_total = section.settings.rating_count
+
+  # A store running a reviews app publishes the standard `reviews.rating`
+  # and `reviews.rating_count` metafields. Those are the truth when they
+  # exist; the settings above are what the design shows until then.
+  assign rating_metafield = review_product.metafields.reviews.rating
+  if rating_metafield != blank and rating_metafield.value.rating != blank
+    assign rating_display = rating_metafield.value.rating
+  endif
+
+  assign count_metafield = review_product.metafields.reviews.rating_count
+  if count_metafield != blank
+    assign rating_total = count_metafield
+  endif
+
+  assign full_stars = rating_display | times: 1 | floor
+
+  assign s5 = section.settings.star_5_count
+  assign s4 = section.settings.star_4_count
+  assign s3 = section.settings.star_3_count
+  assign s2 = section.settings.star_2_count
+  assign s1 = section.settings.star_1_count
+  assign star_total = s5 | plus: s4 | plus: s3 | plus: s2 | plus: s1
+  if star_total == 0
+    assign star_total = 1
+  endif
+-%}
+
+{%- comment -%}
+  The color pickers only apply on the default scheme — see product_main for
+  why a color_scheme and a hardcoded color can't both drive the same
+  property.
+{%- endcomment -%}
+{%- style -%}
+  {% if section.settings.color_scheme == 'default' %}
+    #shopify-section-{{ section.id }} .product-reviews {
+      background-color: {{ section.settings.background_color }};
+    }
+    #shopify-section-{{ section.id }} .product-reviews__heading {
+      color: {{ section.settings.heading_color }};
+    }
+    #shopify-section-{{ section.id }} .product-reviews__summary {
+      background-color: {{ section.settings.summary_background }};
+    }
+  {% endif %}
+  @media (min-width: 1025px) {
+    #shopify-section-{{ section.id }} .review-grid {
+      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    }
+  }
+{%- endstyle -%}
+
+<section id="{{ section.settings.anchor_id | default: 'reviews' }}" class="product-reviews{% if section.settings.color_scheme == 'pink' %} theme-pink{% endif %}" aria-label="Customer reviews">
+  <div class="container">
+
+    <h2 class="product-reviews__heading" data-animate="fade-up">{{ section.settings.heading }}</h2>
+
+    <div class="product-reviews__summary" data-animate="fade-up">
+      <div class="product-reviews__score">
+        <div class="rating rating--lg">
+          <span class="rating__stars" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              {%- if i <= full_stars -%}
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              {%- endif -%}
+            {%- endfor -%}
+          </span>
+        </div>
+        <span class="product-reviews__score-value">{{ rating_display }} out of 5</span>
+        <span class="product-reviews__score-count">Based on {{ rating_total }} reviews</span>
+      </div>
+
+      <div class="review-breakdown">
+        {%- comment -%}
+          One row per star level. `stars` counts down 5 → 1 and `count`
+          picks the matching setting, so the five near-identical rows in
+          the static build collapse into one loop.
+        {%- endcomment -%}
+        {%- for offset in (0..4) -%}
+          {%- liquid
+            assign stars = 5 | minus: offset
+            case stars
+              when 5
+                assign count = s5
+              when 4
+                assign count = s4
+              when 3
+                assign count = s3
+              when 2
+                assign count = s2
+              else
+                assign count = s1
+            endcase
+            assign bar_width = count | times: 100.0 | divided_by: star_total
+          -%}
+          <div class="review-breakdown__row">
+            <span>{{ stars }}</span>
+            <div class="review-breakdown__track"><div class="review-breakdown__fill" style="width: {{ bar_width }}%;"></div></div>
+            <span>{{ count }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <a href="{{ section.settings.write_review_link | default: '#' }}" class="btn btn--pill btn--outline product-reviews__write-btn">{{ section.settings.write_review_text }}</a>
+    </div>
+
+    <div class="review-grid" data-animate="fade-up-stagger">
+      {% content_for 'blocks' %}
+    </div>
+
+    {%- if section.settings.show_pagination -%}
+      <nav class="pagination" aria-label="Review pages">
+        {%- for page_number in (1..section.settings.pagination_pages) -%}
+          <button type="button" class="pagination__page{% if forloop.first %} is-active{% endif %}"{% if forloop.first %} aria-current="page"{% endif %}>{{ page_number }}</button>
+        {%- endfor -%}
+        <button type="button" class="pagination__next" aria-label="Next page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+      </nav>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "tag": "div",
+  "blocks": [{ "type": "review" }],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Customer Reviews" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "reviews", "info": "The buy box's rating link jumps to this id." },
+    { "type": "header", "content": "Product" },
+    { "type": "product", "id": "product", "label": "Product", "info": "Leave blank on a product template to use the page's own product. Its review metafields win over the numbers below." },
+    { "type": "text", "id": "rating_value", "label": "Average rating", "default": "4.75", "info": "0-5. Text, not a number: Shopify allows only one decimal digit on number and range settings, and the design shows 4.75." },
+    { "type": "number", "id": "rating_count", "label": "Review count", "default": 118 },
+    { "type": "text", "id": "write_review_text", "label": "Write-a-review button", "default": "Write a review" },
+    { "type": "url", "id": "write_review_link", "label": "Write-a-review link" },
+    { "type": "header", "content": "Rating histogram" },
+    { "type": "number", "id": "star_5_count", "label": "5 star", "default": 94 },
+    { "type": "number", "id": "star_4_count", "label": "4 star", "default": 14 },
+    { "type": "number", "id": "star_3_count", "label": "3 star", "default": 6 },
+    { "type": "number", "id": "star_2_count", "label": "2 star", "default": 3 },
+    { "type": "number", "id": "star_1_count", "label": "1 star", "default": 1 },
+    { "type": "header", "content": "Pagination" },
+    { "type": "checkbox", "id": "show_pagination", "label": "Show pagination", "default": true },
+    { "type": "range", "id": "pagination_pages", "label": "Pages", "min": 1, "max": 10, "step": 1, "default": 4 },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "columns", "label": "Cards per row (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "default", "label": "Cream / terracotta" },
+        { "value": "pink", "label": "Pink" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#f6efdd" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#2b2b2b" },
+    { "type": "color", "id": "summary_background", "label": "Summary card", "default": "#ffffff" }
+  ],
+  "presets": [{ "name": "Product reviews" }]
+}
+{% endschema %}

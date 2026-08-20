@@ -119,3 +119,11 @@ Covered: `announcement_item`, `nav_link`, `menu_card`, `marquee_item`,
 `product_card`, `world_card`, `testimonial`, `quiz_character_result`,
 `quiz_soda_result`, `quiz_intensity_option`, `quiz_character_decor`,
 `footer_column`, `reward_milestone`.
+
+Product page adds `gallery_image`, `variant_option`, `trust_badge`
+(`product_main`), `feature_badge` (`product_story`, alongside the shared
+`testimonial`), `review` (`product_reviews`) and `faq_item` (`faq_section`),
+wired up by `Liquid/templates/product.json`. The first five land in sections
+that fill more than one container, so those sections place them as **static
+blocks by id** — `{% content_for 'blocks' %}` can only be called once per
+section. `review` and `faq_item` are repeatable through that single call.

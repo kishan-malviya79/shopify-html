@@ -1,0 +1,92 @@
+{% comment %}
+  Section: product_photo_banner
+  Source: sections/product-photo-banner.html (also rendered on the full PDP
+  below product_story)
+  CSS: css/sections/product-photo-banner.css
+
+  Full-bleed lifestyle photo break, framed top and bottom by the same wavy
+  edge product_story uses — top band terracotta (flat top, wave dipping
+  into the photo), bottom band cream (same path flipped, flat bottom
+  meeting the page).
+
+  Settings:
+    - CONTENT: image (image_picker), image_alt (text)
+    - STYLE: aspect_ratio (select), color_scheme (select — see
+      product_main)
+    - COLOR: top_edge_color, bottom_edge_color
+
+  Blocks: none — one photo, no repeater content.
+
+  CSS/JS loading:
+    - section-product-photo-banner.css is loaded HERE, by this section
+      only. The wave shape itself is the shared --mask-wave-edge token from
+      tokens.css, so no SVG is redrawn.
+    - No JS.
+{% endcomment %}
+
+{{ 'section-product-photo-banner.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  The edge pickers only apply on the default scheme — see product_main for
+  why a color_scheme and a hardcoded color can't both drive the same
+  property.
+{%- endcomment -%}
+{%- style -%}
+  {% if section.settings.color_scheme == 'default' %}
+    #shopify-section-{{ section.id }} .photo-banner::before {
+      background-color: {{ section.settings.top_edge_color }};
+    }
+    #shopify-section-{{ section.id }} .photo-banner::after {
+      background-color: {{ section.settings.bottom_edge_color }};
+    }
+  {% endif %}
+  #shopify-section-{{ section.id }} .photo-banner__media {
+    aspect-ratio: {{ section.settings.aspect_ratio }};
+  }
+{%- endstyle -%}
+
+<section class="photo-banner{% if section.settings.color_scheme == 'pink' %} theme-pink{% endif %}" aria-label="{{ section.settings.image_alt | escape }}">
+  <div class="photo-banner__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 2400 | image_tag: alt: section.settings.image_alt, loading: 'lazy' }}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product photo banner",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Wide crop — the band renders at 3:1 by default." },
+    { "type": "text", "id": "image_alt", "label": "Alt text", "default": "Roasted makhana with green chutney and the product tin and pouch" },
+    { "type": "header", "content": "Style" },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        { "value": "3 / 1", "label": "Wide (3:1)" },
+        { "value": "21 / 9", "label": "Cinematic (21:9)" },
+        { "value": "2 / 1", "label": "Short (2:1)" }
+      ],
+      "default": "3 / 1"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "default", "label": "Cream / terracotta" },
+        { "value": "pink", "label": "Pink" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "top_edge_color", "label": "Top wave", "default": "#d05835" },
+    { "type": "color", "id": "bottom_edge_color", "label": "Bottom wave", "default": "#fbf1e4" }
+  ],
+  "presets": [{ "name": "Product photo banner" }]
+}
+{% endschema %}

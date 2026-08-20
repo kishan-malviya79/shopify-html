@@ -1,0 +1,158 @@
+{% comment %}
+  Section: combo_promo
+  Source: sections/combo-promo.html (also rendered on the full PDP between
+  product_reviews and faq_section)
+  CSS: css/sections/combo-promo.css
+
+  Full-bleed combo offer over a pure-CSS sunburst (a
+  repeating-conic-gradient, no image asset): a stroked white heading above
+  one white combo card — media, rating, title, copy, price, qty stepper and
+  an "Add Combo to Cart" button.
+
+  Settings:
+    - CONTENT: heading (text), product (product — supplies title, price,
+      compare_at_price and image), image (image_picker — overrides the
+      product photo), description (richtext), rating_value, rating_count,
+      button_label, button_link
+    - STYLE: ray_size (range — degrees per ray pair), color_scheme (select
+      — see product_main)
+    - COLOR: sunburst_color_a, sunburst_color_b, card_background
+
+  Blocks: none — one combo card, no repeater content.
+
+  CSS/JS loading:
+    - section-combo-promo.css is loaded HERE, by this section only.
+    - Shared component CSS (.stroke-heading, .combo-card, .rating, .price,
+      .badge, .qty-stepper, .btn) lives in components.css, loaded once in
+      layout/theme.liquid.
+    - combo-promo.js is imported page-wise (defer) for the card's qty
+      stepper. It uses its own data-combo-qty-* attributes so it never
+      collides with product_main's identically-shaped stepper on the same
+      page.
+{% endcomment %}
+
+{{ 'section-combo-promo.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'combo-promo.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign combo = section.settings.product
+  assign full_stars = section.settings.rating_value | floor
+  assign ray = section.settings.ray_size
+  assign ray_pair = ray | times: 2
+-%}
+
+{%- comment -%}
+  The color pickers only apply on the default scheme — see product_main for
+  why a color_scheme and a hardcoded color can't both drive the same
+  property. ray_size is scheme-independent, so it is always emitted.
+{%- endcomment -%}
+{%- style -%}
+  #shopify-section-{{ section.id }} .combo-promo {
+    {% if section.settings.color_scheme == 'default' %}
+      background-color: {{ section.settings.sunburst_color_a }};
+      background-image: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        {{ section.settings.sunburst_color_a }} 0deg {{ ray }}deg,
+        {{ section.settings.sunburst_color_b }} {{ ray }}deg {{ ray_pair }}deg
+      );
+    {% else %}
+      background-image: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        var(--color-sunburst-a) 0deg {{ ray }}deg,
+        var(--color-sunburst-b) {{ ray }}deg {{ ray_pair }}deg
+      );
+    {% endif %}
+  }
+  {% if section.settings.color_scheme == 'default' %}
+    #shopify-section-{{ section.id }} .combo-card {
+      background-color: {{ section.settings.card_background }};
+    }
+  {% endif %}
+{%- endstyle -%}
+
+<section class="combo-promo{% if section.settings.color_scheme == 'pink' %} theme-pink{% endif %}" aria-label="Combo offer">
+  <div class="container">
+
+    <h2 class="combo-promo__heading stroke-heading stroke-heading--white" data-animate="char-reveal">{{ section.settings.heading }}</h2>
+
+    <div class="combo-card" data-animate="fade-up">
+      <div class="combo-card__media">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 900 | image_tag: alt: combo.title, loading: 'lazy' }}
+        {%- elsif combo.featured_image -%}
+          {{ combo.featured_image | image_url: width: 900 | image_tag: alt: combo.title, loading: 'lazy' }}
+        {%- endif -%}
+      </div>
+
+      <div class="combo-card__body">
+        <div class="rating">
+          <span class="rating__stars" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              {%- if i <= full_stars -%}
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+              {%- endif -%}
+            {%- endfor -%}
+          </span>
+          <span class="rating__count">({{ section.settings.rating_count }})</span>
+        </div>
+
+        <h3 class="combo-card__title">{{ combo.title }}</h3>
+        <div class="combo-card__text">{{ section.settings.description }}</div>
+
+        <div class="price">
+          <span class="price__sale">{{ combo.price | money }}</span>
+          {%- if combo.compare_at_price > combo.price -%}
+            {%- assign saving = combo.compare_at_price | minus: combo.price -%}
+            <span class="price__compare">{{ combo.compare_at_price | money }}</span>
+            <span class="badge badge--green">Save {{ saving | money }}</span>
+          {%- endif -%}
+        </div>
+
+        <div class="combo-card__cart-row">
+          <div class="qty-stepper">
+            <button type="button" class="qty-stepper__btn" data-combo-qty-decrease aria-label="Decrease quantity">&minus;</button>
+            <span class="qty-stepper__value" data-combo-qty-value>1</span>
+            <button type="button" class="qty-stepper__btn" data-combo-qty-increase aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="btn btn--pill btn--red" data-add-to-cart>{{ section.settings.button_label }}</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Combo promo",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Crunch Max Combo" },
+    { "type": "product", "id": "product", "label": "Combo product" },
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Overrides the product photo." },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "range", "id": "rating_value", "label": "Rating", "min": 0, "max": 5, "step": 0.5, "default": 5 },
+    { "type": "number", "id": "rating_count", "label": "Rating count", "default": 53 },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add Combo to Cart" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Unused while the button adds to the cart drawer; set it if the button should navigate instead." },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "ray_size", "label": "Sunburst ray width", "min": 3, "max": 20, "step": 1, "unit": "deg", "default": 9 },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "default", "label": "Cream / terracotta" },
+        { "value": "pink", "label": "Pink" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "sunburst_color_a", "label": "Ray A", "default": "#ff7a2e" },
+    { "type": "color", "id": "sunburst_color_b", "label": "Ray B", "default": "#ffb347" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" }
+  ],
+  "presets": [{ "name": "Combo promo" }]
+}
+{% endschema %}

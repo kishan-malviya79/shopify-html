@@ -1,0 +1,181 @@
+{% comment %}
+  Section: faq_section
+  Source: sections/faq.html (layout "compact", the PDP block) and
+  sections/faq-page.html (layout "page", the standalone FAQ page)
+  CSS: css/sections/faq.css
+
+  One section, two layouts — no duplicate file:
+    - "compact" (default): two-column PDP FAQ — rotated bordered photo
+      beside a Fredoka heading, the accordion, and a "still have
+      questions?" line under it.
+    - "page": standalone FAQ page — breadcrumb + centered stroked page
+      title above the same grid, flat photo with the note beneath it, and
+      no in-column heading.
+
+  Settings:
+    - LAYOUT: layout (select: compact | page)
+    - CONTENT: image (image_picker), image_alt (text), heading (text —
+      "compact" only), page_title (text — "page" only),
+      breadcrumb_home_label / breadcrumb_home_link /
+      breadcrumb_current_label (— "page" only), more_questions_text
+      (richtext), more_questions_link_text (text), more_questions_link
+      (url)
+    - STYLE: color_scheme (select — see product_main)
+    - COLOR: background_color, heading_color
+
+  Blocks:
+    - theme block "faq_item" (repeatable) — all rows land in one
+      .accordion, so this section uses a single {% content_for 'blocks' %}.
+
+  CSS/JS loading:
+    - section-faq.css is loaded HERE, by this section only.
+    - Shared component CSS (.accordion, .breadcrumb, .stroke-heading) lives
+      in components.css, loaded once in layout/theme.liquid.
+    - faq.js is imported page-wise (defer): one row open at a time, click
+      toggles and closes the rest. It binds every .faq on the page.
+{% endcomment %}
+
+{{ 'section-faq.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'faq.js' | asset_url }}" defer></script>
+
+{%- assign is_page = false -%}
+{%- if section.settings.layout == 'page' -%}
+  {%- assign is_page = true -%}
+{%- endif -%}
+
+{%- comment -%}
+  The color pickers only apply on the default scheme — see product_main for
+  why a color_scheme and a hardcoded color can't both drive the same
+  property.
+{%- endcomment -%}
+{%- style -%}
+  {% if section.settings.color_scheme == 'default' %}
+    #shopify-section-{{ section.id }} .faq {
+      background-color: {{ section.settings.background_color }};
+    }
+    #shopify-section-{{ section.id }} .faq__heading,
+    #shopify-section-{{ section.id }} .faq__page-heading {
+      color: {{ section.settings.heading_color }};
+    }
+  {% endif %}
+{%- endstyle -%}
+
+{%- capture more_questions -%}
+  {%- if section.settings.more_questions_text != blank or section.settings.more_questions_link_text != blank -%}
+    {%- comment -%}
+      A <div>, not the static build's <p>: more_questions_text is a
+      richtext setting and already renders its own <p>, which a parent <p>
+      would auto-close. section-faq.css renders that inner <p> inline so
+      the line still reads "Still have questions? Let's chat".
+    {%- endcomment -%}
+    <div class="faq__more">
+      {{ section.settings.more_questions_text }}
+      <a href="{{ section.settings.more_questions_link | default: '#' }}">{{ section.settings.more_questions_link_text }}</a>
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture photo -%}
+  <div class="faq__photo">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 900 | image_tag: alt: section.settings.image_alt, loading: 'lazy' }}
+    {%- endif -%}
+  </div>
+{%- endcapture -%}
+
+<section class="faq{% if is_page %} faq--page{% endif %}{% if section.settings.color_scheme == 'pink' %} theme-pink{% endif %}" aria-label="Frequently asked questions">
+
+  {%- comment -%}
+    Both layouts share ONE accordion container: {% content_for 'blocks' %}
+    may only appear once per section, so the layouts branch around the
+    accordion rather than each carrying their own copy of it. The "page"
+    layout opens an extra .faq__grid wrapper that closes further down.
+  {%- endcomment -%}
+  <div class="container{% if is_page %} faq__inner{% else %} faq__grid{% endif %}">
+
+    {%- if is_page -%}
+      <nav class="breadcrumb faq__breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ section.settings.breadcrumb_home_link | default: routes.root_url }}" class="breadcrumb__link">{{ section.settings.breadcrumb_home_label }}</a>
+        <span class="breadcrumb__sep">&gt;</span>
+        <span class="breadcrumb__current">{{ section.settings.breadcrumb_current_label }}</span>
+      </nav>
+
+      <h1 class="faq__page-heading stroke-heading" data-animate="char-reveal">{{ section.settings.page_title }}</h1>
+
+      <div class="faq__grid">
+        <div class="faq__aside">
+          {{ photo }}
+          {{ more_questions }}
+        </div>
+    {%- else -%}
+      {{ photo }}
+    {%- endif -%}
+
+    <div class="faq__content">
+      {%- unless is_page -%}
+        <h2 class="faq__heading" data-animate="fade-up">{{ section.settings.heading }}</h2>
+      {%- endunless -%}
+
+      <div class="accordion">
+        {% content_for 'blocks' %}
+      </div>
+
+      {%- unless is_page -%}
+        {{ more_questions }}
+      {%- endunless -%}
+    </div>
+
+    {%- if is_page -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "div",
+  "blocks": [{ "type": "faq_item" }],
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "compact", "label": "Compact (product page)" },
+        { "value": "page", "label": "Page (standalone FAQ)" }
+      ],
+      "default": "compact"
+    },
+    { "type": "header", "content": "Content" },
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "image_alt", "label": "Photo alt text", "default": "Mimi's Chutney Pop tin" },
+    { "type": "text", "id": "heading", "label": "Heading (compact)", "default": "Questions?<br />We're here to help." },
+    { "type": "text", "id": "page_title", "label": "Page title (page)", "default": "Frequently Asked Questions" },
+    { "type": "text", "id": "breadcrumb_home_label", "label": "Breadcrumb home (page)", "default": "Home" },
+    { "type": "url", "id": "breadcrumb_home_link", "label": "Breadcrumb home link (page)" },
+    { "type": "text", "id": "breadcrumb_current_label", "label": "Breadcrumb current (page)", "default": "FAQ" },
+    { "type": "richtext", "id": "more_questions_text", "label": "Still-have-questions text" },
+    { "type": "text", "id": "more_questions_link_text", "label": "Still-have-questions link text", "default": "Let's chat" },
+    { "type": "url", "id": "more_questions_link", "label": "Still-have-questions link" },
+    { "type": "header", "content": "Style" },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "default", "label": "Cream / terracotta" },
+        { "value": "pink", "label": "Pink" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#f6efdd" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#e2241a" }
+  ],
+  "presets": [{ "name": "FAQ" }]
+}
+{% endschema %}

@@ -1,0 +1,430 @@
+{
+  "sections": {
+    "product_main": {
+      "type": "product_main",
+      "blocks": {
+        "gallery-1": {
+          "type": "gallery_image",
+          "static": true,
+          "settings": {
+            "alt": "Tantan's Salt Pop — pouch and tin"
+          }
+        },
+        "gallery-2": {
+          "type": "gallery_image",
+          "static": true,
+          "settings": {
+            "alt": "Tantan's Salt Pop pouch"
+          }
+        },
+        "gallery-3": {
+          "type": "gallery_image",
+          "static": true,
+          "settings": {
+            "alt": "Tantan's Salt Pop tin, open"
+          }
+        },
+        "gallery-4": {
+          "type": "gallery_image",
+          "static": true,
+          "settings": {
+            "alt": "Tantan's Salt Pop pouch, back"
+          }
+        },
+        "variant-1": {
+          "type": "variant_option",
+          "static": true,
+          "settings": {
+            "label": "70g Tin",
+            "price": "₹300",
+            "default_selected": true
+          }
+        },
+        "variant-2": {
+          "type": "variant_option",
+          "static": true,
+          "settings": {
+            "label": "20g Tasting Pouch",
+            "price": "₹99"
+          }
+        },
+        "trust-1": {
+          "type": "trust_badge",
+          "static": true,
+          "settings": {
+            "icon": "dispatch",
+            "label": "Fast dispatch"
+          }
+        },
+        "trust-2": {
+          "type": "trust_badge",
+          "static": true,
+          "settings": {
+            "icon": "secure",
+            "label": "Secure payment"
+          }
+        },
+        "trust-3": {
+          "type": "trust_badge",
+          "static": true,
+          "settings": {
+            "icon": "replacement",
+            "label": "Easy replacement"
+          }
+        },
+        "trust-4": {
+          "type": "trust_badge",
+          "static": true,
+          "settings": {
+            "icon": "roasted",
+            "label": "Roasted, not fried"
+          }
+        }
+      },
+      "settings": {
+        "eyebrow_text": "Pink Salt Makhana · Salt Pop",
+        "description": "<p>An unforgettable blackberry &amp; smooth vanilla combination.</p>",
+        "rating_value": 4.3,
+        "rating_count": 1240,
+        "reviews_anchor": "reviews",
+        "tax_note": "Inclusive of all taxes",
+        "variants_label": "Quantity",
+        "checkout_note": "Safe Checkout · 7-Days Return · 3-6 Day Delivery",
+        "show_chat_button": true,
+        "show_pincode_checker": true,
+        "pincode_placeholder": "Enter pincode",
+        "pincode_button_label": "Check",
+        "upsell_heading": "Must Try",
+        "upsell_badge": "63% OFF + FREE Munchief bag",
+        "upsell_text": "The crunch the flap, the full-on flavour scene",
+        "upsell_button_label": "Add Combo to Cart",
+        "thumbnail_columns": 4,
+        "color_scheme": "pink"
+      }
+    },
+    "product_story": {
+      "type": "product_story",
+      "blocks": {
+        "story-review-1": {
+          "type": "testimonial",
+          "static": true,
+          "settings": {
+            "title": "Perfect way to unwind",
+            "review_text": "<p>I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>",
+            "author_name": "Tina A",
+            "rating_value": 5
+          }
+        },
+        "story-review-2": {
+          "type": "testimonial",
+          "static": true,
+          "settings": {
+            "title": "My new favorite treat",
+            "review_text": "<p>These Makhanas are amazing. The flavor is actually really good. I take one after work and it just melts the stress away. Will definitely be ordering again.</p>",
+            "author_name": "Sara M",
+            "rating_value": 5
+          }
+        },
+        "story-review-3": {
+          "type": "testimonial",
+          "static": true,
+          "settings": {
+            "title": "Subtle, relaxing, and delicious",
+            "review_text": "<p>These drinks taste great and give a calm, happy feeling without being too intense. Perfect for a chill night at home.</p>",
+            "author_name": "Nina K",
+            "rating_value": 5
+          }
+        },
+        "story-badge-1": {
+          "type": "feature_badge",
+          "static": true,
+          "settings": {
+            "icon": "less_sugar",
+            "label": "Less Sugar"
+          }
+        },
+        "story-badge-2": {
+          "type": "feature_badge",
+          "static": true,
+          "settings": {
+            "icon": "real_ingredients",
+            "label": "Real Ingredients"
+          }
+        },
+        "story-badge-3": {
+          "type": "feature_badge",
+          "static": true,
+          "settings": {
+            "icon": "digestive",
+            "label": "Supports Digestive Health"
+          }
+        },
+        "story-badge-4": {
+          "type": "feature_badge",
+          "static": true,
+          "settings": {
+            "icon": "vegan",
+            "label": "Vegan",
+            "highlight": true
+          }
+        },
+        "story-badge-5": {
+          "type": "feature_badge",
+          "static": true,
+          "settings": {
+            "icon": "roasted_not_fried",
+            "label": "Roasted Not Fried"
+          }
+        },
+        "story-badge-6": {
+          "type": "feature_badge",
+          "static": true,
+          "settings": {
+            "icon": "prebiotic",
+            "label": "· Prebiotic ·"
+          }
+        }
+      },
+      "settings": {
+        "heading": "Tantan's Salt Pop",
+        "description": "<p>Made with blackberry, crisp apple, and a splash of mandarin and lemon juices, Blackberry Vanilla creates a layered blackberry flavor with smooth vanilla notes for an unforgettable soda that'll satisfy every craving.</p>",
+        "storage_label": "Storage:",
+        "storage_text": "<p>As part of our 9g Fiber Line, this flavor should be stored in the fridge so it's ready to chill whenever you are.</p>",
+        "ingredients_label": "Ingredients:",
+        "ingredients_text": "<p>Carbonated Water, OLISMART (Cassava Root Fiber, Chicory Root Inulin, Jerusalem Artichoke Inulin, Nopal Cactus*, Marshmallow Root*, Calendula Flower*, Kudzu Root*), Blackberry Juice Concentrate, Apple Juice Concentrate, Cassava Root Syrup, Mandarin Juice Concentrate, Lemon Juice Concentrate, Stevia Leaf*, Himalayan Pink Salt, Natural Flavors.</p>",
+        "footnote": "*Extract",
+        "show_wave": true,
+        "color_scheme": "pink"
+      }
+    },
+    "product_photo_banner": {
+      "type": "product_photo_banner",
+      "settings": {
+        "image_alt": "Roasted makhana with pink salt and Tantan's Salt Pop tin and pouch",
+        "aspect_ratio": "3 / 1",
+        "color_scheme": "pink"
+      }
+    },
+    "product_reviews": {
+      "type": "product_reviews",
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "title": "Perfectly chatpata, not overpowering",
+            "body": "<p>Some chutney snacks I've tried are way too tangy or too salty. This one nails the balance — crunchy, spiced, and I keep going back for...</p>",
+            "author": "Ankit Bansal",
+            "date": "08/21/2025",
+            "rating_value": 5,
+            "verified": true
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "title": "Great for post-workout cravings",
+            "body": "<p>I keep a tin at my desk and a pouch in my gym bag. Roasted, not fried, so it doesn't feel like a guilty snack after a...</p>",
+            "author": "Vikas Gupta",
+            "date": "08/19/2025",
+            "rating_value": 5,
+            "verified": true
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "title": "Excellent product, cost-effective",
+            "body": "<p>Compared to other roasted makhana brands I've bought, this is easily the best value for the flavour and quantity you...</p>",
+            "author": "Soumya Mitra",
+            "date": "08/17/2025",
+            "rating_value": 5,
+            "verified": true
+          }
+        },
+        "review-4": {
+          "type": "review",
+          "settings": {
+            "title": "Delivery was spot on",
+            "body": "<p>Ordered on a Tuesday, got it Thursday. Super fast and the packaging kept everything crisp — no crushed tins or...</p>",
+            "author": "Varun Kapoor",
+            "date": "08/14/2025",
+            "rating_value": 5,
+            "verified": true
+          }
+        },
+        "review-5": {
+          "type": "review",
+          "settings": {
+            "title": "Crunchy and genuinely addictive",
+            "body": "<p>Roasted, never fried, but you'd never guess from the crunch. The green chutney flavour is the closest I've had to the real...</p>",
+            "author": "Nikhil Desai",
+            "date": "08/10/2025",
+            "rating_value": 5,
+            "verified": true
+          }
+        },
+        "review-6": {
+          "type": "review",
+          "settings": {
+            "title": "Stress levels have gone down",
+            "body": "<p>I didn't expect a performance supplement to affect my stress, but this one definitely has. Calming without making me...</p>",
+            "author": "Karan Rao",
+            "date": "08/05/2025",
+            "rating_value": 5,
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3",
+        "review-4",
+        "review-5",
+        "review-6"
+      ],
+      "settings": {
+        "heading": "Customer Reviews",
+        "anchor_id": "reviews",
+        "rating_value": "4.75",
+        "rating_count": 118,
+        "write_review_text": "Write a review",
+        "star_5_count": 94,
+        "star_4_count": 14,
+        "star_3_count": 6,
+        "star_2_count": 3,
+        "star_1_count": 1,
+        "show_pagination": true,
+        "pagination_pages": 4,
+        "columns": 3,
+        "color_scheme": "pink"
+      }
+    },
+    "combo_promo": {
+      "type": "combo_promo",
+      "settings": {
+        "heading": "The Crunch Max Combo",
+        "description": "<p>The crunch, the flap, the full-on flavour scene. Pair Chutney Pop with a Guava Chilli Lime protein soda.</p>",
+        "rating_value": 5,
+        "rating_count": 53,
+        "button_label": "Add Combo to Cart",
+        "ray_size": 9,
+        "color_scheme": "pink"
+      }
+    },
+    "faq_section": {
+      "type": "faq_section",
+      "blocks": {
+        "faq-1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Most orders dispatch within 24 hours and arrive in 3–6 business days, depending on your pincode. You can check serviceability right on this page before you order.</p>",
+            "open_by_default": true
+          }
+        },
+        "faq-2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is Salt Pop vegan?",
+            "answer": "<p>Yes — every Munchief makhana flavour, including Salt Pop, is 100% vegan, roasted (not fried), and made with real ingredients.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How should I store it after opening?",
+            "answer": "<p>Reseal the pouch or snap the tin's lid back on and keep it somewhere cool and dry. For maximum crunch, we'd finish it within 2–3 weeks of opening.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I return it if I don't like the flavour?",
+            "answer": "<p>We offer a 7-day return window on unopened packs. If something arrived damaged, reach out and we'll sort a replacement or refund.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4"
+      ],
+      "settings": {
+        "layout": "compact",
+        "heading": "Questions?<br />We're here to help.",
+        "image_alt": "Tantan's Salt Pop tin",
+        "more_questions_text": "<p>Still have questions?</p>",
+        "more_questions_link_text": "Let's chat",
+        "color_scheme": "pink"
+      }
+    },
+    "product_carousel_family": {
+      "type": "product_carousel",
+      "blocks": {
+        "card-1": {
+          "type": "product_card",
+          "settings": {
+            "badge_text": "5000+ Bought This",
+            "badge_style": "green",
+            "rating_value": 5,
+            "rating_count": 53,
+            "variant_label": "20g Tasting Pouch"
+          }
+        },
+        "card-2": {
+          "type": "product_card",
+          "settings": {
+            "badge_text": "Best Seller",
+            "badge_style": "orange",
+            "rating_value": 5,
+            "rating_count": 41,
+            "variant_label": "20g Tasting Pouch"
+          }
+        },
+        "card-3": {
+          "type": "product_card",
+          "settings": {
+            "rating_value": 5,
+            "rating_count": 28,
+            "variant_label": "20g Tasting Pouch"
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3"
+      ],
+      "settings": {
+        "heading": "Meet the Rest of the Family",
+        "anchor_id": "rest-of-the-family",
+        "nav_style": "arrows",
+        "heading_font": "display",
+        "cards_per_row": 3,
+        "show_borders": true
+      }
+    },
+    "chaos_banner": {
+      "type": "chaos_banner",
+      "settings": {
+        "heading": "Ready to cause<br />some chaos?",
+        "text": "<p>Ten flavours. Five personalities. One mystery still brewing. Come find out which one you are.</p>",
+        "button_label": "Shop Now",
+        "content_align": "left",
+        "content_width": 620
+      }
+    }
+  },
+  "order": [
+    "product_main",
+    "product_story",
+    "product_photo_banner",
+    "product_reviews",
+    "combo_promo",
+    "faq_section",
+    "product_carousel_family",
+    "chaos_banner"
+  ]
+}
