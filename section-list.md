@@ -54,3 +54,13 @@ Conventions to follow when converting the remaining pages — see `Liquid/README
   `#shopify-section-{{ section.id }}`, per block on `#block-{{ block.id }}` so
   card 1 and card 2 can carry different styles in the same section.
 
+## Ported into the live theme
+
+The home page of this build is running in the Horizon theme at
+`D:/Github/munchief` (sections, blocks, CSS, images and `js/animations.js`, all
+prefixed `munchief-`). The scripts that did it live in
+[tools/munchief-port/](tools/munchief-port/) and are re-runnable.
+
+`munchief/MUNCHIEF-HANDOFF.md` is the entry point for continuing that work —
+conventions to follow, traps already hit, and the backlog of pages (about,
+contact, legal, shop all, product, build your bundle) plus the blog.
