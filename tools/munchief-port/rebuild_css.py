@@ -54,6 +54,8 @@ CSS_SOURCES = {
     'product-photo-banner': 'product-photo-banner',
     'product-reviews': 'product-reviews',
     'combo-promo': 'combo-promo',
+    # Shop all
+    'shop-all': 'collection-grid',
 }
 
 TAIL = '''

@@ -1,0 +1,122 @@
+{% comment %}
+  Block: collection_group
+  Source: sections/shop-all.html (section: collection_grid)
+
+  One category row of the Shop All page: a centered red Fredoka heading over
+  a .product-grid of product cards. The block also supplies its own tab in
+  the section's .filter-tabs row — the section loops its blocks to build
+  that row, so adding a group adds a tab and removing it removes the tab
+  (no dead filters).
+
+  Settings:
+    - heading (text) — e.g. "Makhanas"; also the tab label unless
+      filter_label overrides it
+    - filter_label (text, optional) — tab label when it differs from the
+      heading (e.g. group "Munchief Sodas" / tab "Prebiotic Soda")
+    - filter_key (text, optional) — slug written to data-category and the
+      tab's data-filter; defaults to the handleized heading
+    - collection (collection, optional) — when set, tiles render straight
+      from the collection's products and the nested product_card blocks
+      are ignored; products_to_show caps how many
+    - products_to_show (range) — cap for collection mode
+    - show_heading (checkbox) — hide the group heading when a page runs a
+      single unlabelled grid
+    - heading_color (color) — per-block, so group 1 and group 2 can differ
+      inside the SAME section
+
+  Nested blocks:
+    - "product_card" — see blocks/product_card.liquid, the same block
+      product_carousel uses; the tiles are identical between the two, only
+      the container changes (wrapping grid here, scrolling track there)
+
+  The group carries data-category so assets/collection-grid.js can toggle
+  `hidden` on it. `.collection__group[hidden]` is overridden in
+  section-shop-all.css because the flex display would otherwise win over
+  the UA's [hidden] rule.
+
+  This block ships no CSS: .product-grid, .product-card, .badge, .price,
+  .rating, .select and .btn all come from assets/components.css, loaded
+  once in layout/theme.liquid.
+{% endcomment %}
+
+{%- liquid
+  assign group_key = block.settings.filter_key | default: block.settings.heading | handleize
+  assign group_label = block.settings.filter_label | default: block.settings.heading
+-%}
+
+{%- style -%}
+  #block-{{ block.id }} .collection__group-heading {
+    color: {{ block.settings.heading_color }};
+  }
+{%- endstyle -%}
+
+<div id="block-{{ block.id }}" class="collection__group" data-category="{{ group_key }}" data-filter-label="{{ group_label | escape }}" {{ block.shopify_attributes }}>
+  {%- if block.settings.show_heading and block.settings.heading != blank -%}
+    <h2 class="collection__group-heading">{{ block.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="product-grid">
+    {%- if block.settings.collection != blank -%}
+      {%- comment -%} Collection mode: tiles come straight from the products. {%- endcomment -%}
+      {%- for product in block.settings.collection.products limit: block.settings.products_to_show -%}
+        <article class="product-card">
+          <a href="{{ product.url }}" class="product-card__link">
+            <div class="product-card__media">
+              {%- if product.compare_at_price > product.price -%}
+                <span class="badge badge--green product-card__badge">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+              {%- endif -%}
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 800 | image_tag: alt: product.title, loading: 'lazy' }}
+              {%- endif -%}
+            </div>
+
+            <h3 class="product-card__title">{{ product.title }}</h3>
+
+            <div class="price">
+              <span class="price__sale">{{ product.price | money }}</span>
+              {%- if product.compare_at_price > product.price -%}
+                <span class="price__compare">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+          </a>
+
+          <div class="select">
+            <select class="select__input" aria-label="Variant" name="id" data-variant-select>
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}"{% unless variant.available %} disabled{% endunless %}>{{ variant.title }} &mdash; {{ variant.price | money }}</option>
+              {%- endfor -%}
+            </select>
+            <svg class="select__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <button type="button" class="btn btn--pill btn--red btn--block" data-add-to-cart>Add to Cart</button>
+        </article>
+      {%- endfor -%}
+    {%- else -%}
+      {% content_for 'blocks' %}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection group",
+  "blocks": [{ "type": "product_card" }],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Makhanas" },
+    { "type": "checkbox", "id": "show_heading", "label": "Show heading", "default": true },
+    { "type": "header", "content": "Filter tab" },
+    { "type": "text", "id": "filter_label", "label": "Tab label", "info": "Leave blank to reuse the heading." },
+    { "type": "text", "id": "filter_key", "label": "Tab value", "info": "Slug used by the filter script. Leave blank to derive it from the heading." },
+    { "type": "header", "content": "Products" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "When set, tiles render from this collection and the product card blocks are ignored." },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 24, "step": 1, "default": 8 },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#e2241a" }
+  ],
+  "presets": [{ "name": "Collection group" }]
+}
+{% endschema %}

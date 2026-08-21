@@ -1,0 +1,207 @@
+{
+  "sections": {
+    "collection_grid": {
+      "type": "collection_grid",
+      "blocks": {
+        "group-makhanas": {
+          "type": "collection_group",
+          "blocks": {
+            "makhana-1": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "5000+ Bought This",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "20g Tasting Pouch"
+              }
+            },
+            "makhana-2": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "Best Seller",
+                "badge_style": "orange",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "20g Tasting Pouch"
+              }
+            },
+            "makhana-3": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "5000+ Bought This",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "20g Tasting Pouch"
+              }
+            },
+            "makhana-4": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "20g Tasting Pouch"
+              }
+            },
+            "makhana-5": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "5000+ Bought This",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "20g Tasting Pouch"
+              }
+            }
+          },
+          "block_order": [
+            "makhana-1",
+            "makhana-2",
+            "makhana-3",
+            "makhana-4",
+            "makhana-5"
+          ],
+          "settings": {
+            "heading": "Makhanas",
+            "show_heading": true,
+            "filter_label": "Makhanas",
+            "filter_key": "makhanas",
+            "heading_color": "#e2241a"
+          }
+        },
+        "group-sodas": {
+          "type": "collection_group",
+          "blocks": {
+            "soda-1": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "5000+ Bought This",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "Pack of 1"
+              }
+            },
+            "soda-2": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "Best Seller",
+                "badge_style": "orange",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "Pack of 1"
+              }
+            },
+            "soda-3": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "Pack of 1"
+              }
+            },
+            "soda-4": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "Pack of 1"
+              }
+            }
+          },
+          "block_order": [
+            "soda-1",
+            "soda-2",
+            "soda-3",
+            "soda-4"
+          ],
+          "settings": {
+            "heading": "Munchief Sodas",
+            "show_heading": true,
+            "filter_label": "Prebiotic Soda",
+            "filter_key": "sodas",
+            "heading_color": "#e2241a"
+          }
+        },
+        "group-combos": {
+          "type": "collection_group",
+          "blocks": {
+            "combo-1": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "Best Value",
+                "badge_style": "green",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "Pack of 6"
+              }
+            },
+            "combo-2": {
+              "type": "product_card",
+              "settings": {
+                "badge_text": "Best Seller",
+                "badge_style": "orange",
+                "rating_value": 5,
+                "rating_count": 53,
+                "variant_label": "Pack of 6"
+              }
+            }
+          },
+          "block_order": [
+            "combo-1",
+            "combo-2"
+          ],
+          "settings": {
+            "heading": "Combos",
+            "show_heading": true,
+            "filter_label": "Combos",
+            "filter_key": "combos",
+            "heading_color": "#e2241a"
+          }
+        }
+      },
+      "block_order": [
+        "group-makhanas",
+        "group-sodas",
+        "group-combos"
+      ],
+      "settings": {
+        "heading": "Shop All",
+        "empty_text": "No products in this category yet.",
+        "show_breadcrumb": true,
+        "breadcrumb_home_label": "Home",
+        "breadcrumb_current_label": "Shop all",
+        "product_source": "auto",
+        "show_filters": true,
+        "all_filter_label": "All",
+        "columns": 3,
+        "padding_top": 64,
+        "padding_bottom": 96,
+        "background_color": "#f6efdd",
+        "heading_color": "#2b2b2b",
+        "breadcrumb_color": "#6b6257"
+      }
+    },
+    "chaos_banner": {
+      "type": "chaos_banner",
+      "settings": {
+        "heading": "Ready to cause<br />some chaos?",
+        "text": "<p>Ten flavours. Five personalities. One mystery still brewing. Come find out which one you are.</p>",
+        "button_label": "Shop Now",
+        "content_align": "left",
+        "content_width": 620
+      }
+    }
+  },
+  "order": [
+    "collection_grid",
+    "chaos_banner"
+  ]
+}

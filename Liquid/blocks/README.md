@@ -31,6 +31,7 @@ render them and for the CSS/JS loading rules.
 | `feature_badge.liquid` | `product_story` | Icon + label in the 6-up trust row; `highlight` swaps in the filled-red circle. Static block (`story-badge-1`…`story-badge-6`). |
 | `review.liquid` | `product_reviews` | Repeatable — the grid is one container. |
 | `faq_item.liquid` | `faq_section` | Repeatable; backs both the compact PDP layout and the standalone FAQ page. |
+| `collection_group.liquid` | `collection_grid` | One category row of the Shop All page. Nests `product_card` blocks via `{% content_for 'blocks' %}` (like `nav_link` → `menu_card`), and renders its own filter tab from `filter_label`/`filter_key`, so a group and its tab live and die together. A `collection` setting overrides the nested cards. |
 
 ## Conversion notes
 
@@ -48,6 +49,10 @@ render them and for the CSS/JS loading rules.
   1:1. The one addition made during conversion:
   `.flavor-quiz__character--flip` in `css/sections/flavor-quiz.css`,
   backing the decor block's `flip` setting.
+- **`collection_group` reuses `product_card` verbatim.** The Shop All tiles
+  and the carousel tiles are the same block — only the container changes
+  (a wrapping `.product-grid` here, a scrolling `.product-carousel__track`
+  there), so nothing was forked to build the page.
 - **Star ratings** are inlined in `product_card` and `testimonial` rather
   than shared. If more blocks need them, lift the 5-star loop into
   `snippets/rating-stars.liquid` and `{% render %}` it.

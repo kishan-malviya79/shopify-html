@@ -10,7 +10,8 @@ Liquid/
   blocks/     theme blocks (one file = one block type, own {% schema %})
   layout/     theme.liquid — global CSS/JS + header/footer groups + cart drawer
   sections/   one file per section + header-group.json / footer-group.json
-  templates/  index.json (home), product.json + product.pink.json (PDP)
+  templates/  index.json (home), product.json + product.pink.json (PDP),
+              page.shop-all.json + collection.json (Shop All / collections)
 ```
 
 ## Home page (`templates/index.json`)
@@ -58,6 +59,42 @@ One `faq_section.liquid` backs both FAQ layouts: `layout: compact` is the
 PDP block, `layout: page` is the standalone FAQ page (breadcrumb + stroked
 page title, note moved under the photo). Same markup, same blocks, one
 extra setting — not a second file.
+
+## Shop All page (`templates/page.shop-all.json`)
+
+| Order | Section | File |
+|---|---|---|
+| — | announcement_bar | `sections/announcement_bar.liquid` (header group) |
+| — | header | `sections/header.liquid` (header group) |
+| 1 | collection_grid | `sections/collection_grid.liquid` |
+| 2 | chaos_banner | `sections/chaos_banner.liquid` |
+| — | footer | `sections/footer.liquid` (footer group) |
+
+Assign the template to a Shopify page with the handle `shop-all` (Admin →
+Pages → Theme template → `shop-all`); the header's "Shop All" links point
+at `/pages/shop-all`.
+
+`collection_grid` runs in two modes off one `product_source` setting:
+
+- `blocks` (the Shop All page) — one `collection_group` block per category
+  row, each nesting the `product_card` blocks the carousel already uses.
+  Every group renders its own filter tab, so adding or deleting a group
+  adds or deletes its tab and no dead filters are possible. The section
+  owns only the leading "All" tab.
+- `collection` — the tabs and group headings are dropped and the grid
+  renders straight from `collection.products`, with the page title and
+  breadcrumb falling back to `collection.title`.
+- `auto` (what `templates/collection.json` runs) — one collection template
+  serves every collection *and* `/collections/all`, Shopify's virtual
+  all-products listing, which is the store's Shop All URL. That listing has
+  no admin record, so `collection.id` is nil; the section keys off that and
+  renders the designed groups there, real products everywhere else. The
+  template carries both configurations at once and the URL picks.
+
+`collection_group` is the second block that nests other blocks (after
+`nav_link` → `menu_card`); it can also take a `collection` of its own,
+which then overrides its nested cards the same way `product_carousel`'s
+collection setting does.
 
 ### Color schemes
 
@@ -136,6 +173,7 @@ blocks, not hardcoded in the stylesheet:
 | `product-main.js` | `sections/product_main.liquid` |
 | `combo-promo.js` | `sections/combo_promo.liquid` |
 | `faq.js` | `sections/faq_section.liquid` |
+| `collection-grid.js` | `sections/collection_grid.liquid` |
 
 ## Blocks
 
@@ -144,7 +182,9 @@ Sections render them three ways:
 
 1. `{% content_for 'blocks' %}` — all blocks into one container
    (`product_carousel`, `world_grid`, `testimonial_carousel`, `footer`,
-   `cart_drawer`, `header`'s desktop nav, `product_reviews`, `faq_section`).
+   `cart_drawer`, `header`'s desktop nav, `product_reviews`, `faq_section`,
+   `collection_grid` — whose `collection_group` blocks each call it again
+   for their own `product_card` tiles).
 2. `{% content_for "block", type: "...", id: "..." %}` — **static** blocks,
    used where one section places different block types in different
    containers: `flavor_quiz` (decor, crunch results, sip results, intensity

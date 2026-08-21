@@ -87,6 +87,30 @@ Two conversion decisions worth carrying forward:
   uses. `product_reviews` and `faq_section` have a single container each, so they
   use the repeatable `{% content_for 'blocks' %}` form.
 
+### Shop All page
+
+The Shop All page is converted: `templates/page.shop-all.json` renders
+`collection_grid` → `chaos_banner` (with `announcement_bar` + `header` above and
+`footer` below from the section groups), matching sections/shop-all.html end to
+end. `templates/collection.json` is the same section on a real collection page
+with `product_source: "collection"` — one grid off `collection.products`, no
+category tabs.
+
+New section: `collection_grid`.
+New block: `collection_group` — nests `product_card` blocks (reused from
+`product_carousel`, unchanged), the same way `nav_link` nests `menu_card`.
+New page-wise JS: `collection-grid.js` (category tab filter, binds every
+instance, re-inits on `shopify:section:load`).
+
+One conversion decision worth carrying forward:
+
+- **Tabs come from the blocks, not from a parallel setting.** Each
+  `collection_group` renders its own filter tab (its `filter_label`, falling back
+  to its heading), so a group and its tab are added and deleted together — the
+  static build's risk of a dead "Combos" tab pointing at a group that no longer
+  exists can't happen. The section only owns the leading "All" tab, and the
+  script back-fills a tab for any group that rendered without one.
+
 ## Ported into the live theme
 
 The home page of this build is running in the Horizon theme at
@@ -104,6 +128,18 @@ version: the PDP FAQ reuses the theme's existing `munchief-faq` section
 instead of adding the comp's compact layout, and add-to-cart posts through
 real Shopify product forms rather than the static build's localStorage cart.
 
+The **Shop All page is ported too**: `munchief-collection-grid` with
+`munchief-collection-group` blocks (nesting the existing
+`munchief-product-card`), plus a `munchief-product-tile` snippet for the
+collection-driven tiles. One section backs both `templates/collection.json`
+(`product_source: "auto"` — the curated 3-group page with its filter tabs on
+`/collections/all`, which is where the header's Shop All links point and which
+is Shopify's virtual all-products listing, and a plain product grid on every
+real collection) and `templates/page.shop-all.json` (the same designed page
+pinned to a `shop-all` page handle). Horizon's own collection template is kept at
+`.munchief-backup/collection.json`. `css/sections/shop-all.css` is registered
+in `rebuild_css.py` as the `shop-all` stem, so it regenerates like the rest.
+
 `munchief/MUNCHIEF-HANDOFF.md` is the entry point for continuing that work —
 conventions to follow, traps already hit, and the backlog of pages (about,
-contact, legal, shop all, build your bundle) plus the blog.
+build your bundle) plus the blog.
