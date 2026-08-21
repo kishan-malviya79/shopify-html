@@ -1,0 +1,62 @@
+{% comment %}
+  Block: promise
+  Source: sections/our-promise.html (section: our_promise)
+
+  One sticker card in the promise row. Renders as the shared `.promise-card`
+  component from components.css — cream fill, 2px orange outline with a flat
+  10px shadow of the same colour, an oversized emoji up top and the copy
+  pinned to the bottom — with per-block colour overrides scoped to
+  #block-{{ block.id }}, so one card can be highlighted inside the row.
+
+  Settings:
+    - icon (text) — an emoji, rendered at 64px
+    - title (text)
+    - text (richtext)
+    - COLOR (per block): card_background, border_color, title_color,
+      text_color
+{% endcomment %}
+
+{%- style -%}
+  {%- if block.settings.card_background != blank -%}
+    #block-{{ block.id }} { background-color: {{ block.settings.card_background }}; }
+  {%- endif -%}
+  {%- if block.settings.border_color != blank -%}
+    #block-{{ block.id }} {
+      border-color: {{ block.settings.border_color }};
+      box-shadow: 0 10px 0 {{ block.settings.border_color }};
+    }
+  {%- endif -%}
+  {%- if block.settings.title_color != blank -%}
+    #block-{{ block.id }} .promise-card__title { color: {{ block.settings.title_color }}; }
+  {%- endif -%}
+  {%- if block.settings.text_color != blank -%}
+    #block-{{ block.id }} .promise-card__text { color: {{ block.settings.text_color }}; }
+  {%- endif -%}
+{%- endstyle -%}
+
+<article id="block-{{ block.id }}" class="promise-card" {{ block.shopify_attributes }}>
+  {%- if block.settings.icon != blank -%}
+    <span class="promise-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+  {%- endif -%}
+  <div>
+    <h3 class="promise-card__title">{{ block.settings.title }}</h3>
+    <div class="promise-card__text">{{ block.settings.text }}</div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Promise",
+  "settings": [
+    { "type": "text", "id": "icon", "label": "Icon", "default": "&#128293;", "info": "An emoji — rendered at 64px." },
+    { "type": "text", "id": "title", "label": "Title", "default": "Roasted, Not Fried" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Every batch is roasted to keep it light and crunchy never deep-fried.</p>" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "card_background", "label": "Card background", "info": "Leave blank for the shared cream card." },
+    { "type": "color", "id": "border_color", "label": "Border and shadow", "info": "Leave blank for the shared orange outline." },
+    { "type": "color", "id": "title_color", "label": "Title", "info": "Leave blank for the shared card colour." },
+    { "type": "color", "id": "text_color", "label": "Text", "info": "Leave blank for the shared card colour." }
+  ],
+  "presets": [{ "name": "Promise" }]
+}
+{% endschema %}

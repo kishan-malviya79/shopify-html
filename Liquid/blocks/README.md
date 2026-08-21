@@ -32,6 +32,10 @@ render them and for the CSS/JS loading rules.
 | `review.liquid` | `product_reviews` | Repeatable — the grid is one container. |
 | `faq_item.liquid` | `faq_section` | Repeatable; backs both the compact PDP layout and the standalone FAQ page. |
 | `collection_group.liquid` | `collection_grid` | One category row of the Shop All page. Nests `product_card` blocks via `{% content_for 'blocks' %}` (like `nav_link` → `menu_card`), and renders its own filter tab from `filter_label`/`filter_key`, so a group and its tab live and die together. A `collection` setting overrides the nested cards. |
+| `tag.liquid` | `world_band` | Ingredient chip. Plain shared `.badge--green` pill — no chip component of its own; the colour pickers are blank by default. |
+| `character.liquid` | `character_carousel` | The shared `.testimonial-card` on the `--character` skin (tinted fill, white photo frame, uppercase title, no rating). `tint` picks one of the four modifier classes already in `components.css`. |
+| `collage_photo.liquid` | `about_moments` | One `.blob-photo` cloud cutout, `tilt` picking between the two rotations. The stagger is the section's grid, so block order decides placement. |
+| `promise.liquid` | `our_promise` | Emoji + title + copy sticker card (`.promise-card`), with per-block border/shadow colour so one card can be highlighted in the row. |
 
 ## Conversion notes
 
@@ -73,3 +77,12 @@ render them and for the CSS/JS loading rules.
   block at the end of each `assets/section-*.css`.
 - **Line items and cart recommendations are not blocks** — they come from
   `cart.items` and the `recommendations` product_list.
+- **`character` reuses `.testimonial-card` as-is.** Like `product_story`, the
+  About page's character rail is the same card component on a modifier skin
+  (`--character` plus a tint), so nothing was forked from
+  `testimonial_carousel` to build it.
+- **The About manifesto statement is five text settings, not one richtext.**
+  The design strikes through the claim the brand rejects (`<s>`) and flips
+  the promise itself to black (`<b>`); neither tag survives a `richtext`
+  setting, so `about_manifesto` wraps the parts itself and the merchant
+  edits words, not markup.

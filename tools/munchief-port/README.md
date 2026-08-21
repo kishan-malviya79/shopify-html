@@ -16,6 +16,7 @@ Run them from anywhere with `python tools/munchief-port/<script>.py`.
 | `speed_and_safety.py` | The adaptations that aren't a clean one-line diff: retimed constants, reveal safety net, start-at-top, the rAF-driven chaos scrub. |
 | `copy_images.py` | Re-encodes the home page art to WebP and copies it into the theme's `assets/`. 31MB of source PNGs became 1.5MB. |
 | `copy_product_images.py` | The same for the two images the product page adds (`munchief-product-photo.webp`, `munchief-photo-banner.webp`). Safe to re-run. |
+| `copy_about_images.py` | The same for the two the About page adds (`munchief-about-hero.webp`, `munchief-about-packshot.webp`) — everything else that page needs already shipped with the home page. Safe to re-run. |
 | `test_scrub.js` | Node harness that exercises the chaos-banner scrub against a stub DOM — proves the loop tracks scroll position, composes with the existing transform, and idles off screen. `node test_scrub.js`. |
 
 ## Three traps worth knowing before you run these

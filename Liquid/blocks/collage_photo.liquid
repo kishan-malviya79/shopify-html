@@ -1,0 +1,40 @@
+{% comment %}
+  Block: collage_photo
+  Source: sections/about.html (section: about_moments)
+
+  One cloud-cutout photo in the moments collage. Renders as the shared
+  `.blob-photo` component from components.css — organic border-radius, thick
+  white border, flat shadow — with the two rotations the designs alternate
+  between. The overlap/stagger is the section's grid, not this block, so the
+  order in the theme editor decides where a photo lands.
+
+  Settings:
+    - image (image_picker)
+    - tilt (select: a | b) — the two rotations
+{% endcomment %}
+
+<div id="block-{{ block.id }}" class="blob-photo blob-photo--tilt-{{ block.settings.tilt }}" {{ block.shopify_attributes }}>
+  {%- if block.settings.image != blank -%}
+    {{ block.settings.image | image_url: width: 1200 | image_tag: alt: '', role: 'presentation', loading: 'lazy' }}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collage photo",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    {
+      "type": "select",
+      "id": "tilt",
+      "label": "Tilt",
+      "options": [
+        { "value": "a", "label": "Left" },
+        { "value": "b", "label": "Right" }
+      ],
+      "default": "a"
+    }
+  ],
+  "presets": [{ "name": "Collage photo" }]
+}
+{% endschema %}

@@ -1,0 +1,115 @@
+{% comment %}
+  Section: about_manifesto
+  Source: sections/about.html (section: about_manifesto)
+  CSS: section-about-manifesto.css (loaded here, this section only)
+  Shared: .band, .band__inner, .band__sparkle live in components.css
+
+  Mint band: a big cut-out packshot bleeding off the left edge, four
+  decorative sparkles, and a copy column on the right.
+
+  The statement is five text settings rather than one richtext, because the
+  design strikes through the claim the brand rejects (<s>) and flips the
+  promise itself to black (<b>) — neither tag survives a `richtext` setting.
+  The section wraps the parts, so a merchant edits words, not markup; leave
+  a part blank to drop it.
+
+  Settings:
+    - CONTENT: statement_lead / statement_struck / statement_mid /
+      statement_bold / statement_tail (text), text (richtext)
+    - IMAGE: image (image_picker), image_alt (text)
+    - STYLE: show_sparkles (checkbox), is_last_band (checkbox),
+      min_height (range), padding_block (range)
+    - COLOR: background_color, statement_color, statement_accent_color,
+      text_color
+
+  Blocks: none
+{% endcomment %}
+
+{{ 'section-about-manifesto.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .manifesto {
+    background-color: {{ section.settings.background_color }};
+  }
+  #shopify-section-{{ section.id }} .manifesto__statement {
+    color: {{ section.settings.statement_color }};
+  }
+  #shopify-section-{{ section.id }} .manifesto__statement b {
+    color: {{ section.settings.statement_accent_color }};
+  }
+  #shopify-section-{{ section.id }} .manifesto__text {
+    color: {{ section.settings.text_color }};
+  }
+  /* The stylesheet reflows this band below 1100px; an id-scoped rule would
+     win over that media query, so the merchant metrics apply above it. */
+  @media (min-width: 1101px) {
+    #shopify-section-{{ section.id }} .manifesto {
+      min-height: clamp(420px, 62vw, {{ section.settings.min_height }}px);
+      padding-block: clamp(var(--space-2xl), 9.7vw, {{ section.settings.padding_block }}px);
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign band_class = 'band manifesto'
+  if section.settings.is_last_band
+    assign band_class = 'band band--last manifesto'
+  endif
+-%}
+
+<section class="{{ band_class }}" aria-label="{{ section.settings.statement_lead | default: 'Why we exist' }}">
+
+  <div class="manifesto__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1400 | image_tag: alt: section.settings.image_alt, loading: 'lazy' }}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_sparkles -%}
+    {%- for i in (1..4) -%}
+      <svg class="band__sparkle band__sparkle--{{ i }}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.9 4.7 2.3 8 4 9.7 1.7 1.7 5 3.1 8 4-3 .9-6.3 2.3-8 4-1.7 1.7-3.1 5-4 8-.9-3-2.3-6.3-4-8-1.7-1.7-5-3.1-8-4 3-.9 6.3-2.3 8-4 1.7-1.7 3.1-5 4-9.7z"/></svg>
+    {%- endfor -%}
+  {%- endif -%}
+
+  <div class="band__inner manifesto__body">
+    <h2 class="manifesto__statement">
+      {{- section.settings.statement_lead }}
+      {%- if section.settings.statement_struck != blank %} <s>{{ section.settings.statement_struck }}</s>{% endif %}
+      {{ section.settings.statement_mid }}
+      {%- if section.settings.statement_bold != blank %} <b>{{ section.settings.statement_bold }}</b>{% endif %}
+      {{ section.settings.statement_tail -}}
+    </h2>
+    <div class="manifesto__text">{{ section.settings.text }}</div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "About manifesto",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Statement" },
+    { "type": "text", "id": "statement_lead", "label": "Opening", "default": "Most snacks try to be" },
+    { "type": "text", "id": "statement_struck", "label": "Struck-through claim", "default": "healthy first, fun never.", "info": "Rendered with a line through it, in the statement colour." },
+    { "type": "text", "id": "statement_mid", "label": "Middle", "default": "We flipped it." },
+    { "type": "text", "id": "statement_bold", "label": "Highlighted promise", "default": "Snacking should feel like a personality", "info": "Rendered in the accent colour." },
+    { "type": "text", "id": "statement_tail", "label": "Closing", "default": "— not a nutrition label." },
+    { "type": "header", "content": "Content" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>We believe in real food the kind that smells like its own juices, with no artificial colors or flavors. Every morning, we start from scratch: chopping, cooking, marinating, and rolling burritos, tacos, and quesadillas.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Packshot" },
+    { "type": "text", "id": "image_alt", "label": "Packshot alt text", "default": "A hand holding a Munchief pouch" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Band background", "default": "#d7ecb9" },
+    { "type": "color", "id": "statement_color", "label": "Statement", "default": "#f83e1c" },
+    { "type": "color", "id": "statement_accent_color", "label": "Highlighted promise", "default": "#000000" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#5f0e00" },
+    { "type": "header", "content": "Style" },
+    { "type": "checkbox", "id": "show_sparkles", "label": "Show sparkle decor", "default": true },
+    { "type": "checkbox", "id": "is_last_band", "label": "Last band on the page", "default": false, "info": "Rounds the bottom corners instead of running into the band below." },
+    { "type": "range", "id": "min_height", "label": "Minimum height", "min": 400, "max": 1000, "step": 20, "unit": "px", "default": 896 },
+    { "type": "range", "id": "padding_block", "label": "Vertical padding", "min": 40, "max": 200, "step": 4, "unit": "px", "default": 140 }
+  ],
+  "presets": [{ "name": "About manifesto" }]
+}
+{% endschema %}

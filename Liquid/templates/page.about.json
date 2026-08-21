@@ -1,0 +1,173 @@
+{
+  "sections": {
+    "about_hero": {
+      "type": "about_hero",
+      "settings": {
+        "heading": "We built a snack brand<br />around real people.",
+        "text": "<p>Five personalities. Five flavours. Two worlds. Zero boring snacks.</p>",
+        "show_breadcrumb": true,
+        "breadcrumb_home_label": "Home",
+        "breadcrumb_current_label": "About Us",
+        "show_seal": true,
+        "seal_value": "100%",
+        "seal_label": "Vegetarian",
+        "min_height": 660,
+        "padding_top": 80,
+        "padding_bottom": 82
+      }
+    },
+    "about_manifesto": {
+      "type": "about_manifesto",
+      "settings": {
+        "statement_lead": "Most snacks try to be",
+        "statement_struck": "healthy first, fun never.",
+        "statement_mid": "We flipped it.",
+        "statement_bold": "Snacking should feel like a personality",
+        "statement_tail": "— not a nutrition label.",
+        "text": "<p>We believe in real food the kind that smells like its own juices, with no artificial colors or flavors. Every morning, we start from scratch: chopping, cooking, marinating, and rolling burritos, tacos, and quesadillas.</p>",
+        "image_alt": "A hand holding a Munchief Chutney Pop pouch",
+        "show_sparkles": true,
+        "is_last_band": false,
+        "min_height": 896,
+        "padding_block": 140
+      }
+    },
+    "world_band_crunch": {
+      "type": "world_band",
+      "blocks": {
+        "tag-1": { "type": "tag", "settings": { "label": "Roasted, not fried" } },
+        "tag-2": { "type": "tag", "settings": { "label": "Character-led" } },
+        "tag-3": { "type": "tag", "settings": { "label": "70g tin" } }
+      },
+      "block_order": ["tag-1", "tag-2", "tag-3"],
+      "settings": {
+        "heading": "Crunch World",
+        "text": "<p>Five real people, five roasted makhana flavours, each one built around an actual mood — not an invented mascot. Big Indian street-food energy, roasted not fried.</p>",
+        "cta_text": "Shop Now",
+        "color_scheme": "crunch",
+        "is_last_band": false,
+        "min_height": 880
+      }
+    },
+    "world_band_prebiotic": {
+      "type": "world_band",
+      "blocks": {
+        "tag-1": { "type": "tag", "settings": { "label": "Prebiotic soda" } },
+        "tag-2": { "type": "tag", "settings": { "label": "Low sugar" } },
+        "tag-3": { "type": "tag", "settings": { "label": "250ml can" } }
+      },
+      "block_order": ["tag-1", "tag-2", "tag-3"],
+      "settings": {
+        "heading": "Prebiotic World",
+        "text": "<p>Prebiotic sodas built for chaatpata cravings familiar Indian flavours, a fizzy upgrade, and one flavour still brewing behind the scenes</p>",
+        "cta_text": "Shop Now",
+        "color_scheme": "prebiotic",
+        "is_last_band": false,
+        "min_height": 880
+      }
+    },
+    "character_carousel": {
+      "type": "character_carousel",
+      "blocks": {
+        "character-1": { "type": "character", "settings": { "title": "Chutney Pop", "author": "Mimi aka Maitri", "tint": "peach" } },
+        "character-2": { "type": "character", "settings": { "title": "Salt Pop", "author": "Tantan aka Tanya", "tint": "pink" } },
+        "character-3": { "type": "character", "settings": { "title": "Noodle Blast", "author": "Chiku aka Chirag", "tint": "butter" } },
+        "character-4": { "type": "character", "settings": { "title": "Pop'n'Pani", "author": "Golu aka Gaurav", "tint": "gold" } }
+      },
+      "block_order": ["character-1", "character-2", "character-3", "character-4"],
+      "settings": {
+        "heading": "Real People.<br />Not Cartoons.",
+        "text": "<p>Every character on every pack is a real person's real mood not a stock mascot. Same rendering family, same premium polish, actual faces behind the flavours.</p>",
+        "anchor_id": "characters",
+        "enable_arrows": true,
+        "card_width": 544,
+        "gap": 24,
+        "padding_top": 150,
+        "padding_bottom": 140
+      }
+    },
+    "about_moments": {
+      "type": "about_moments",
+      "blocks": {
+        "photo-1": { "type": "collage_photo", "settings": { "tilt": "a" } },
+        "photo-2": { "type": "collage_photo", "settings": { "tilt": "b" } },
+        "photo-3": { "type": "collage_photo", "settings": { "tilt": "a" } }
+      },
+      "block_order": ["photo-1", "photo-2", "photo-3"],
+      "settings": {
+        "heading": "Clean, functional, feel good drinks and makanas that enhance joyful moments",
+        "text": "<p>Munchief isn't just another the brand. It's a cultural shift in how we socialize, unwind, and celebrate.</p>",
+        "cta_text": "Shop Now",
+        "show_rating": true,
+        "rating_value": 5,
+        "rating_count": "1200+ happy munchiefans",
+        "padding_block": 64
+      }
+    },
+    "our_promise": {
+      "type": "our_promise",
+      "blocks": {
+        "promise-1": {
+          "type": "promise",
+          "settings": {
+            "icon": "&#128293;",
+            "title": "Roasted, Not Fried",
+            "text": "<p>Every batch is roasted to keep it light and crunchy never deep-fried.</p>"
+          }
+        },
+        "promise-2": {
+          "type": "promise",
+          "settings": {
+            "icon": "&#127807;",
+            "title": "Prebiotic, Not Probiotic",
+            "text": "<p>We only say \"prebiotic\" because that's what's actually in the can and we'll always tell you the difference.</p>"
+          }
+        },
+        "promise-3": {
+          "type": "promise",
+          "settings": {
+            "icon": "&#128248;",
+            "title": "Real Photography",
+            "text": "<p>The people on our packs are real not stock art, not generic illustration.</p>"
+          }
+        },
+        "promise-4": {
+          "type": "promise",
+          "settings": {
+            "icon": "&#129296;",
+            "title": "Honest About Pending",
+            "text": "<p>If a number isn't confirmed yet, we say \"pending\" we don't publish a guess and hope nobody checks.</p>"
+          }
+        }
+      },
+      "block_order": ["promise-1", "promise-2", "promise-3", "promise-4"],
+      "settings": {
+        "heading": "Our Promise",
+        "overlay_opacity": 20,
+        "min_height": 900,
+        "padding_top": 80,
+        "padding_bottom": 48
+      }
+    },
+    "chaos_banner": {
+      "type": "chaos_banner",
+      "settings": {
+        "heading": "Ready to cause<br />some chaos?",
+        "text": "<p>Ten flavours. Five personalities. One mystery still brewing. Come find out which one you are.</p>",
+        "button_label": "Shop Now",
+        "content_align": "left",
+        "content_width": 620
+      }
+    }
+  },
+  "order": [
+    "about_hero",
+    "about_manifesto",
+    "world_band_crunch",
+    "world_band_prebiotic",
+    "character_carousel",
+    "about_moments",
+    "our_promise",
+    "chaos_banner"
+  ]
+}

@@ -11,7 +11,8 @@ Liquid/
   layout/     theme.liquid — global CSS/JS + header/footer groups + cart drawer
   sections/   one file per section + header-group.json / footer-group.json
   templates/  index.json (home), product.json + product.pink.json (PDP),
-              page.shop-all.json + collection.json (Shop All / collections)
+              page.shop-all.json + collection.json (Shop All / collections),
+              page.about.json (About Us)
 ```
 
 ## Home page (`templates/index.json`)
@@ -96,6 +97,61 @@ at `/pages/shop-all`.
 which then overrides its nested cards the same way `product_carousel`'s
 collection setting does.
 
+## About page (`templates/page.about.json`)
+
+| Order | Section | File |
+|---|---|---|
+| — | announcement_bar | `sections/announcement_bar.liquid` (header group) |
+| — | header | `sections/header.liquid` (header group) |
+| 1 | about_hero | `sections/about_hero.liquid` |
+| 2 | about_manifesto | `sections/about_manifesto.liquid` |
+| 3 | world_band — "Crunch World" | `sections/world_band.liquid` |
+| 4 | world_band — "Prebiotic World" (`color_scheme: prebiotic`) | same file, second instance |
+| 5 | character_carousel | `sections/character_carousel.liquid` |
+| 6 | about_moments | `sections/about_moments.liquid` |
+| 7 | our_promise | `sections/our_promise.liquid` |
+| 8 | chaos_banner | `sections/chaos_banner.liquid` |
+| — | footer | `sections/footer.liquid` (footer group) |
+
+Assign the template to a Shopify page with the handle `about` (Admin →
+Pages → Theme template → `about`). `about_hero` renders the page's
+breadcrumb strip itself, so no separate breadcrumb section is needed.
+
+### Stacked bands
+
+`about_hero`, `about_manifesto` and both `world_band`s are `.band`s: each
+one has 96px rounded top corners, rides 64px up over the band above it and
+carries a flat white lip along that edge, purely through DOM order. The
+geometry is the shared `.band` component in `components.css`, so the
+sections only own their own content.
+
+Two checkboxes drive the ends of that stack: `about_hero` is always the
+first band (square top, one rounded bottom-right corner), and every other
+band section carries an `is_last_band` checkbox that rounds its bottom
+corners and drops the negative margin. The About page leaves it off — the
+cream `character_carousel` slides up over the last band the same way the
+static build does.
+
+One `world_band.liquid` backs both world instances. `color_scheme` picks
+the whole skin (`crunch` = orange band with white copy, `prebiotic` = cream
+band with outlined red copy and the taller top padding), and the section's
+color pickers are **left blank by default**: a filled picker emits an
+id-scoped rule that beats the scheme's class, so it's the scheme or the
+picker, never both — the same rule the PDP color schemes follow below.
+
+`our_promise` is shared, not About-only: the Build Your Bundle page renders
+the same section under its bundle builder.
+
+### Merchant metrics vs. mobile CSS
+
+Section stylesheets drop or tighten their desktop metrics inside
+`max-width` media queries. An `#shopify-section-…` rule outranks any of
+them, so a merchant's padding/height/gap would leak onto phones. Every
+About-page section therefore emits those particular values inside a
+matching `min-width` media query (and keeps the stylesheet's `clamp()`
+around merchant heights), while colors — which should apply at every width
+— stay unwrapped.
+
 ### Color schemes
 
 Every PDP section carries a `color_scheme` select. Picking `pink` renders
@@ -174,6 +230,12 @@ blocks, not hardcoded in the stylesheet:
 | `combo-promo.js` | `sections/combo_promo.liquid` |
 | `faq.js` | `sections/faq_section.liquid` |
 | `collection-grid.js` | `sections/collection_grid.liquid` |
+| `character-carousel.js` | `sections/character_carousel.liquid` |
+
+`character-carousel.js` is a third sibling of `product-carousel.js` /
+`testimonial-carousel.js` rather than a shared file: the rails differ in
+root class and card gap. It reads the gap off the track's computed style,
+so the desktop (24px) and mobile (16px) steps both land on a card edge.
 
 ## Blocks
 
@@ -183,6 +245,7 @@ Sections render them three ways:
 1. `{% content_for 'blocks' %}` — all blocks into one container
    (`product_carousel`, `world_grid`, `testimonial_carousel`, `footer`,
    `cart_drawer`, `header`'s desktop nav, `product_reviews`, `faq_section`,
+   `world_band`, `character_carousel`, `about_moments`, `our_promise`,
    `collection_grid` — whose `collection_group` blocks each call it again
    for their own `product_card` tiles).
 2. `{% content_for "block", type: "...", id: "..." %}` — **static** blocks,

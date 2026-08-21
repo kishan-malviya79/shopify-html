@@ -1,0 +1,93 @@
+{% comment %}
+  Section: our_promise
+  Source: sections/our-promise.html (also rendered on sections/about.html and
+  sections/build-your-bundle.html)
+  CSS: section-our-promise.css (loaded here, this section only)
+  Shared: .stroke-heading and .promise-card live in components.css
+
+  Full-bleed photo band: a stroked display heading up top and a row of
+  sticker cards over the bottom of the photo, with a wash between the two so
+  the copy stays legible on any crop. Below 640px the cards peek-scroll
+  instead of stacking — four full-height cards in a column would push the
+  photo band past 2000px tall on a phone.
+
+  Settings:
+    - CONTENT: heading (text), image (image_picker)
+    - STYLE: overlay_opacity (range), min_height (range),
+      padding_top / padding_bottom (range)
+    - COLOR: background_color (fallback behind the photo), heading_color
+
+  Blocks:
+    - theme block "promise" — emoji + title + copy sticker card.
+      See blocks/promise.liquid.
+{% endcomment %}
+
+{{ 'section-our-promise.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .our-promise {
+    background-color: {{ section.settings.background_color }};
+  }
+  #shopify-section-{{ section.id }} .our-promise__media::after {
+    background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});
+  }
+  #shopify-section-{{ section.id }} .our-promise__heading {
+    color: {{ section.settings.heading_color }};
+  }
+  /* The stylesheet reflows this band below 1025px; an id-scoped rule would
+     win over those media queries, so the merchant metrics apply above them. */
+  @media (min-width: 1025px) {
+    #shopify-section-{{ section.id }} .our-promise {
+      min-height: {{ section.settings.min_height }}px;
+      padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="our-promise" aria-label="{{ section.settings.heading | strip_html | default: 'Our promise' }}">
+
+  <div class="our-promise__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 2400 | image_tag: alt: '', role: 'presentation', loading: 'lazy', sizes: '100vw' }}
+    {%- endif -%}
+  </div>
+
+  <h2 class="our-promise__heading stroke-heading" data-animate="char-reveal">{{ section.settings.heading }}</h2>
+
+  <div class="our-promise__cards" data-animate="fade-up-stagger">
+    {% content_for 'blocks' %}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Our promise",
+  "tag": "div",
+  "blocks": [{ "type": "promise" }],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Promise" },
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Band background", "default": "#2f6fed", "info": "Shows behind the photo while it loads, and on any crop it doesn't cover." },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#ef3b34" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "overlay_opacity", "label": "Photo wash", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 20 },
+    { "type": "range", "id": "min_height", "label": "Minimum height (desktop)", "min": 400, "max": 1100, "step": 20, "unit": "px", "default": 900 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [
+    {
+      "name": "Our promise",
+      "blocks": [
+        { "type": "promise" },
+        { "type": "promise" },
+        { "type": "promise" },
+        { "type": "promise" }
+      ]
+    }
+  ]
+}
+{% endschema %}

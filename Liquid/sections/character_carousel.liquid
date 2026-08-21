@@ -1,0 +1,117 @@
+{% comment %}
+  Section: character_carousel
+  Source: sections/character-carousel.html + sections/about.html
+  CSS: section-character-carousel.css (loaded here, this section only)
+  JS:  character-carousel.js — imported page-wise (defer); binds every
+       instance on the page and re-binds on shopify:section:load
+  Shared: .testimonial-card (+ the --character/--peach/--pink/--butter/--gold
+  modifiers) and .btn--icon-circle live in components.css
+
+  "Real People. Not Cartoons." — a centred heading + blurb + prev/next pair
+  over a peek-scrolling row of tinted character cards. Distinct from
+  `testimonial_carousel`, which is the homepage's 3-up grid of cream review
+  cards with star ratings; this one is a wide rail of 543px character cards.
+
+  Settings:
+    - CONTENT: heading (text), text (richtext), anchor_id (text)
+    - STYLE: enable_arrows (checkbox), card_width (range), gap (range),
+      padding_top / padding_bottom (range)
+    - COLOR: background_color, heading_color, text_color
+
+  Blocks:
+    - theme block "character" — photo, flavour title, copy, name and a tint.
+      See blocks/character.liquid.
+{% endcomment %}
+
+{{ 'section-character-carousel.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'character-carousel.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .character-carousel {
+    background-color: {{ section.settings.background_color }};
+  }
+  #shopify-section-{{ section.id }} .character-carousel__heading {
+    color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }} .character-carousel__text {
+    color: {{ section.settings.text_color }};
+  }
+  /* The stylesheet tightens the rail below 640px; an id-scoped rule would win
+     over that media query, so the merchant metrics apply above it. */
+  @media (min-width: 641px) {
+    #shopify-section-{{ section.id }} .character-carousel {
+      padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;
+    }
+    #shopify-section-{{ section.id }} .character-carousel__track {
+      gap: {{ section.settings.gap }}px;
+    }
+    #shopify-section-{{ section.id }} .character-carousel__track .testimonial-card {
+      flex-basis: {{ section.settings.card_width }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="{{ section.settings.anchor_id | default: section.id }}" class="character-carousel" aria-label="{{ section.settings.heading | strip_html | default: 'Characters' }}">
+
+  <div class="character-carousel__header">
+    <h2 class="character-carousel__heading" data-animate="char-reveal">{{ section.settings.heading }}</h2>
+    <div class="character-carousel__text">{{ section.settings.text }}</div>
+
+    {%- if section.settings.enable_arrows -%}
+      <div class="character-carousel__nav">
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-prev aria-label="Previous character">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="11 6 5 12 11 18"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="btn btn--icon-circle btn--outline" data-carousel-next aria-label="Next character">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="13 6 19 12 13 18"></polyline>
+          </svg>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="character-carousel__track" data-carousel-track data-animate="fade-up-stagger">
+    {% content_for 'blocks' %}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Character carousel",
+  "tag": "div",
+  "blocks": [{ "type": "character" }],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Real People.<br />Not Cartoons.", "info": "Use <br /> for a line break." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Every character on every pack is a real person's real mood not a stock mascot. Same rendering family, same premium polish, actual faces behind the flavours.</p>" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "info": "e.g. characters" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf6ed" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#ef3b34" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#5f0e00" },
+    { "type": "header", "content": "Style" },
+    { "type": "checkbox", "id": "enable_arrows", "label": "Show prev/next arrows", "default": true },
+    { "type": "range", "id": "card_width", "label": "Card width (desktop)", "min": 320, "max": 640, "step": 8, "unit": "px", "default": 544 },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 8, "max": 64, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 150 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 140 }
+  ],
+  "presets": [
+    {
+      "name": "Character carousel",
+      "blocks": [
+        { "type": "character" },
+        { "type": "character", "settings": { "tint": "pink" } },
+        { "type": "character", "settings": { "tint": "butter" } },
+        { "type": "character", "settings": { "tint": "gold" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

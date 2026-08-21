@@ -1,0 +1,125 @@
+{% comment %}
+  Section: about_moments
+  Source: sections/about.html (section: about_moments)
+  CSS: section-about-moments.css (loaded here, this section only)
+  Shared: .container, .blob-photo, .btn-group, .btn--pill, .btn--icon-circle
+  and .rating live in components.css
+
+  A centred red statement heading over a two-column row: the collage of
+  overlapping cloud cutouts on the left, copy + Shop Now CTA + a star rating
+  on the right. The collage's stagger is this section's grid — the first two
+  photos sit side by side, the third centres underneath — so three blocks is
+  the shape the design expects; more simply keep filling the grid.
+
+  Settings:
+    - CONTENT: heading (text), text (richtext), cta_text (text),
+      cta_link (url)
+    - RATING: show_rating (checkbox), rating_value (range),
+      rating_count (text)
+    - STYLE: padding_block (range)
+    - COLOR: background_color, heading_color, text_color, star_color
+
+  Blocks:
+    - theme block "collage_photo" — one `.blob-photo` cutout.
+      See blocks/collage_photo.liquid.
+{% endcomment %}
+
+{{ 'section-about-moments.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .moments {
+    background-color: {{ section.settings.background_color }};
+    padding-block: {{ section.settings.padding_block }}px;
+  }
+  #shopify-section-{{ section.id }} .moments__heading {
+    color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }} .moments__text {
+    color: {{ section.settings.text_color }};
+  }
+  #shopify-section-{{ section.id }} .moments__rating .rating__stars svg {
+    color: {{ section.settings.star_color }};
+  }
+{%- endstyle -%}
+
+{%- assign full_stars = section.settings.rating_value | default: 5 | floor -%}
+
+<section class="moments" aria-label="{{ section.settings.heading | strip_html | truncate: 60 | default: 'Joyful moments' }}">
+  <div class="container moments__inner">
+
+    <h2 class="moments__heading" data-animate="fade-up">{{ section.settings.heading }}</h2>
+
+    <div class="moments__body">
+
+      <div class="moments__collage" data-animate="fade-up-stagger">
+        {% content_for 'blocks' %}
+      </div>
+
+      <div class="moments__copy">
+        <div class="moments__text">{{ section.settings.text }}</div>
+
+        {%- if section.settings.cta_text != blank -%}
+          <div class="btn-group">
+            <a href="{{ section.settings.cta_link | default: '#' }}" class="btn btn--pill btn--outline">{{ section.settings.cta_text }}</a>
+            <a href="{{ section.settings.cta_link | default: '#' }}" class="btn btn--icon-circle btn--outline" aria-label="{{ section.settings.cta_text }}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_rating -%}
+          <div class="rating moments__rating">
+            <span class="rating__stars" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                {%- if i <= full_stars -%}
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431L24 9.168l-6 5.847L19.335 24 12 19.897 4.665 24 6 15.015 0 9.168l8.332-1.15z"/></svg>
+                {%- endif -%}
+              {%- endfor -%}
+            </span>
+            <span class="rating__count">{{ section.settings.rating_count }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About moments",
+  "tag": "div",
+  "blocks": [{ "type": "collage_photo" }],
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Clean, functional, feel good drinks and makanas that enhance joyful moments" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Munchief isn't just another the brand. It's a cultural shift in how we socialize, unwind, and celebrate.</p>" },
+    { "type": "text", "id": "cta_text", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "header", "content": "Rating" },
+    { "type": "checkbox", "id": "show_rating", "label": "Show rating", "default": true },
+    { "type": "range", "id": "rating_value", "label": "Stars", "min": 0, "max": 5, "step": 1, "default": 5 },
+    { "type": "text", "id": "rating_count", "label": "Rating label", "default": "1200+ happy munchiefans" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f6efdd" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#ee2a2a" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#1b1b1b" },
+    { "type": "color", "id": "star_color", "label": "Stars", "default": "#ee2a2a" },
+    { "type": "header", "content": "Style" },
+    { "type": "range", "id": "padding_block", "label": "Vertical padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "presets": [
+    {
+      "name": "About moments",
+      "blocks": [
+        { "type": "collage_photo" },
+        { "type": "collage_photo", "settings": { "tilt": "b" } },
+        { "type": "collage_photo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

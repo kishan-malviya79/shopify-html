@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Section: about_hero
+   First band of the About page: full-bleed sky/character photo, a 120px
+   display headline + one-line subtitle centred in the open sky, and a
+   rotated "100% Vegetarian" seal. Band geometry (radius, overlap, lip) lives
+   in the shared `.band` component — this file only holds the content.
+   Metrics match its Figma dev-mode spec exactly (919px band, 80/82px
+   vertical padding, 16px stack gap).
+   ========================================================================== */
+
+/* Breadcrumb strip above the hero — its own cream band so the trail never
+   sits on the photo. */
+.about-breadcrumb {
+  background-color: var(--color-cream-bg);
+}
+
+.about-breadcrumb .breadcrumb {
+  padding-block: var(--space-sm);
+}
+
+.about-hero {
+  display: flex;
+  justify-content: center;
+  padding-block: 80px 82px;
+  background-color: var(--color-about-sky);
+}
+
+.about-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  /* The comp's band is 919px tall; the copy sits in its top third and the
+     cast fills the rest of the photo below. */
+  min-height: clamp(320px, 46vw, 660px);
+  text-align: center;
+}
+
+/* Red fill with a white outline — the stroke isn't in the dev-mode payload
+   (Figma doesn't export text strokes) but it's clearly on the comp, and it's
+   what keeps the headline readable over the sky photo. */
+.about-hero__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400; /* Mouse Memoirs ships a single weight */
+  font-size: var(--fs-about-hero-heading);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--color-about-red);
+  -webkit-text-stroke: var(--stroke-width-heading) var(--color-white);
+  paint-order: stroke fill;
+}
+
+@media (min-width: 1025px) {
+  .about-hero__heading {
+    -webkit-text-stroke-width: 4px;
+  }
+}
+
+.about-hero__text {
+  margin: 0;
+  max-width: 640px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-band-text);
+  line-height: 1.4;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-ink);
+}
+
+/* Seal ------------------------------------------------------------------- */
+.about-hero__seal {
+  position: absolute;
+  top: clamp(80px, 13vw, 190px);
+  right: clamp(12px, 5vw, 78px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(84px, 11.8vw, 170px);
+  aspect-ratio: 1;
+  padding: var(--space-xs);
+  transform: rotate(14.77deg);
+  background-color: var(--color-about-red);
+  border: 6px solid var(--color-white);
+  border-radius: var(--radius-pill);
+  text-align: center;
+}
+
+.about-hero__seal-value {
+  font-family: var(--font-heading-rounded);
+  font-weight: 600;
+  font-size: clamp(18px, 2.4vw, 34px);
+  line-height: 1;
+  color: var(--color-white);
+}
+
+.about-hero__seal-label {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-bold);
+  font-size: clamp(7px, 0.85vw, 12px);
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+@media (max-width: 640px) {
+  .about-hero {
+    padding-block: var(--space-xl) var(--space-lg);
+  }
+
+  .about-hero__inner {
+    min-height: 220px;
+  }
+}
+
+/* Liquid build only ---------------------------------------------------------
+   `text` is a `richtext` setting, so Shopify wraps it in its own <p>. The
+   subtitle is a single centred line — drop the wrapper's default margin. */
+.about-hero__text > p {
+  margin: 0;
+}

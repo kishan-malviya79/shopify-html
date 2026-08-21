@@ -1,0 +1,37 @@
+{% comment %}
+  Block: tag
+  Source: sections/about.html (section: world_band)
+
+  One ingredient chip in a world band's tag row. Renders as the shared
+  `.badge--green` pill from components.css — no chip component of its own —
+  with an optional per-block colour override scoped to #block-{{ block.id }},
+  so one chip can call out a claim the rest of the row doesn't.
+
+  Settings:
+    - label (text)
+    - COLOR (per block): background_color, text_color
+{% endcomment %}
+
+{%- style -%}
+  {%- if block.settings.background_color != blank -%}
+    #block-{{ block.id }} { background-color: {{ block.settings.background_color }}; }
+  {%- endif -%}
+  {%- if block.settings.text_color != blank -%}
+    #block-{{ block.id }} { color: {{ block.settings.text_color }}; }
+  {%- endif -%}
+{%- endstyle -%}
+
+<span id="block-{{ block.id }}" class="badge badge--green" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+
+{% schema %}
+{
+  "name": "Tag",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Roasted, not fried" },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "background_color", "label": "Chip background", "info": "Leave blank for the shared green chip." },
+    { "type": "color", "id": "text_color", "label": "Chip text", "info": "Leave blank for the shared green chip." }
+  ],
+  "presets": [{ "name": "Tag" }]
+}
+{% endschema %}

@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Section: about_manifesto
+   Mint band: a big square packshot pinned left, the manifesto copy in a
+   699px column on the right, sparkles scattered over both. Band geometry
+   (96px top radius, -64px overlap, white lip) comes from `.band`.
+   Metrics match its Figma dev-mode spec exactly (896px band, 140/48px
+   padding, 16px stack gap, 56px heading, 18px body).
+   ========================================================================== */
+
+.manifesto {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: clamp(420px, 62vw, 896px);
+  padding-block: clamp(var(--space-2xl), 9.7vw, 140px);
+  background-color: var(--color-about-mint);
+}
+
+/* The packshot is a cut-out, so it bleeds against the band rather than
+   sitting in a column of its own. */
+.manifesto__media {
+  position: absolute;
+  left: clamp(-40px, 3vw, 43px);
+  top: 50%;
+  z-index: 0;
+  width: clamp(240px, 47vw, 677px);
+  transform: translateY(-50%);
+}
+
+.manifesto__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.manifesto__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: min(699px, 100%);
+}
+
+.manifesto__statement {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400; /* Mouse Memoirs ships a single weight */
+  font-size: var(--fs-about-statement);
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--color-about-red);
+}
+
+/* The claim the brand rejects — struck through, in the same red. */
+.manifesto__statement s {
+  text-decoration-thickness: 3px;
+}
+
+/* The promise itself flips to black inside the red sentence. */
+.manifesto__statement b {
+  font-weight: inherit;
+  color: var(--color-black);
+}
+
+.manifesto__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-band-text);
+  line-height: 1.4;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-ink);
+}
+
+/* Sparkle placement, per the comp's four decorative marks. */
+.manifesto .band__sparkle--1 { left: 135px; top: 136px; }
+.manifesto .band__sparkle--2 { right: 205px; top: 83px; }
+.manifesto .band__sparkle--3 { right: 266px; bottom: 81px; width: 32px; height: 32px; }
+.manifesto .band__sparkle--4 { left: 230px; bottom: 70px; width: 43px; height: 43px; }
+
+@media (max-width: 1100px) {
+  .manifesto {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    text-align: left;
+  }
+
+  .manifesto__media {
+    position: static;
+    width: min(320px, 70%);
+    transform: none;
+  }
+}
+
+/* Liquid build only ---------------------------------------------------------
+   `text` is a `richtext` setting, so Shopify wraps it in its own <p>. */
+.manifesto__text > p {
+  margin: 0;
+}

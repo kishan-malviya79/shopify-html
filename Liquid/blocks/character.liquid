@@ -1,0 +1,76 @@
+{% comment %}
+  Block: character
+  Source: sections/character-carousel.html (section: character_carousel)
+
+  One character card in the "Real People. Not Cartoons." rail. It is the
+  shared `.testimonial-card` with the `--character` skin (tinted fill, white
+  photo frame, uppercase title, no star rating), so this block adds no card
+  CSS of its own — the four `tint` values are modifier classes that already
+  live in components.css.
+
+  Settings:
+    - image (image_picker) — the pack character photo
+    - title (text) — the flavour, e.g. "Chutney Pop"
+    - text (richtext)
+    - author (text) — e.g. "Mimi aka Maitri"
+    - tint (select: peach | pink | butter | gold) — card fill
+    - COLOR (per block): card_background, title_color, text_color — a filled
+      picker wins over the tint modifier, so leave them blank to use the tint.
+{% endcomment %}
+
+{%- style -%}
+  {%- if block.settings.card_background != blank -%}
+    #block-{{ block.id }} { background-color: {{ block.settings.card_background }}; }
+  {%- endif -%}
+  {%- if block.settings.title_color != blank -%}
+    #block-{{ block.id }} .testimonial-card__title { color: {{ block.settings.title_color }}; }
+  {%- endif -%}
+  {%- if block.settings.text_color != blank -%}
+    #block-{{ block.id }} .testimonial-card__text,
+    #block-{{ block.id }} .testimonial-card__author { color: {{ block.settings.text_color }}; }
+  {%- endif -%}
+{%- endstyle -%}
+
+<article id="block-{{ block.id }}" class="testimonial-card testimonial-card--character testimonial-card--{{ block.settings.tint }}" {{ block.shopify_attributes }}>
+  <div class="testimonial-card__media">
+    {%- if block.settings.image != blank -%}
+      {{ block.settings.image | image_url: width: 900 | image_tag: alt: block.settings.author, loading: 'lazy' }}
+    {%- endif -%}
+  </div>
+
+  <div class="testimonial-card__body">
+    <h3 class="testimonial-card__title">{{ block.settings.title }}</h3>
+    <div class="testimonial-card__text">{{ block.settings.text }}</div>
+    <hr class="testimonial-card__divider" />
+    <p class="testimonial-card__author">{{ block.settings.author }}</p>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Character",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "title", "label": "Flavour", "default": "Chutney Pop" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>I was honestly a bit skeptical at first, but Munchief drinks completely changed my mind. The effect is smooth and relaxing without feeling overwhelming.</p>" },
+    { "type": "text", "id": "author", "label": "Name", "default": "Mimi aka Maitri" },
+    {
+      "type": "select",
+      "id": "tint",
+      "label": "Card fill",
+      "options": [
+        { "value": "peach", "label": "Peach" },
+        { "value": "pink", "label": "Pink" },
+        { "value": "butter", "label": "Butter" },
+        { "value": "gold", "label": "Gold" }
+      ],
+      "default": "peach"
+    },
+    { "type": "header", "content": "Color" },
+    { "type": "color", "id": "card_background", "label": "Card background", "info": "Leave blank to use the card fill above." },
+    { "type": "color", "id": "title_color", "label": "Title", "info": "Leave blank to use the shared card colour." },
+    { "type": "color", "id": "text_color", "label": "Text", "info": "Leave blank to use the shared card colour." }
+  ],
+  "presets": [{ "name": "Character" }]
+}
+{% endschema %}

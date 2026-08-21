@@ -56,6 +56,13 @@ CSS_SOURCES = {
     'combo-promo': 'combo-promo',
     # Shop all
     'shop-all': 'collection-grid',
+    # About page
+    'about-hero': 'about-hero',
+    'about-manifesto': 'about-manifesto',
+    'world-band': 'world-band',
+    'character-carousel': 'character-carousel',
+    'about-moments': 'about-moments',
+    'our-promise': 'our-promise',
 }
 
 TAIL = '''

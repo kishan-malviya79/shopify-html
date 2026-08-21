@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Section: our_promise
+   Full-bleed photo band with a display heading up top and a row of 4
+   `.promise-card`s (css/components.css) sitting over the bottom of the
+   photo. Metrics match its Figma dev-mode spec exactly (80/49px section
+   padding, 48px gutters, 20px card gap, 256px card row).
+   ========================================================================== */
+
+.our-promise {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2xl);
+  padding-block: 80px 49px;
+  overflow: hidden;
+  background-color: var(--color-brand-blue); /* fallback behind the photo */
+}
+
+.our-promise__media,
+.our-promise__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.our-promise__media img {
+  display: block;
+  object-fit: cover;
+}
+
+/* The spec's 20% black wash keeps the heading and cards legible on any crop. */
+.our-promise__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.our-promise__heading {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding-inline: var(--space-md);
+  font-size: var(--fs-promise-heading);
+  line-height: 0.9;
+  text-align: center;
+  color: var(--color-brand-red-line);
+}
+
+.our-promise__cards {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 1400px;
+  padding-inline: var(--space-xl);
+}
+
+/* Desktop locks to the comp's 900px band so the photo reads as a scene
+   rather than a strip behind the cards. */
+@media (min-width: 1025px) {
+  .our-promise {
+    min-height: 900px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .our-promise {
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .our-promise__cards {
+    flex-wrap: wrap;
+    padding-inline: var(--space-lg);
+  }
+
+  .our-promise__cards .promise-card {
+    flex: 1 1 calc(50% - var(--space-md));
+  }
+}
+
+@media (max-width: 640px) {
+  .our-promise__cards {
+    /* Peek-scroll instead of a 1-up stack: 4 full-height cards stacked would
+       push the photo band past 2000px tall on a phone. */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: var(--space-md);
+    scrollbar-width: none;
+  }
+
+  .our-promise__cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .our-promise__cards .promise-card {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+}
+
+/* Liquid build only ---------------------------------------------------------
+   the promise block's `text` is a `richtext` setting, so Shopify wraps it in
+   its own <p>. Scoped to this section so `.promise-card` stays shared. */
+.our-promise__cards .promise-card__text > p {
+  margin: 0;
+}
